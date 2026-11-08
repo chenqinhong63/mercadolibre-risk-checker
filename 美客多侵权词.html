@@ -187,6 +187,19 @@ section{padding-top:34px}
 .pf-citem.ok{background:#e2f4e8;color:#1c6b3a;border-color:#81c784}
 .pf-citem.miss{background:#fdecea;color:#b3261e;border-color:#e57373}
 .pf-citem.unconf{background:#fff3cd;color:#8a6d00;border-color:#e0c26a}
+/* ===== 选品分析助手 ===== */
+.pk-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+.pk-table th,.pk-table td{border:1px solid var(--line);padding:6px 7px;text-align:left;vertical-align:top}
+.pk-table th{background:#f4f6fa}
+.pk-score{border:1.5px solid var(--line);border-radius:12px;padding:12px;margin:10px 0;background:#fff}
+.pk-dim{display:flex;gap:8px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed var(--line)}
+.pk-dim:last-child{border-bottom:none}
+.pk-dim .pk-dn{flex:0 0 118px;font-weight:800;color:#14213d;font-size:14px}
+.pk-dim .pk-db{flex:1;font-size:13px;color:#444}
+.pk-bar{height:8px;background:#e8ecf3;border-radius:99px;overflow:hidden;margin-top:4px}
+.pk-bar i{display:block;height:100%;background:#f5b301}
+.pk-subnav{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.pk-fav{color:#f5a300;font-size:17px}
 </style>
 </head>
 <body>
@@ -234,18 +247,20 @@ section{padding-top:34px}
     <a href="#" data-tab="imgopt" class="tab">🖼 图片优化</a><a href="#" data-tab="video" class="tab">🎬 视频生成</a><a href="#" data-tab="coach" class="tab">🎓 教学陪跑</a>
     <a href="#" data-tab="bench" class="tab">📦 上架工作台</a>
     <a href="#" data-tab="profit" class="tab">🧮 利润计算器</a>
+<a href="#" data-tab="pick" onclick="return false">🎯 选品分析</a>
   </nav>
   <style>.nav a.tab.active{background:var(--navy);color:#fff;border-color:var(--navy)} @media print{section{display:block!important}}</style>
 
 
   <section id="sect-core">
-    <div class="sec-head"><span class="num">🧰</span><div><h2>五大核心工具（全部免费）</h2><p>本站所有工具都在浏览器本地运行，免费、无需注册。不会操作可以加微信咨询陪跑（微信号 czqshy888888）。</p></div></div>
+    <div class="sec-head"><span class="num">🧰</span><div><h2>六大核心工具（全部免费）</h2><p>本站所有工具都在浏览器本地运行，免费、无需注册。不会操作可以加微信咨询陪跑（微信号 czqshy888888）。</p></div></div>
     <div class="grid">
       <article class="card"><div class="term">🔍 侵权与合规风险检测</div><p style="font-size:14px;margin:8px 0">标题、描述、商品链接、商品图四种查法，37 条风险词库，中英西三语，带语境判断和风险报告。</p><button class="btn btn-light" data-goto="home" type="button">去检测</button></article>
       <article class="card"><div class="term">✍️ 标题优化</div><p style="font-size:14px;margin:8px 0">本地词典生成 ≤60 字符西语标题，自动过侵权词表，带结构检查和修改前后对比。</p><button class="btn btn-light" data-goto="title" type="button">去优化标题</button></article>
       <article class="card"><div class="term">🖼 图片优化</div><p style="font-size:14px;margin:8px 0">上传图本地实测（分辨率/比例/清晰度/白底），生成主图、卖点图、场景图的 Muse 提示词。</p><button class="btn btn-light" data-goto="imgopt" type="button">去优化图片</button></article>
       <article class="card"><div class="term">🎬 视频生成</div><p style="font-size:14px;margin:8px 0">7 种视频类型的脚本和分镜（西语旁白+中文对照），一键生成 Muse 视频提示词。</p><button class="btn btn-light" data-goto="video" type="button">去生成分镜</button></article>
       <article class="card"><div class="term">🧮 利润计算器</div><p style="font-size:14px;margin:8px 0">单件利润、利润率、盈亏平衡售价、目标利润售价和多售价对比，还能读取上架工作台的项目并把结果存回去。</p><button class="btn btn-light" data-goto="profit" type="button">去算利润</button></article>
+      <article class="card"><div class="term">🎯 选品分析</div><p style="font-size:14px;margin:8px 0">把你查到的市场、竞品、成本数据整理成候选清单，算利润、打评分、生成诊断和测试计划。</p><button class="btn btn-light" data-goto="pick" type="button">打开选品分析</button></article>
     </div>
   </section>
 
@@ -650,6 +665,107 @@ section{padding-top:34px}
       <div class="note" style="margin-top:12px">📌 以上为测算结果，不代表实际成交利润。实际利润还会受汇损、退货、促销折扣和平台政策变化影响。本工具不保证利润、销量或商品畅销。</div>
     </div>
   </section>
+  <section class="card" id="sect-pick">
+    <div class="sec-head"><span class="num">🎯</span><div><h2>美客多 AI 选品分析助手</h2><p>从市场研究、商品筛选、利润核算到风险诊断，帮助新手做出更理性的选品决策</p></div></div>
+    <div class="note">📌 <b>先说清：</b>本站不接任何外部数据接口，不会替你抓取大麦、蓝鲸、ERP 或美客多的数据，也不会编造销量和搜索量。这里是把<b>你自己查到的数据</b>整理好，用真实公式算利润、用可解释的规则评分，再生成能粘贴给 Muse 的诊断提示词。数据只存在当前浏览器（localStorage），不是云端同步，记得导出备份。</div>
+    <div class="pk-subnav">
+      <button class="btn btn-light" data-pkscroll="pkResearch" type="button">1 市场研究</button>
+      <button class="btn btn-light" data-pkscroll="pkListBox" type="button">2 候选商品</button>
+      <button class="btn btn-light" data-pkscroll="pkFilterBox" type="button">3 批量筛选</button>
+      <button class="btn btn-light" data-pkscroll="pkDiagBox" type="button">4 评分与 AI 诊断</button>
+      <button class="btn btn-light" data-pkscroll="pkCompBox" type="button">5 竞争分析</button>
+      <button class="btn btn-light" data-pkscroll="pkPlanBox" type="button">6 测试计划</button>
+      <button class="btn btn-light" data-pkscroll="pkIoBox" type="button">7 导入导出</button>
+    </div>
+
+    <h3 id="pkResearch" style="margin:16px 0 6px">1. 选品市场研究（先做计划，再找数据）</h3>
+    <div class="wb-grid">
+      <div class="wb-field"><label for="pk_r_cat">商品类目</label><input class="search" id="pk_r_cat" placeholder="例如：厨房收纳"></div>
+      <div class="wb-field"><label for="pk_r_kw">西班牙语关键词</label><input class="search" id="pk_r_kw" placeholder="例如：organizador de especias giratorio"></div>
+      <div class="wb-field"><label for="pk_r_price">目标售价（MXN）</label><input class="search" id="pk_r_price" inputmode="decimal" placeholder="例如：349"></div>
+      <div class="wb-field"><label for="pk_r_margin">目标利润率 %</label><input class="search" id="pk_r_margin" inputmode="decimal" placeholder="例如：20"></div>
+      <div class="wb-field"><label for="pk_r_type">商品类型</label><select class="search" id="pk_r_type"><option>标品</option><option>非标品</option><option>季节性商品</option><option>节日商品</option><option>不确定</option></select></div>
+      <div class="wb-field"><label for="pk_r_budget">计划测试预算（元）</label><input class="search" id="pk_r_budget" inputmode="decimal" placeholder="例如：3000"></div>
+    </div>
+    <div class="wb-toolbar"><button class="btn btn-yellow" id="pkResearchGen" type="button">生成市场研究任务清单</button><button class="btn btn-light" id="pkResearchCopy" type="button">复制清单</button></div>
+    <div id="pkResearchOut"></div>
+
+    <h3 id="pkListBox" style="margin:20px 0 6px">2. 候选商品管理</h3>
+    <div class="wb-field" style="max-width:340px"><label for="pk_rate">测算汇率：1 MXN = ? CNY（示例值，请按实际改）</label><input class="search" id="pk_rate" inputmode="decimal" value="0.385"></div>
+    <div class="wb-toolbar">
+      <button class="btn btn-yellow" id="pkNew" type="button">＋ 添加候选商品</button>
+      <button class="btn btn-light" id="pkViewToggle" type="button">切换卡片/表格</button>
+    </div>
+    <div class="wb-grid">
+      <div class="wb-field"><label for="pkSearch">搜索（名称/类目/关键词/编号）</label><input class="search" id="pkSearch" placeholder="输入关键词"></div>
+      <div class="wb-field"><label for="pkSort">排序</label><select class="search" id="pkSort"><option value="new">最新添加</option><option value="score">评分高→低</option><option value="margin">利润率高→低</option><option value="price">目标售价高→低</option><option value="reviews">评论数多→少</option></select></div>
+      <div class="wb-field"><label for="pkCatFilter">按类目筛选</label><input class="search" id="pkCatFilter" placeholder="类目关键词，可空"></div>
+      <div class="wb-field"><label for="pkFavFilter">收藏</label><select class="search" id="pkFavFilter"><option value="all">全部</option><option value="fav">只看收藏 ⭐</option></select></div>
+    </div>
+    <div id="pkList"></div>
+
+    <div id="pkEditor" style="display:none">
+      <h3 style="margin:16px 0 6px">编辑候选商品 <span class="wb-meta" id="pkCodeLine"></span></h3>
+      <p class="wb-meta">没有的数据就留空，页面会显示「未填写/待验证」，不要为了好看编数字。</p>
+      <div class="wb-grid" id="pkForm"></div>
+      <div class="wb-field"><label for="pkF_note">研究记录 / 供应商备注</label><textarea class="search" id="pkF_note" data-pkf="note" placeholder="例如：11/8 在美客多搜关键词，前 5 名评论都在 500+；1688 有 3 家供货，最低 42 元"></textarea></div>
+      <div class="wb-toolbar">
+        <button class="btn btn-yellow" id="pkSave" type="button">💾 保存商品</button>
+        <button class="btn btn-light" id="pkToBench" type="button">➕ 加入上架工作台</button>
+        <button class="btn btn-ghost" id="pkDelete" type="button">🗑 删除这个商品</button>
+      </div>
+    </div>
+
+    <h3 id="pkFilterBox" style="margin:20px 0 6px">3. 商品批量筛选（不符合的也会列出原因）</h3>
+    <div class="wb-grid">
+      <div class="wb-field"><label>目标售价范围 MXN（下限 - 上限）</label><div class="pf-row"><input class="search" id="pk_f_pmin" inputmode="decimal" placeholder="下限"><input class="search" id="pk_f_pmax" inputmode="decimal" placeholder="上限"></div></div>
+      <div class="wb-field"><label>采购成本范围 元（下限 - 上限）</label><div class="pf-row"><input class="search" id="pk_f_cmin" inputmode="decimal" placeholder="下限"><input class="search" id="pk_f_cmax" inputmode="decimal" placeholder="上限"></div></div>
+      <div class="wb-field"><label for="pk_f_margin">最低利润率 %</label><input class="search" id="pk_f_margin" inputmode="decimal" placeholder="例如：15"></div>
+      <div class="wb-field"><label for="pk_f_weight">最大重量 kg</label><input class="search" id="pk_f_weight" inputmode="decimal" placeholder="例如：2"></div>
+      <div class="wb-field"><label for="pk_f_ship">国际物流上限 元</label><input class="search" id="pk_f_ship" inputmode="decimal" placeholder="例如：40"></div>
+      <div class="wb-field"><label for="pk_f_reviews">最低评论数</label><input class="search" id="pk_f_reviews" inputmode="numeric" placeholder="例如：50"></div>
+      <div class="wb-field"><label for="pk_f_sales">最低销量数据</label><input class="search" id="pk_f_sales" inputmode="numeric" placeholder="例如：100"></div>
+      <div class="wb-field"><label for="pk_f_cat">类目包含</label><input class="search" id="pk_f_cat" placeholder="可空"></div>
+      <div class="wb-field"><label for="pk_f_risk">侵权风险</label><select class="search" id="pk_f_risk"><option value="all">不限</option><option value="clean">排除「有风险」</option></select></div>
+      <div class="wb-field"><label for="pk_f_supply">供应链优势</label><select class="search" id="pk_f_supply"><option value="all">不限</option><option value="yes">只看有优势</option></select></div>
+    </div>
+    <div class="wb-toolbar"><button class="btn btn-yellow" id="pkFilterRun" type="button">开始筛选</button></div>
+    <div id="pkFilterOut"></div>
+
+    <h3 id="pkDiagBox" style="margin:20px 0 6px">4. 选品评分与 AI 诊断（先在上方点选一个商品）</h3>
+    <div id="pkScoreOut"><div class="note">还没有选商品。在候选商品列表里点任意商品，这里会显示它的 100 分评分明细、数据完整度和本地诊断。</div></div>
+    <div class="wb-toolbar">
+      <button class="btn btn-yellow" id="pkDiagLocal" type="button">本地规则诊断</button>
+      <button class="btn btn-light" id="pkDiagCopy" type="button">📋 复制给 Muse 深度分析</button>
+    </div>
+    <div id="pkDiagOut"></div>
+
+    <h3 id="pkCompBox" style="margin:20px 0 6px">5. 竞争分析（竞品资料靠你贴进来，不贴就没有）</h3>
+    <div id="pkCompBoxBody"><div class="note">先在上方点选一个候选商品，再在这里添加它的竞品。</div></div>
+
+    <h3 id="pkPlanBox" style="margin:20px 0 6px">6. 商品测试计划（低成本试卖）</h3>
+    <div class="wb-grid">
+      <div class="wb-field"><label for="pk_t_qty">计划采购数量</label><input class="search" id="pk_t_qty" inputmode="numeric" placeholder="例如：50"></div>
+      <div class="wb-field"><label for="pk_t_budget">测试预算上限（元）</label><input class="search" id="pk_t_budget" inputmode="decimal" placeholder="例如：3000"></div>
+      <div class="wb-field"><label for="pk_t_ad">预计广告投入（元）</label><input class="search" id="pk_t_ad" inputmode="decimal" placeholder="例如：300"></div>
+    </div>
+    <p class="wb-meta">单件采购成本、物流、售价从当前选中的候选商品自动带入（先在上方点选商品）。</p>
+    <div class="wb-toolbar"><button class="btn btn-yellow" id="pkPlanGen" type="button">生成测试计划</button><button class="btn btn-light" id="pkPlanCopy" type="button">复制计划</button></div>
+    <div id="pkPlanOut"></div>
+
+    <h3 id="pkIoBox" style="margin:20px 0 6px">7. 数据导入导出（支持大麦/蓝鲸/ERP 导出的 CSV）</h3>
+    <div class="wb-toolbar">
+      <button class="btn btn-light" id="pkExportJson" type="button">⬇ 导出 JSON 备份</button>
+      <button class="btn btn-light" id="pkExportCsv" type="button">⬇ 导出 CSV</button>
+      <button class="btn btn-light" id="pkImportJsonBtn" type="button">⬆ 导入 JSON</button>
+      <input type="file" id="pkImportJsonFile" accept=".json,application/json" style="display:none">
+      <button class="btn btn-light" id="pkImportCsvBtn" type="button">⬆ 导入 CSV（带字段映射）</button>
+      <input type="file" id="pkImportCsvFile" accept=".csv,text/csv" style="display:none">
+    </div>
+    <div id="pkMapBox"></div>
+    <div class="note">导入说明：CSV 导入后会让你把外部列名对到本站字段（比如外部「标题」→ 商品名称），对不上的可以不导入。本站不会登录你的第三方账号、不需要任何平台密码、不抓取数据。</div>
+  </section>
+
 <script>
 var WORDS=[
  {t:"réplica / replica",cn:"复制品 / 仿品",risk:"high",cat:"brand",why:"等于自认卖假货，是 BPP 投诉与删除+处罚的直接事由。(B: Upseller、Nubimetrics)",alt:"只卖正品；无品牌通用品用自有品牌或无品牌，描述功能即可。",keys:["replica","réplica"],en:"replica / knockoff / counterfeit",enk:["replica", "knockoff", "knock off", "counterfeit", "dupe"],ck:["仿品", "复刻", "仿冒"]},
@@ -817,7 +933,7 @@ document.getElementById("checkBtn").addEventListener("click",runCheck);
 
 
 /* tabs */
-var TABMAP={home:["sect-core","sect-bench-entry","bpp","checker","sect-free"],title:["sect-title"],imgopt:["sect-img"],video:["sect-video"],coach:["sect-coach"],bench:["sect-bench"],profit:["sect-profit"]};
+var TABMAP={home:["sect-core","sect-bench-entry","bpp","checker","sect-free"],title:["sect-title"],imgopt:["sect-img"],video:["sect-video"],coach:["sect-coach"],bench:["sect-bench"],profit:["sect-profit"],pick:["sect-pick"]};
 function showTab(name){
   if(name==="desk"&&typeof renderDesk==="function")renderDesk();if(name==="bench"&&typeof wbRender==="function")wbRender();if(name==="profit"&&typeof pfRefreshProjects==="function")pfRefreshProjects();
   Object.keys(TABMAP).forEach(function(k){TABMAP[k].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=(k===name?"":"none");});});
@@ -1517,6 +1633,379 @@ p.profitCalc={time:pfLast.time,priceMxn:Math.round(r.R*100)/100,profitMxn:Math.r
 p.steps.s2="已完成";p.updated=wbNow();wbPut(p);
 showToast("已保存回工作台项目，第二步已标为已完成");pfRefreshProjects();});
 pfSavedRender();pfRefreshProjects();
+/* ===== AI 选品分析助手 ===== */
+var PK_KEY="mlr_candidates_v1";
+var PK_GROUPS=[
+{g:"基础信息",fields:[["name","商品名称 *","例如：20 罐旋转调料架"],["link","商品链接","美客多商品链接"],["cat","商品类目","例如：厨房收纳"],["img","商品图片链接","图片 URL"],["kw","商品关键词","西语关键词，逗号分隔"]]},
+{g:"美客多市场数据（自己查到多少填多少）",fields:[["price","当前售价 MXN","例如：349"],["sales","销量数据","例如：500（注明周期）"],["reviews","评论数量","例如：320"],["rating","商品评分","例如：4.6"],["listedAt","上架时间","例如：2025-08"],["shop","店铺名称","竞品店铺名"],["compCount","竞品数量","同关键词大约多少个商品"],["histPrice","历史价格","例如：399→349"],["histTrend","历史销量趋势","例如：近30天上升"]]},
+{g:"供应链数据",fields:[["srcLink","1688 商品链接",""],["cost","采购价格 CNY","例如：45"],["domShip","国内运输 CNY","例如：3"],["weight","商品重量","例如：1.2 kg"],["size","包装尺寸","例如：28×18×12 cm"],["intlShip","国际物流 CNY","例如：28"],["supplier","供应商信息","例如：1688 店铺名"],["moq","最低采购数量","例如：50"]]},
+{g:"经营数据",fields:[["tgtPrice","目标售价 MXN","例如：349"],["feePct","平台佣金 %","例如：15"],["adPct","广告成本 %","例如：8"],["shipMode","物流方式","例如：海运 / 空运 / Full"]]}
+];
+var PK_KEY_FIELDS=["name","cat","price","sales","reviews","rating","compCount","cost","intlShip","weight","tgtPrice","feePct","supplier","srcLink"];
+function pkBlank(){var t=wbNow();return {id:"c"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),code:"PK-"+t.slice(0,10).replace(/-/g,"")+"-"+Math.random().toString(36).slice(2,6).toUpperCase(),name:"",link:"",cat:"",img:"",kw:"",market:"墨西哥",price:"",sales:"",reviews:"",rating:"",listedAt:"",shop:"",compCount:"",histPrice:"",histTrend:"",srcLink:"",cost:"",domShip:"",weight:"",size:"",intlShip:"",supplier:"",moq:"",tgtPrice:"",feePct:"",adPct:"",shipMode:"",risk:"待验证",supplyAdv:"待验证",note:"",fav:false,comps:[],wbId:"",created:t,updated:t};}
+function pkLoad(){try{var v=JSON.parse(localStorage.getItem(PK_KEY)||"[]");return Array.isArray(v)?v:[];}catch(e){return[];}}
+function pkSaveAll(list){try{localStorage.setItem(PK_KEY,JSON.stringify(list));}catch(e){showToast("保存失败：浏览器存储不可用或已满");}}
+function pkGet(id){return pkLoad().filter(function(c){return c.id===id;})[0]||null;}
+function pkPut(c){var list=pkLoad();var i=-1;list.forEach(function(x,j){if(x.id===c.id)i=j;});if(i>=0)list[i]=c;else list.unshift(c);pkSaveAll(list);}
+function pkRate(){var v=parseFloat(document.getElementById("pk_rate").value);return v>0?v:0.385;}
+function pkCalcFor(c){
+var price=(c.tgtPrice||"").trim()||(c.price||"").trim();
+if(!price||!(c.cost||"").trim())return null;
+return pfCalc({price:price,priceCur:"MXN",qty:"1",rate:String(pkRate()),cost:c.cost,costCur:"CNY",cDom:c.domShip||"",cDomCur:"CNY",cIntl:c.intlShip||"",cIntlCur:"CNY",cPack:"",cPackCur:"CNY",cStore:"",cStoreCur:"CNY",cOther:"",cOtherCur:"CNY",feePct:c.feePct||"",feeFix:"",feeFixCur:"MXN",feeOther:"",feeOtherCur:"MXN",adMode:"A",adPct:c.adPct||"",adAmt:"",adAmtCur:"MXN",target:"",targetCur:"MXN",roasSales:"",roasSalesCur:"MXN",roasSpend:"",roasSpendCur:"MXN",extras:[],pricesMxn:[]});
+}
+function pkNumOf(v){var n=parseFloat(String(v||"").replace(/[^0-9.]/g,""));return isNaN(n)?null:n;}
+function pkWeightKg(c){var w=String(c.weight||"");var n=pkNumOf(w);if(n===null)return null;if(/克|g(?!a)/i.test(w)&&n>20)return n/1000;return n;}
+function pkScore(c){
+var calc=pkCalcFor(c);var dims=[];
+// 利润空间 25
+if(!calc||calc.error)dims.push({n:"利润空间",max:25,score:null,basis:"缺售价或采购成本，无法测算利润。",rule:"利润率 ≥30%→25 · ≥20%→20 · ≥10%→14 · ≥0%→7 · <0%→0"});
+else{var mg=calc.main.margin;var s=mg>=30?25:mg>=20?20:mg>=10?14:mg>=0?7:0;
+dims.push({n:"利润空间",max:25,score:s,basis:"利润率 "+mg.toFixed(1)+"%、单件利润 "+calc.main.profit.toFixed(2)+" MXN（利润计算器同口径测算，汇率 "+pkRate()+")",rule:"利润率 ≥30%→25 · ≥20%→20 · ≥10%→14 · ≥0%→7 · <0%→0"});}
+// 市场需求证据 20
+var sv=pkNumOf(c.sales),rv=pkNumOf(c.reviews),rt=pkNumOf(c.rating),ht=(c.histTrend||"").trim();
+if(sv===null&&rv===null&&rt===null&&!ht)dims.push({n:"市场需求证据",max:20,score:null,basis:"销量、评论、评分、趋势一个都没填，没有任何需求证据。",rule:"销量 8 + 评论 6 + 评分 3 + 趋势 3，按已填数据给分"});
+else{var ds=0,db=[];
+if(sv!==null){ds+=sv>=500?8:sv>=100?6:sv>=10?4:2;db.push("销量 "+c.sales+" → 占 8 分项");}else db.push("销量未填（扣 8 分项）");
+if(rv!==null){ds+=rv>=200?6:rv>=50?4:rv>=10?2:1;db.push("评论 "+c.reviews);}else db.push("评论未填（扣 6 分项）");
+if(rt!==null){ds+=rt>=4.5?3:rt>=4?2:1;db.push("评分 "+c.rating);}else db.push("评分未填（扣 3 分项）");
+if(ht){ds+=3;db.push("趋势已记录");}else db.push("趋势未填（扣 3 分项）");
+dims.push({n:"市场需求证据",max:20,score:ds,basis:db.join("；"),rule:"销量 8 + 评论 6 + 评分 3 + 趋势 3（均为用户录入数据，本站不验证真伪）"});}
+// 竞争程度 15
+var cc=pkNumOf(c.compCount);
+if(cc===null)dims.push({n:"竞争程度",max:15,score:null,basis:"竞品数量未填，无法判断竞争。",rule:"竞品 ≤20→15 · ≤50→11 · ≤100→7 · >100→3"});
+else dims.push({n:"竞争程度",max:15,score:cc<=20?15:cc<=50?11:cc<=100?7:3,basis:"竞品数量约 "+cc+"（用户录入）",rule:"竞品 ≤20→15 · ≤50→11 · ≤100→7 · >100→3"});
+// 物流特性 15
+var wkg=pkWeightKg(c),intl=pkNumOf(c.intlShip),cost=pkNumOf(c.cost);
+if(wkg===null&&intl===null)dims.push({n:"物流和商品特性",max:15,score:null,basis:"重量和国际物流都没填。",rule:"重量 6 + 物流占比 5 + 尺寸已填 4"});
+else{var ls=0,lb=[];
+if(wkg!==null){ls+=wkg<=0.5?6:wkg<=1?5:wkg<=2?3:1;lb.push("重量约 "+wkg+" kg");}else lb.push("重量未填（扣 6）");
+if(intl!==null&&cost!==null&&(cost+intl)>0){var ratio=intl/(cost+intl);ls+=ratio<=0.35?5:ratio<=0.55?3:1;lb.push("物流占成本比 "+Math.round(ratio*100)+"%");}else lb.push("物流占比算不出（扣 5）");
+if((c.size||"").trim()){ls+=4;lb.push("尺寸已填");}else lb.push("尺寸未填（扣 4）");
+dims.push({n:"物流和商品特性",max:15,score:Math.min(15,ls),basis:lb.join("；"),rule:"重量 6 + 物流占比 5 + 尺寸已填 4（重量按 kg 解析估算）"});}
+// 供应链 10
+var moq=pkNumOf(c.moq);
+if(!(c.supplier||"").trim()&&!(c.srcLink||"").trim()&&moq===null&&c.supplyAdv==="待验证")dims.push({n:"供应链稳定性",max:10,score:null,basis:"供应商、货源链接、起订量都没填。",rule:"供应商 3 + 货源链接 2 + 起订量 3 + 优势自评 2"});
+else{var ss=0,sb=[];
+if((c.supplier||"").trim()){ss+=3;sb.push("供应商已记录");}else sb.push("供应商未填（扣 3）");
+if((c.srcLink||"").trim()){ss+=2;sb.push("有 1688 链接");}else sb.push("无货源链接（扣 2）");
+if(moq!==null){ss+=moq<=50?3:moq<=200?2:1;sb.push("起订量 "+c.moq);}else sb.push("起订量未填（扣 3）");
+if(c.supplyAdv==="有"){ss+=2;sb.push("自评有供应链优势");}else sb.push("供应链优势："+c.supplyAdv+"（不加分）");
+dims.push({n:"供应链稳定性",max:10,score:ss,basis:sb.join("；"),rule:"供应商 3 + 货源链接 2 + 起订量 3 + 优势自评 2"});}
+// 合规风险 15
+var base=c.risk==="无"?15:c.risk==="有"?0:7;
+var scanText=((c.name||"")+" "+(c.kw||""));
+var wordHits=(typeof findRawHits==="function")?findRawHits(scanText):[];
+var hasHigh=wordHits.some(function(h){return WORDS[h.idx]&&WORDS[h.idx].risk==="high";});
+var hasMed=wordHits.some(function(h){return WORDS[h.idx]&&WORDS[h.idx].risk==="med";});
+var cb="风险自评："+c.risk+" → 基础 "+base+" 分";
+if(hasHigh){base=Math.min(base,3);cb+="；名称/关键词命中高风险侵权词，封顶 3 分";}
+else if(hasMed){base=Math.min(base,10);cb+="；名称/关键词命中中风险词，封顶 10 分";}
+dims.push({n:"合规与侵权风险",max:15,score:base,basis:cb,rule:"自评 无→15 · 待验证→7 · 有→0；命中侵权词库另行封顶"});
+var earned=0,possible=0;
+dims.forEach(function(d){if(d.score!==null){earned+=d.score;possible+=d.max;}});
+var filled=PK_KEY_FIELDS.filter(function(k){return (c[k]||"").toString().trim();}).length;
+var compPct=Math.round(filled/PK_KEY_FIELDS.length*100);
+  return {dims:dims,earned:earned,possible:possible,scaled:(possible&&compPct>=20)?Math.round(earned/possible*100):null,completeness:compPct,calc:calc};
+}
+var pkSel=null,pkView="card";
+function pkRenderList(){
+var list=pkLoad();
+var q=(document.getElementById("pkSearch").value||"").trim().toLowerCase();
+var cf=(document.getElementById("pkCatFilter").value||"").trim().toLowerCase();
+var favOnly=document.getElementById("pkFavFilter").value==="fav";
+var sort=document.getElementById("pkSort").value;
+var rows=list.filter(function(c){
+if(favOnly&&!c.fav)return false;
+if(cf&&(c.cat||"").toLowerCase().indexOf(cf)===-1)return false;
+if(q){var hay=((c.name||"")+" "+(c.cat||"")+" "+(c.kw||"")+" "+(c.code||"")).toLowerCase();if(hay.indexOf(q)===-1)return false;}
+return true;}).map(function(c){return {c:c,sc:pkScore(c)};});
+rows.sort(function(a,b){
+if(sort==="score")return (b.sc.scaled||-1)-(a.sc.scaled||-1);
+if(sort==="margin")return ((b.sc.calc&&b.sc.calc.main.margin)||-999)-((a.sc.calc&&a.sc.calc.main.margin)||-999);
+if(sort==="price")return (pkNumOf(b.c.tgtPrice||b.c.price)||0)-(pkNumOf(a.c.tgtPrice||a.c.price)||0);
+if(sort==="reviews")return (pkNumOf(b.c.reviews)||0)-(pkNumOf(a.c.reviews)||0);
+return 0;});
+var box=document.getElementById("pkList");
+if(!list.length){box.innerHTML='<div class="note">还没有候选商品。点「＋ 添加候选商品」，把你在美客多、1688、大麦等地方看到的商品先记下来——数据靠你录入，本站不自动抓取。</div>';return;}
+if(!rows.length){box.innerHTML='<div class="note">没有符合当前搜索/筛选的商品。</div>';return;}
+if(pkView==="table"){
+var th='<table class="pk-table"><tr><th>商品</th><th>类目</th><th>目标售价</th><th>采购成本</th><th>利润率</th><th>评分(折算)</th><th>完整度</th><th>操作</th></tr>';
+rows.forEach(function(r){var c=r.c,sc=r.sc;
+th+='<tr><td>'+(c.fav?'<span class="pk-fav">⭐</span> ':"")+'<b>'+wbEsc(c.name||"未命名")+'</b><br><span class="wb-meta">'+c.code+'</span></td><td>'+wbEsc(c.cat||"未填写")+'</td><td>'+wbEsc(c.tgtPrice||c.price||"未填写")+' MXN</td><td>'+wbEsc(c.cost||"未填写")+' 元</td><td>'+(sc.calc&&!sc.calc.error?sc.calc.main.margin.toFixed(1)+" %":"待验证")+'</td><td>'+(sc.scaled===null?"数据不足":sc.scaled+" 分")+'</td><td>'+sc.completeness+'%</td><td><button class="btn btn-light" type="button" data-pkopen="'+c.id+'">选它</button></td></tr>';});
+box.innerHTML=th+'</table>';return;}
+box.innerHTML=rows.map(function(r){var c=r.c,sc=r.sc;
+return '<div class="wb-item'+(c.id===pkSel?" sel":"")+'" style="cursor:default"><b>'+wbEsc(c.name||"未命名商品")+'</b> <button class="btn btn-ghost" type="button" data-pkfav="'+c.id+'" title="收藏">'+(c.fav?'<span class="pk-fav">⭐</span>':'☆')+'</button> <span class="wb-chip '+(c.risk==="有"?"":(sc.scaled!==null&&sc.scaled>=60?"done":"doing"))+'">'+(sc.scaled===null?"数据不足":"评分 "+sc.scaled)+'</span><div class="wb-meta">编号 '+c.code+' · 类目 '+(wbEsc(c.cat)||"未填写")+' · 目标售价 '+(wbEsc(c.tgtPrice||c.price)||"未填写")+' MXN · 采购 '+(wbEsc(c.cost)||"未填写")+' 元 · 利润率 '+(sc.calc&&!sc.calc.error?sc.calc.main.margin.toFixed(1)+" %":"待验证")+' · 数据完整度 '+sc.completeness+'%</div><div class="wb-bar"><i style="width:'+(sc.scaled||0)+'%"></i></div><div class="wb-toolbar" style="margin:8px 0 0"><button class="btn btn-light" type="button" data-pkopen="'+c.id+'">选中并编辑/诊断</button></div></div>';}).join("");
+}
+function pkFormHTML(){
+var h="";
+PK_GROUPS.forEach(function(g){
+h+='<div class="wb-field" style="grid-column:1/-1"><b style="color:#14213d">'+g.g+'</b></div>';
+g.fields.forEach(function(f){
+h+='<div class="wb-field"><label>'+f[1]+'</label><input class="search" data-pkf="'+f[0]+'" placeholder="'+f[2]+'"></div>';});
+});
+h+='<div class="wb-field"><label>侵权风险（自评）</label><select class="search" data-pkf="risk"><option>待验证</option><option>无</option><option>有</option></select></div>';
+h+='<div class="wb-field"><label>供应链优势（自评）</label><select class="search" data-pkf="supplyAdv"><option>待验证</option><option>有</option><option>无</option></select></div>';
+return h;
+}
+function pkOpen(id){
+pkSel=id;var c=pkGet(id);var ed=document.getElementById("pkEditor");
+if(!c){ed.style.display="none";pkRenderScore();return;}
+ed.style.display="block";
+document.getElementById("pkCodeLine").textContent="· 编号 "+c.code+" · 创建 "+c.created+" · 修改 "+c.updated;
+document.querySelectorAll("[data-pkf]").forEach(function(el){el.value=c[el.dataset.pkf]||"";});
+document.getElementById("pkF_note").value=c.note||"";
+pkRenderList();pkRenderScore();pkRenderComp();
+}
+function pkReadForm(c){
+document.querySelectorAll("[data-pkf]").forEach(function(el){c[el.dataset.pkf]=el.value;});
+c.note=document.getElementById("pkF_note").value;c.updated=wbNow();return c;
+}
+function pkRenderScore(){
+var box=document.getElementById("pkScoreOut");
+var c=pkSel?pkGet(pkSel):null;
+if(!c){box.innerHTML='<div class="note">还没有选商品。在候选商品列表里点任意商品，这里会显示它的 100 分评分明细、数据完整度和本地诊断。</div>';return;}
+var sc=pkScore(c);
+var h='<div class="pk-score"><b style="font-size:17px">'+wbEsc(c.name||"未命名商品")+'</b> · 折算评分 <b style="font-size:20px;color:#14213d">'+(sc.scaled===null?"数据不足":sc.scaled+" 分")+'</b>（已评维度 '+sc.earned+' / '+sc.possible+' 分）· 数据完整度 <b>'+sc.completeness+'%</b>'
++'<p class="wb-meta" style="margin:6px 0 0">这是启发式参考分，不是预测模型：分数不预测销量、不保证赚钱。缺数据的维度不给分也不扣成零分，而是标「数据不足」并从折算里剔除。</p>';
+sc.dims.forEach(function(d){
+h+='<div class="pk-dim"><div class="pk-dn">'+d.n+'<br><span style="font-size:15px">'+(d.score===null?"数据不足":d.score+" / "+d.max)+'</span>'+(d.score!==null?'<div class="pk-bar"><i style="width:'+Math.round(d.score/d.max*100)+'%"></i></div>':"")+'</div><div class="pk-db"><b>依据：</b>'+wbEsc(d.basis)+'<br><b>规则：</b>'+wbEsc(d.rule)+'<br><b>数据来源：</b>用户录入 / 利润测算</div></div>';});
+if(sc.calc&&!sc.calc.error)h+='<p style="font-size:14px;margin:8px 0 0">利润测算（与利润计算器同口径）：单件利润 <b>'+sc.calc.main.profit.toFixed(2)+' MXN</b> · 利润率 '+sc.calc.main.margin.toFixed(1)+'% · ROI '+(sc.calc.main.roi===null?"—":sc.calc.main.roi.toFixed(1)+'%')+' · 盈亏平衡 '+sc.calc.be.toFixed(2)+' MXN</p>';
+else h+='<p style="font-size:14px;margin:8px 0 0;color:#b3261e">利润测算：数据不足（需要目标售价/当前售价 + 采购成本）。</p>';
+h+='</div>';
+box.innerHTML=h;
+}
+function pkDiagText(c){
+var sc=pkScore(c);var lines=[];
+lines.push(""+(c.name||"未命名商品")+"（"+c.code+"）");
+if(!sc.calc||sc.calc.error)lines.push("· 利润风险：数据不足，无法测算利润（缺售价或采购成本），先补这两项再谈选品。");
+else if(sc.calc.main.profit<0)lines.push("· 利润风险：高。按当前数据单件预计亏损 "+Math.abs(sc.calc.main.profit).toFixed(2)+" MXN，要么降成本要么提售价，否则淘汰。");
+else if(sc.calc.main.margin<10)lines.push("· 利润风险：中。利润率只有 "+sc.calc.main.margin.toFixed(1)+"%，广告和退货稍一波动就可能亏。");
+else lines.push("· 利润情况：单件利润 "+sc.calc.main.profit.toFixed(2)+" MXN，利润率 "+sc.calc.main.margin.toFixed(1)+"%，盈亏平衡售价 "+sc.calc.be.toFixed(2)+" MXN。");
+lines.push("· 数据完整度："+sc.completeness+"%。" +(sc.completeness<60?"缺得比较多，评分只能当参考，先补销量、评论、竞品数、物流这几项。":"基本够做初步判断。"));
+var wordHits=(typeof findRawHits==="function")?findRawHits((c.name||"")+" "+(c.kw||"")):[];
+if(c.risk==="有")lines.push("· 合规风险：你自评为「有侵权风险」，建议先用检测器逐词核对，或直接换品。");
+else if(wordHits.length)lines.push("· 合规提醒：名称/关键词命中风险词 "+wordHits.length+" 处（"+wordHits.slice(0,3).map(function(x){return WORDS[x.idx].t;}).join("、")+"…），请到「侵权与合规风险检测器」详细查。");
+else lines.push("· 合规提醒：名称/关键词未命中现有词库（不等于无风险，图片和货源授权仍需人工核对）；自评状态："+c.risk+"。");
+if(sc.scaled===null)lines.push("· 评分：数据不足，暂不给折算分。");
+else{var sug=sc.scaled>=70&&sc.completeness>=60?"建议小批量测试（先看测试计划）":sc.scaled>=50?"建议进一步调查 / 建议询价":(c.risk==="有"?"建议淘汰":"建议暂缓");
+lines.push("· 折算评分 "+sc.scaled+" 分 → 本地下一步建议（仅供参考）："+sug+"。");}
+lines.push("· 说明：以上是本地规则按你录入的数据生成的，不调用 AI、不预测销量。想要深度分析，点「复制给 Muse 深度分析」。");
+return lines.join("\n");
+}
+function pkPrompt(c){
+var sc=pkScore(c);var calc=sc.calc;
+function v(x){return (x===undefined||x===null||String(x).trim()==="")?"未填写":x;}
+var compTxt=(c.comps&&c.comps.length)?c.comps.map(function(x,i){return "竞品"+(i+1)+"："+v(x.name)+"｜售价 "+v(x.price)+" MXN｜销量 "+v(x.sales)+"｜评论 "+v(x.reviews)+"｜评分 "+v(x.rating)+"｜特点 "+v(x.feat)+"｜卖家 "+v(x.shop);}).join("\n"):"未填写（没有竞品资料，不要虚构）";
+return "你是一名美客多（Mercado Libre）墨西哥站选品分析师。请基于我提供的真实数据做选品诊断。数据里没写的不要编造，缺失项请明确指出。\n\n"
++"\n名称："+v(c.name)+"\n类目："+v(c.cat)+"\n链接："+v(c.link)+"\n关键词："+v(c.kw)+"\n目标市场：墨西哥\n\n"
++"\n当前售价："+v(c.price)+" MXN\n销量数据："+v(c.sales)+"\n评论数："+v(c.reviews)+"\n评分："+v(c.rating)+"\n上架时间："+v(c.listedAt)+"\n竞品数量："+v(c.compCount)+"\n历史价格："+v(c.histPrice)+"\n历史趋势："+v(c.histTrend)+"\n\n"
++"\n"+compTxt+"\n\n"
++"\n采购价："+v(c.cost)+" CNY\n国内运费："+v(c.domShip)+" CNY\n国际物流："+v(c.intlShip)+" CNY\n重量："+v(c.weight)+"\n尺寸："+v(c.size)+"\n供应商："+v(c.supplier)+"\n起订量："+v(c.moq)+"\n1688 链接："+v(c.srcLink)+"\n\n"
++"\n"+(calc&&!calc.error?("目标售价 "+calc.R+" MXN｜单件利润 "+calc.main.profit.toFixed(2)+" MXN｜利润率 "+calc.main.margin.toFixed(1)+"%｜ROI "+(calc.main.roi===null?"—":calc.main.roi.toFixed(1)+"%")+"｜盈亏平衡 "+calc.be.toFixed(2)+" MXN"):"数据不足，无法测算")+"\n平台佣金："+v(c.feePct)+"%\n广告成本："+v(c.adPct)+"%\n\n"
++"\n数据完整度："+sc.completeness+"%\n评分（折算）："+(sc.scaled===null?"数据不足":sc.scaled+" 分")+"\n侵权风险自评："+c.risk+"\n研究记录："+v(c.note)+"\n\n"
++"请严格按以下 11 部分输出：1 商品概况；2 市场需求证据；3 竞争情况；4 利润与成本分析；5 供应链风险；6 合规与侵权风险；7 商品差异化建议；8 主要风险；9 数据不足之处；10 建议下一步行动；11 是否建议继续测试及其依据。最后结论只能从这五个里选一个：建议进一步调查 / 建议询价 / 建议小批量测试 / 建议暂缓 / 建议淘汰。不要输出「保证爆款」「保证赚钱」之类的话，不要编造销量、搜索量或平台政策。";
+}
+function pkRenderComp(){
+var box=document.getElementById("pkCompBoxBody");
+var c=pkSel?pkGet(pkSel):null;
+if(!c){box.innerHTML='<div class="note">先在上方点选一个候选商品，再在这里添加它的竞品。</div>';return;}
+c.comps=c.comps||[];
+var h='<p style="font-size:14.5px">当前商品：<b>'+wbEsc(c.name||"未命名")+'</b>（目标售价 '+(wbEsc(c.tgtPrice||c.price)||"未填写")+' MXN）</p>';
+if(c.comps.length){
+h+='<table class="pk-table"><tr><th>竞品</th><th>售价 MXN</th><th>销量</th><th>评论</th><th>评分</th><th>特点</th><th>卖家</th><th></th></tr>';
+c.comps.forEach(function(x,i){h+='<tr><td>'+wbEsc(x.name||"竞品"+(i+1))+'</td><td>'+wbEsc(x.price||"未填")+'</td><td>'+wbEsc(x.sales||"未填")+'</td><td>'+wbEsc(x.reviews||"未填")+'</td><td>'+wbEsc(x.rating||"未填")+'</td><td>'+wbEsc(x.feat||"")+'</td><td>'+wbEsc(x.shop||"")+'</td><td><button class="btn btn-ghost" type="button" data-pkcompdel="'+i+'">删</button></td></tr>';});
+h+='</table>';
+var prices=c.comps.map(function(x){return pkNumOf(x.price);}).filter(function(x){return x!==null;});
+if(prices.length){var avg=prices.reduce(function(a,b){return a+b;},0)/prices.length;var tp=pkNumOf(c.tgtPrice||c.price);
+h+='<div class="note" style="margin-top:8px">价格竞争：竞品价最低 '+Math.min.apply(null,prices)+'、最高 '+Math.max.apply(null,prices)+'、平均 '+avg.toFixed(2)+' MXN'+(tp!==null?("；你的目标售价 "+tp+" MXN，"+(tp<avg?"低于平均价，走性价比路线要注意利润":"高于平均价，需要差异化卖点支撑")):"")+'。评论门槛：竞品评论最多 '+(Math.max.apply(null,c.comps.map(function(x){return pkNumOf(x.reviews)||0;})))+' 条，新品冷启动要预留评价积累时间。差异化只能从你填的竞品特点里找，特点没填就先去竞品页看图和差评。</div>';}
+} else h+='<div class="note">还没有竞品。去美客多搜这个商品的关键词，把前 3-5 名的链接、售价、评论填进来，竞争分析才有依据。</div>';
+h+='<div class="wb-grid" style="margin-top:10px">'
++'<div class="wb-field"><label>竞品名称/链接</label><input class="search" id="pk_cp_name" placeholder="名称或链接"></div>'
++'<div class="wb-field"><label>竞品售价 MXN</label><input class="search" id="pk_cp_price" inputmode="decimal"></div>'
++'<div class="wb-field"><label>竞品销量</label><input class="search" id="pk_cp_sales"></div>'
++'<div class="wb-field"><label>竞品评论数</label><input class="search" id="pk_cp_reviews" inputmode="numeric"></div>'
++'<div class="wb-field"><label>竞品评分</label><input class="search" id="pk_cp_rating" inputmode="decimal"></div>'
++'<div class="wb-field"><label>竞品特点/卖点</label><input class="search" id="pk_cp_feat" placeholder="例如：带夜灯、差评说易碎"></div>'
++'<div class="wb-field"><label>竞品卖家</label><input class="search" id="pk_cp_shop"></div></div>'
++'<div class="wb-toolbar"><button class="btn btn-light" id="pkCompAdd" type="button">＋ 添加这个竞品</button></div>';
+box.innerHTML=h;
+document.getElementById("pkCompAdd").addEventListener("click",function(){
+var cc=pkGet(pkSel);if(!cc)return;cc.comps=cc.comps||[];
+cc.comps.push({name:pkNum("pk_cp_name"),price:pkNum("pk_cp_price"),sales:pkNum("pk_cp_sales"),reviews:pkNum("pk_cp_reviews"),rating:pkNum("pk_cp_rating"),feat:pkNum("pk_cp_feat"),shop:pkNum("pk_cp_shop")});
+cc.updated=wbNow();pkPut(cc);pkRenderComp();showToast("已添加竞品");});
+}
+function pkNum(id){var el=document.getElementById(id);return el?el.value.trim():"";}
+var pkLastPlan="",pkLastResearch="";
+document.getElementById("pkForm").innerHTML=pkFormHTML();
+document.getElementById("pkNew").addEventListener("click",function(){
+var list=pkLoad();
+var empty=list.filter(function(c){return!c.name;})[0];
+if(empty){pkOpen(empty.id);showToast("已有一个空白候选，先填它，避免重复");return;}
+var c=pkBlank();list.unshift(c);pkSaveAll(list);pkOpen(c.id);showToast("已新建候选商品，填好点保存");});
+document.getElementById("pkSave").addEventListener("click",function(){
+var c=pkSel?pkGet(pkSel):null;if(!c)return;
+pkReadForm(c);pkPut(c);pkRenderList();pkRenderScore();pkRenderComp();showToast("已保存（存在本机浏览器）");});
+document.getElementById("pkDelete").addEventListener("click",function(){
+var c=pkSel?pkGet(pkSel):null;if(!c)return;
+if(!confirm("确定删除候选商品「"+(c.name||"未命名")+"」（"+c.code+"）吗？删除后无法恢复，建议先导出 JSON 备份。"))return;
+pkSaveAll(pkLoad().filter(function(x){return x.id!==c.id;}));pkSel=null;document.getElementById("pkEditor").style.display="none";pkRenderList();pkRenderScore();pkRenderComp();showToast("已删除");});
+document.getElementById("pkList").addEventListener("click",function(e){
+var op=e.target.closest("[data-pkopen]");var fv=e.target.closest("[data-pkfav]");
+if(fv){var c=pkGet(fv.dataset.pkfav);if(c){c.fav=!c.fav;c.updated=wbNow();pkPut(c);pkRenderList();}return;}
+if(op)pkOpen(op.dataset.pkopen);});
+document.getElementById("pkSearch").addEventListener("input",pkRenderList);
+document.getElementById("pkCatFilter").addEventListener("input",pkRenderList);
+document.getElementById("pkSort").addEventListener("change",pkRenderList);
+document.getElementById("pkFavFilter").addEventListener("change",pkRenderList);
+document.getElementById("pk_rate").addEventListener("input",function(){pkRenderList();if(pkSel)pkRenderScore();});
+document.getElementById("pkViewToggle").addEventListener("click",function(){pkView=pkView==="card"?"table":"card";pkRenderList();});
+document.querySelectorAll("[data-pkscroll]").forEach(function(b){b.addEventListener("click",function(){var t=document.getElementById(b.dataset.pkscroll);if(t)t.scrollIntoView({behavior:"smooth"});});});
+document.getElementById("pkResearchGen").addEventListener("click",function(){
+var cat=pkNum("pk_r_cat")||"（未填类目）",kw=pkNum("pk_r_kw"),price=pkNum("pk_r_price"),margin=pkNum("pk_r_margin"),type=document.getElementById("pk_r_type").value,budget=pkNum("pk_r_budget");
+var lines=[];
+lines.push("类目："+cat+"｜类型："+type+(budget?"｜测试预算："+budget+" 元":""));
+lines.push("⚠️ 当前为市场研究计划，尚未获取真实市场数据。以下都是要你去查的任务，不是结论。");
+lines.push("1. 关键词调查：主关键词「"+(kw||"待补西语关键词")+"」，再扩展 3-5 个同义词/长尾词，逐个在美客多墨西哥站搜索，记录每个词的结果数量和前 10 名商品。");
+lines.push("2. 竞品研究：每个关键词挑前 3-5 名，记录售价、销量、评论数、评分、上架时间、店铺名，填进本页的候选商品和竞争分析。");
+lines.push("3. 需求验证：看头部商品评论数和近期评价增速、问答区有没有人问；没有销量和评论证据，就不要下「需求大」的结论。");
+lines.push("4. 竞争维度：价格带分布、评论门槛、图片和卖点差异、是否有品牌垄断、是否季节性（"+type+"）。");
+lines.push("5. 利润预筛：目标售价 "+(price||"待定")+" MXN、目标利润率 "+(margin||"待定")+"%，用候选商品的采购价在利润计算器里先算一遍，算不过账的直接淘汰。");
+lines.push("6. 需要补充的数据：竞品销量与评论、类目竞品总数、1688 采购价与起订量、国际物流报价、类目合规要求。");
+pkLastResearch=lines.join("\n");
+document.getElementById("pkResearchOut").innerHTML='<div class="note" style="white-space:pre-wrap">'+wbEsc(pkLastResearch)+'</div>';});
+document.getElementById("pkResearchCopy").addEventListener("click",function(){if(!pkLastResearch){showToast("先生成清单再复制");return;}wbCopy(pkLastResearch);});
+document.getElementById("pkFilterRun").addEventListener("click",function(){
+function gv(id){return pkNum(id);}
+var f={pmin:pkNumOf(gv("pk_f_pmin")),pmax:pkNumOf(gv("pk_f_pmax")),cmin:pkNumOf(gv("pk_f_cmin")),cmax:pkNumOf(gv("pk_f_cmax")),margin:pkNumOf(gv("pk_f_margin")),weight:pkNumOf(gv("pk_f_weight")),ship:pkNumOf(gv("pk_f_ship")),reviews:pkNumOf(gv("pk_f_reviews")),sales:pkNumOf(gv("pk_f_sales")),cat:gv("pk_f_cat").toLowerCase(),risk:document.getElementById("pk_f_risk").value,supply:document.getElementById("pk_f_supply").value};
+var pass=[],fail=[];
+pkLoad().forEach(function(c){
+var why=[];var calc=pkCalcFor(c);
+var tp=pkNumOf(c.tgtPrice||c.price);
+if(f.pmin!==null&&(tp===null||tp<f.pmin))why.push("目标售价 "+(tp===null?"未填":tp)+" 低于下限 "+f.pmin);
+if(f.pmax!==null&&(tp===null||tp>f.pmax))why.push("目标售价 "+(tp===null?"未填":tp)+" 高于上限 "+f.pmax);
+var co=pkNumOf(c.cost);
+if(f.cmin!==null&&(co===null||co<f.cmin))why.push("采购成本 "+(co===null?"未填":co)+" 低于下限 "+f.cmin);
+if(f.cmax!==null&&(co===null||co>f.cmax))why.push("采购成本 "+(co===null?"未填":co)+" 高于上限 "+f.cmax);
+if(f.margin!==null){if(!calc||calc.error)why.push("利润率算不出（缺售价/成本），无法验证 ≥"+f.margin+"%");else if(calc.main.margin<f.margin)why.push("利润率 "+calc.main.margin.toFixed(1)+"% < "+f.margin+"%");}
+if(f.weight!==null){var w=pkWeightKg(c);if(w===null||w>f.weight)why.push("重量 "+(w===null?"未填":w+" kg")+" 超过上限 "+f.weight+" kg");}
+if(f.ship!==null){var sh=pkNumOf(c.intlShip);if(sh===null||sh>f.ship)why.push("国际物流 "+(sh===null?"未填":sh)+" 超过上限 "+f.ship);}
+if(f.reviews!==null){var rv=pkNumOf(c.reviews);if(rv===null||rv<f.reviews)why.push("评论数 "+(rv===null?"未填":rv)+" 低于 "+f.reviews);}
+if(f.sales!==null){var sl=pkNumOf(c.sales);if(sl===null||sl<f.sales)why.push("销量 "+(sl===null?"未填":sl)+" 低于 "+f.sales);}
+if(f.cat&&(c.cat||"").toLowerCase().indexOf(f.cat)===-1)why.push("类目不包含「"+f.cat+"」");
+if(f.risk==="clean"&&c.risk==="有")why.push("自评有侵权风险");
+if(f.supply==="yes"&&c.supplyAdv!=="有")why.push("无供应链优势（当前："+c.supplyAdv+"）");
+(why.length?fail:pass).push({c:c,why:why,calc:calc});});
+var h='<div class="note">筛选完成：符合 <b>'+pass.length+'</b> 个，不符合 <b>'+fail.length+'</b> 个。不符合原因逐条列在下面，数据未填也会算不符合（先补数据再判断）。</div>';
+pass.forEach(function(r){h+='<div class="wb-item" style="cursor:default"><b>✅ '+wbEsc(r.c.name||"未命名")+'</b><div class="wb-meta">'+r.c.code+' · 利润率 '+(r.calc&&!r.calc.error?r.calc.main.margin.toFixed(1)+" %":"待验证")+'</div></div>';});
+fail.forEach(function(r){h+='<div class="wb-item" style="cursor:default"><b>❌ '+wbEsc(r.c.name||"未命名")+'</b><div class="wb-meta">'+r.c.code+'</div><div style="font-size:13px;color:#b3261e">'+r.why.map(wbEsc).join("；")+'</div></div>';});
+document.getElementById("pkFilterOut").innerHTML=h;});
+document.getElementById("pkDiagLocal").addEventListener("click",function(){
+var c=pkSel?pkGet(pkSel):null;
+if(!c){showToast("先在上方点选一个候选商品");return;}
+document.getElementById("pkDiagOut").innerHTML='<div class="note" style="white-space:pre-wrap">'+wbEsc(pkDiagText(c))+'</div>';});
+document.getElementById("pkDiagCopy").addEventListener("click",function(){
+var c=pkSel?pkGet(pkSel):null;
+if(!c){showToast("先在上方点选一个候选商品");return;}
+wbCopy(pkPrompt(c));});
+document.getElementById("pkCompBoxBody").addEventListener("click",function(e){
+var d=e.target.closest("[data-pkcompdel]");if(!d)return;
+var c=pkGet(pkSel);if(!c)return;c.comps.splice(parseInt(d.dataset.pkcompdel),1);c.updated=wbNow();pkPut(c);pkRenderComp();});
+document.getElementById("pkPlanGen").addEventListener("click",function(){
+var c=pkSel?pkGet(pkSel):null;
+if(!c){showToast("先在上方点选一个候选商品");return;}
+var calc=pkCalcFor(c);
+var qty=parseInt(pkNum("pk_t_qty"))||0,budget=pkNumOf(pkNum("pk_t_budget")),ad=pkNumOf(pkNum("pk_t_ad"))||0;
+if(qty<1){showToast("请填计划采购数量");return;}
+var cost=pkNumOf(c.cost),dom=pkNumOf(c.domShip)||0,intl=pkNumOf(c.intlShip)||0;
+if(cost===null||!calc||calc.error){showToast("这个商品缺采购成本或售价，先补齐再生成计划");return;}
+var unitAll=cost+dom+intl;
+var batchIn=qty*unitAll+ad;
+var profitCny=calc.main.profit*pkRate();
+var netPer=profitCny+unitAll;
+var beUnits=netPer>0?Math.ceil(batchIn/netPer):null;
+var lines=[];
+lines.push(""+(c.name||"未命名")+"（"+c.code+"）");
+lines.push("· 测试资金预算：批次投入约 "+batchIn.toFixed(2)+" 元（采购+国内运费+国际物流 "+qty+" 件 × "+unitAll.toFixed(2)+" 元 + 广告 "+ad+" 元）"+(budget!==null?("；你的预算上限 "+budget+" 元，"+(batchIn<=budget?"在预算内":"⚠️ 超出预算 "+(batchIn-budget).toFixed(2)+" 元")):""));
+lines.push("· 单件全成本："+unitAll.toFixed(2)+" 元（不含平台佣金和按比例广告，那两项在利润测算里扣）。");
+lines.push("· 预计盈亏平衡条件：单件预计利润约 "+profitCny.toFixed(2)+" 元（按当前售价和费用测算，不是承诺）"+(beUnits!==null?("；约售出 "+beUnits+" 件可覆盖本批次全部投入（含广告）"):"；单件净回款为负，卖得越多亏得越多，先调价或降成本"));
+lines.push("· 资金区分：已投入现金 "+batchIn.toFixed(2)+" 元；全部售出预计总利润约 "+(qty*profitCny).toFixed(2)+" 元（测算）；未售库存按单件全成本计占用资金，不等于亏损，只有清仓或报废才变成实际损失。");
+lines.push("· 需要验证的市场指标：点击率、转化率、真实广告占比、退货率、评价星级与差评点。");
+lines.push("· 测试期观察数据（每天记）：曝光、点击、订单、广告花费、退款/退货、库存余量。");
+lines.push("· 继续测试的条件：售出进度过半且单件利润为正、退货率可控、评价 ≥4 分。");
+lines.push("· 暂停或淘汰的条件：广告占比持续 >25% 仍不出单、单件实际利润转负、出现侵权或合规投诉、差评集中在质量问题。");
+pkLastPlan=lines.join("\n");
+document.getElementById("pkPlanOut").innerHTML='<div class="note" style="white-space:pre-wrap">'+wbEsc(pkLastPlan)+'</div>';});
+document.getElementById("pkPlanCopy").addEventListener("click",function(){if(!pkLastPlan){showToast("先生成计划再复制");return;}wbCopy(pkLastPlan);});
+document.getElementById("pkToBench").addEventListener("click",function(){
+var c=pkSel?pkGet(pkSel):null;if(!c)return;
+pkReadForm(c);pkPut(c);
+if(c.wbId&&wbGet(c.wbId)){showToast("这个商品已经在上架工作台里了（编号 "+wbGet(c.wbId).code+"），没有重复创建");return;}
+var same=wbLoad().filter(function(p){return p.name&&c.name&&p.name===c.name;})[0];
+if(same){c.wbId=same.id;pkPut(c);showToast("工作台里已有同名项目，已关联，没有重复创建");return;}
+var p=wbBlank();p.name=c.name||"";p.cat=c.cat||"";p.cost=c.cost||"";
+var sc=pkScore(c);var calc=sc.calc;
+p.note="来自选品分析（"+c.code+"）"+(c.link?"\n商品链接："+c.link:"")+(calc&&!calc.error?"\n利润测算：售价 "+calc.R+" MXN，单件利润 "+calc.main.profit.toFixed(2)+" MXN，利润率 "+calc.main.margin.toFixed(1)+"%":"")+(sc.scaled!==null?"\n选品评分（折算）："+sc.scaled+" 分，数据完整度 "+sc.completeness+"%":"")+"\n风险提醒：侵权自评 "+c.risk+"；选品阶段结论仅供参考，上架前请用检测器复查。";
+if(calc&&!calc.error){p.profit={price:String(Math.round(calc.R*100)/100),rate:String(Math.round((1/pkRate())*10000)/10000),fee:c.feePct||"",ship:c.intlShip||""};p.profitCalc={time:wbNow(),priceMxn:Math.round(calc.R*100)/100,profitMxn:Math.round(calc.main.profit*100)/100,margin:Math.round(calc.main.margin*100)/100,beMxn:Math.round(calc.be*100)/100};p.steps.s2="已完成";}
+wbPut(p);c.wbId=p.id;pkPut(c);showToast("已加入上架工作台（编号 "+p.code+"）");});
+/* ---- IO ---- */
+document.getElementById("pkExportJson").addEventListener("click",function(){
+var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(pkLoad(),null,2)],{type:"application/json"}));a.download="ml-pick-candidates.json";document.body.appendChild(a);a.click();a.remove();showToast("已导出 JSON");});
+document.getElementById("pkExportCsv").addEventListener("click",function(){
+var list=pkLoad();if(!list.length){showToast("还没有候选商品");return;}
+function q(v){return '"'+String(v==null?"":v).replace(/"/g,'""')+'"';}
+var keys=["code","name","link","cat","kw","price","sales","reviews","rating","listedAt","shop","compCount","histPrice","histTrend","srcLink","cost","domShip","weight","size","intlShip","supplier","moq","tgtPrice","feePct","adPct","shipMode","risk","supplyAdv","note","created","updated"];
+var rows=[keys.join(",")];
+list.forEach(function(c){rows.push(keys.map(function(k){return q(c[k]);}).join(","));});
+var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+rows.join("\n")],{type:"text/csv"}));a.download="ml-pick-candidates.csv";document.body.appendChild(a);a.click();a.remove();showToast("已导出 CSV");});
+document.getElementById("pkImportJsonBtn").addEventListener("click",function(){document.getElementById("pkImportJsonFile").click();});
+document.getElementById("pkImportJsonFile").addEventListener("change",function(){
+var f=this.files[0];if(!f)return;var rd=new FileReader();
+rd.onload=function(){try{var v=JSON.parse(rd.result);var arr=Array.isArray(v)?v:[v];var ok=0;var list=pkLoad();
+arr.forEach(function(x){if(!x||typeof x!=="object"||!x.name)return;var c=pkBlank();Object.keys(c).forEach(function(k){if(typeof x[k]==="string"||typeof x[k]==="boolean")c[k]=x[k];});if(Array.isArray(x.comps))c.comps=x.comps;list.unshift(c);ok++;});
+if(!ok){showToast("导入失败：没有有效的商品（需要有名称）");return;}
+pkSaveAll(list);pkRenderList();showToast("已导入 "+ok+" 个候选商品");}catch(e){showToast("导入失败：不是有效的 JSON 文件");}document.getElementById("pkImportJsonFile").value="";};
+rd.readAsText(f);});
+var PK_MAP_FIELDS=[["name","商品名称",["标题","名称","title","name","商品"]],["link","商品链接",["链接","url","link"]],["cat","类目",["类目","分类","categoria","category"]],["price","当前售价",["售价","价格","price","precio"]],["sales","销量数据",["销量","sales","ventas"]],["reviews","评论数",["评论","评价","reviews"]],["rating","评分",["评分","rating","estrellas"]],["shop","店铺名称",["店铺","卖家","shop","tienda"]],["compCount","竞品数量",["竞品","竞争","competencia"]],["cost","采购价格",["采购","成本","cost","进货"]],["intlShip","国际物流",["物流","运费","envio","shipping"]],["weight","重量",["重量","peso","weight"]],["tgtPrice","目标售价",["目标价","定价"]],["kw","关键词",["关键词","keyword"]]];
+var pkCsvRows=null,pkCsvHeaders=null;
+function pkParseCsv(text){
+var rows=[],row=[],cur="",inQ=false;
+for(var i=0;i<text.length;i++){var ch=text[i];
+if(inQ){if(ch==='"'){if(text[i+1]==='"'){cur+='"';i++;}else inQ=false;}else cur+=ch;}
+else if(ch==='"')inQ=true;
+else if(ch===','){row.push(cur);cur="";}
+else if(ch==='\n'){row.push(cur);rows.push(row);row=[];cur="";}
+else if(ch==='\r'){}
+else cur+=ch;}
+if(cur!==""||row.length){row.push(cur);rows.push(row);}
+return rows.filter(function(r){return r.length>1||(r[0]&&r[0].trim());});
+}
+document.getElementById("pkImportCsvBtn").addEventListener("click",function(){document.getElementById("pkImportCsvFile").click();});
+document.getElementById("pkImportCsvFile").addEventListener("change",function(){
+var f=this.files[0];if(!f)return;var rd=new FileReader();
+rd.onload=function(){
+var rows=pkParseCsv(String(rd.result||""));
+if(rows.length<2){showToast("CSV 里没有数据行（需要表头+至少一行）");return;}
+pkCsvHeaders=rows[0].map(function(h){return String(h||"").trim();});
+pkCsvRows=rows.slice(1);
+var h='<div class="pf-comp"><h3>字段映射：把外部列对到本站字段</h3><p class="wb-meta">已按列名自动猜了一遍，对不上的手动改；选「不导入」的字段会留空显示未填写。本次共 '+pkCsvRows.length+' 行数据。</p>';
+PK_MAP_FIELDS.forEach(function(mf){
+var guess=-1;
+pkCsvHeaders.forEach(function(hd,idx){if(guess>=0)return;var low=hd.toLowerCase();if(mf[2].some(function(g){return low.indexOf(g.toLowerCase())>=0;}))guess=idx;});
+h+='<div class="wb-field"><label>'+mf[1]+'</label><select class="search" data-pkmap="'+mf[0]+'"><option value="-1">不导入</option>'+pkCsvHeaders.map(function(hd,idx){return '<option value="'+idx+'"'+(idx===guess?" selected":"")+'>'+wbEsc(hd||("列"+(idx+1)))+'</option>';}).join("")+'</select></div>';});
+h+='<div class="wb-toolbar"><button class="btn btn-yellow" id="pkMapImport" type="button">按这个映射导入 '+pkCsvRows.length+' 行</button></div></div>';
+document.getElementById("pkMapBox").innerHTML=h;
+document.getElementById("pkMapImport").addEventListener("click",function(){
+var map={};document.querySelectorAll("[data-pkmap]").forEach(function(s){map[s.dataset.pkmap]=parseInt(s.value);});
+if(map.name===undefined||map.name<0){showToast("至少要把「商品名称」对上一个列，不然导进来没法认");return;}
+var list=pkLoad();var ok=0;
+pkCsvRows.forEach(function(r){var c=pkBlank();var has=false;
+Object.keys(map).forEach(function(k){var idx=map[k];if(idx>=0&&r[idx]!==undefined){c[k]=String(r[idx]).trim();if(k==="name"&&c[k])has=true;}});
+if(has){list.unshift(c);ok++;}});
+pkSaveAll(list);pkRenderList();document.getElementById("pkMapBox").innerHTML="";showToast("已导入 "+ok+" 个候选商品");});
+document.getElementById("pkImportCsvFile").value="";};
+rd.readAsText(f);});
+pkRenderList();
+
 /* image optimizer */
 var IO_SCENES={
  hogar:{label:"家居用品",scenes:["客厅沙发旁的茶几上","卧室床头柜上","厨房台面上，背景有虚化的灶台和橱柜"],scenesEs:["sobre la mesa de centro junto al sofá de la sala","sobre el buró de la recámara","sobre la encimera de la cocina con la estufa desenfocada al fondo"]},
