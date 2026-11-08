@@ -895,7 +895,7 @@ var LEVEL_CLASS={high:"b-high",med:"b-med",low:"b-low",review:"b-med"};
 var COMP_RULES=[
  {label:"功效/医疗宣称",lv:"high",why:"功效/医疗宣称在美客多和墨西哥广告法规下都属于严管内容，无资质、无依据的治疗、减肥、美白宣称容易被下架甚至封号。",alt:"删掉功效承诺，改写成材质、规格、使用场景等客观描述；清洁漂白类实物请人工确认语境。",k:["cura","curar","adelgazar","bajar de peso","blanqueador","治疗","治愈","根治","减肥","瘦身","美白","祛斑","降血压","降血糖","抗癌","cure","weight loss","whitening","emagrecer","emagrecimento","clareador","perder peso","queimar gordura","tirar manchas"]},
  {label:"受限品类",lv:"med",why:"这类词指向受限或需要资质、类目准入的品类（如药品、保健、烟草、杀虫剂），无资质上架可能被拦截或下架。",alt:"先在卖家中心确认该类目是否开放、需要什么资质；不确定的先别上架。",k:["medicamento","farmaco","suplemento","pesticida","insecticida","tabaco","cigarrillo","vapeador","bebida alcoholica","药品","保健品","杀虫剂","烟草","电子烟","酒精饮料","supplement","pesticide","tobacco","vape","remedio","inseticida","suplemento alimentar"]},
- {label:"站外引流",lv:"med",why:"引导买家到站外（微信、邮箱、电话等）联系或交易是平台重点违规，可能限流、下架或封号。",alt:"删除站外联系方式，沟通和交易都留在平台内完成。",k:["wechat","微信","telegram","fuera de mercado libre","contactame por","contáctame por","邮箱联系","me chama no zap","contato por fora","fora do mercado livre"]},
+ {label:"站外引流",lv:"med",why:"引导买家到站外（微信、邮箱、电话等）联系或交易是平台重点违规，可能限流、下架或封号。",alt:"删除站外联系方式，沟通和交易都留在平台内完成。",k:["wechat","微信","telegram","fuera de mercado libre","contactame por","contáctame por","邮箱联系","me chama no zap","chama no zap","contato por fora","fora do mercado livre"]},
  {label:"绝对化用语",lv:"low",why:"「第一、最、顶级」等绝对化表达缺乏依据时，容易被投诉或判定为夸大宣传。",alt:"改成可验证的具体信息，如材质、参数和真实销量数据。",k:["销量第一","全网第一","最好","顶级","numero uno","el numero 1","the best","number one","o melhor","melhor do brasil","numero 1"]}
 ];
 function analyzeField(text,field,fakePresent){
