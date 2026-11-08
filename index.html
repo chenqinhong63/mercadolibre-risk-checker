@@ -381,6 +381,9 @@ section{padding-top:34px}
     <h3>🕘 最近检测记录</h3>
     <div id="deskHistory"></div>
     <button class="btn btn-ghost" id="deskClearHistory" type="button">清空检测记录</button>
+    <h3 style="margin-top:22px">⭐ 收藏的商品</h3>
+    <div id="deskFavs"></div>
+    <button class="btn btn-ghost" id="deskClearFavs" type="button">清空收藏</button>
     <h3 style="margin-top:22px">✍️ 保存的标题草稿</h3>
     <div id="deskTitles"></div>
     <button class="btn btn-ghost" id="deskClearTitles" type="button">清空标题草稿</button>
@@ -524,7 +527,7 @@ function runCheck(){
   else{
     html+="<ul>"+hits.map(function(h){return "<li><span class='badge "+LEVEL_CLASS[h.level]+"'>"+LEVEL_LABEL[h.level]+"</span><b>"+h.entry.t+"</b>（"+h.field+"，约第 "+(h.pos+1)+" 字，命中「"+h.key+"」）<br>原因："+h.entry.why+(h.note?"<br>语境判断："+h.note:"")+"<br>建议："+h.entry.alt+"<br>人工复核："+(h.review?"是":"否")+"</li>";}).join("")+"</ul>";
   }
-  html+='<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-light" id="copyResBtn" type="button">📋 复制检测结果</button><button class="btn btn-light" id="exportRepBtn" type="button">⬇ 导出风险报告</button><button class="btn btn-light" id="claudeBtn" type="button">🤖 复制到 Muse 深度分析</button></div>';
+  html+='<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-light" id="copyResBtn" type="button">📋 复制检测结果</button><button class="btn btn-light" id="exportRepBtn" type="button">⬇ 导出风险报告</button><button class="btn btn-light" id="claudeBtn" type="button">🤖 复制到 Muse 深度分析</button><button class="btn btn-light" id="favBtn" type="button">⭐ 收藏这个商品</button></div>';
   box.innerHTML=html;
   var lines=["美客多侵权风险检测报告","商品："+prodName,"检测时间："+timeStr,"检测内容：标题 "+title.length+" 字 / 描述 "+desc.length+" 字","总体等级："+overall.label+" — "+overall.advice,""];
   if(!hits.length)lines.push("未命中词表关键词（仅供参考，不代表官方审核结果）。");
@@ -540,6 +543,7 @@ function bindReportButtons(){
   var rep=window.__lastReport;if(!rep)return;
   function wire(id,fn){var b=document.getElementById(id);if(b)b.addEventListener("click",function(){fn(b);});}
   function copy(text,b){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){b.textContent="✅ 已复制";}).catch(function(){b.textContent="复制失败";});}else{b.textContent="浏览器不支持自动复制";}}
+  wire("favBtn",function(b){if(typeof saveFav==="function"){saveFav({time:rep.time,title:rep.title||"（无标题）",level:rep.level,hits:rep.hits});b.textContent="⭐ 已收藏";}});
   wire("copyResBtn",function(b){copy(rep.text,b);});
   wire("claudeBtn",function(b){copy(rep.prompt,b);});
   wire("exportRepBtn",function(){
@@ -818,12 +822,15 @@ function precheckReport(){
 function lsGet(k){try{return JSON.parse(localStorage.getItem(k)||"[]");}catch(e){return[];}}
 function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function recordHistory(rec){var arr=lsGet("mlr_history");if(arr.length&&arr[0].title===rec.title&&arr[0].level===rec.level&&arr[0].time===rec.time)return;arr.unshift(rec);if(arr.length>30)arr=arr.slice(0,30);lsSet("mlr_history",arr);renderDesk();}
+function saveFav(item){var arr=lsGet("mlr_favs");arr.unshift(item);if(arr.length>50)arr=arr.slice(0,50);lsSet("mlr_favs",arr);renderDesk();showToast("已收藏到工作台（仅本设备）");}
 function saveDraft(kind,item){var key=kind==="title"?"mlr_titles":"mlr_descs";var arr=lsGet(key);arr.unshift(item);if(arr.length>30)arr=arr.slice(0,30);lsSet(key,arr);renderDesk();showToast("已保存到工作台（仅本设备）");}
 function deskRow(html){return '<div style="display:flex;gap:8px;align-items:flex-start;border:1px solid #e5e7eb;border-radius:10px;padding:8px 10px;margin-bottom:8px;font-size:14px"><div style="flex:1">'+html+'</div></div>';}
 function renderDesk(){
   var h=document.getElementById("deskHistory");if(!h)return;
   var hist=lsGet("mlr_history");
   h.innerHTML=hist.length?hist.map(function(r,i){return deskRow("<b>"+r.level+"</b> · 命中 "+r.hits+" 条 · "+r.time+"<br>"+r.title+' <button class="btn btn-ghost deskDel" data-k="mlr_history" data-i="'+i+'" type="button" style="padding:2px 10px;min-height:30px">删除</button>');}).join(""):'<p class="sub">还没有检测记录，去「侵权词检测」跑一次就会出现在这里。</p>';
+  var f=document.getElementById("deskFavs");var favs=lsGet("mlr_favs");
+  if(f)f.innerHTML=favs.length?favs.map(function(r,i){return deskRow("<b>"+r.level+"</b> · 命中 "+r.hits+" 条 · "+r.time+"<br>"+r.title+' <button class="btn btn-ghost deskDel" data-k="mlr_favs" data-i="'+i+'" type="button" style="padding:2px 10px;min-height:30px">删除</button>');}).join(""):'<p class="sub">还没有收藏。在检测报告里点“⭐ 收藏这个商品”就会出现在这里。</p>';
   var t=document.getElementById("deskTitles");var titles=lsGet("mlr_titles");
   t.innerHTML=titles.length?titles.map(function(r,i){return deskRow(r.time+"<br>"+r.text+' <button class="btn btn-ghost deskDel" data-k="mlr_titles" data-i="'+i+'" type="button" style="padding:2px 10px;min-height:30px">删除</button>');}).join(""):'<p class="sub">还没有标题草稿，在「标题优化」生成后点“保存为标题草稿”。</p>';
   var d=document.getElementById("deskDescs");var descs=lsGet("mlr_descs");
@@ -849,6 +856,7 @@ document.getElementById("saveDescBtn").addEventListener("click",function(){
   var now=new Date();saveDraft("desc",{time:now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+" "+String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0"),text:v});
 });
 document.getElementById("deskClearHistory").addEventListener("click",function(){lsSet("mlr_history",[]);renderDesk();});
+document.getElementById("deskClearFavs").addEventListener("click",function(){lsSet("mlr_favs",[]);renderDesk();});
 document.getElementById("deskClearTitles").addEventListener("click",function(){lsSet("mlr_titles",[]);renderDesk();});
 document.getElementById("deskClearDescs").addEventListener("click",function(){lsSet("mlr_descs",[]);renderDesk();});
 renderDesk();
