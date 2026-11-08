@@ -2229,7 +2229,7 @@ function mlrSetSite(s){
   document.querySelectorAll("#sect-profit select").forEach(function(sel){
     var hasM=false,hasB=false;
     for(var i=0;i<sel.options.length;i++){if(sel.options[i].value==="MXN")hasM=true;if(sel.options[i].value==="BRL")hasB=true;}
-    if(hasM&&!hasB){var o=document.createElement("option");o.value="BRL";o.textContent="巴西雷亚尔";o.setAttribute("data-fx","1");sel.appendChild(o);}
+    if(hasM&&!hasB){var o=document.createElement("option");o.value="BRL";o.textContent="巴西雷亚尔 BRL";o.setAttribute("data-fx","1");sel.appendChild(o);}
   });
   var bm=document.getElementById("siteMx"),bb=document.getElementById("siteBr");
   if(bm)bm.addEventListener("click",function(){mlrSetSite("mx");});
