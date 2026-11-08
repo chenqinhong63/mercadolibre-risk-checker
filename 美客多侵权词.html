@@ -1335,7 +1335,7 @@ function wbRender(){
   ed.style.display="block";
   document.getElementById("wbCodeLine").textContent="· 编号 "+p.code+" · 目标市场：墨西哥";
   document.getElementById("wbTimes").textContent="创建："+p.created+" · 最近修改："+p.updated+"（输入即自动保存）";
-  ["name","cat","brand","model","spec","cost","weight","size","supplier","note"].forEach(function(k){
+  ["name","cat","brand","model","spec","cost","weight","size","supplier","note","barcode","barcodeType","barcodeCheck","barcodeNote"].forEach(function(k){
     var el=document.querySelector('[data-wbf="'+k+'"]');
     if(el&&document.activeElement!==el)el.value=p[k]||"";});
   var miss=wbMissing(p);
