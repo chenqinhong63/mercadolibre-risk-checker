@@ -129,6 +129,32 @@ section{padding-top:34px}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 @media print{.nav,.checker .row,.filters,.actions{display:none!important} body{background:#fff} .card,.stat,.step,.catcard{break-inside:avoid}}
 @media (max-width:640px){.btn{min-height:44px}}
+/* ===== 上架工作台 ===== */
+#sect-bench select.search,#sect-bench textarea.search{width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;font-size:15px;background:#fff;color:#222;font-family:inherit}
+#sect-bench textarea.search{min-height:64px;resize:vertical}
+.wb-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:640px){.wb-grid{grid-template-columns:1fr}}
+.wb-field label{display:block;font-size:13px;font-weight:700;margin:8px 0 4px;color:#333}
+.wb-miss{display:inline-block;background:#fdecea;color:#b3261e;border:1px solid #f5c6c2;border-radius:999px;padding:2px 9px;font-size:12px;margin:2px 4px 2px 0}
+.wb-item{border:1.5px solid var(--line);border-radius:12px;padding:12px;margin:10px 0;background:#fff;cursor:pointer;text-align:left;width:100%;font-family:inherit}
+.wb-item.sel{border-color:var(--blue);background:#eef4ff}
+.wb-item b{font-size:16px;color:#14213d}
+.wb-meta{font-size:12.5px;color:#666;margin-top:3px}
+.wb-bar{height:8px;background:#e8ecf3;border-radius:99px;overflow:hidden;margin-top:8px}
+.wb-bar i{display:block;height:100%;background:#2e9e5b;border-radius:99px}
+.wb-chip{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700;background:#eef1f6;color:#445}
+.wb-chip.doing{background:#fff3cd;color:#8a6d00}
+.wb-chip.done{background:#e2f4e8;color:#1c6b3a}
+.wb-step{border:1.5px solid var(--line);border-radius:12px;padding:12px;margin:10px 0;background:#fff}
+.wb-step h3{margin:0 0 4px;font-size:16px;color:#14213d}
+.wb-step .wb-sdesc{font-size:13px;color:#666;margin:0 0 8px}
+.wb-step select{padding:7px 9px;border:1.5px solid var(--line);border-radius:8px;font-size:14px;background:#fff}
+.wb-step details{margin-top:8px;font-size:13.5px;color:#444}
+.wb-step summary{cursor:pointer;font-weight:700;color:var(--blue)}
+.wb-check{display:flex;gap:9px;align-items:flex-start;padding:8px 10px;border:1px solid var(--line);border-radius:10px;margin:7px 0;background:#fff;font-size:14.5px;cursor:pointer}
+.wb-check input{width:19px;height:19px;margin-top:1px;flex:none}
+.wb-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.wb-done-banner{background:#e2f4e8;border:1.5px solid #2e9e5b;color:#14532d;border-radius:12px;padding:12px;font-weight:700;margin-top:10px}
 </style>
 </head>
 <body>
@@ -174,6 +200,7 @@ section{padding-top:34px}
   <nav class="nav" id="tabBar">
     <a href="#" data-tab="home" class="tab active">🔍 侵权词检测器</a><a href="#" data-tab="title" class="tab">✍️ 标题优化</a>
     <a href="#" data-tab="imgopt" class="tab">🖼 图片优化</a><a href="#" data-tab="video" class="tab">🎬 视频生成</a><a href="#" data-tab="coach" class="tab">🎓 教学陪跑</a>
+    <a href="#" data-tab="bench" class="tab">📦 上架工作台</a>
   </nav>
   <style>.nav a.tab.active{background:var(--navy);color:#fff;border-color:var(--navy)} @media print{section{display:block!important}}</style>
 
@@ -188,6 +215,12 @@ section{padding-top:34px}
     </div>
   </section>
 
+
+  <section class="card" id="sect-bench-entry">
+    <div class="sec-head"><span class="num">📦</span><div><h2>商品上架工作台</h2><p>从商品资料到上架检查，一站式完成美客多商品准备</p></div></div>
+    <p style="font-size:14.5px">把一个商品的资料、标题、描述、图片、视频、风险检查和上架清单都放在一个项目里管理，进度一目了然。数据只保存在你这台设备的浏览器里，不用注册。</p>
+    <div class="actions"><button class="btn btn-yellow" id="wbHomeNew" type="button">📦 开始创建商品</button></div>
+  </section>
 
   <section id="bpp">
     <div class="sec-head"><span class="num">1</span><div><h2>被投诉会怎样</h2><p>品牌方通过 BPP 投诉后：<b>投诉 → 刊登立即暂停 → 你有 4 天提交发票/授权答辩 → 品牌 4 天内确认 → 永久删除，多次违规可封号</b>。正品转售不算侵权，能出示正规进货发票，投诉就不成立——发票务必留好。</p></div></div>
@@ -420,6 +453,54 @@ section{padding-top:34px}
   
 </div>
 
+  <section class="card" id="sect-bench">
+    <div class="sec-head"><span class="num">📦</span><div><h2>美客多商品上架工作台</h2><p>一个商品一个项目：资料整理 → 利润分析 → 标题 → 描述 → 图片 → 视频 → 风险检查 → 上架前检查</p></div></div>
+    <div class="note">💾 <b>本地保存说明：</b>项目只保存在当前浏览器和这台设备里（localStorage），刷新页面不会丢；但清理浏览器数据、换设备或换浏览器会丢失。本站没有云端同步——<b>重要资料请经常用下方「导出 JSON 备份」存一份文件。</b></div>
+
+    <h3 style="margin:16px 0 6px">① 我的商品项目</h3>
+    <div class="wb-toolbar">
+      <button class="btn btn-yellow" id="wbNew" type="button">＋ 新建商品</button>
+      <button class="btn btn-light" id="wbExportJson" type="button">⬇ 导出 JSON 备份</button>
+      <button class="btn btn-light" id="wbImportBtn" type="button">⬆ 导入 JSON</button>
+      <input type="file" id="wbImportFile" accept=".json,application/json" style="display:none">
+      <button class="btn btn-light" id="wbExportCsv" type="button">⬇ 导出 CSV</button>
+    </div>
+    <div class="wb-grid">
+      <div class="wb-field"><label for="wbSearch">搜索项目（名称 / 编号 / 类目）</label><input class="search" id="wbSearch" placeholder="输入关键词搜索"></div>
+      <div class="wb-field"><label for="wbFilter">按状态筛选</label><select class="search" id="wbFilter"><option value="all">全部状态</option><option value="未开始">未开始</option><option value="进行中">进行中</option><option value="已完成">已完成</option></select></div>
+    </div>
+    <div id="wbList"></div>
+
+    <div id="wbEditor" style="display:none">
+      <h3 style="margin:20px 0 6px">② 商品资料 <span class="wb-meta" id="wbCodeLine"></span></h3>
+      <div id="wbMissing"></div>
+      <div class="wb-grid">
+        <div class="wb-field"><label for="wbF_name">商品名称 *</label><input class="search" id="wbF_name" data-wbf="name" placeholder="例如：20 罐旋转调料架"></div>
+        <div class="wb-field"><label for="wbF_cat">商品类目 *</label><input class="search" id="wbF_cat" data-wbf="cat" placeholder="例如：厨房收纳 / Especieros"></div>
+        <div class="wb-field"><label for="wbF_brand">商品品牌 *</label><input class="search" id="wbF_brand" data-wbf="brand" placeholder="无品牌就写：无品牌 / Genérica"></div>
+        <div class="wb-field"><label for="wbF_model">商品型号</label><input class="search" id="wbF_model" data-wbf="model" placeholder="没有可留空，不要编造"></div>
+        <div class="wb-field"><label for="wbF_spec">商品规格 *</label><input class="search" id="wbF_spec" data-wbf="spec" placeholder="例如：20 罐装，ABS+PET"></div>
+        <div class="wb-field"><label for="wbF_cost">采购成本（元人民币）*</label><input class="search" id="wbF_cost" data-wbf="cost" inputmode="decimal" placeholder="例如：45"></div>
+        <div class="wb-field"><label for="wbF_weight">商品重量</label><input class="search" id="wbF_weight" data-wbf="weight" placeholder="例如：1.2 kg（含包装）"></div>
+        <div class="wb-field"><label for="wbF_size">商品尺寸</label><input class="search" id="wbF_size" data-wbf="size" placeholder="实测长×宽×高 cm，不要估"></div>
+        <div class="wb-field"><label for="wbF_supplier">供应商信息（可选）</label><input class="search" id="wbF_supplier" data-wbf="supplier" placeholder="例如：1688 店铺名 / 货号"></div>
+        <div class="wb-field"><label>目标市场</label><input class="search" value="墨西哥（Mercado Libre México）" disabled></div>
+      </div>
+      <div class="wb-field"><label for="wbF_note">商品备注</label><textarea class="search" id="wbF_note" data-wbf="note" placeholder="例如：等样品到货后实测尺寸；主图已拍，副图待做"></textarea></div>
+      <p class="wb-meta" id="wbTimes"></p>
+
+      <h3 style="margin:20px 0 6px">③ 制作流程（8 步）</h3>
+      <p style="font-size:13.5px;color:#666;margin:0">每一步都可以手动改状态；有现成功能的步骤直接跳过去做，还没有的步骤提供可复制的 Muse 提示词。状态和资料都会自动保存。</p>
+      <div id="wbSteps"></div>
+
+      <h3 style="margin:20px 0 6px">④ 上架前检查清单</h3>
+      <p class="wb-meta" id="wbCheckProg"></p>
+      <div id="wbChecks"></div>
+      <div id="wbDoneBanner"></div>
+      <div class="note" style="margin-top:10px">⚠️ 检查完成只代表你自己逐项核对过，<b>不等于 Mercado Libre 官方审核通过</b>；是否合规以平台最新规则和实际审核为准。</div>
+      <div class="wb-toolbar"><button class="btn btn-ghost" id="wbDelete" type="button">🗑 删除当前商品项目</button></div>
+    </div>
+  </section>
 <script>
 var WORDS=[
  {t:"réplica / replica",cn:"复制品 / 仿品",risk:"high",cat:"brand",why:"等于自认卖假货，是 BPP 投诉与删除+处罚的直接事由。(B: Upseller、Nubimetrics)",alt:"只卖正品；无品牌通用品用自有品牌或无品牌，描述功能即可。",keys:["replica","réplica"],en:"replica / knockoff / counterfeit",enk:["replica", "knockoff", "knock off", "counterfeit", "dupe"],ck:["仿品", "复刻", "仿冒"]},
@@ -563,9 +644,9 @@ document.getElementById("checkBtn").addEventListener("click",runCheck);
 
 
 /* tabs */
-var TABMAP={home:["sect-core","bpp","checker","sect-free"],title:["sect-title"],imgopt:["sect-img"],video:["sect-video"],coach:["sect-coach"]};
+var TABMAP={home:["sect-core","sect-bench-entry","bpp","checker","sect-free"],title:["sect-title"],imgopt:["sect-img"],video:["sect-video"],coach:["sect-coach"],bench:["sect-bench"]};
 function showTab(name){
-  if(name==="desk"&&typeof renderDesk==="function")renderDesk();
+  if(name==="desk"&&typeof renderDesk==="function")renderDesk();if(name==="bench"&&typeof wbRender==="function")wbRender();
   Object.keys(TABMAP).forEach(function(k){TABMAP[k].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=(k===name?"":"none");});});
   document.querySelectorAll("#tabBar .tab").forEach(function(a){a.classList.toggle("active",a.dataset.tab===name);});
   window.scrollTo({top:0,behavior:"smooth"});
@@ -837,6 +918,166 @@ function showToast(msg){
   clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(function(){t.style.display="none";},2200);
 }
 
+
+/* ===== 商品上架工作台 ===== */
+var WB_KEY="mlr_projects_v1";
+var WB_STATUSES=["未开始","进行中","已完成","需要重新检查"];
+var WB_REQ=[["name","商品名称"],["cat","商品类目"],["brand","商品品牌"],["spec","商品规格"],["cost","采购成本"]];
+var WB_CHECKS=["商品信息是否真实完整","商品品牌是否准确","商品型号是否准确","标题是否清晰","西班牙语是否自然","图片是否清晰","图片是否与实物一致","商品规格是否准确","是否检查常见侵权风险","是否检查平台及类目要求","是否确认价格和库存","是否完成最终人工复核"];
+var WB_STEPS=[
+ {k:"s1",t:"第一步：商品资料整理",d:"把名称、类目、品牌、规格、成本等真实资料填全。缺什么上面会红字提示，不要编造。",guide:"在本页上方「商品资料」里逐项填写。品牌没有就写「无品牌」，型号没有可留空；尺寸重量请实测后再填，后面算运费和做尺寸图都要用。",act:"form"},
+ {k:"s2",t:"第二步：选品与利润分析",d:"用下面的小计算器估算单件利润（只是估算，不是平台数据）。",guide:"填入你打算卖的墨西哥比索售价、汇率、平台佣金比例和预估运费，点计算。佣金比例按你的类目和刊登类型在卖家中心确认，不要凭感觉填。",act:"profit"},
+ {k:"s3",t:"第三步：Listing 标题优化",d:"用本站的标题优化器生成 60 字符内的西语标题。",guide:"先在本页把商品名称、规格填好，再去标题优化器：填中文名、材质、功能、规格，生成后挑一条，回到这里把这一步标为已完成。",act:"goto",tab:"title",label:"✍️ 进入标题优化"},
+ {k:"s4",t:"第四步：西班牙语商品描述",d:"本站暂无描述生成器，用下面的按钮复制 Muse 提示词，到 Muse 里生成地道西语描述。",guide:"点「复制 Muse 描述提示词」，把商品资料自动带入提示词（缺的字段会标注待补充），在 Muse 对话里粘贴发送，拿到描述后人工核对数字和规格再用。",act:"prompt"},
+ {k:"s5",t:"第五步：商品图片优化",d:"用本站图片优化器诊断主图并生成图片提示词。",guide:"先准备好商品原图，再去图片优化器按 5 步走：上传诊断 → 填信息 → 生成提示词 → 合规自查 → 前后对比。尺寸图必须用你实测的尺寸。",act:"goto",tab:"imgopt",label:"🖼 进入图片优化"},
+ {k:"s6",t:"第六步：商品视频制作",d:"用本站视频生成器做分镜脚本和 Muse 视频提示词。",guide:"先有图片素材再做视频。去视频生成器：上传素材 → 填商品信息 → 选类型生成分镜 → 复制提示词到 Muse 生成 → 回来过一遍合规检查。",act:"goto",tab:"video",label:"🎬 进入视频生成"},
+ {k:"s7",t:"第七步：侵权及风险检查",d:"用本站检测器查标题、描述、链接和图片文字。",guide:"把最终标题和描述粘到检测器里查一遍，有高风险先改；商品图也要过图片识别。检测结果仅供参考，不代表官方审核。",act:"goto",tab:"home",label:"🔍 进入侵权词检测器"},
+ {k:"s8",t:"第八步：上架前最终检查",d:"逐项勾完下方检查清单，再做最后人工复核。",guide:"对照实物和刊登页逐项勾选；全部勾完会出现「上架前检查完成」。注意：这不等于官方审核通过，上架后还要留意平台通知。",act:"checklist"}
+];
+function wbLoad(){try{var v=JSON.parse(localStorage.getItem(WB_KEY)||"[]");return Array.isArray(v)?v:[];}catch(e){return[];}}
+function wbSave(list){try{localStorage.setItem(WB_KEY,JSON.stringify(list));}catch(e){showToast("保存失败：浏览器存储不可用或已满");}}
+function wbNow(){var n=new Date();return n.getFullYear()+"-"+String(n.getMonth()+1).padStart(2,"0")+"-"+String(n.getDate()).padStart(2,"0")+" "+String(n.getHours()).padStart(2,"0")+":"+String(n.getMinutes()).padStart(2,"0");}
+function wbCode(){var n=new Date();return "MLM-"+n.getFullYear()+String(n.getMonth()+1).padStart(2,"0")+String(n.getDate()).padStart(2,"0")+"-"+Math.random().toString(36).slice(2,6).toUpperCase();}
+function wbBlank(){var t=wbNow();var p={id:"p"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),code:wbCode(),name:"",cat:"",brand:"",model:"",spec:"",cost:"",weight:"",size:"",supplier:"",note:"",market:"墨西哥",created:t,updated:t,steps:{},checks:{},profit:{price:"",rate:"",fee:"",ship:""}};WB_STEPS.forEach(function(s){p.steps[s.k]="未开始";});return p;}
+function wbOverall(p){var done=WB_STEPS.every(function(s){return p.steps[s.k]==="已完成";});if(done)return"已完成";var touched=WB_STEPS.some(function(s){return p.steps[s.k]!=="未开始";})||p.name||p.cat;return touched?"进行中":"未开始";}
+function wbProgress(p){var d=WB_STEPS.filter(function(s){return p.steps[s.k]==="已完成";}).length;return Math.round(d/WB_STEPS.length*100);}
+var wbSel=null;
+function wbGet(id){return wbLoad().filter(function(p){return p.id===id;})[0]||null;}
+function wbPut(p){var list=wbLoad();var i=-1;list.forEach(function(x,j){if(x.id===p.id)i=j;});if(i>=0)list[i]=p;else list.unshift(p);wbSave(list);}
+function wbMissing(p){return WB_REQ.filter(function(r){return !(p[r[0]]||"").toString().trim();}).map(function(r){return r[1];});}
+function wbRender(){
+  var list=wbLoad();
+  var q=(document.getElementById("wbSearch").value||"").trim().toLowerCase();
+  var f=document.getElementById("wbFilter").value;
+  var box=document.getElementById("wbList");var html="";
+  var shown=list.filter(function(p){
+    if(f!=="all"&&wbOverall(p)!==f)return false;
+    if(q){var hay=((p.name||"")+" "+(p.code||"")+" "+(p.cat||"")).toLowerCase();if(hay.indexOf(q)===-1)return false;}
+    return true;});
+  if(!list.length)html='<div class="note">还没有商品项目。点上方「＋ 新建商品」创建第一个，资料会自动保存在这台设备上。</div>';
+  else if(!shown.length)html='<div class="note">没有符合条件的项目，换个关键词或状态试试。</div>';
+  shown.forEach(function(p){
+    var ov=wbOverall(p);var cls=ov==="已完成"?"done":(ov==="进行中"?"doing":"");
+    html+='<button type="button" class="wb-item'+(p.id===wbSel?" sel":"")+'" data-wbopen="'+p.id+'"><b>'+esc(p.name||"未命名商品")+'</b> <span class="wb-chip '+cls+'">'+ov+'</span><div class="wb-meta">编号 '+esc(p.code||"")+' · 类目 '+(esc(p.cat)||"未填")+' · 进度 '+wbProgress(p)+'% · 修改于 '+esc(p.updated||"")+'</div><div class="wb-bar"><i style="width:'+wbProgress(p)+'%"></i></div></button>';});
+  box.innerHTML=html;
+  var ed=document.getElementById("wbEditor");
+  var p=wbSel?wbGet(wbSel):null;
+  if(!p){ed.style.display="none";return;}
+  ed.style.display="block";
+  document.getElementById("wbCodeLine").textContent="· 编号 "+p.code+" · 目标市场：墨西哥";
+  document.getElementById("wbTimes").textContent="创建："+p.created+" · 最近修改："+p.updated+"（输入即自动保存）";
+  ["name","cat","brand","model","spec","cost","weight","size","supplier","note"].forEach(function(k){
+    var el=document.querySelector('[data-wbf="'+k+'"]');
+    if(el&&document.activeElement!==el)el.value=p[k]||"";});
+  var miss=wbMissing(p);
+  document.getElementById("wbMissing").innerHTML=miss.length?'<div style="margin:4px 0 6px"><span style="font-size:13px;font-weight:700;color:#b3261e">待补充：</span>'+miss.map(function(m){return '<span class="wb-miss">'+m+'</span>';}).join("")+'</div>':'<div class="note" style="margin:4px 0 6px">✅ 必填资料已齐（型号、重量等选填项按实物情况补）。</div>';
+  var sh="";
+  WB_STEPS.forEach(function(s){
+    var st=p.steps[s.k]||"未开始";
+    sh+='<div class="wb-step"><h3>'+s.t+' <span class="wb-chip '+(st==="已完成"?"done":(st==="进行中"?"doing":""))+'">'+st+'</span></h3><p class="wb-sdesc">'+s.d+'</p>';
+    if(s.act==="form")sh+='<button class="btn btn-light" type="button" data-wbscroll="wbF_name">去填写资料 ↑</button> ';
+    if(s.act==="goto")sh+='<button class="btn btn-yellow" type="button" data-goto="'+s.tab+'">'+s.label+'</button> ';
+    if(s.act==="checklist")sh+='<button class="btn btn-light" type="button" data-wbscroll="wbChecks">去勾检查清单 ↓</button> ';
+    if(s.act==="prompt")sh+='<button class="btn btn-yellow" type="button" id="wbDescPrompt">📋 复制 Muse 描述提示词</button> ';
+    if(s.act==="profit"){
+      var pr=p.profit||{};
+      sh+='<div class="wb-grid"><div class="wb-field"><label>售价（MXN 比索）</label><input class="search" data-wbp="price" inputmode="decimal" placeholder="例如：349" value="'+esc(pr.price||"")+'"></div>'
+        +'<div class="wb-field"><label>汇率（1 人民币 = ? 比索）</label><input class="search" data-wbp="rate" inputmode="decimal" placeholder="按当天汇率填，例如：2.6" value="'+esc(pr.rate||"")+'"></div>'
+        +'<div class="wb-field"><label>平台佣金 %（按类目确认）</label><input class="search" data-wbp="fee" inputmode="decimal" placeholder="例如：15" value="'+esc(pr.fee||"")+'"></div>'
+        +'<div class="wb-field"><label>预估运费（元人民币）</label><input class="search" data-wbp="ship" inputmode="decimal" placeholder="例如：28" value="'+esc(pr.ship||"")+'"></div></div>'
+        +'<div class="actions" style="margin-top:8px"><button class="btn btn-yellow" type="button" id="wbProfitCalc">计算估算利润</button></div><div id="wbProfitOut" style="margin-top:8px"></div>';}
+    sh+='<label style="font-size:13px;font-weight:700;margin-left:4px">状态 <select data-wbstep="'+s.k+'">'+WB_STATUSES.map(function(x){return '<option'+(x===st?" selected":"")+'>'+x+'</option>';}).join("")+'</select></label>';
+    sh+='<details><summary>查看操作说明</summary><p style="margin:6px 0 0">'+s.guide+'</p></details></div>';});
+  document.getElementById("wbSteps").innerHTML=sh;
+  var cdone=WB_CHECKS.filter(function(c,i){return p.checks["c"+i];}).length;
+  document.getElementById("wbCheckProg").textContent="已完成 "+cdone+" / "+WB_CHECKS.length+" 项";
+  document.getElementById("wbChecks").innerHTML=WB_CHECKS.map(function(c,i){
+    return '<label class="wb-check"><input type="checkbox" data-wbcheck="c'+i+'"'+(p.checks["c"+i]?" checked":"")+'><span>'+c+'</span></label>';}).join("");
+  document.getElementById("wbDoneBanner").innerHTML=(cdone===WB_CHECKS.length)?'<div class="wb-done-banner">✅ 上架前检查完成——最后再人工通读一遍标题、描述和图片，确认与实物一致后再发布。</div>':"";
+  var pc=document.getElementById("wbProfitCalc");
+  if(pc)pc.addEventListener("click",wbProfitRun);
+  var dp=document.getElementById("wbDescPrompt");
+  if(dp)dp.addEventListener("click",function(){
+    var miss=wbMissing(p);
+    var txt="请根据以下真实商品资料，写一份 Mercado Libre 墨西哥站的西班牙语商品描述。要求：地道墨西哥西语、口语化但专业；分段写清卖点、规格、使用场景和包装清单；数字和规格只能用我给的，不要编造品牌、认证或功效；缺的资料标注「待补充」不要猜。\n商品名称："+(p.name||"待补充")+"\n类目："+(p.cat||"待补充")+"\n品牌："+(p.brand||"待补充")+"\n型号："+(p.model||"待补充")+"\n规格："+(p.spec||"待补充")+"\n重量："+(p.weight||"待补充")+"\n尺寸："+(p.size||"待补充")+"\n备注："+(p.note||"无")+(miss.length?"\n（注意：以下必填项还没填："+miss.join("、")+"）":"");
+    copyText(txt);});
+}
+function wbProfitRun(){
+  var p=wbSel?wbGet(wbSel):null;if(!p)return;
+  var pr=p.profit||{};var price=parseFloat(pr.price),rate=parseFloat(pr.rate),fee=parseFloat(pr.fee)||0,ship=parseFloat(pr.ship)||0,cost=parseFloat(p.cost);
+  var out=document.getElementById("wbProfitOut");
+  if(!(price>0&&rate>0&&cost>=0)){out.innerHTML='<span style="color:#b3261e;font-size:13.5px">请先填售价、汇率和上方资料里的采购成本（都要是数字），缺一项算不了。</span>';return;}
+  var revCny=price/rate;var feeCny=revCny*fee/100;var profit=revCny-feeCny-ship-cost;
+  out.innerHTML='<div class="note" style="margin:0">估算：售价折人民币约 <b>'+revCny.toFixed(2)+' 元</b> − 佣金 '+feeCny.toFixed(2)+' 元 − 运费 '+ship.toFixed(2)+' 元 − 采购成本 '+cost.toFixed(2)+' 元 = <b style="color:'+(profit>=0?"#1c6b3a":"#b3261e")+'">单件利润约 '+profit.toFixed(2)+' 元</b>（未含汇损、退货和广告，仅供估算，不承诺收益）。</div>';
+}
+function wbNewProject(){
+  var list=wbLoad();
+  var empty=list.filter(function(p){return !p.name&&wbOverall(p)==="未开始";})[0];
+  if(empty){wbSel=empty.id;wbRender();showToast("已有一个空白项目，先填它，避免重复创建");return;}
+  var p=wbBlank();list.unshift(p);wbSave(list);wbSel=p.id;wbRender();showToast("已新建商品项目，输入即自动保存");
+}
+document.getElementById("wbNew").addEventListener("click",wbNewProject);
+var wbHomeBtn=document.getElementById("wbHomeNew");
+if(wbHomeBtn)wbHomeBtn.addEventListener("click",function(){showTab("bench");wbNewProject();});
+document.getElementById("wbSearch").addEventListener("input",wbRender);
+document.getElementById("wbFilter").addEventListener("change",wbRender);
+document.getElementById("wbList").addEventListener("click",function(e){
+  var b=e.target.closest("[data-wbopen]");if(!b)return;wbSel=b.dataset.wbopen;wbRender();
+  document.getElementById("wbEditor").scrollIntoView({behavior:"smooth",block:"start"});});
+document.querySelectorAll("[data-wbf]").forEach(function(el){
+  el.addEventListener("input",function(){
+    var p=wbSel?wbGet(wbSel):null;if(!p)return;
+    p[el.dataset.wbf]=el.value;p.updated=wbNow();wbPut(p);
+    document.getElementById("wbTimes").textContent="创建："+p.created+" · 最近修改："+p.updated+"（输入即自动保存）";
+    clearTimeout(window._wbT);window._wbT=setTimeout(wbRender,600);});});
+document.getElementById("wbSteps").addEventListener("change",function(e){
+  var sel=e.target.closest("[data-wbstep]");var p=wbSel?wbGet(wbSel):null;if(!p)return;
+  if(sel){p.steps[sel.dataset.wbstep]=sel.value;p.updated=wbNow();wbPut(p);wbRender();}});
+document.getElementById("wbSteps").addEventListener("input",function(e){
+  var inp=e.target.closest("[data-wbp]");var p=wbSel?wbGet(wbSel):null;if(!inp||!p)return;
+  p.profit=p.profit||{};p.profit[inp.dataset.wbp]=inp.value;p.updated=wbNow();wbPut(p);});
+document.getElementById("wbSteps").addEventListener("click",function(e){
+  var b=e.target.closest("[data-wbscroll]");if(!b)return;
+  var t=document.getElementById(b.dataset.wbscroll);if(t)t.scrollIntoView({behavior:"smooth",block:"start"});});
+document.getElementById("wbChecks").addEventListener("change",function(e){
+  var c=e.target.closest("[data-wbcheck]");var p=wbSel?wbGet(wbSel):null;if(!c||!p)return;
+  p.checks[c.dataset.wbcheck]=c.checked;p.updated=wbNow();wbPut(p);wbRender();});
+document.getElementById("wbDelete").addEventListener("click",function(){
+  var p=wbSel?wbGet(wbSel):null;if(!p)return;
+  if(!confirm("确定删除商品项目「"+(p.name||"未命名商品")+"」（"+p.code+"）吗？删除后无法恢复，建议先导出 JSON 备份。"))return;
+  wbSave(wbLoad().filter(function(x){return x.id!==p.id;}));wbSel=null;wbRender();showToast("已删除该项目");});
+document.getElementById("wbExportJson").addEventListener("click",function(){
+  var data=JSON.stringify(wbLoad(),null,2);
+  var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([data],{type:"application/json"}));a.download="ml-workbench-backup.json";document.body.appendChild(a);a.click();a.remove();showToast("已导出 JSON 备份文件");});
+document.getElementById("wbExportCsv").addEventListener("click",function(){
+  var list=wbLoad();if(!list.length){showToast("还没有项目可导出");return;}
+  function q(v){return '"'+String(v==null?"":v).replace(/"/g,'""')+'"';}
+  var rows=[["编号","商品名称","类目","品牌","型号","规格","采购成本CNY","重量","尺寸","供应商","进度%","状态","创建时间","修改时间","备注"].join(",")];
+  list.forEach(function(p){rows.push([p.code,p.name,p.cat,p.brand,p.model,p.spec,p.cost,p.weight,p.size,p.supplier,wbProgress(p),wbOverall(p),p.created,p.updated,p.note].map(q).join(","));});
+  var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+rows.join("\n")],{type:"text/csv"}));a.download="ml-workbench-projects.csv";document.body.appendChild(a);a.click();a.remove();showToast("已导出 CSV");});
+document.getElementById("wbImportBtn").addEventListener("click",function(){document.getElementById("wbImportFile").click();});
+document.getElementById("wbImportFile").addEventListener("change",function(){
+  var f=this.files[0];if(!f)return;
+  var rd=new FileReader();
+  rd.onload=function(){
+    try{
+      var v=JSON.parse(rd.result);
+      var arr=Array.isArray(v)?v:[v];
+      var ok=0;var list=wbLoad();
+      arr.forEach(function(x){
+        if(!x||typeof x!=="object"||(!x.name&&!x.code))return;
+        var p=wbBlank();
+        ["code","name","cat","brand","model","spec","cost","weight","size","supplier","note","created","updated"].forEach(function(k){if(typeof x[k]==="string")p[k]=x[k];});
+        if(x.steps&&typeof x.steps==="object")WB_STEPS.forEach(function(s){if(WB_STATUSES.indexOf(x.steps[s.k])>=0)p.steps[s.k]=x.steps[s.k];});
+        if(x.checks&&typeof x.checks==="object")WB_CHECKS.forEach(function(c,i){p.checks["c"+i]=!!x.checks["c"+i];});
+        if(x.profit&&typeof x.profit==="object")["price","rate","fee","ship"].forEach(function(k){if(typeof x.profit[k]==="string")p.profit[k]=x.profit[k];});
+        list.unshift(p);ok++;});
+      if(!ok){showToast("导入失败：文件里没有有效的商品项目");return;}
+      wbSave(list);showToast("已导入 "+ok+" 个项目");wbRender();
+    }catch(e){showToast("导入失败：不是有效的 JSON 文件");}
+    document.getElementById("wbImportFile").value="";};
+  rd.readAsText(f);});
+wbRender();
 
 /* image optimizer */
 var IO_SCENES={
