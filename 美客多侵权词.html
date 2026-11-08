@@ -550,7 +550,7 @@ section{padding-top:34px}
     </div>
   </section>
     <section class="card" id="sect-profit">
-    <div class="sec-head"><span class="num">🧮</span><div><h2>美客多墨西哥站商品利润计算器 3.0</h2><p>单件利润、利润率、ROI、盈亏平衡、目标售价、多售价对比、批次测试与成本完整度——全部按你填的数字算</p></div></div>
+    <div class="sec-head"><span class="num">🧮</span><div><h2>美客多商品利润计算器 3.0（墨西哥站 / 巴西站）</h2><p>单件利润、利润率、ROI、盈亏平衡、目标售价、多售价对比、批次测试与成本完整度——全部按你填的数字算</p></div></div>
     <div class="note">⚠️ <b>汇率和费率都要自己填、自己确认：</b>汇率默认是<b>示例值</b>，不是实时汇率；平台费用会因商品类目、售价、物流方式及平台政策变化，请以卖家后台实际费用为准。本工具不接官方 API、不自动获取实时数据、不虚构税费。</div>
 
     <div class="pf-modebar">
@@ -1134,6 +1134,8 @@ document.getElementById("imgUrlBtn").addEventListener("click",function(){
 /* title tool */
 var MAT_ES={"不锈钢":"acero inoxidable","硅胶":"silicón","塑料":"plástico","金属":"metal","玻璃":"vidrio","陶瓷":"cerámica","皮革":"cuero","铝合金":"aleación de aluminio","铝":"aluminio","铁":"hierro","竹":"bambú","木":"madera","布":"tela","纸":"papel","橡胶":"goma","尼龙":"nailon","聚酯":"poliéster","棉":"algodón","亚克力":"acrílico"};
 var FUNC_ES={"防水":"impermeable","防滑":"antideslizante","折叠":"plegable","可调节":"ajustable","便携":"portátil","大容量":"gran capacidad","加厚":"grueso","轻便":"ligero","耐用":"durable","易清洗":"fácil de limpiar","收纳":"organizador","旋转":"giratorio","电动":"eléctrico","手动":"manual","无线":"inalámbrico","带盖":"con tapa","多功能":"multifuncional","一次性":"desechable","防潮":"anti humedad","静音":"silencioso"};
+var PROD_ES={"调料架":"especiero","收纳盒":"caja organizadora","置物架":"estante","水杯":"vaso","背包":"mochila","鞋架":"zapatero","雨伞":"paraguas","台灯":"lámpara de mesa","风扇":"ventilador","加湿器":"humidificador"};
+var PROD_PT={"调料架":"porta-temperos","收纳盒":"caixa organizadora","置物架":"prateleira","水杯":"copo","背包":"mochila","鞋架":"sapateira","雨伞":"guarda-chuva","台灯":"luminária de mesa","风扇":"ventilador","加湿器":"umidificador"};
 var MAT_PT={"不锈钢":"aço inoxidável","硅胶":"silicone","塑料":"plástico","金属":"metal","玻璃":"vidro","陶瓷":"cerâmica","皮革":"couro","铝合金":"liga de alumínio","铝":"alumínio","铁":"ferro","竹":"bambu","木":"madeira","布":"tecido","纸":"papel","橡胶":"borracha","尼龙":"nylon","聚酯":"poliéster","棉":"algodão","亚克力":"acrílico"};
 var FUNC_PT={"防水":"impermeável","防滑":"antiderrapante","折叠":"dobrável","可调节":"ajustável","便携":"portátil","大容量":"grande capacidade","加厚":"reforçado","轻便":"leve","耐用":"durável","易清洗":"fácil de limpar","收纳":"organizador","旋转":"giratório","电动":"elétrico","手动":"manual","无线":"sem fio","带盖":"com tampa","多功能":"multifuncional","一次性":"descartável","防潮":"anti umidade","静音":"silencioso"};
 
@@ -1160,7 +1162,7 @@ document.getElementById("tGen").addEventListener("click",function(){
   if(!name){out.innerHTML='<p style="color:var(--red);font-size:14px">先填商品中文名称。</p>';return;}
   var kws=kwRaw?kwRaw.split(/[,，、]/).map(function(s){return s.trim();}).filter(Boolean):[];
   var PT=(document.getElementById("tLang")&&document.getElementById("tLang").value==="pt");var MATD=PT?MAT_PT:MAT_ES,FUNCD=PT?FUNC_PT:FUNC_ES;
-  var matT=trWords(mat,MATD),funcT=trWords(func,FUNCD),nameT=trWords(name,Object.assign({},MATD,FUNCD));
+  var matT=trWords(mat,MATD),funcT=trWords(func,FUNCD),nameT=trWords(name,Object.assign({},MATD,FUNCD,PT?PROD_PT:PROD_ES));
   var core=kws[0]||nameT.text;
   var specES=PT?spec.replace(/(\d+)罐/g,"$1 potes").replace(/(\d+)件套/g,"kit com $1").replace(/(\d+)个装/g,"pacote com $1"):spec.replace(/(\d+)罐/g,"$1 frascos").replace(/(\d+)件套/g,"set de $1").replace(/(\d+)个装/g,"paquete de $1");
   function build(parts){return trim60(cap1(parts.filter(Boolean).join(" ")));}
@@ -1193,11 +1195,11 @@ document.getElementById("tGen").addEventListener("click",function(){
       +'<div style="padding:10px;border:1px solid var(--line);border-radius:10px"><div style="font-size:12px;color:var(--muted)">修改后（标准版）· '+(v1?v1.length:0)+' 字符</div><div style="font-weight:700;margin:4px 0">'+v1+'</div><div style="font-size:13px">'+(scanHits(v1).length?'<span style="color:var(--red)">仍有命中，见上方提醒</span>':'<span style="color:var(--green)">✅ 未命中词表</span>')+'</div></div></div>';
   }
   html+='<b>优化建议</b><ul>';
-  if(!kws.length)html+='<li>没填目标关键词：西语标题只能用名称词典拼装，建议补 1–2 个买家会搜的西语关键词，标题相关性会更好。</li>';
+  if(!kws.length)html+='<li>没填目标关键词：'+(PT?'葡语':'西语')+'标题只能用名称词典拼装，建议补 1–2 个买家会搜的'+(PT?'葡语':'西语')+'关键词，标题相关性会更好。</li>';
   kws.forEach(function(k){var inT=variants.length&&variants[0][1].toLowerCase().indexOf(k.toLowerCase())!==-1;html+='<li>关键词「'+k+'」'+(inT?'已进入标准版标题 ✓':'未进入标准版（可能被 60 字符截断），可手动放到最前面')+'。</li>';});
   if(v1&&v1.length<40)html+='<li>标准版标题偏短（'+v1.length+' 字符）：可以再补一个真实参数或第二个关键词，但不要塞促销词。</li>';
   if(!spec)html+='<li>没填规格：标题里加上容量/数量/尺寸这类真实参数，点击和转化通常更好。</li>';
-  if(misses.length)html+='<li>这些词不在本地词典里，已在标题中跳过或保留原文，请人工确认西语：'+misses.join("、")+'。</li>';
+  if(misses.length)html+='<li>这些词不在本地词典里，已在标题中跳过或保留原文，请人工确认'+(PT?'葡语':'西语')+'：'+misses.join("、")+'。</li>';
   html+='<li>可读性：标题按“产品词在最前、参数在后”排列；不要整句大写，不要重复堆同一个词。</li>';
   html+='</ul><p style="font-size:12.5px;color:var(--muted);margin:6px 0 0">本工具用本地规则和词典拼装，不编造属性；生成结果请对照实物再确认一遍。</p></div>';
   out.innerHTML=html;
@@ -2208,7 +2210,7 @@ function mlrApplySite(){
     var root=document.getElementById(id);if(!root)return;
     var walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:function(n){
       if(!n.nodeValue||(!n.nodeValue.includes("MXN")&&!n.nodeValue.includes("BRL")&&!n.nodeValue.includes("墨西哥")&&!n.nodeValue.includes("巴西")))return NodeFilter.FILTER_REJECT;
-      if(n.parentElement&&n.parentElement.closest("[data-fx]"))return NodeFilter.FILTER_REJECT;
+      if(n.parentElement&&(n.parentElement.closest("[data-fx]")||n.parentElement.closest("select")))return NodeFilter.FILTER_REJECT;
       return NodeFilter.FILTER_ACCEPT;}});
     var nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
     nodes.forEach(function(n){var v=n.nodeValue;pairs.forEach(function(p){v=v.split(p[0]).join(p[1]);});n.nodeValue=v;});
@@ -2236,6 +2238,9 @@ function mlrSetSite(s){
     if(typeof window[fn]==="function"){var orig=window[fn];window[fn]=function(){var r=orig.apply(this,arguments);mlrApplySite();return r;};}
   });
   if(typeof wbBlank==="function"){var _wb=wbBlank;wbBlank=function(){var p=_wb();if(mlrSite()==="br")p.market="巴西";return p;};}
+  var __mlrBusy=false;
+  var __mlrObs=new MutationObserver(function(){if(__mlrBusy)return;__mlrBusy=true;try{mlrApplySite();}catch(e){}setTimeout(function(){__mlrBusy=false;},50);});
+  ["sect-profit","sect-pick","sect-bench"].forEach(function(id){var el=document.getElementById(id);if(el)__mlrObs.observe(el,{subtree:true,childList:true,characterData:true});});
   mlrApplySite();
 })();
 
