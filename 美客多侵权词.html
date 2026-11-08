@@ -276,7 +276,7 @@ section{padding-top:34px}
     <div class="catgrid">
       <div class="catcard"><b>📥 完整词表 CSV</b>37 条风险词 + 替代写法，随时离线对照。<br><button class="btn btn-light" id="csvBtn2" style="margin-top:10px">下载 CSV</button></div>
       <div class="catcard"><b>🔗 分享给卖家朋友</b>好工具值得传出去，朋友避坑也会记得你。<br><button class="btn btn-light" id="shareBtn" style="margin-top:10px">复制网站链接</button><span id="shareHint" style="font-size:12.5px;color:var(--muted);margin-left:8px"></span></div>
-      <div class="catcard"><b>🛠 店铺批量全检 / 定制词表</b>整店标题、图片一次查完，或按你的类目定制词表，加微信聊：<br><span id="contactSlot" style="display:inline-block;margin-top:8px;font-weight:900">微信：待添加</span></div>
+      <div class="catcard"><b>🛠 店铺批量全检 / 定制词表</b>整店标题、图片一次查完，或按你的类目定制词表，加微信聊：<br><span id="contactSlot" style="display:inline-block;margin-top:8px;font-weight:900">微信：czqshy888888</span> <button class="btn btn-light" id="wxCopyBtn" style="padding:6px 12px;font-size:13px">复制微信号</button><span id="wxHint" style="font-size:12.5px;color:var(--muted);margin-left:6px"></span></div>
     </div>
   </section>
 
@@ -494,6 +494,11 @@ document.getElementById("imgUrlBtn").addEventListener("click",function(){
 });
 
 document.getElementById("csvBtn2").addEventListener("click",function(){document.getElementById("csvBtn").click();});
+document.getElementById("wxCopyBtn").addEventListener("click",function(){
+  var hint=document.getElementById("wxHint");
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText("czqshy888888").then(function(){hint.textContent="已复制，打开微信粘贴添加。";}).catch(function(){hint.textContent="手动输入：czqshy888888";});}
+  else{hint.textContent="手动输入：czqshy888888";}
+});
 document.getElementById("shareBtn").addEventListener("click",function(){
   var url="https://chenqinhong63.github.io/mercadolibre-risk-checker/";
   var hint=document.getElementById("shareHint");
