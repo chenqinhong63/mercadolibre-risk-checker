@@ -175,6 +175,18 @@ section{padding-top:34px}
 .pf-modebar .btn.on{background:var(--blue);color:#fff;border-color:var(--blue)}
 .pf-err{background:#fdecea;border:1.5px solid #e57373;color:#b3261e;border-radius:12px;padding:12px;font-weight:700;margin:12px 0}
 .pf-loss{background:#fdecea;border:1.5px solid #b3261e;color:#7f1d1d;border-radius:12px;padding:12px;font-weight:800;margin:12px 0}
+/* ===== 利润计算器 3.0 additions ===== */
+.pf-xrow{display:grid;grid-template-columns:108px 1fr 86px auto;gap:6px;align-items:center}
+@media(max-width:640px){.pf-xrow{grid-template-columns:96px 1fr 78px auto}}
+.pf-xrow select{padding:9px 8px;border:1.5px solid var(--line);border-radius:10px;font-size:14px;background:#fff;font-family:inherit}
+.pf-on{font-size:13px;font-weight:700;white-space:nowrap}
+.pf-on input{width:17px;height:17px;vertical-align:-3px}
+.pf-comp{border:1.5px solid var(--line);border-radius:12px;padding:12px;margin:12px 0;background:#fff}
+.pf-comp h3{margin:0 0 8px;font-size:16px}
+.pf-citem{display:inline-block;border-radius:999px;padding:3px 11px;font-size:12.5px;font-weight:700;margin:2px 4px 2px 0;border:1px solid var(--line)}
+.pf-citem.ok{background:#e2f4e8;color:#1c6b3a;border-color:#81c784}
+.pf-citem.miss{background:#fdecea;color:#b3261e;border-color:#e57373}
+.pf-citem.unconf{background:#fff3cd;color:#8a6d00;border-color:#e0c26a}
 </style>
 </head>
 <body>
@@ -523,9 +535,9 @@ section{padding-top:34px}
       <div class="wb-toolbar"><button class="btn btn-ghost" id="wbDelete" type="button">🗑 删除当前商品项目</button></div>
     </div>
   </section>
-  <section class="card" id="sect-profit">
-    <div class="sec-head"><span class="num">🧮</span><div><h2>美客多墨西哥站商品利润计算器</h2><p>单件利润、利润率、盈亏平衡售价、目标利润售价、多售价对比——全部按你填的数字算，不用平台假数据</p></div></div>
-    <div class="note">⚠️ <b>汇率要自己填：</b>下方汇率默认是<b>示例值</b>，不是实时汇率。平台费用会因商品类目、售价、物流方式及平台政策变化，请以卖家后台实际费用为准。本工具不接官方 API、不自动获取实时数据。</div>
+    <section class="card" id="sect-profit">
+    <div class="sec-head"><span class="num">🧮</span><div><h2>美客多墨西哥站商品利润计算器 3.0</h2><p>单件利润、利润率、ROI、盈亏平衡、目标售价、多售价对比、批次测试与成本完整度——全部按你填的数字算</p></div></div>
+    <div class="note">⚠️ <b>汇率和费率都要自己填、自己确认：</b>汇率默认是<b>示例值</b>，不是实时汇率；平台费用会因商品类目、售价、物流方式及平台政策变化，请以卖家后台实际费用为准。本工具不接官方 API、不自动获取实时数据、不虚构税费。</div>
 
     <div class="pf-modebar">
       <button class="btn btn-light on" id="pfModeNew" type="button">🌱 新手模式（必要项）</button>
@@ -536,13 +548,18 @@ section{padding-top:34px}
       <h3 style="margin:14px 0 6px">1. 商品与售价</h3>
       <div class="wb-grid">
         <div class="wb-field"><label for="pf_name">商品名称</label><input class="search" id="pf_name" placeholder="例如：20 罐旋转调料架"></div>
-        <div class="wb-field"><label for="pf_qty">商品数量（件）</label><input class="search" id="pf_qty" inputmode="numeric" value="1"></div>
+        <div class="wb-field"><label for="pf_qty">商品数量（件，用于批次总利润）</label><input class="search" id="pf_qty" inputmode="numeric" value="1"></div>
         <div class="wb-field"><label>商品采购成本 *</label><div class="pf-row"><input class="search" id="pf_cost" inputmode="decimal" placeholder="例如：45"><select class="search" id="pf_costCur"><option value="CNY">人民币 CNY</option><option value="MXN">比索 MXN</option></select></div></div>
         <div class="wb-field"><label>商品售价 *</label><div class="pf-row"><input class="search" id="pf_price" inputmode="decimal" placeholder="例如：349"><select class="search" id="pf_priceCur"><option value="MXN">比索 MXN</option><option value="CNY">人民币 CNY</option></select></div></div>
         <div class="wb-field"><label for="pf_rate">汇率：1 MXN = ? CNY *</label><input class="search" id="pf_rate" inputmode="decimal" value="0.385"><div class="wb-meta" style="color:#b3261e;font-weight:700">当前为示例汇率，请输入实际汇率。</div></div>
+        <div class="wb-field pf-pro"><label for="pf_rateDate">汇率确认日期</label><input class="search" type="date" id="pf_rateDate"></div>
+        <div class="wb-field pf-pro"><label for="pf_cat">商品类目</label><input class="search" id="pf_cat" placeholder="例如：厨房收纳 / Especieros"></div>
+        <div class="wb-field pf-pro"><label for="pf_shipMode">物流方式</label><select class="search" id="pf_shipMode"><option value="">未选择</option><option>海运</option><option>空运</option><option>陆运</option><option>平台物流（Full 等）</option><option>其他</option></select></div>
+        <div class="wb-field pf-pro"><label for="pf_weight2">包装后重量</label><input class="search" id="pf_weight2" placeholder="例如：1.4 kg（含包装实测）"></div>
+        <div class="wb-field pf-pro"><label for="pf_size2">商品包装尺寸</label><input class="search" id="pf_size2" placeholder="例如：28×18×12 cm（实测）"></div>
       </div>
 
-      <h3 style="margin:16px 0 6px">2. 其他成本（单件，每项都标了币种）</h3>
+      <h3 style="margin:16px 0 6px">2. 其他成本（单件，每项都标了币种，别混算）</h3>
       <div class="wb-grid">
         <div class="wb-field pf-pro"><label>国内运输成本</label><div class="pf-row"><input class="search" id="pf_c_dom" inputmode="decimal" placeholder="0"><select class="search" id="pf_c_domCur"><option value="CNY">CNY</option><option value="MXN">MXN</option></select></div></div>
         <div class="wb-field"><label>国际物流成本</label><div class="pf-row"><input class="search" id="pf_c_intl" inputmode="decimal" placeholder="例如：28"><select class="search" id="pf_c_intlCur"><option value="CNY">CNY</option><option value="MXN">MXN</option></select></div></div>
@@ -551,11 +568,13 @@ section{padding-top:34px}
         <div class="wb-field pf-pro"><label>其他成本</label><div class="pf-row"><input class="search" id="pf_c_other" inputmode="decimal" placeholder="0"><select class="search" id="pf_c_otherCur"><option value="CNY">CNY</option><option value="MXN">MXN</option></select></div></div>
       </div>
 
-      <h3 style="margin:16px 0 6px">3. 平台费用（自己按后台确认，不要凭感觉）</h3>
+      <h3 style="margin:16px 0 6px">3. 平台费用（按卖家后台确认，不要凭感觉）</h3>
       <div class="wb-grid">
-        <div class="wb-field"><label for="pf_feePct">平台佣金 %（按售价比例）</label><input class="search" id="pf_feePct" inputmode="decimal" placeholder="例如：15"></div>
+        <div class="wb-field"><label for="pf_feePct">平台佣金 %（按售价比例计提）</label><input class="search" id="pf_feePct" inputmode="decimal" placeholder="例如：15"><div class="wb-meta">佣金 = 售价 × 佣金%，售价越高佣金金额越高。</div></div>
         <div class="wb-field pf-pro"><label>平台固定费用（单件）</label><div class="pf-row"><input class="search" id="pf_feeFix" inputmode="decimal" placeholder="0"><select class="search" id="pf_feeFixCur"><option value="MXN">MXN</option><option value="CNY">CNY</option></select></div></div>
         <div class="wb-field pf-pro"><label>其他平台费用（单件）</label><div class="pf-row"><input class="search" id="pf_feeOther" inputmode="decimal" placeholder="0"><select class="search" id="pf_feeOtherCur"><option value="MXN">MXN</option><option value="CNY">CNY</option></select></div></div>
+        <div class="wb-field pf-pro"><label for="pf_feeSrc">平台费用来源</label><select class="search" id="pf_feeSrc"><option value="">未记录</option><option>美客多卖家后台</option><option>物流报价</option><option>手动估算</option><option>其他</option></select></div>
+        <div class="wb-field pf-pro"><label for="pf_feeDate">费用确认日期</label><input class="search" type="date" id="pf_feeDate"></div>
       </div>
 
       <h3 style="margin:16px 0 6px">4. 广告费用</h3>
@@ -565,19 +584,22 @@ section{padding-top:34px}
         <div class="wb-field pf-pro" id="pf_adAmtWrap" style="display:none"><label>单件广告成本</label><div class="pf-row"><input class="search" id="pf_adAmt" inputmode="decimal" placeholder="0"><select class="search" id="pf_adAmtCur"><option value="MXN">MXN</option><option value="CNY">CNY</option></select></div></div>
       </div>
       <div class="pf-pro">
-        <h3 style="margin:16px 0 6px">5. ROAS 辅助计算（可选）</h3>
+        <h3 style="margin:16px 0 6px">5. 更多成本项（可按单件金额或售价 %，可关掉不计入）</h3>
+        <p class="wb-meta">注意防重复：同一笔费用只填一处。例如已填在「平台固定费用」里的，就不要再填到下面的清关/税费里重复计算。</p>
+        <div class="wb-grid" id="pfExtras"></div>
+        <h3 style="margin:16px 0 6px">6. ROAS 辅助计算（可选）</h3>
         <div class="wb-grid">
           <div class="wb-field"><label>广告带来的销售额</label><div class="pf-row"><input class="search" id="pf_roasSales" inputmode="decimal" placeholder="例如：5000"><select class="search" id="pf_roasSalesCur"><option value="MXN">MXN</option><option value="CNY">CNY</option></select></div></div>
           <div class="wb-field"><label>广告花费</label><div class="pf-row"><input class="search" id="pf_roasSpend" inputmode="decimal" placeholder="例如：800"><select class="search" id="pf_roasSpendCur"><option value="MXN">MXN</option><option value="CNY">CNY</option></select></div></div>
         </div>
         <p class="wb-meta">ROAS = 广告带来的销售额 ÷ 广告花费。ROAS 越高不一定代表利润越高，还需要结合商品成本、平台费用和其他费用判断。</p>
-        <h3 style="margin:16px 0 6px">6. 目标利润反推售价（可选）</h3>
+        <h3 style="margin:16px 0 6px">7. 目标利润反推售价（可选）</h3>
         <div class="wb-grid">
           <div class="wb-field"><label>目标单件利润</label><div class="pf-row"><input class="search" id="pf_target" inputmode="decimal" placeholder="例如：100"><select class="search" id="pf_targetCur"><option value="MXN">MXN</option><option value="CNY">CNY</option></select></div></div>
         </div>
       </div>
 
-      <h3 style="margin:16px 0 6px">7. 多售价对比（售价单位：MXN 比索，可自己改）</h3>
+      <h3 style="margin:16px 0 6px">8. 多售价对比（售价单位：MXN 比索，可自己改）</h3>
       <div class="wb-grid">
         <div class="wb-field"><label for="pf_p1">保守售价</label><input class="search" id="pf_p1" inputmode="decimal" placeholder="点计算后自动带入，可改"></div>
         <div class="wb-field"><label for="pf_p2">推荐测试售价</label><input class="search" id="pf_p2" inputmode="decimal" placeholder="点计算后自动带入，可改"></div>
@@ -595,6 +617,18 @@ section{padding-top:34px}
       </div>
       <div id="pf_out"></div>
 
+      <div class="pf-pro">
+        <h3 style="margin:18px 0 6px">9. 批次测试成本分析（小批量试卖时用）</h3>
+        <div class="wb-grid">
+          <div class="wb-field"><label for="pf_bQty">计划测试商品数量</label><input class="search" id="pf_bQty" inputmode="numeric" placeholder="例如：100"></div>
+          <div class="wb-field"><label>采购单价</label><div class="pf-row"><input class="search" id="pf_bUnit" inputmode="decimal" placeholder="例如：45"><select class="search" id="pf_bUnitCur"><option value="CNY">CNY</option><option value="MXN">MXN</option></select></div></div>
+          <div class="wb-field"><label>单件物流成本</label><div class="pf-row"><input class="search" id="pf_bShip" inputmode="decimal" placeholder="例如：28"><select class="search" id="pf_bShipCur"><option value="CNY">CNY</option><option value="MXN">MXN</option></select></div></div>
+          <div class="wb-field"><label>其他批次费用（整批一次）</label><div class="pf-row"><input class="search" id="pf_bOther" inputmode="decimal" placeholder="例如：300"><select class="search" id="pf_bOtherCur"><option value="CNY">CNY</option><option value="MXN">MXN</option></select></div></div>
+        </div>
+        <div class="wb-toolbar"><button class="btn btn-light" id="pf_bFill" type="button">带入上方采购成本和国际物流</button><button class="btn btn-yellow" id="pf_bCalc" type="button">计算批次分析</button></div>
+        <div id="pf_batchOut"></div>
+      </div>
+
       <h3 style="margin:18px 0 6px">与上架工作台连接</h3>
       <div class="wb-grid">
         <div class="wb-field"><label for="pf_wbSel">选择工作台商品项目</label><select class="search" id="pf_wbSel"></select></div>
@@ -605,14 +639,15 @@ section{padding-top:34px}
       </div>
       <p class="wb-meta">保存回工作台后，在上架工作台第二步卡片里能看到最近一次测算的单件利润。</p>
 
-      <h3 style="margin:18px 0 6px">已保存的计算结果（本机）</h3>
+      <h3 style="margin:18px 0 6px">已保存的计算结果（本机，可载入继续改）</h3>
       <div id="pf_savedList"></div>
 
       <h3 style="margin:18px 0 6px">新手解释</h3>
-      <details><summary style="cursor:pointer;font-weight:700;color:var(--blue)">什么是利润率？</summary><p style="font-size:14px">利润率 = 单件利润 ÷ 销售收入 × 100%。比如卖 349 比索、赚 66 比索，利润率约 19%。它看的是「每卖 100 块钱能留下多少」，方便横向比不同商品。</p></details>
+      <details><summary style="cursor:pointer;font-weight:700;color:var(--blue)">什么是利润率？和 ROI 有什么区别？</summary><p style="font-size:14px">利润率 = 单件利润 ÷ 销售收入 × 100%，看「每卖 100 块留下多少」。ROI = 单件利润 ÷ 单件总成本 × 100%，看「每投入 100 块成本赚回多少」。两个都算给你，口径不同别混用。</p></details>
       <details><summary style="cursor:pointer;font-weight:700;color:var(--blue)">什么是盈亏平衡售价？</summary><p style="font-size:14px">刚好不赚不亏的最低售价：低于它卖一件亏一件。计算时已经把佣金、广告这类按比例收的费用考虑进去了，所以它比「成本总和」更真实。</p></details>
       <details><summary style="cursor:pointer;font-weight:700;color:var(--blue)">什么是 ROAS？</summary><p style="font-size:14px">ROAS = 广告带来的销售额 ÷ 广告花费。比如花费 800 带来 5000 销售额，ROAS = 6.25。它只看广告效率，不等于利润：成本高的商品 ROAS 很高也可能亏钱，要和单件利润一起看。</p></details>
-      <div class="note" style="margin-top:12px">📌 以上为测算结果，不代表实际成交利润。实际利润还会受汇损、退货、促销折扣和平台政策变化影响。</div>
+      <details><summary style="cursor:pointer;font-weight:700;color:var(--blue)">剩余库存算亏损吗？</summary><p style="font-size:14px">不算。批次分析里把三件事分开看：现金总投入、已售商品的预计利润、剩余库存占用的资金。库存还在手里就是资产占用，只有确定卖不掉或清仓甩卖时，才把差价算作损失。</p></details>
+      <div class="note" style="margin-top:12px">📌 以上为测算结果，不代表实际成交利润。实际利润还会受汇损、退货、促销折扣和平台政策变化影响。本工具不保证利润、销量或商品畅销。</div>
     </div>
   </section>
 <script>
@@ -1195,42 +1230,89 @@ document.getElementById("wbImportFile").addEventListener("change",function(){
   rd.readAsText(f);});
 wbRender();
 
-/* ===== 利润计算器 ===== */
+/* ===== 利润计算器 3.0 ===== */
 var PF_KEY="mlr_profit_calcs";
+var PF_EXTRAS=[
+{k:"ret",t:"退货损耗",hint:"按预估退货率摊到单件的损耗"},
+{k:"promo",t:"促销折扣",hint:"参加促销让利的部分，常用售价 %"},
+{k:"customs",t:"清关费用",hint:"单件分摊的清关费用"},
+{k:"tax",t:"进口税费",hint:"不要凭空编税率，按实际单据填"},
+{k:"ins",t:"保险费用",hint:"货运险等单件分摊"},
+{k:"ops",t:"其他运营成本",hint:"打包、贴标等其他单件运营支出"}];
 function pfCalc(o){
 function f(v,cur){v=parseFloat(v);if(isNaN(v))v=0;return cur==="MXN"?v:v/o.rate;}
 if(!(parseFloat(o.rate)>0))return {error:"汇率必须大于 0，请填你实际使用的汇率（1 MXN =? CNY）。"};
-if(!(parseFloat(o.price)>=0)||o.price===""||o.price===null)return {error:"请填写商品售价（数字）。"};
+if(o.price===""||o.price===null||isNaN(parseFloat(o.price)))return {error:"请填写商品售价（数字）。"};
 if(o.cost===""||o.cost===null||isNaN(parseFloat(o.cost)))return {error:"请填写商品采购成本（数字）。"};
+var negFields=[["售价",o.price],["采购成本",o.cost],["国内运输",o.cDom],["国际物流",o.cIntl],["包装",o.cPack],["仓储",o.cStore],["其他成本",o.cOther],["平台佣金%",o.feePct],["平台固定费用",o.feeFix],["其他平台费用",o.feeOther],["广告%",o.adPct],["单件广告成本",o.adAmt]];
+for(var i=0;i<negFields.length;i++){var nv=parseFloat(negFields[i][1]);if(!isNaN(nv)&&nv<0)return {error:"「"+negFields[i][0]+"」不能填负数，请检查输入。"};}
 var R=f(o.price,o.priceCur);
 var goods=f(o.cost,o.costCur)+f(o.cDom,o.cDomCur)+f(o.cIntl,o.cIntlCur)+f(o.cPack,o.cPackCur)+f(o.cStore,o.cStoreCur)+f(o.cOther,o.cOtherCur);
 var feeFixM=f(o.feeFix,o.feeFixCur)+f(o.feeOther,o.feeOtherCur);
 var feePct=parseFloat(o.feePct)||0;
 var adPct=o.adMode==="A"?(parseFloat(o.adPct)||0):0;
 var adAmtM=o.adMode==="B"?f(o.adAmt,o.adAmtCur):0;
-var pct=(feePct+adPct)/100;
-if(pct>=1)return {error:"平台佣金与广告百分比合计已达到或超过 100%，无法计算盈亏平衡售价，请检查百分比输入。"};
+var xPct=0,xAmt=0;
+(o.extras||[]).forEach(function(x){
+if(!x||!x.on||x.v===""||x.v===null||isNaN(parseFloat(x.v)))return;
+if(parseFloat(x.v)<0)return;
+if(x.mode==="pct")xPct+=parseFloat(x.v);else xAmt+=f(x.v,x.cur);});
+// negative extras check (parse above skips via return in forEach only for that item; do explicit scan)
+var xNeg=(o.extras||[]).some(function(x){return x&&x.on&&!isNaN(parseFloat(x.v))&&parseFloat(x.v)<0;});
+if(xNeg)return {error:"附加成本项不能填负数，请检查输入。"};
+var pct=(feePct+adPct+xPct)/100;
+if(pct>=1)return {error:"按售价比例收取的费用合计已达到或超过 100%（佣金 "+feePct+"% + 广告 "+adPct+"% + 附加 "+xPct+"%），无法计算盈亏平衡售价，请检查百分比输入。"};
+var fixedBase=goods+feeFixM+adAmtM+xAmt;
 function at(priceM){
 var fee=priceM*feePct/100+feeFixM;
 var ad=o.adMode==="A"?priceM*adPct/100:adAmtM;
-var profit=priceM-fee-ad-goods;
-return {rev:priceM,fee:fee,ad:ad,goods:goods,totalCost:fee+ad+goods,profit:profit,margin:priceM>0?profit/priceM*100:null};
+var extra=priceM*xPct/100+xAmt;
+var totalCost=fee+ad+extra+goods;
+var profit=priceM-totalCost;
+return {rev:priceM,fee:fee,ad:ad,extra:extra,goods:goods,totalCost:totalCost,profit:profit,
+margin:priceM>0?profit/priceM*100:null,roi:totalCost>0?profit/totalCost*100:null};
 }
 var main=at(R);
-var be=(goods+feeFixM+adAmtM)/(1-pct);
+var be=fixedBase/(1-pct);
 var targetM=(o.target===""||o.target===null||isNaN(parseFloat(o.target)))?null:f(o.target,o.targetCur);
-var targetPrice=targetM===null?null:(goods+feeFixM+adAmtM+targetM)/(1-pct);
+var targetPrice=targetM===null?null:(fixedBase+targetM)/(1-pct);
 var roas=null;
 if(o.roasSales!==""&&o.roasSales!==null&&o.roasSpend!==""&&o.roasSpend!==null&&!isNaN(parseFloat(o.roasSales))&&!isNaN(parseFloat(o.roasSpend))){
 var sp=f(o.roasSpend,o.roasSpendCur);
 if(sp>0)roas=f(o.roasSales,o.roasSalesCur)/sp;}
 var compare=(o.pricesMxn||[]).map(function(p){p=parseFloat(p);if(isNaN(p)||p<0)return null;var r=at(p);r.price=p;return r;}).filter(Boolean);
-return {R:R,main:main,be:be,targetPrice:targetPrice,roas:roas,compare:compare,rate:parseFloat(o.rate)};
+var qty=parseInt(o.qty)||1;if(qty<1)qty=1;
+var out={R:R,main:main,be:be,targetPrice:targetPrice,roas:roas,compare:compare,rate:parseFloat(o.rate),qty:qty,batchProfit:main.profit*qty,xPct:xPct,xAmt:xAmt};
+if(!isFinite(out.be)||!isFinite(out.main.profit))return {error:"计算结果异常（出现无穷大），请检查汇率和各项输入。"};
+return out;
+}
+function pfCompleteness(o){
+function filled(v){return v!==""&&v!==null&&v!==undefined;}
+function xFilled(k){var x=(o.extras||[]).filter(function(e){return e.k===k;})[0];return!!(x&&x.on&&filled(x.v));}
+var items=[];
+items.push({n:"采购成本",s:filled(o.cost)?"ok":"miss"});
+items.push({n:"国内运输",s:filled(o.cDom)?"ok":"miss"});
+items.push({n:"国际物流",s:filled(o.cIntl)?"ok":"miss"});
+items.push({n:"平台佣金",s:!filled(o.feePct)?"miss":(o.feeSrc?"ok":"unconf")});
+items.push({n:"平台固定费用",s:filled(o.feeFix)?"ok":"miss"});
+items.push({n:"广告成本",s:(o.adMode==="B"?filled(o.adAmt):filled(o.adPct))?"ok":"miss"});
+items.push({n:"汇率",s:!filled(o.rate)?"miss":(o.rateDate?"ok":"unconf")});
+items.push({n:"退货损耗",s:xFilled("ret")?"ok":"miss"});
+items.push({n:"税费",s:xFilled("tax")?"ok":"miss"});
+items.push({n:"其他费用",s:(filled(o.cOther)||filled(o.feeOther)||xFilled("customs")||xFilled("ins")||xFilled("ops"))?"ok":"miss"});
+var keyNames=["采购成本","国际物流","平台佣金","广告成本","汇率"];
+var keyMissing=items.some(function(it){return keyNames.indexOf(it.n)>=0&&it.s==="miss";});
+return {items:items,keyMissing:keyMissing};
 }
 function pfNum(id){var el=document.getElementById(id);return el?el.value.trim():"";}
+function pfExtrasGather(){
+return PF_EXTRAS.map(function(x){
+return {k:x.k,mode:document.getElementById("pf_x_"+x.k+"_mode").value,v:pfNum("pf_x_"+x.k+"_v"),cur:document.getElementById("pf_x_"+x.k+"_cur").value,on:document.getElementById("pf_x_"+x.k+"_on").checked};});
+}
 function pfGather(){
-return {price:pfNum("pf_price"),priceCur:document.getElementById("pf_priceCur").value,qty:parseInt(pfNum("pf_qty"))||1,
-rate:pfNum("pf_rate"),cost:pfNum("pf_cost"),costCur:document.getElementById("pf_costCur").value,
+return {price:pfNum("pf_price"),priceCur:document.getElementById("pf_priceCur").value,qty:pfNum("pf_qty"),
+rate:pfNum("pf_rate"),rateDate:pfNum("pf_rateDate"),cost:pfNum("pf_cost"),costCur:document.getElementById("pf_costCur").value,
+cat:pfNum("pf_cat"),shipMode:document.getElementById("pf_shipMode").value,weight2:pfNum("pf_weight2"),size2:pfNum("pf_size2"),
 cDom:pfNum("pf_c_dom"),cDomCur:document.getElementById("pf_c_domCur").value,
 cIntl:pfNum("pf_c_intl"),cIntlCur:document.getElementById("pf_c_intlCur").value,
 cPack:pfNum("pf_c_pack"),cPackCur:document.getElementById("pf_c_packCur").value,
@@ -1238,10 +1320,12 @@ cStore:pfNum("pf_c_store"),cStoreCur:document.getElementById("pf_c_storeCur").va
 cOther:pfNum("pf_c_other"),cOtherCur:document.getElementById("pf_c_otherCur").value,
 feePct:pfNum("pf_feePct"),feeFix:pfNum("pf_feeFix"),feeFixCur:document.getElementById("pf_feeFixCur").value,
 feeOther:pfNum("pf_feeOther"),feeOtherCur:document.getElementById("pf_feeOtherCur").value,
+feeSrc:document.getElementById("pf_feeSrc").value,feeDate:pfNum("pf_feeDate"),
 adMode:document.getElementById("pf_adMode").value,adPct:pfNum("pf_adPct"),adAmt:pfNum("pf_adAmt"),adAmtCur:document.getElementById("pf_adAmtCur").value,
 target:pfNum("pf_target"),targetCur:document.getElementById("pf_targetCur").value,
 roasSales:pfNum("pf_roasSales"),roasSalesCur:document.getElementById("pf_roasSalesCur").value,
 roasSpend:pfNum("pf_roasSpend"),roasSpendCur:document.getElementById("pf_roasSpendCur").value,
+extras:pfExtrasGather(),
 pricesMxn:[pfNum("pf_p1"),pfNum("pf_p2"),pfNum("pf_p3")]};
 }
 function pfFmt(n){return (Math.round(n*100)/100).toLocaleString("zh-CN",{minimumFractionDigits:2,maximumFractionDigits:2});}
@@ -1249,31 +1333,63 @@ var pfLast=null;
 function pfRender(){
 var o=pfGather();var r=pfCalc(o);var out=document.getElementById("pf_out");
 if(r.error){out.innerHTML='<div class="pf-err">'+r.error+'</div>';pfLast=null;return;}
-pfLast={inputs:o,result:r,name:pfNum("pf_name"),time:wbNow()};
-// auto-fill compare prices if empty
 if(!pfNum("pf_p1")&&!pfNum("pf_p2")&&!pfNum("pf_p3")&&r.R>0){
 document.getElementById("pf_p1").value=Math.round(r.R*0.9);
 document.getElementById("pf_p2").value=Math.round(r.R);
 document.getElementById("pf_p3").value=Math.round(r.R*1.15);
-r=pfCalc(pfGather());pfLast.result=r;}
+o=pfGather();r=pfCalc(o);if(r.error){out.innerHTML='<div class="pf-err">'+r.error+'</div>';pfLast=null;return;}}
+pfLast={inputs:o,result:r,name:pfNum("pf_name"),time:wbNow()};
 var m=r.main;var cny=function(mx){return mx*r.rate;};
 var html="";
 if(m.profit<0)html+='<div class="pf-loss">⚠️ 当前售价下预计亏损，请检查成本或售价。（单件预计亏损 '+pfFmt(Math.abs(m.profit))+' MXN）</div>';
 html+='<div class="pf-cards">'
-+'<div class="pf-card"><div class="pf-k">预计销售收入（单件）</div><div class="pf-v">'+pfFmt(m.rev)+' MXN</div><div class="pf-s">约 '+pfFmt(cny(m.rev))+' CNY</div></div>'
-+'<div class="pf-card"><div class="pf-k">单件总成本</div><div class="pf-v">'+pfFmt(m.totalCost)+' MXN</div><div class="pf-s">商品及物流 '+pfFmt(m.goods)+' · 平台费 '+pfFmt(m.fee)+' · 广告 '+pfFmt(m.ad)+'</div></div>'
-+'<div class="pf-card '+(m.profit>=0?"pos":"neg")+'"><div class="pf-k">单件预计利润</div><div class="pf-v">'+pfFmt(m.profit)+' MXN</div><div class="pf-s">约 '+pfFmt(cny(m.profit))+' CNY'+(o.qty>1?' · '+o.qty+' 件共约 '+pfFmt(m.profit*o.qty)+' MXN':"")+'</div></div>'
-+'<div class="pf-card"><div class="pf-k">利润率</div><div class="pf-v">'+(m.margin===null?"—":pfFmt(m.margin)+" %")+'</div><div class="pf-s">利润 ÷ 销售收入</div></div>'
-+'<div class="pf-card"><div class="pf-k">盈亏平衡售价</div><div class="pf-v">'+pfFmt(r.be)+' MXN</div><div class="pf-s">约 '+pfFmt(cny(r.be))+' CNY · 低于它卖一件亏一件</div></div>'
-+(r.targetPrice!==null?'<div class="pf-card"><div class="pf-k">目标利润对应售价</div><div class="pf-v">'+pfFmt(r.targetPrice)+' MXN</div><div class="pf-s">约 '+pfFmt(cny(r.targetPrice))+' CNY</div></div>':"")
++'<div class="pf-card '+(m.profit>=0?"pos":"neg")+'"><div class="pf-k">1 · 单件预计利润</div><div class="pf-v">'+pfFmt(m.profit)+' MXN</div><div class="pf-s">约 '+pfFmt(cny(m.profit))+' CNY</div></div>'
++'<div class="pf-card"><div class="pf-k">2 · 单件利润率</div><div class="pf-v">'+(m.margin===null?"—":pfFmt(m.margin)+" %")+'</div><div class="pf-s">ROI（利润÷成本）'+(m.roi===null?"—":pfFmt(m.roi)+" %")+'</div></div>'
++'<div class="pf-card"><div class="pf-k">3 · 盈亏平衡售价</div><div class="pf-v">'+pfFmt(r.be)+' MXN</div><div class="pf-s">约 '+pfFmt(cny(r.be))+' CNY · 低于它卖一件亏一件</div></div>'
++(r.targetPrice!==null?'<div class="pf-card"><div class="pf-k">4 · 目标利润对应售价</div><div class="pf-v">'+pfFmt(r.targetPrice)+' MXN</div><div class="pf-s">约 '+pfFmt(cny(r.targetPrice))+' CNY</div></div>':"")
++'<div class="pf-card"><div class="pf-k">5 · 单件总成本</div><div class="pf-v">'+pfFmt(m.totalCost)+' MXN</div><div class="pf-s">商品及物流 '+pfFmt(m.goods)+' · 平台费 '+pfFmt(m.fee)+' · 广告 '+pfFmt(m.ad)+' · 附加 '+pfFmt(m.extra)+'</div></div>'
++'<div class="pf-card"><div class="pf-k">6 · 销售收入 / 批次总利润</div><div class="pf-v">'+pfFmt(m.rev)+' MXN</div><div class="pf-s">单件收入 · '+r.qty+' 件批次总利润约 '+pfFmt(r.batchProfit)+' MXN</div></div>'
 +(r.roas!==null?'<div class="pf-card"><div class="pf-k">广告 ROAS</div><div class="pf-v">'+pfFmt(r.roas)+'</div><div class="pf-s">ROAS 高 ≠ 利润高，结合单件利润看</div></div>':"")
 +'</div>';
+var comp=pfCompleteness(o);
+var okN=comp.items.filter(function(i){return i.s==="ok";}).length;
+var missNames=comp.items.filter(function(i){return i.s==="miss";}).map(function(i){return i.n;});
+html+='<div class="pf-comp"><h3>成本完整度检查（'+okN+' / '+comp.items.length+' 项已填写）</h3>'
++comp.items.map(function(it){return '<span class="pf-citem '+(it.s==="ok"?"ok":(it.s==="unconf"?"unconf":"miss"))+'">'+it.n+'：'+(it.s==="ok"?"已填写":(it.s==="unconf"?"尚未确认":"未填写"))+'</span>';}).join("")
++(missNames.length?'<p class="wb-meta" style="margin-top:8px">可能遗漏的成本：'+missNames.join("、")+'。没发生的费用可以填 0，填 0 也算已确认。</p>':'<p class="wb-meta" style="margin-top:8px">成本项已全部填写或确认为 0。</p>')
++(comp.keyMissing?'<p style="color:#b3261e;font-weight:800;margin:8px 0 0">当前利润仅为初步估算，部分成本尚未确认。</p>':"")
++'<p class="wb-meta" style="margin-top:6px">完整度只提醒哪些成本还没算进去，不代表商品的风险评分。</p></div>';
 if(r.compare.length){
 html+='<h3 style="margin:14px 0 4px">多售价对比（MXN）</h3><table class="pf-table"><tr><th>售价</th><th>销售额</th><th>平台费用</th><th>广告费用</th><th>单件利润</th><th>利润率</th></tr>';
 var labels=["保守售价","推荐测试售价","较高售价"];
 r.compare.forEach(function(c,i){html+='<tr><td>'+labels[i]+' '+pfFmt(c.price)+'</td><td>'+pfFmt(c.rev)+'</td><td>'+pfFmt(c.fee)+'</td><td>'+pfFmt(c.ad)+'</td><td style="font-weight:800;color:'+(c.profit>=0?"#1c6b3a":"#b3261e")+'">'+pfFmt(c.profit)+'</td><td>'+(c.margin===null?"—":pfFmt(c.margin)+" %")+'</td></tr>';});
 html+='</table><p class="wb-meta">哪个价格更合适要结合销量与市场判断，本表不声称哪个最优。</p>';}
-html+='<p class="wb-meta">计算口径：所有金额先按汇率统一换算为 MXN 再计算；佣金和模式 A 广告按售价比例计提。以上为测算结果，不代表实际成交利润。</p>';
+html+='<p class="wb-meta">计算口径：所有金额先按汇率统一换算为 MXN 再计算；佣金、模式 A 广告和按 % 的附加成本都按售价比例计提。以上为测算结果，不代表实际成交利润。</p>';
+out.innerHTML=html;
+}
+function pfBatchRun(){
+var out=document.getElementById("pf_batchOut");
+var o=pfGather();var r=pfCalc(o);
+if(r.error){out.innerHTML='<div class="pf-err">先把上方主计算填好（'+r.error+'）</div>';return;}
+var rate=r.rate;
+function f(v,cur){v=parseFloat(v);if(isNaN(v))v=0;return cur==="MXN"?v:v/rate;}
+var qty=parseInt(pfNum("pf_bQty"))||0;
+if(qty<1){out.innerHTML='<div class="pf-err">请填写计划测试商品数量（至少 1）。</div>';return;}
+var unit=f(pfNum("pf_bUnit"),document.getElementById("pf_bUnitCur").value);
+var ship=f(pfNum("pf_bShip"),document.getElementById("pf_bShipCur").value);
+var other=f(pfNum("pf_bOther"),document.getElementById("pf_bOtherCur").value);
+var buyCost=unit*qty, shipCost=ship*qty, totalIn=buyCost+shipCost+other, avg=totalIn/qty;
+var html='<div class="pf-cards">'
++'<div class="pf-card"><div class="pf-k">批次采购成本</div><div class="pf-v">'+pfFmt(buyCost)+' MXN</div><div class="pf-s">单价 '+pfFmt(unit)+' × '+qty+' 件</div></div>'
++'<div class="pf-card"><div class="pf-k">批次物流成本</div><div class="pf-v">'+pfFmt(shipCost)+' MXN</div><div class="pf-s">单件物流 '+pfFmt(ship)+'</div></div>'
++'<div class="pf-card"><div class="pf-k">批次总投入（现金）</div><div class="pf-v">'+pfFmt(totalIn)+' MXN</div><div class="pf-s">约 '+pfFmt(totalIn*rate)+' CNY · 含其他批次费用 '+pfFmt(other)+'</div></div>'
++'<div class="pf-card"><div class="pf-k">单件平均成本（批次口径）</div><div class="pf-v">'+pfFmt(avg)+' MXN</div><div class="pf-s">总投入 ÷ 数量，不含平台费和广告</div></div>'
++'<div class="pf-card"><div class="pf-k">全部售出预计利润</div><div class="pf-v">'+pfFmt(r.main.profit*qty)+' MXN</div><div class="pf-s">按上方单件利润 × '+qty+' 件</div></div></div>';
+html+='<h3 style="margin:12px 0 4px">库存测试模拟（按售出比例）</h3><table class="pf-table"><tr><th>售出比例</th><th>已售件数</th><th>销售收入 MXN</th><th>已售商品预计利润 MXN</th><th>剩余库存</th><th>库存占用资金 MXN</th></tr>';
+[50,70,90,100].forEach(function(pc){
+var sold=Math.round(qty*pc/100);var remain=qty-sold;
+html+='<tr><td>'+pc+'%</td><td>'+sold+'</td><td>'+pfFmt(sold*r.R)+'</td><td style="font-weight:800;color:'+(r.main.profit>=0?"#1c6b3a":"#b3261e")+'">'+pfFmt(sold*r.main.profit)+'</td><td>'+remain+' 件</td><td>'+pfFmt(remain*avg)+'</td></tr>';});
+html+='</table><p class="wb-meta">注意：剩余库存是还没卖出的货物占用的资金，<b>不等于已经发生的亏损</b>；现金投入、已售利润、库存占用三件事分开看。只有确定卖不掉或清仓时，差价才变成实际损失。</p>';
 out.innerHTML=html;
 }
 function pfSavedLoad(){try{var v=JSON.parse(localStorage.getItem(PF_KEY)||"[]");return Array.isArray(v)?v:[];}catch(e){return[];}}
@@ -1281,13 +1397,35 @@ function pfSavedRender(){
 var list=pfSavedLoad();var box=document.getElementById("pf_savedList");
 if(!list.length){box.innerHTML='<div class="note">还没有保存的计算结果。算完点「💾 保存计算结果」就会留在这里（只存本机浏览器）。</div>';return;}
 box.innerHTML=list.map(function(x,i){
-return '<div class="wb-item" style="cursor:default"><b>'+wbEsc(x.name||"未命名商品")+'</b><div class="wb-meta">'+wbEsc(x.time)+' · 售价 '+pfFmt(x.result.R)+' MXN · 单件利润 <b style="color:'+(x.result.main.profit>=0?"#1c6b3a":"#b3261e")+'">'+pfFmt(x.result.main.profit)+' MXN</b> · 利润率 '+(x.result.main.margin===null?"—":pfFmt(x.result.main.margin)+" %")+' · 盈亏平衡 '+pfFmt(x.result.be)+' MXN</div><button class="btn btn-ghost" type="button" data-pfdel="'+i+'" style="margin-top:6px">删除这条</button></div>';}).join("");
+return '<div class="wb-item" style="cursor:default"><b>'+wbEsc(x.name||"未命名商品")+'</b><div class="wb-meta">'+wbEsc(x.time)+' · 售价 '+pfFmt(x.result.R)+' MXN · 单件利润 <b style="color:'+(x.result.main.profit>=0?"#1c6b3a":"#b3261e")+'">'+pfFmt(x.result.main.profit)+' MXN</b> · 利润率 '+(x.result.main.margin===null?"—":pfFmt(x.result.main.margin)+" %")+' · 盈亏平衡 '+pfFmt(x.result.be)+' MXN</div><button class="btn btn-light" type="button" data-pfload="'+i+'" style="margin-top:6px">载入这条继续改</button> <button class="btn btn-ghost" type="button" data-pfdel="'+i+'" style="margin-top:6px">删除</button></div>';}).join("");
+}
+function pfApply(x){
+var o=x.inputs||{};
+function set(id,v){var el=document.getElementById(id);if(el&&v!==undefined&&v!==null)el.value=v;}
+set("pf_name",x.name);set("pf_qty",o.qty);set("pf_cost",o.cost);set("pf_costCur",o.costCur);set("pf_price",o.price);set("pf_priceCur",o.priceCur);
+set("pf_rate",o.rate);set("pf_rateDate",o.rateDate);set("pf_cat",o.cat);set("pf_shipMode",o.shipMode);set("pf_weight2",o.weight2);set("pf_size2",o.size2);
+set("pf_c_dom",o.cDom);set("pf_c_domCur",o.cDomCur);set("pf_c_intl",o.cIntl);set("pf_c_intlCur",o.cIntlCur);set("pf_c_pack",o.cPack);set("pf_c_packCur",o.cPackCur);
+set("pf_c_store",o.cStore);set("pf_c_storeCur",o.cStoreCur);set("pf_c_other",o.cOther);set("pf_c_otherCur",o.cOtherCur);
+set("pf_feePct",o.feePct);set("pf_feeFix",o.feeFix);set("pf_feeFixCur",o.feeFixCur);set("pf_feeOther",o.feeOther);set("pf_feeOtherCur",o.feeOtherCur);
+set("pf_feeSrc",o.feeSrc);set("pf_feeDate",o.feeDate);
+set("pf_adMode",o.adMode);set("pf_adPct",o.adPct);set("pf_adAmt",o.adAmt);set("pf_adAmtCur",o.adAmtCur);
+document.getElementById("pf_adMode").dispatchEvent(new Event("change"));
+set("pf_target",o.target);set("pf_targetCur",o.targetCur);
+set("pf_roasSales",o.roasSales);set("pf_roasSalesCur",o.roasSalesCur);set("pf_roasSpend",o.roasSpend);set("pf_roasSpendCur",o.roasSpendCur);
+(o.extras||[]).forEach(function(xv){if(!xv)return;set("pf_x_"+xv.k+"_mode",xv.mode);set("pf_x_"+xv.k+"_v",xv.v);set("pf_x_"+xv.k+"_cur",xv.cur);var on=document.getElementById("pf_x_"+xv.k+"_on");if(on)on.checked=!!xv.on;});
+set("pf_p1",(o.pricesMxn||[])[0]);set("pf_p2",(o.pricesMxn||[])[1]);set("pf_p3",(o.pricesMxn||[])[2]);
+pfRender();showToast("已载入这条记录，可继续修改");
 }
 function pfRefreshProjects(){
 var sel=document.getElementById("pf_wbSel");if(!sel)return;
 var list=(typeof wbLoad==="function")?wbLoad():[];
 sel.innerHTML=list.length?list.map(function(p){return '<option value="'+p.id+'">'+wbEsc((p.name||"未命名商品")+"（"+p.code+"）")+'</option>';}).join(""):'<option value="">（工作台还没有项目）</option>';
 }
+(function pfExtrasInit(){
+var box=document.getElementById("pfExtras");if(!box)return;
+box.innerHTML=PF_EXTRAS.map(function(x){
+return '<div class="wb-field"><label>'+x.t+'</label><div class="pf-xrow"><select id="pf_x_'+x.k+'_mode"><option value="pct">按售价 %</option><option value="amt">单件金额</option></select><input class="search" id="pf_x_'+x.k+'_v" inputmode="decimal" placeholder="0"><select id="pf_x_'+x.k+'_cur"><option value="MXN">MXN</option><option value="CNY">CNY</option></select><label class="pf-on"><input type="checkbox" id="pf_x_'+x.k+'_on" checked> 计入</label></div><div class="wb-meta">'+x.hint+'</div></div>';}).join("");
+})();
 document.getElementById("pf_calc").addEventListener("click",pfRender);
 document.getElementById("pfBody").addEventListener("input",function(){clearTimeout(window._pfT);window._pfT=setTimeout(function(){if(pfNum("pf_price")&&pfNum("pf_cost"))pfRender();},500);});
 document.getElementById("pf_adMode").addEventListener("change",function(){
@@ -1301,49 +1439,60 @@ document.getElementById("pfModePro").addEventListener("click",function(){
 document.getElementById("pfBody").classList.remove("pf-beginner");
 this.classList.add("on");document.getElementById("pfModeNew").classList.remove("on");});
 document.getElementById("pf_reset").addEventListener("click",function(){
-["pf_name","pf_cost","pf_price","pf_qty","pf_c_dom","pf_c_intl","pf_c_pack","pf_c_store","pf_c_other","pf_feePct","pf_feeFix","pf_feeOther","pf_adPct","pf_adAmt","pf_roasSales","pf_roasSpend","pf_target","pf_p1","pf_p2","pf_p3"].forEach(function(id){var el=document.getElementById(id);if(el)el.value=(id==="pf_qty")?"1":"";});
-document.getElementById("pf_out").innerHTML="";pfLast=null;showToast("已重置");});
+["pf_name","pf_cost","pf_price","pf_c_dom","pf_c_intl","pf_c_pack","pf_c_store","pf_c_other","pf_feePct","pf_feeFix","pf_feeOther","pf_adPct","pf_adAmt","pf_roasSales","pf_roasSpend","pf_target","pf_p1","pf_p2","pf_p3","pf_cat","pf_weight2","pf_size2","pf_bQty","pf_bUnit","pf_bShip","pf_bOther"].forEach(function(id){var el=document.getElementById(id);if(el)el.value="";});
+PF_EXTRAS.forEach(function(x){var el=document.getElementById("pf_x_"+x.k+"_v");if(el)el.value="";});
+document.getElementById("pf_qty").value="1";
+document.getElementById("pf_out").innerHTML="";document.getElementById("pf_batchOut").innerHTML="";pfLast=null;showToast("已重置");});
 document.getElementById("pf_save").addEventListener("click",function(){
-if(!pfLast){pfRender();if(!pfLast){showToast("请先填好售价和采购成本算一次");return;}}
+pfRender();
+if(!pfLast){showToast("请先填好售价、采购成本和汇率，算成功一次再保存");return;}
 var list=pfSavedLoad();list.unshift(pfLast);list=list.slice(0,30);
 try{localStorage.setItem(PF_KEY,JSON.stringify(list));}catch(e){showToast("保存失败：浏览器存储不可用");return;}
-pfSavedRender();showToast("已保存这条计算结果");});
+pfSavedRender();showToast("已保存这条计算结果（含全部参数）");});
 document.getElementById("pf_savedList").addEventListener("click",function(e){
-var b=e.target.closest("[data-pfdel]");if(!b)return;
-var list=pfSavedLoad();list.splice(parseInt(b.dataset.pfdel),1);
-try{localStorage.setItem(PF_KEY,JSON.stringify(list));}catch(e){}
-pfSavedRender();});
+var ld=e.target.closest("[data-pfload]");var del=e.target.closest("[data-pfdel]");
+var list=pfSavedLoad();
+if(ld){var x=list[parseInt(ld.dataset.pfload)];if(x)pfApply(x);return;}
+if(del){list.splice(parseInt(del.dataset.pfdel),1);try{localStorage.setItem(PF_KEY,JSON.stringify(list));}catch(e){}pfSavedRender();}});
 document.getElementById("pf_copy").addEventListener("click",function(){
 if(!pfLast){showToast("先算一次再复制");return;}
 var r=pfLast.result,m=r.main;
-var txt=""+(pfLast.name||"未命名商品")+"\n售价："+pfFmt(m.rev)+" MXN\n单件总成本："+pfFmt(m.totalCost)+" MXN（商品及物流 "+pfFmt(m.goods)+" / 平台费 "+pfFmt(m.fee)+" / 广告 "+pfFmt(m.ad)+"）\n单件预计利润："+pfFmt(m.profit)+" MXN（约 "+pfFmt(m.profit*r.rate)+" CNY）\n利润率："+(m.margin===null?"—":pfFmt(m.margin)+" %")+"\n盈亏平衡售价："+pfFmt(r.be)+" MXN"+(r.targetPrice!==null?"\n目标利润对应售价："+pfFmt(r.targetPrice)+" MXN":"")+(r.roas!==null?"\n广告 ROAS："+pfFmt(r.roas):"")+"\n（测算结果，不代表实际成交利润）";
+var txt=""+(pfLast.name||"未命名商品")+"\n售价："+pfFmt(m.rev)+" MXN\n单件总成本："+pfFmt(m.totalCost)+" MXN（商品及物流 "+pfFmt(m.goods)+" / 平台费 "+pfFmt(m.fee)+" / 广告 "+pfFmt(m.ad)+" / 附加 "+pfFmt(m.extra)+"）\n单件预计利润："+pfFmt(m.profit)+" MXN（约 "+pfFmt(m.profit*r.rate)+" CNY）\n利润率："+(m.margin===null?"—":pfFmt(m.margin)+" %")+" · ROI："+(m.roi===null?"—":pfFmt(m.roi)+" %")+"\n盈亏平衡售价："+pfFmt(r.be)+" MXN"+(r.targetPrice!==null?"\n目标利润对应售价："+pfFmt(r.targetPrice)+" MXN":"")+"\n数量 "+r.qty+" 件 · 批次总利润约 "+pfFmt(r.batchProfit)+" MXN"+(r.roas!==null?"\n广告 ROAS："+pfFmt(r.roas):"")+"\n（测算结果，不代表实际成交利润）";
 wbCopy(txt);});
 document.getElementById("pf_csv").addEventListener("click",function(){
 var list=pfSavedLoad();if(!list.length){showToast("还没有保存的结果可导出");return;}
 function q(v){return '"'+String(v==null?"":v).replace(/"/g,'""')+'"';}
-var rows=[["时间","商品名称","售价MXN","单件总成本MXN","单件利润MXN","利润率%","盈亏平衡MXN","目标售价MXN","ROAS"].join(",")];
-list.forEach(function(x){var r=x.result;rows.push([x.time,x.name||"",r.R.toFixed(2),r.main.totalCost.toFixed(2),r.main.profit.toFixed(2),r.main.margin===null?"":r.main.margin.toFixed(2),r.be.toFixed(2),r.targetPrice===null?"":r.targetPrice.toFixed(2),r.roas===null?"":r.roas.toFixed(2)].map(q).join(","));});
+var rows=[["时间","商品名称","类目","数量","售价MXN","单件总成本MXN","单件利润MXN","利润率%","ROI%","盈亏平衡MXN","目标售价MXN","ROAS","批次总利润MXN"].join(",")];
+list.forEach(function(x){var r=x.result;rows.push([x.time,x.name||"",(x.inputs||{}).cat||"",r.qty,r.R.toFixed(2),r.main.totalCost.toFixed(2),r.main.profit.toFixed(2),r.main.margin===null?"":r.main.margin.toFixed(2),r.main.roi===null?"":r.main.roi.toFixed(2),r.be.toFixed(2),r.targetPrice===null?"":r.targetPrice.toFixed(2),r.roas===null?"":r.roas.toFixed(2),r.batchProfit.toFixed(2)].map(q).join(","));});
 var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+rows.join("\n")],{type:"text/csv"}));a.download="ml-profit-calcs.csv";document.body.appendChild(a);a.click();a.remove();});
 document.getElementById("pf_json").addEventListener("click",function(){
 var list=pfSavedLoad();if(!list.length){showToast("还没有保存的结果可导出");return;}
 var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(list,null,2)],{type:"application/json"}));a.download="ml-profit-calcs.json";document.body.appendChild(a);a.click();a.remove();});
+document.getElementById("pf_bCalc").addEventListener("click",pfBatchRun);
+document.getElementById("pf_bFill").addEventListener("click",function(){
+document.getElementById("pf_bUnit").value=pfNum("pf_cost");document.getElementById("pf_bUnitCur").value=document.getElementById("pf_costCur").value;
+document.getElementById("pf_bShip").value=pfNum("pf_c_intl");document.getElementById("pf_bShipCur").value=document.getElementById("pf_c_intlCur").value;
+if(!pfNum("pf_bQty"))document.getElementById("pf_bQty").value=pfNum("pf_qty");
+showToast("已带入采购成本和国际物流");});
 document.getElementById("pf_wbLoad").addEventListener("click",function(){
 var id=document.getElementById("pf_wbSel").value;if(!id){showToast("工作台里还没有项目");return;}
 var p=wbGet(id);if(!p)return;
 document.getElementById("pf_name").value=p.name||"";
 if(p.cost){document.getElementById("pf_cost").value=p.cost;document.getElementById("pf_costCur").value="CNY";}
-showToast("已读取项目「"+(p.name||"未命名")+"」的名称和采购成本");});
+if(p.cat)document.getElementById("pf_cat").value=p.cat;
+showToast("已读取项目「"+(p.name||"未命名")+"」的名称、类目和采购成本");});
 document.getElementById("pf_wbSave").addEventListener("click",function(){
 var id=document.getElementById("pf_wbSel").value;if(!id){showToast("先选一个工作台项目");return;}
-if(!pfLast){pfRender();if(!pfLast){showToast("请先算一次再保存回项目");return;}}
+pfRender();if(!pfLast){showToast("请先算一次再保存回项目");return;}
 var p=wbGet(id);if(!p)return;
 var r=pfLast.result,o=pfLast.inputs;
-p.profit={price:String(Math.round(r.R*100)/100),rate:String(Math.round((1/r.rate)*10000)/10000),fee:o.feePct||"",ship:""};
+var shipCny="";
+if(o.cIntl!==""&&!isNaN(parseFloat(o.cIntl))){shipCny=o.cIntlCur==="CNY"?o.cIntl:String(Math.round(parseFloat(o.cIntl)*r.rate*100)/100);}
+p.profit={price:String(Math.round(r.R*100)/100),rate:String(Math.round((1/r.rate)*10000)/10000),fee:o.feePct||"",ship:shipCny};
 p.profitCalc={time:pfLast.time,priceMxn:Math.round(r.R*100)/100,profitMxn:Math.round(r.main.profit*100)/100,margin:r.main.margin===null?null:Math.round(r.main.margin*100)/100,beMxn:Math.round(r.be*100)/100};
 p.steps.s2="已完成";p.updated=wbNow();wbPut(p);
 showToast("已保存回工作台项目，第二步已标为已完成");pfRefreshProjects();});
 pfSavedRender();pfRefreshProjects();
-
 /* image optimizer */
 var IO_SCENES={
  hogar:{label:"家居用品",scenes:["客厅沙发旁的茶几上","卧室床头柜上","厨房台面上，背景有虚化的灶台和橱柜"],scenesEs:["sobre la mesa de centro junto al sofá de la sala","sobre el buró de la recámara","sobre la encimera de la cocina con la estufa desenfocada al fondo"]},
