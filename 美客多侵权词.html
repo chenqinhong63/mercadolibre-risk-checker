@@ -159,7 +159,7 @@ section{padding-top:34px}
   </header>
 
   <nav class="nav" id="tabBar">
-    <a href="#" data-tab="home" class="tab active">🔍 侵权词检测</a><a href="#" data-tab="words" class="tab">📋 侵权词表</a><a href="#" data-tab="title" class="tab">✍️ 标题优化</a><a href="#" data-tab="learn" class="tab">📚 新手学习</a><a href="#" data-tab="skills" class="tab">🤖 AI Skill</a><a href="#" data-tab="coach" class="tab">🎓 教学陪跑</a>
+    <a href="#" data-tab="home" class="tab active">🔍 侵权词检测 · 词表</a><a href="#" data-tab="title" class="tab">✍️ 标题优化</a><a href="#" data-tab="learn" class="tab">📚 新手学习</a><a href="#" data-tab="skills" class="tab">🤖 AI Skill</a><a href="#" data-tab="coach" class="tab">🎓 教学陪跑</a>
   </nav>
   <style>.nav a.tab.active{background:var(--navy);color:#fff;border-color:var(--navy)} @media print{section{display:block!important}}</style>
 
@@ -457,7 +457,7 @@ function runCheck(){
 document.getElementById("checkBtn").addEventListener("click",runCheck);
 
 /* tabs */
-var TABMAP={home:["bpp","checker","brands","banned","checklist","get"],words:["words"],title:["sect-title"],learn:["sect-learn"],skills:["sect-skills"],coach:["sect-coach"]};
+var TABMAP={home:["bpp","checker","words","brands","banned","checklist","get"],title:["sect-title"],learn:["sect-learn"],skills:["sect-skills"],coach:["sect-coach"]};
 function showTab(name){
   Object.keys(TABMAP).forEach(function(k){TABMAP[k].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=(k===name?"":"none");});});
   document.querySelectorAll("#tabBar .tab").forEach(function(a){a.classList.toggle("active",a.dataset.tab===name);});
