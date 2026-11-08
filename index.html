@@ -200,6 +200,10 @@ section{padding-top:34px}
 .pk-bar i{display:block;height:100%;background:#f5b301}
 .pk-subnav{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
 .pk-fav{color:#f5a300;font-size:17px}
+/* ===== 条码助手 ===== */
+.bc-svgwrap{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:16px;text-align:center;overflow-x:auto}
+.bc-svgwrap svg{max-width:100%;height:auto}
+.bc-warn{border:1.5px solid #f5b301;background:#fffbe8;border-radius:12px;padding:12px;font-size:14px}
 </style>
 </head>
 <body>
@@ -248,12 +252,13 @@ section{padding-top:34px}
     <a href="#" data-tab="bench" class="tab">📦 上架工作台</a>
     <a href="#" data-tab="profit" class="tab">🧮 利润计算器</a>
 <a href="#" data-tab="pick" onclick="return false">🎯 选品分析</a>
+<a href="#" data-tab="barcode" onclick="return false">🔢 条码助手</a>
   </nav>
   <style>.nav a.tab.active{background:var(--navy);color:#fff;border-color:var(--navy)} @media print{section{display:block!important}}</style>
 
 
   <section id="sect-core">
-    <div class="sec-head"><span class="num">🧰</span><div><h2>六大核心工具（全部免费）</h2><p>本站所有工具都在浏览器本地运行，免费、无需注册。不会操作可以加微信咨询陪跑（微信号 czqshy888888）。</p></div></div>
+    <div class="sec-head"><span class="num">🧰</span><div><h2>七大核心工具（全部免费）</h2><p>本站所有工具都在浏览器本地运行，免费、无需注册。不会操作可以加微信咨询陪跑（微信号 czqshy888888）。</p></div></div>
     <div class="grid">
       <article class="card"><div class="term">🔍 侵权与合规风险检测</div><p style="font-size:14px;margin:8px 0">标题、描述、商品链接、商品图四种查法，37 条风险词库，中英西三语，带语境判断和风险报告。</p><button class="btn btn-light" data-goto="home" type="button">去检测</button></article>
       <article class="card"><div class="term">✍️ 标题优化</div><p style="font-size:14px;margin:8px 0">本地词典生成 ≤60 字符西语标题，自动过侵权词表，带结构检查和修改前后对比。</p><button class="btn btn-light" data-goto="title" type="button">去优化标题</button></article>
@@ -261,6 +266,7 @@ section{padding-top:34px}
       <article class="card"><div class="term">🎬 视频生成</div><p style="font-size:14px;margin:8px 0">7 种视频类型的脚本和分镜（西语旁白+中文对照），一键生成 Muse 视频提示词。</p><button class="btn btn-light" data-goto="video" type="button">去生成分镜</button></article>
       <article class="card"><div class="term">🧮 利润计算器</div><p style="font-size:14px;margin:8px 0">单件利润、利润率、盈亏平衡售价、目标利润售价和多售价对比，还能读取上架工作台的项目并把结果存回去。</p><button class="btn btn-light" data-goto="profit" type="button">去算利润</button></article>
       <article class="card"><div class="term">🎯 选品分析</div><p style="font-size:14px;margin:8px 0">把你查到的市场、竞品、成本数据整理成候选清单，算利润、打评分、生成诊断和测试计划。</p><button class="btn btn-light" data-goto="pick" type="button">打开选品分析</button></article>
+      <article class="card"><div class="term">🔢 条码助手</div><p style="font-size:14px;margin:8px 0">UPC / EAN / GTIN 格式与校验位检查、条码图片生成、测试编码演示和条码要求核实清单。</p><button class="btn btn-light" data-goto="barcode" type="button">打开条码助手</button></article>
     </div>
   </section>
 
@@ -535,6 +541,12 @@ section{padding-top:34px}
         <div class="wb-field"><label for="wbF_supplier">供应商信息（可选）</label><input class="search" id="wbF_supplier" data-wbf="supplier" placeholder="例如：1688 店铺名 / 货号"></div>
         <div class="wb-field"><label>目标市场</label><input class="search" value="墨西哥（Mercado Libre México）" disabled></div>
       </div>
+      <div class="wb-grid">
+      <div class="wb-field"><label>商品条码</label><input class="search" data-wbf="barcode" placeholder="UPC / EAN 数字"></div>
+      <div class="wb-field"><label>条码类型</label><select class="search" data-wbf="barcodeType"><option value="">未填写</option><option>UPC-A（12 位）</option><option>EAN-13（13 位）</option><option>EAN-8 / UPC-E（8 位）</option><option>GTIN-14（14 位）</option><option>其他</option></select></div>
+      <div class="wb-field"><label>条码检查结果</label><input class="search" data-wbf="barcodeCheck" placeholder="例如：格式与校验位正确"></div>
+      <div class="wb-field"><label>条码备注</label><input class="search" data-wbf="barcodeNote" placeholder="例如：供应商提供，待核对授权"></div>
+      </div>
       <div class="wb-field"><label for="wbF_note">商品备注</label><textarea class="search" id="wbF_note" data-wbf="note" placeholder="例如：等样品到货后实测尺寸；主图已拍，副图待做"></textarea></div>
       <p class="wb-meta" id="wbTimes"></p>
 
@@ -766,6 +778,72 @@ section{padding-top:34px}
     <div class="note">导入说明：CSV 导入后会让你把外部列名对到本站字段（比如外部「标题」→ 商品名称），对不上的可以不导入。本站不会登录你的第三方账号、不需要任何平台密码、不抓取数据。</div>
   </section>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.12.1/JsBarcode.all.min.js"></script>
+  <section class="card" id="sect-barcode">
+    <div class="sec-head"><span class="num">🔢</span><div><h2>美客多商品条码助手</h2><p>UPC / EAN / GTIN 条码基础检查与商品资料辅助</p></div></div>
+    <div class="bc-warn">⚠️ <b>先说清：</b>本工具用于条码格式检查和测试条码演示，<b>不提供商品条码注册服务</b>。格式正确不代表条码真实有效或拥有合法使用权。请通过正规渠道获取商品条码，并以 Mercado Libre 当前商品类目和销售国家要求为准。</div>
+
+    <h3 style="margin:16px 0 6px">1. 条码格式检查（UPC / EAN / GTIN）</h3>
+    <div class="pf-row">
+      <input class="search" id="bc_code" placeholder="输入你的条码，例如 036000291452" style="flex:1">
+      <button class="btn btn-yellow" id="bcCheck" type="button">检查格式</button>
+      <button class="btn btn-light" id="bcCopyCode" type="button">复制编码</button>
+    </div>
+    <p class="wb-meta">支持长度：8 位（EAN-8 / UPC-E）、12 位（UPC-A）、13 位（EAN-13）、14 位（GTIN-14）。检查只看格式和校验位，<b>不能</b>判断这个条码是否真实注册、归谁所有。</p>
+    <div id="bcCheckOut"></div>
+
+    <h3 style="margin:20px 0 6px">2. 条码图片生成（用你自己拥有或已获授权的编码）</h3>
+    <div class="wb-grid">
+      <div class="wb-field"><label for="bc_draw_code">要生成图片的编码</label><input class="search" id="bc_draw_code" placeholder="先在上方检查通过，再生成"></div>
+      <div class="wb-field"><label for="bc_size">打印尺寸</label><select class="search" id="bc_size"><option value="s">小（标签纸常用）</option><option value="m" selected>中</option><option value="l">大</option></select></div>
+      <div class="wb-field"><label for="bc_shownum">显示编码数字</label><select class="search" id="bc_shownum"><option value="1" selected>显示</option><option value="0">不显示</option></select></div>
+    </div>
+    <div class="wb-toolbar">
+      <button class="btn btn-yellow" id="bcDraw" type="button">生成条码图片</button>
+      <button class="btn btn-light" id="bcDownload" type="button">⬇ 下载 PNG 图片</button>
+    </div>
+    <div id="bcDrawNote"></div>
+    <div class="bc-svgwrap" id="bcSvgWrap" style="display:none"><svg id="bcSvg"></svg></div>
+    <p class="wb-meta">条码图由开源库 JsBarcode（MIT 许可证）在你的浏览器本地生成，不上传服务器。14 位 GTIN 没有对应的零售条码制式，本工具用 Code 128 把这串数字画出来，打印前请先用扫码枪/手机实测能否扫出。</p>
+
+    <h3 style="margin:20px 0 6px">3. 测试条码生成（仅供演示）</h3>
+    <div class="pf-row">
+      <select class="search" id="bc_test_type" style="max-width:220px"><option value="upc">UPC-A（12 位）</option><option value="ean">EAN-13（13 位）</option></select>
+      <button class="btn btn-light" id="bcGenTest" type="button">生成一个测试编码</button>
+    </div>
+    <div id="bcTestOut"></div>
+
+    <h3 style="margin:20px 0 6px">4. 美客多条码要求辅助判断（只给核实方向，不编政策）</h3>
+    <div class="wb-grid">
+      <div class="wb-field"><label for="bc_j_country">商品销售国家</label><select class="search" id="bc_j_country"><option>墨西哥</option><option>其他国家</option></select></div>
+      <div class="wb-field"><label for="bc_j_cat">商品类目</label><input class="search" id="bc_j_cat" placeholder="例如：厨房收纳"></div>
+      <div class="wb-field"><label for="bc_j_type">商品类型</label><select class="search" id="bc_j_type"><option>普通商品</option><option>自有品牌商品</option><option>手工作品</option><option>二手商品</option></select></div>
+      <div class="wb-field"><label for="bc_j_has">是否拥有正规商品条码</label><select class="search" id="bc_j_has"><option>有（GS1 正规渠道）</option><option>没有</option><option>不确定</option></select></div>
+      <div class="wb-field"><label for="bc_j_own">是否为自有品牌</label><select class="search" id="bc_j_own"><option>否</option><option>是</option></select></div>
+      <div class="wb-field"><label for="bc_j_nobrand">是否为无品牌商品</label><select class="search" id="bc_j_nobrand"><option>否</option><option>是</option></select></div>
+    </div>
+    <div class="wb-toolbar"><button class="btn btn-yellow" id="bcJudge" type="button">给我核实清单</button></div>
+    <div id="bcJudgeOut"></div>
+
+    <h3 style="margin:20px 0 6px">5. 保存到商品上架工作台</h3>
+    <div class="wb-grid">
+      <div class="wb-field"><label for="bc_wbSel">选择工作台项目</label><select class="search" id="bc_wbSel"></select></div>
+      <div class="wb-field"><label for="bc_note">条码备注</label><input class="search" id="bc_note" placeholder="例如：供应商提供的 EAN，待核对授权"></div>
+    </div>
+    <div class="wb-toolbar"><button class="btn btn-yellow" id="bcSaveWb" type="button">保存条码信息到这个项目</button></div>
+    <p class="wb-meta">保存内容：上方检查的编码、类型、检查结果和这条备注，会写进工作台项目的条码字段（工作台表单里也能直接改）。</p>
+
+    <h3 style="margin:20px 0 6px">6. 新手教学：条码基础知识</h3>
+    <details class="faq"><summary>1. UPC 是什么？</summary><p>UPC（Universal Product Code）是北美常用的商品条码标准，最常见的是 12 位的 UPC-A。美客多墨西哥站的很多类目刊登时会要求填 GTIN 类字段，UPC 就是其中一种。</p></details>
+    <details class="faq"><summary>2. EAN 是什么？</summary><p>EAN（European Article Number）源自欧洲，最常见 13 位（EAN-13），拉美市场也很常见。你从 1688 或本地供应商拿到的商品，很多印的是 EAN-13。</p></details>
+    <details class="faq"><summary>3. GTIN 是什么？</summary><p>GTIN（全球贸易项目代码）是统称：UPC、EAN 都是 GTIN 的具体长度版本（8/12/13/14 位）。平台说「填 GTIN」时，填你商品实际的那种码即可，不要自己改长度。</p></details>
+    <details class="faq"><summary>4. UPC 与 EAN 有什么区别？</summary><p>主要是位数和发源地：UPC-A 12 位、北美为主；EAN-13 13 位、全球更通用。校验位算法是同一套。本站的检查工具两者都支持，生成图片时会自动按长度选制式。</p></details>
+    <details class="faq"><summary>5. 商品条码和平台商品 ID 有什么区别？</summary><p>条码（GTIN）是商品本身的全球身份，印在包装上、跟着商品走；平台商品 ID（如 MLM 开头的刊登编号、目录 ID）是美客多系统内部的编号，只在平台里用。两者不要混填。</p></details>
+    <details class="faq"><summary>6. 为什么随机条码不能随便用于销售？</summary><p>正规条码由 GS1 体系分配给企业，每个码对应特定商品。随便编一个或买来路不明的码，可能撞上别人已注册的商品：轻则刊登被拒、目录匹配错误，重则被投诉冒用、商品下架。用本站测试编码上架属于同类风险。</p></details>
+    <details class="faq"><summary>7. 如何了解正规商品条码的获取方式？</summary><p>正规渠道是 GS1：中国企业一般找中国物品编码中心（GS1 中国）申请厂商识别代码，墨西哥本地公司找 GS1 México；有品牌的找品牌方或供应商要授权使用的条码。具体费用和流程以 GS1 官方公布为准，本站不代办、不卖码。</p></details>
+    <details class="faq"><summary>8. 商品没有条码时应该怎么办？</summary><p>先确认类目要求：到卖家中心按你的类目实际走一遍刊登，看 GTIN 字段是必填、可选还是有「无条码」类选项（不同国家、类目、商品类型可能不同，本站不写死）。普通刊登和目录刊登的要求也可能不一样。实在没有，又确认类目必须要，就走 GS1 正规申请，不要买假码凑数。</p></details>
+  </section>
+
 <script>
 var WORDS=[
  {t:"réplica / replica",cn:"复制品 / 仿品",risk:"high",cat:"brand",why:"等于自认卖假货，是 BPP 投诉与删除+处罚的直接事由。(B: Upseller、Nubimetrics)",alt:"只卖正品；无品牌通用品用自有品牌或无品牌，描述功能即可。",keys:["replica","réplica"],en:"replica / knockoff / counterfeit",enk:["replica", "knockoff", "knock off", "counterfeit", "dupe"],ck:["仿品", "复刻", "仿冒"]},
@@ -933,9 +1011,9 @@ document.getElementById("checkBtn").addEventListener("click",runCheck);
 
 
 /* tabs */
-var TABMAP={home:["sect-core","sect-bench-entry","bpp","checker","sect-free"],title:["sect-title"],imgopt:["sect-img"],video:["sect-video"],coach:["sect-coach"],bench:["sect-bench"],profit:["sect-profit"],pick:["sect-pick"]};
+var TABMAP={home:["sect-core","sect-bench-entry","bpp","checker","sect-free"],title:["sect-title"],imgopt:["sect-img"],video:["sect-video"],coach:["sect-coach"],bench:["sect-bench"],profit:["sect-profit"],pick:["sect-pick"],barcode:["sect-barcode"]};
 function showTab(name){
-  if(name==="desk"&&typeof renderDesk==="function")renderDesk();if(name==="bench"&&typeof wbRender==="function")wbRender();if(name==="profit"&&typeof pfRefreshProjects==="function")pfRefreshProjects();
+  if(name==="desk"&&typeof renderDesk==="function")renderDesk();if(name==="bench"&&typeof wbRender==="function")wbRender();if(name==="profit"&&typeof pfRefreshProjects==="function")pfRefreshProjects();if(name==="barcode"&&typeof bcRefreshProjects==="function")bcRefreshProjects();
   Object.keys(TABMAP).forEach(function(k){TABMAP[k].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=(k===name?"":"none");});});
   document.querySelectorAll("#tabBar .tab").forEach(function(a){a.classList.toggle("active",a.dataset.tab===name);});
   window.scrollTo({top:0,behavior:"smooth"});
@@ -1229,7 +1307,7 @@ function wbLoad(){try{var v=JSON.parse(localStorage.getItem(WB_KEY)||"[]");retur
 function wbSave(list){try{localStorage.setItem(WB_KEY,JSON.stringify(list));}catch(e){showToast("保存失败：浏览器存储不可用或已满");}}
 function wbNow(){var n=new Date();return n.getFullYear()+"-"+String(n.getMonth()+1).padStart(2,"0")+"-"+String(n.getDate()).padStart(2,"0")+" "+String(n.getHours()).padStart(2,"0")+":"+String(n.getMinutes()).padStart(2,"0");}
 function wbCode(){var n=new Date();return "MLM-"+n.getFullYear()+String(n.getMonth()+1).padStart(2,"0")+String(n.getDate()).padStart(2,"0")+"-"+Math.random().toString(36).slice(2,6).toUpperCase();}
-function wbBlank(){var t=wbNow();var p={id:"p"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),code:wbCode(),name:"",cat:"",brand:"",model:"",spec:"",cost:"",weight:"",size:"",supplier:"",note:"",market:"墨西哥",created:t,updated:t,steps:{},checks:{},profit:{price:"",rate:"",fee:"",ship:""}};WB_STEPS.forEach(function(s){p.steps[s.k]="未开始";});return p;}
+function wbBlank(){var t=wbNow();var p={id:"p"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),code:wbCode(),name:"",cat:"",brand:"",model:"",spec:"",cost:"",weight:"",size:"",supplier:"",note:"",barcode:"",barcodeType:"",barcodeCheck:"",barcodeNote:"",market:"墨西哥",created:t,updated:t,steps:{},checks:{},profit:{price:"",rate:"",fee:"",ship:""}};WB_STEPS.forEach(function(s){p.steps[s.k]="未开始";});return p;}
 function wbOverall(p){var done=WB_STEPS.every(function(s){return p.steps[s.k]==="已完成";});if(done)return"已完成";var touched=WB_STEPS.some(function(s){return p.steps[s.k]!=="未开始";})||p.name||p.cat;return touched?"进行中":"未开始";}
 function wbProgress(p){var d=WB_STEPS.filter(function(s){return p.steps[s.k]==="已完成";}).length;return Math.round(d/WB_STEPS.length*100);}
 var wbSel=null;
@@ -1633,6 +1711,127 @@ p.profitCalc={time:pfLast.time,priceMxn:Math.round(r.R*100)/100,profitMxn:Math.r
 p.steps.s2="已完成";p.updated=wbNow();wbPut(p);
 showToast("已保存回工作台项目，第二步已标为已完成");pfRefreshProjects();});
 pfSavedRender();pfRefreshProjects();
+/* ===== 商品条码助手 ===== */
+function bcCheckDigitStr(dataDigits){
+  var sum=0;var w=3;
+  for(var i=dataDigits.length-1;i>=0;i--){sum+=parseInt(dataDigits[i],10)*w;w=(w===3?1:3);}
+  return String((10-(sum%10))%10);
+}
+function bcValidate(raw){
+  raw=(raw===null||raw===undefined)?"":String(raw);
+  var issues=[];
+  var trimmed=raw.trim();
+  if(!trimmed)return {empty:true,issues:["输入是空的，先输入条码再检查。"]};
+  if(/\s/.test(trimmed))issues.push("编码里包含空格：复制时可能多带了空格，下面按去掉空格后的内容检查。");
+  var cleaned=trimmed.replace(/\s/g,"");
+  if(/[^0-9]/.test(cleaned)){issues.push("包含非数字字符：条码只能由数字组成，请核对有没有混入字母或符号。");return {issues:issues,cleaned:cleaned,len:cleaned.length,ok:false,fatal:true};}
+  var len=cleaned.length;
+  var types={8:"EAN-8 / UPC-E（8 位）",12:"UPC-A（12 位）",13:"EAN-13（13 位）",14:"GTIN-14（14 位）"};
+  if(!types[len]){issues.push("长度是 "+len+" 位：本站支持 8 / 12 / 13 / 14 位，这个长度不属于常见零售条码格式。");return {issues:issues,cleaned:cleaned,len:len,ok:false,fatal:true};}
+  var data=cleaned.slice(0,len-1),actual=cleaned[len-1],expected=bcCheckDigitStr(data);
+  var ok=expected===actual;
+  if(!ok)issues.push("校验位不正确：按标准算法，最后一位应该是 "+expected+"，你输入的是 "+actual+"。常见原因是抄错一位，或者这串码本身不是按标准生成的。");
+  return {issues:issues,cleaned:cleaned,len:len,type:types[len],expected:expected,actual:actual,ok:ok};
+}
+var bcLast=null,bcLastSvg=false;
+function bcRenderCheck(){
+  var raw=document.getElementById("bc_code").value;
+  var r=bcValidate(raw);
+  var out=document.getElementById("bcCheckOut");
+  if(r.empty){out.innerHTML='<div class="note">⚠️ '+r.issues[0]+'</div>';bcLast=null;return;}
+  var lines=[];
+  if(r.fatal){lines.push("<b>检查结果：格式有问题</b>");r.issues.forEach(function(x){lines.push("· "+x);});lines.push("下一步建议：核对包装上的条码重新输入；如果这串码来自供应商，让对方发条码照片逐位对。");
+    out.innerHTML='<div class="note" style="white-space:pre-wrap">'+lines.join("\n")+'</div>';bcLast={code:r.cleaned,type:"",ok:false,summary:"格式有问题："+r.issues.join(" ")};return;}
+  lines.push("<b>检查结果："+(r.ok?"✅ 格式和校验位都正确":"❌ 校验位不正确")+"</b>");
+  lines.push("· 编码长度："+r.len+" 位");
+  lines.push("· 判断格式："+r.type);
+  lines.push("· 校验位检查：应为 "+r.expected+"，实际 "+r.actual+" → "+(r.ok?"正确":"错误"));
+  r.issues.forEach(function(x){lines.push("· "+x);});
+  lines.push("· 提醒：格式正确不代表该条码已经合法注册、归你所有，或一定能上架美客多；条码归属本站查不了。");
+  lines.push(r.ok?"下一步建议：可以点下方「生成条码图片」，或保存到工作台项目里。":"下一步建议：先别拿这个码上架，逐位核对包装原文，改对校验位再检查一次。");
+  out.innerHTML='<div class="note" style="white-space:pre-wrap">'+lines.join("\n")+'</div>';
+  bcLast={code:r.cleaned,type:r.type,ok:r.ok,summary:(r.ok?"格式与校验位正确（"+r.type+"）":"校验位错误：应为 "+r.expected+"（"+r.type+"）")};
+  document.getElementById("bc_draw_code").value=r.cleaned;
+}
+document.getElementById("bcCheck").addEventListener("click",bcRenderCheck);
+document.getElementById("bcCopyCode").addEventListener("click",function(){
+  var v=document.getElementById("bc_code").value.trim();if(!v){showToast("先输入编码");return;}wbCopy(v);});
+document.getElementById("bcDraw").addEventListener("click",function(){
+  var code=document.getElementById("bc_draw_code").value.replace(/\s/g,"");
+  var note=document.getElementById("bcDrawNote");
+  var wrap=document.getElementById("bcSvgWrap");
+  if(!code){showToast("先输入要生成图片的编码");return;}
+  var r=bcValidate(code);
+  if(r.fatal||!r.ok){note.innerHTML='<div class="note">⚠️ 这个编码没通过格式检查（'+(r.issues[0]||"格式有误")+'），先改对再生成图片，避免打出扫不出来的条码。</div>';wrap.style.display="none";return;}
+  if(typeof JsBarcode==="undefined"){note.innerHTML='<div class="note">⚠️ 条码生成库加载失败（可能网络问题）。请刷新页面重试；这不是收费问题，库是免费开源的。</div>';return;}
+  var fmt=r.len===12?"UPC":r.len===13?"EAN13":r.len===8?"EAN8":"CODE128";
+  var size=document.getElementById("bc_size").value;
+  var dims={s:{w:2,h:50},m:{w:3,h:80},l:{w:4,h:110}}[size];
+  try{
+    JsBarcode("#bcSvg",code,{format:fmt,displayValue:document.getElementById("bc_shownum").value==="1",width:dims.w,height:dims.h,margin:10,fontSize:16});
+    wrap.style.display="block";bcLastSvg=true;
+    note.innerHTML='<div class="note">✅ 已生成（制式：'+(fmt==="CODE128"?"Code 128（14 位 GTIN 以数字串形式呈现）":fmt)+'）。下载后请先打印一张用手机扫码实测，确认能扫出 '+wbEsc(code)+' 再批量使用。</div>';
+  }catch(e){note.innerHTML='<div class="note">⚠️ 生成失败：'+wbEsc(e.message||"编码与所选制式不匹配")+'。请回上方重新检查编码。</div>';wrap.style.display="none";}
+});
+document.getElementById("bcDownload").addEventListener("click",function(){
+  if(!bcLastSvg){showToast("先生成条码图片再下载");return;}
+  var svg=document.getElementById("bcSvg");
+  var xml=new XMLSerializer().serializeToString(svg);
+  var img=new Image();
+  img.onload=function(){
+    var cv=document.createElement("canvas");cv.width=img.width||600;cv.height=img.height||200;
+    var ctx=cv.getContext("2d");ctx.fillStyle="#ffffff";ctx.fillRect(0,0,cv.width,cv.height);ctx.drawImage(img,0,0);
+    cv.toBlob(function(b){var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="barcode-"+document.getElementById("bc_draw_code").value.replace(/\s/g,"")+".png";document.body.appendChild(a);a.click();a.remove();showToast("已下载条码图片");},"image/png");};
+  img.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(xml);
+});
+document.getElementById("bcGenTest").addEventListener("click",function(){
+  var t=document.getElementById("bc_test_type").value;
+  var n=(t==="upc")?11:12;
+  var data="";for(var i=0;i<n;i++)data+=String(Math.floor(Math.random()*10));
+  if(data[0]==="0")data="1"+data.slice(1);
+  var code=data+bcCheckDigitStr(data);
+  document.getElementById("bcTestOut").innerHTML='<div class="bc-warn">🧪 <b>测试编码：'+code+'</b>（'+(t==="upc"?"UPC-A 12 位":"EAN-13 13 位")+'，校验位是按算法补的，所以格式能通过检查）<br><b>此编码仅供测试或演示，不代表真实注册商品条码，不得直接用于商品销售或平台上架。</b><br><span class="wb-meta">它只是随机数字+正确校验位，没有在 GS1 注册过，也可能和真实商品撞码。</span><div class="wb-toolbar" style="margin:8px 0 0"><button class="btn btn-light" type="button" id="bcTestFill">填入上方检查</button><button class="btn btn-light" type="button" id="bcTestDraw">填入条码图生成</button></div></div>';
+  document.getElementById("bcTestFill").addEventListener("click",function(){document.getElementById("bc_code").value=code;bcRenderCheck();});
+  document.getElementById("bcTestDraw").addEventListener("click",function(){document.getElementById("bc_draw_code").value=code;showToast("已填入条码图生成区（仅供演示）");});
+});
+document.getElementById("bcJudge").addEventListener("click",function(){
+  var country=document.getElementById("bc_j_country").value;
+  var cat=document.getElementById("bc_j_cat").value.trim()||"（未填类目）";
+  var type=document.getElementById("bc_j_type").value;
+  var has=document.getElementById("bc_j_has").value;
+  var own=document.getElementById("bc_j_own").value==="是";
+  var nob=document.getElementById("bc_j_nobrand").value==="是";
+  var L=[];
+  L.push("<b>辅助判断结果（只是核实方向，不是官方结论）</b>");
+  L.push("· 销售国家："+country+"；类目："+cat+"；类型："+type+"。不同国家、类目、商品类型的条码要求可能不同，最终以你实际刊登时卖家中心该类目的字段要求为准。");
+  L.push("· 是否需要查类目条码要求：<b>需要</b>。最可靠的做法：在卖家中心按这个类目真实走一遍刊登流程，看 GTIN/条码字段是必填、可选，还是有无条码选项；目录刊登和普通刊登的要求可能不同。");
+  if(has.indexOf("有")===0)L.push("· 你已有正规条码：准备资料——条码对应的商品信息页/GS1 证书、采购凭证；如果是品牌方的码，还要品牌授权证明。刊登时填的码要和包装上印的一致。");
+  else if(has==="没有")L.push("· 你目前没有正规条码：先按上面方法确认这个类目是否必须要码。确认必须要之后，正规做法是走 GS1 申请（见教学第 7 条），不要买来路不明的码、不要用本站测试编码凑数。");
+  else L.push("· 你对条码来源不确定：先向供应商索要条码来源说明（GS1 证书或品牌授权），查不清来源的码按「没有」处理。");
+  if(own)L.push("· 自有品牌：条码一般用自己公司 GS1 厂商识别代码编制；还没有的，先去 GS1 了解申请，再印包装。");
+  if(nob)L.push("· 无品牌商品：刊登时品牌字段和条码字段怎么处理，各类目不完全一样，同样以刊登页实际提示为准；无品牌不等于可以随便填一个码。");
+  L.push("· 是否确认条码豁免政策：本站<b>不编造</b>美客多有统一的「条码豁免」政策。要确认的是你这个类目当下的刊登要求本身，入口：卖家中心 sellers.mercadolibre.com → 帮助中心，搜索「GTIN」「código de barras」看当前类目的说明。");
+  L.push("· 需要准备的商品资料：商品实物照片（含包装条码面）、采购发票/凭证、品牌授权（如适用）、条码来源说明。");
+  document.getElementById("bcJudgeOut").innerHTML='<div class="note" style="white-space:pre-wrap">'+L.join("\n")+'</div>';
+});
+function bcRefreshProjects(){
+  var sel=document.getElementById("bc_wbSel");if(!sel)return;
+  var list=(typeof wbLoad==="function")?wbLoad():[];
+  var cur=sel.value;
+  sel.innerHTML=list.length?list.map(function(p){return '<option value="'+p.id+'">'+wbEsc(p.code)+" · "+wbEsc(p.name||"未命名商品")+'</option>';}).join(""):'<option value="">（工作台还没有项目）</option>';
+  if(cur)sel.value=cur;
+}
+document.getElementById("bcSaveWb").addEventListener("click",function(){
+  var sel=document.getElementById("bc_wbSel");
+  if(!sel.value){showToast("工作台里还没有项目，先去工作台新建一个");return;}
+  if(!bcLast){showToast("先在上方输入编码并点「检查格式」");return;}
+  var p=wbGet(sel.value);if(!p){showToast("项目不存在了，刷新后再试");return;}
+  p.barcode=bcLast.code;p.barcodeType=bcLast.type||"";p.barcodeCheck=bcLast.summary;p.barcodeNote=document.getElementById("bc_note").value.trim();
+  p.updated=wbNow();wbPut(p);
+  showToast("已保存到项目 "+p.code+"（在工作台表单的条码栏也能看到）");
+});
+bcRefreshProjects();
+
 /* ===== AI 选品分析助手 ===== */
 var PK_KEY="mlr_candidates_v1";
 var PK_GROUPS=[
