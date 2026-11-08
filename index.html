@@ -181,6 +181,14 @@ section{padding-top:34px}
         <button class="btn btn-yellow" id="linkBtn" type="button">🔗 用链接检测</button>
       </div>
       <div id="linkHint" style="font-size:13px;color:#d6d9ff;margin:-4px 0 10px"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:6px;align-items:center">
+        <label class="btn btn-ghost" for="imgFile" style="cursor:pointer;margin:0">🖼 上传商品图识别</label>
+        <input id="imgFile" type="file" accept="image/*" style="display:none"/>
+        <input id="imgUrl" type="url" placeholder="或粘贴商品图链接（mlstatic 图片地址）" style="flex:1;min-width:220px;border-radius:12px;border:0;padding:13px 14px;font:inherit;font-size:15px;color:#111;background:#fff"/>
+        <button class="btn btn-ghost" id="imgUrlBtn" type="button">识别图片链接</button>
+      </div>
+      <div id="imgHint" style="font-size:13px;color:#d6d9ff;margin:0 0 10px"></div>
+      <img id="imgPreview" alt="待识别的商品图预览" style="display:none;max-width:220px;border-radius:10px;margin:0 0 12px;border:1px solid #6b6fd6"/>
       <textarea id="checkInput" placeholder="粘贴你的西语标题 / 描述，例如：Mochila inspirada en Disney oferta envío gratis…"></textarea>
       <div class="row">
         <button class="btn btn-yellow" id="checkBtn">开始检测</button>
@@ -428,6 +436,59 @@ document.getElementById("linkBtn").addEventListener("click",function(){
       setTextAndCheck(desc?(title+"\n"+desc):title);
     }).catch(function(){hint.textContent="商品 "+info.id+"：已读取标题并检测。";setTextAndCheck(title);});
   }).catch(function(){fallback("美客多官方接口需要授权、暂时读不到商品全文，");});
+});
+
+/* image OCR */
+var tessReady=null;
+function loadTesseract(){
+  if(window.Tesseract)return Promise.resolve();
+  if(tessReady)return tessReady;
+  tessReady=new Promise(function(res,rej){
+    var s=document.createElement("script");
+    s.src="https://cdn.jsdelivr.net/npm/tesseract.js@5.0.5/dist/tesseract.min.js";
+    s.onload=res;s.onerror=function(){rej(new Error("cdn"));};
+    document.head.appendChild(s);
+  });
+  return tessReady;
+}
+function showPreview(srcUrl){
+  var p=document.getElementById("imgPreview");
+  p.src=srcUrl;p.style.display="block";
+}
+function ocrDone(text){
+  var hint=document.getElementById("imgHint");
+  var clean=(text||"").replace(/\s+/g," ").trim();
+  if(!clean){hint.textContent="没从这张图里读到文字。图片里的纯 logo、卡通形象（没有文字的）识别不出来，请对照第 6 节第 3、4 条人工看一遍。";return;}
+  hint.textContent="已从图片里识别出文字并自动检测。提醒：没有文字的 logo、卡通/球队形象识别不出来，请再对照第 6 节第 3、4 条人工看一遍。";
+  setTextAndCheck(clean);
+}
+function recognizeImage(source){
+  var hint=document.getElementById("imgHint");
+  hint.textContent="正在加载识别引擎（首次约需几秒）…";
+  loadTesseract().then(function(){
+    return Tesseract.createWorker(["spa","eng"],1,{logger:function(m){
+      if(m.status==="recognizing text")hint.textContent="正在识别图片文字… "+Math.round((m.progress||0)*100)+"%";
+    }});
+  }).then(function(worker){
+    return worker.recognize(source).then(function(r){
+      return worker.terminate().then(function(){return r;});
+    });
+  }).then(function(r){ocrDone(r.data.text);})
+  .catch(function(){hint.textContent="识别没跑起来：可能是网络打不开识别引擎，或图片链接被跨域限制。把图片下载到手机/电脑后，用「上传商品图识别」再试。";});
+}
+document.getElementById("imgFile").addEventListener("change",function(e){
+  var f=e.target.files&&e.target.files[0];
+  if(!f)return;
+  var url=URL.createObjectURL(f);
+  showPreview(url);
+  recognizeImage(url);
+});
+document.getElementById("imgUrlBtn").addEventListener("click",function(){
+  var u=(document.getElementById("imgUrl").value||"").trim();
+  var hint=document.getElementById("imgHint");
+  if(!u){hint.textContent="先粘贴商品图链接，或直接点「上传商品图识别」。";return;}
+  showPreview(u);
+  recognizeImage(u);
 });
 /* CSV */
 document.getElementById("csvBtn").addEventListener("click",function(){
