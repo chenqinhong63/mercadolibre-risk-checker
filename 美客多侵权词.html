@@ -143,7 +143,7 @@ section{padding-top:34px}
     </div>
     <div class="actions" style="margin-top:18px">
       <a class="btn btn-yellow" href="#checker" style="text-decoration:none;background:var(--yellow);color:#111">🔍 立即免费检测</a>
-      <a class="btn btn-light" href="#get" style="text-decoration:none">📥 领取完整词表 / 店铺全检</a>
+      <a class="btn btn-light" href="#get" style="text-decoration:none">🛠 店铺全检 / 定制词表</a>
     </div>
     <p class="note" style="margin-top:16px">⚠️ 美客多没有公开发布过官方“完整黑名单”。本表是按官方规则 + 卖家经验整理的<b>风险合成表，不是官方名单</b>。</p>
 
@@ -172,9 +172,9 @@ section{padding-top:34px}
   </header>
 
   <nav class="nav" id="tabBar">
-    <a href="#" data-tab="home" class="tab active">🔍 侵权词检测 · 词表</a><a href="#" data-tab="title" class="tab">✍️ 标题优化</a>
+    <a href="#" data-tab="home" class="tab active">🔍 侵权词检测器</a><a href="#" data-tab="title" class="tab">✍️ 标题优化</a>
     <a href="#" data-tab="precheck" class="tab">✅ 上架自查</a>
-    <a href="#" data-tab="desk" class="tab">🗂 工作台</a><a href="#" data-tab="imgopt" class="tab">🖼 图片优化</a><a href="#" data-tab="video" class="tab">🎬 视频生成</a><a href="#" data-tab="skills" class="tab">🤖 AI Skill</a><a href="#" data-tab="coach" class="tab">🎓 教学陪跑</a>
+    <a href="#" data-tab="desk" class="tab">🗂 工作台</a><a href="#" data-tab="imgopt" class="tab">🖼 图片优化</a><a href="#" data-tab="video" class="tab">🎬 视频生成</a><a href="#" data-tab="coach" class="tab">🎓 教学陪跑</a>
   </nav>
   <style>.nav a.tab.active{background:var(--navy);color:#fff;border-color:var(--navy)} @media print{section{display:block!important}}</style>
 
@@ -225,33 +225,7 @@ section{padding-top:34px}
     </div>
   </section>
 
-  <section id="words">
-    <div class="sec-head"><span class="num">3</span><div><h2>侵权词总表（37 条）</h2><p>🔴 高风险：删掉不要用。🟠 中风险：避免用，或有证明才用。🟢 注意：看语境。点开卡片里的“为什么危险”看依据。</p></div></div>
-    <div class="filters">
-      <input class="search" id="search" type="search" placeholder="搜索西语词、中文意思或替代写法… 例如 replica、仿品、compatible">
-      <div class="chips" id="riskChips">
-        <button class="chip active" data-risk="all">全部风险</button>
-        <button class="chip" data-risk="high">🔴 高风险</button>
-        <button class="chip" data-risk="med">🟠 中风险</button>
-        <button class="chip" data-risk="low">🟢 注意 / 看语境</button>
-      </div>
-      <div class="chips" id="catChips">
-        <button class="chip active" data-cat="all">全部类型</button>
-        <button class="chip" data-cat="brand">品牌仿冒</button>
-        <button class="chip" data-cat="copy">版权 / 盗版</button>
-        <button class="chip" data-cat="promo">标题促销填充</button>
-        <button class="chip" data-cat="medical">医疗宣称</button>
-        <button class="chip" data-cat="contact">站外 / 图片</button>
-        <button class="chip" data-cat="usage">用法语境</button>
-      </div>
-      <div class="countline" id="countLine"></div>
-      <div class="actions">
-        <button class="btn btn-light" id="csvBtn">⬇ 下载词表 CSV</button>
-        <button class="btn btn-light" onclick="window.print()">🖨 打印 / 存 PDF</button>
-      </div>
-    </div>
-    <div class="grid" id="wordGrid"></div>
-  </section>
+
 
   <section id="brands">
     <div class="sec-head"><span class="num">4</span><div><h2>2026 年执法最紧的品牌</h2><p>不是黑名单，是今年投诉和查扣最集中的对象；任何注册商标同理。</p></div></div>
@@ -305,9 +279,8 @@ section{padding-top:34px}
   </section>
 
   <section id="get">
-    <div class="sec-head"><span class="num">7</span><div><h2>带走完整词表，或让你的店铺一次查完</h2><p>自己一个个查太慢——下面三条路，选一条：</p></div></div>
+    <div class="sec-head"><span class="num">7</span><div><h2>让你的店铺一次查完</h2><p>自己一个个查太慢——下面两条路，选一条：</p></div></div>
     <div class="catgrid">
-      <div class="catcard"><b>📥 完整词表 CSV</b>37 条风险词 + 替代写法，随时离线对照。<br><button class="btn btn-light" id="csvBtn2" style="margin-top:10px">下载 CSV</button></div>
       <div class="catcard"><b>🔗 分享给卖家朋友</b>好工具值得传出去，朋友避坑也会记得你。<br><button class="btn btn-light" id="shareBtn" style="margin-top:10px">复制网站链接</button><span id="shareHint" style="font-size:12.5px;color:var(--muted);margin-left:8px"></span></div>
       <div class="catcard"><b>🛠 店铺批量全检 / 定制词表</b>整店标题、图片一次查完，或按你的类目定制词表，加微信聊：<br><span id="contactSlot" style="display:inline-block;margin-top:8px;font-weight:900">微信：czqshy888888</span> <button class="btn btn-light" id="wxCopyBtn" style="padding:6px 12px;font-size:13px">复制微信号</button><span id="wxHint" style="font-size:12.5px;color:var(--muted);margin-left:6px"></span></div>
     </div>
@@ -331,31 +304,7 @@ section{padding-top:34px}
 
 
 
-<section id="sect-skills">
-<div class="sec-head"><span class="num">🤖</span><div><h2>AI Skill 工具专区</h2><p>把重复运营工作做成可复用的 AI 工作流。每个 Skill 都附一段可直接粘贴给 Muse 的提示词，先免费用起来；完整 Skill 包和定制服务在“教学陪跑”里。</p></div></div>
-<div class="grid">
-<article class="card"><div class="term">🎯 美客多选品 Skill</div><dl>
-<div><dt>功能介绍</dt><dd>按需求、竞争、利润、合规四项给产品方向打分，输出值得测的款和风险点，不编造销量数据。</dd></div>
-<div><dt>适用人群</dt><dd>不知道卖什么、选品靠感觉的新手卖家。</dd></div>
-<div><dt>使用方法</dt><dd>复制下面提示词到 Muse，把换成你的类目和价格带。</dd></div>
-</dl><pre id="prompt1" style="white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:13px;margin:10px 0 0">你是一名美客多墨西哥站选品顾问。类目：，价格带：比索。请按需求、竞争、利润、合规四项打分，给出值得测的 3 个产品方向和每个方向的风险点；不要编造销量数据，没有数据就直接说明。</pre><div class="actions"><button class="btn btn-light" data-copy="prompt1">📋 复制提示词</button></div></article>
-<article class="card"><div class="term">✍️ 美客多 Listing 优化 Skill</div><dl>
-<div><dt>功能介绍</dt><dd>一张产品事实卡，生成西语标题、卖点副图文字、描述和售前问答模板，并做跨内容一致性检查。</dd></div>
-<div><dt>适用人群</dt><dd>上架慢、标题和图片总是返工的卖家。</dd></div>
-<div><dt>使用方法</dt><dd>复制提示词，把产品事实填全——给多少事实，用多少事实。</dd></div>
-</dl><pre id="prompt2" style="white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:13px;margin:10px 0 0">你是美客多墨西哥站 Listing 优化专家。产品事实：。请生成：60 字符内的西语标题（不用 oferta、envío gratis 等填充词）、卖点副图文字（西语）、描述（西语）和售前问答模板；只用我给的事实，不要添加品牌、认证或我没提供的功能。</pre><div class="actions"><button class="btn btn-light" data-copy="prompt2">📋 复制提示词</button></div></article>
-<article class="card"><div class="term">🛡 美客多侵权词检测 Skill</div><dl>
-<div><dt>功能介绍</dt><dd>按商标、版权、医疗宣称、促销填充四类筛标题和描述，给风险等级和合规替代写法。本页面的检测器就是它的在线版。</dd></div>
-<div><dt>适用人群</dt><dd>怕被投诉下架、想上架前自查的卖家。</dd></div>
-<div><dt>使用方法</dt><dd>在本页检测器直接查，或复制提示词到 Muse 批量查。</dd></div>
-</dl><pre id="prompt3" style="white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:13px;margin:10px 0 0">你是美客多墨西哥站合规审核员。下面是我的标题/描述：。请按高/中/低风险列出可能涉及商标、版权、医疗宣称、促销填充的词，给出合规替代写法；并说明这只是风险提示，不代表官方审核结果。</pre><div class="actions"><button class="btn btn-light" data-copy="prompt3">📋 复制提示词</button></div></article>
-<article class="card"><div class="term">🖼 美客多商品图片美工 Skill</div><dl>
-<div><dt>功能介绍</dt><dd>从一张主图规划整套卖点副图：一图一个卖点，附墨西哥西语文案；规格 1:1、推荐 1200×1200。</dd></div>
-<div><dt>适用人群</dt><dd>没有美工、副图靠拼凑的卖家。</dd></div>
-<div><dt>使用方法</dt><dd>复制提示词，附上产品图和真实参数，让 Muse 先出图组规划再做图。</dd></div>
-</dl><pre id="prompt4" style="white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:13px;margin:10px 0 0">你是美客多商品视觉设计师。产品：，真实参数：。请规划主图 + 副图共 8–12 张（1:1，1200×1200），一图一个卖点，写明每张图的西语文案和画面元素；不得使用品牌 logo、水印、促销文字和联系方式。</pre><div class="actions"><button class="btn btn-light" data-copy="prompt4">📋 复制提示词</button></div></article>
-</div>
-</section>
+
 
 <section id="sect-coach">
 <div class="sec-head"><span class="num">🎓</span><div><h2>教学陪跑</h2><p>不只给工具文件，而是把你店里最耗时的重复工作做成可复用的 AI 工作流，陪你落地。本站暂不在线收款：先微信沟通需求，确认后走闲鱼下单，价格以闲鱼商品页为准。</p></div></div>
@@ -618,27 +567,7 @@ var WORDS=[
 var riskLabel={high:"🔴 高风险",med:"🟠 中风险",low:"🟢 注意"};
 var riskClass={high:"b-high",med:"b-med",low:"b-low"};
 var catLabel={brand:"品牌仿冒",copy:"版权 / 盗版",promo:"标题促销填充",medical:"医疗宣称",contact:"站外 / 图片",usage:"用法语境"};
-var state={risk:"all",cat:"all",q:""};
-function render(){
-  var grid=document.getElementById("wordGrid");
-  var list=WORDS.filter(function(w){
-    if(state.risk!=="all"&&w.risk!==state.risk)return false;
-    if(state.cat!=="all"&&w.cat!==state.cat)return false;
-    if(state.q){var s=(w.t+" "+w.cn+" "+(w.en||"")+" "+w.why+" "+w.alt).toLowerCase(); if(s.indexOf(state.q.toLowerCase())===-1)return false;}
-    return true;
-  });
-  document.getElementById("countLine").textContent="显示 "+list.length+" / "+WORDS.length+" 条";
-  if(!list.length){grid.innerHTML='<div class="empty">没有匹配的词条，换个关键词试试。</div>';return;}
-  grid.innerHTML=list.map(function(w){
-    return '<article class="card"><div class="card-top"><div><div class="term">'+w.t+'</div><div class="cn">'+w.cn+(w.en?'<br>EN: '+w.en:'')+'</div></div><span class="cat">'+catLabel[w.cat]+'</span></div>'+
-    '<div style="margin-top:10px"><span class="badge '+riskClass[w.risk]+'">'+riskLabel[w.risk]+'</span></div>'+
-    '<dl><div class="alt"><dt>✅ 改成这样</dt><dd>'+w.alt+'</dd></div></dl><details style="margin-top:8px"><summary style="font-size:12.5px;color:var(--muted);cursor:pointer">为什么危险</summary><div style="font-size:13px;color:var(--muted);margin-top:4px">'+w.why+'</div></details></article>';
-  }).join("");
-}
-document.getElementById("search").addEventListener("input",function(e){state.q=e.target.value.trim();render();});
-document.getElementById("riskChips").addEventListener("click",function(e){var b=e.target.closest("[data-risk]");if(!b)return;state.risk=b.dataset.risk;document.querySelectorAll("#riskChips .chip").forEach(function(c){c.classList.toggle("active",c===b)});render();});
-document.getElementById("catChips").addEventListener("click",function(e){var b=e.target.closest("[data-cat]");if(!b)return;state.cat=b.dataset.cat;document.querySelectorAll("#catChips .chip").forEach(function(c){c.classList.toggle("active",c===b)});render();});
-render();
+
 /* checker */
 function norm(s){return s.toLowerCase();}
 document.getElementById("checkSample").addEventListener("click",function(){
@@ -739,7 +668,7 @@ document.getElementById("checkBtn").addEventListener("click",runCheck);
 
 
 /* tabs */
-var TABMAP={home:["sect-core","bpp","checker","words","brands","banned","checklist","get","sect-free","sect-faq"],title:["sect-title"],precheck:["sect-precheck"],desk:["sect-desk"],imgopt:["sect-img"],video:["sect-video"],skills:["sect-skills"],coach:["sect-coach"]};
+var TABMAP={home:["sect-core","bpp","checker","brands","banned","checklist","get","sect-free","sect-faq"],title:["sect-title"],precheck:["sect-precheck"],desk:["sect-desk"],imgopt:["sect-img"],video:["sect-video"],coach:["sect-coach"]};
 function showTab(name){
   if(name==="desk"&&typeof renderDesk==="function")renderDesk();
   Object.keys(TABMAP).forEach(function(k){TABMAP[k].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=(k===name?"":"none");});});
@@ -869,7 +798,6 @@ document.getElementById("imgUrlBtn").addEventListener("click",function(){
   recognizeImage(u);
 });
 
-document.getElementById("csvBtn2").addEventListener("click",function(){document.getElementById("csvBtn").click();});
 document.getElementById("wxCopyBtn").addEventListener("click",function(){
   var hint=document.getElementById("wxHint");
   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText("czqshy888888").then(function(){hint.textContent="已复制，打开微信粘贴添加。";}).catch(function(){hint.textContent="手动输入：czqshy888888";});}
@@ -1227,6 +1155,9 @@ if(v.voice==="none")s.narr=["（无旁白）","（无旁白）"];
 if(v.voice==="custom"&&v.voiceCustom[i])s.narr=[v.voiceCustom[i],"（自定义旁白）"];
 s.sub=v.sub==="none"?"—":s.narr[0];
 });
+/* 15 秒时四舍五入会让结尾镜头只剩 1 秒：从最长的镜头借 1 秒补到结尾，保证每镜 ≥2 秒、合计仍等于所选时长。 */
+var lastSh=shots[shots.length-1];
+if(lastSh.dur<2){var bigSh=shots[0];shots.forEach(function(s){if(s!==lastSh&&s.dur>bigSh.dur)bigSh=s;});if(bigSh.dur>2){bigSh.dur--;lastSh.dur++;}}
 return {v:v,scene:scene,matEs:matEs,shots:shots};
 }
 function vdRender(plan){
@@ -1254,7 +1185,7 @@ L.push("");
 plan.shots.forEach(function(s,i){L.push("镜头 "+(i+1)+"（"+s.dur+" 秒）："+s.view+"｜角度："+s.angle+"｜运镜："+s.move+"｜旁白："+s.narr[0]);});
 L.push("");
 L.push("全片商品外观、颜色、结构、品牌、型号、配件数量必须与参考素材完全一致，前后镜头不得变化；不得虚构配件和功能；不得出现价格、促销字样、联系方式和水印。");
-L.push("商品变形，结构改变，颜色漂移，多余配件，虚构功能，错误文字，乱码字幕，水印，联系方式，价格标签，低清晰度，镜头抖动。");
+L.push("负面提示词（画面里不要出现）：商品变形，结构改变，颜色漂移，多余配件，虚构功能，错误文字，乱码字幕，水印，联系方式，价格标签，低清晰度，镜头抖动。");
 document.getElementById("vdPrompt").textContent=L.join("\n");
 document.getElementById("vdPromptWrap").classList.add("show");
 vdLastPlan={plan:plan,prompt:L.join("\n")};
@@ -1358,14 +1289,6 @@ document.addEventListener("DOMContentLoaded",function(){
   if(fb&&fp)fb.addEventListener("click",function(){fp.classList.toggle("open");});
 });
 showTab("home");
-/* CSV */
-document.getElementById("csvBtn").addEventListener("click",function(){
-  function q(s){return '"'+String(s).replace(/"/g,'""')+'"';}
-  var rows=[["风险等级","西语词条","中文意思","类型","为什么危险","替代写法"]];
-  WORDS.forEach(function(w){rows.push([riskLabel[w.risk],w.t,w.cn,catLabel[w.cat],w.why,w.alt]);});
-  var csv="\ufeff"+rows.map(function(r){return r.map(q).join(",")}).join("\n");
-  var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="mercadolibre-mexico-ip-words.csv";document.body.appendChild(a);a.click();a.remove();
-});
 </script>
 
 <style>
