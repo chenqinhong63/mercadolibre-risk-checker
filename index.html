@@ -162,7 +162,7 @@ section{padding-top:34px}
   <nav class="nav" id="tabBar">
     <a href="#" data-tab="home" class="tab active">🔍 侵权词检测 · 词表</a><a href="#" data-tab="title" class="tab">✍️ 标题优化</a>
     <a href="#" data-tab="precheck" class="tab">✅ 上架自查</a>
-    <a href="#" data-tab="desk" class="tab">🗂 工作台</a><a href="#" data-tab="skills" class="tab">🤖 AI Skill</a><a href="#" data-tab="coach" class="tab">🎓 教学陪跑</a>
+    <a href="#" data-tab="desk" class="tab">🗂 工作台</a><a href="#" data-tab="imgopt" class="tab">🖼 图片优化</a><a href="#" data-tab="skills" class="tab">🤖 AI Skill</a><a href="#" data-tab="coach" class="tab">🎓 教学陪跑</a>
   </nav>
   <style>.nav a.tab.active{background:var(--navy);color:#fff;border-color:var(--navy)} @media print{section{display:block!important}}</style>
 
@@ -392,6 +392,58 @@ section{padding-top:34px}
     <button class="btn btn-ghost" id="deskClearDescs" type="button">清空描述草稿</button>
   </section>
 
+
+  <section class="card" id="sect-img">
+    <h2 style="margin-top:0">🖼 AI 商品图片优化器</h2>
+    <p class="sub">流程：① 上传图片 → ② 填商品信息 → ③ 选优化类型生成提示词 → ④ 复制到 Muse 里生成/优化图片 → ⑤ 把新图传回来对比检查。<br>说明：本站是静态页面、没有接 AI 接口，所以<b>图片诊断分两部分</b>：尺寸、文件大小、清晰度估算、背景亮度是浏览器本地实测；主体突出、变形、侵权元素这类要靠人眼和 Muse 看图判断，本模块会给你检查清单和现成的诊断提示词，不会假装机器全都能识别。</p>
+
+    <h3>第一步：上传商品图片（JPG / PNG / WEBP）</h3>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <label class="btn btn-ghost" for="ioFile" style="cursor:pointer;margin:0">📤 上传图片</label>
+      <input id="ioFile" type="file" accept="image/jpeg,image/png,image/webp" style="display:none">
+      <span id="ioFileName" style="font-size:13px;color:#666">未选择图片</span>
+    </div>
+    <img id="ioPreview" alt="商品图预览" style="display:none;max-width:280px;border-radius:10px;margin:12px 0;border:1px solid #ddd">
+    <div id="ioDiag"></div>
+
+    <h3 style="margin-top:22px">第二步：填写商品真实信息（提示词只用你填的内容，不编造）</h3>
+    <input class="search" id="ioName" placeholder="商品名称（中文），例如：20罐旋转调料架">
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <select id="ioCat" style="flex:1;min-width:160px;padding:12px;border-radius:12px;border:1px solid #ddd;font:inherit">
+        <option value="hogar">家居用品</option><option value="auto">汽车用品</option><option value="outdoor">户外用品</option><option value="elec">电子产品</option><option value="belleza">美妆个护</option><option value="moda">服饰鞋包</option><option value="otro">其他</option>
+      </select>
+      <input class="search" id="ioBrand" style="flex:1;min-width:160px" placeholder="品牌情况：无品牌 / 自有品牌 / 已授权（填一个）">
+    </div>
+    <input class="search" id="ioMat" placeholder="材质（中文），例如：不锈钢+PP塑料">
+    <input class="search" id="ioSpec" placeholder="规格/尺寸（实测），例如：直径27cm 高28cm，20罐">
+    <textarea id="ioPoints" rows="3" placeholder="核心卖点（一行一个，只写真实卖点），例如：&#10;360度旋转，拿取方便&#10;透明罐身，余量看得见"></textarea>
+    <input class="search" id="ioParts" placeholder="包装包含什么（做包装图用），例如：主机×1、调料罐×20、标签贴×1套">
+
+    <h3 style="margin-top:22px">第三步：生成 Muse 提示词</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn" data-ioprompt="main" type="button">生成主图优化提示词</button>
+      <button class="btn btn-light" data-ioprompt="points" type="button">生成卖点图提示词</button>
+      <button class="btn btn-light" data-ioprompt="scene" type="button">生成场景图提示词</button>
+      <button class="btn btn-light" data-ioprompt="size" type="button">生成尺寸图提示词</button>
+      <button class="btn btn-light" data-ioprompt="diag" type="button">生成图片诊断提示词</button>
+    </div>
+    <div class="result" id="ioOutWrap"><div class="result-box" style="background:var(--surface);border:1px solid var(--line);color:var(--ink)"><pre id="ioOut" style="white-space:pre-wrap;font-size:13.5px;margin:0"></pre><div style="margin-top:10px"><button class="btn btn-light" id="ioCopy" type="button">📋 复制提示词</button></div></div></div>
+
+    <h3 style="margin-top:22px">第四步：图片合规自查（人工判断题，如实选）</h3>
+    <div id="ioRiskList"></div>
+    <div class="row" style="margin-top:10px"><button class="btn" id="ioRiskGen" type="button">生成图片合规小报告</button></div>
+    <div class="result" id="ioRiskResult"><div id="ioRiskBox"></div></div>
+
+    <h3 style="margin-top:22px">第五步：优化前后对比</h3>
+    <p class="sub">把 Muse 优化后的图片传到这里，和第一步的原图并排对比（尺寸、大小、清晰度估算都是本地实测）。</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <label class="btn btn-ghost" for="ioFile2" style="cursor:pointer;margin:0">📤 上传优化后的图片</label>
+      <input id="ioFile2" type="file" accept="image/jpeg,image/png,image/webp" style="display:none">
+      <button class="btn btn-light" id="ioCompare" type="button">对比两张图</button>
+    </div>
+    <div id="ioCompareOut"></div>
+  </section>
+
     <div class="foot">本站是卖家自建工具，不是美客多官方产品。本页为卖家自查参考，不构成法律意见；词表为风险合成表、非官方黑名单，个别词的风险等级为依据投诉流程的推断（C 级，已在词表中标注）。拿不准的 SKU，先备齐发票与授权，再上架。</div>
   </section>
 </div>
@@ -560,7 +612,7 @@ document.getElementById("checkBtn").addEventListener("click",runCheck);
 
 
 /* tabs */
-var TABMAP={home:["bpp","checker","words","brands","banned","checklist","get"],title:["sect-title"],precheck:["sect-precheck"],desk:["sect-desk"],skills:["sect-skills"],coach:["sect-coach"]};
+var TABMAP={home:["bpp","checker","words","brands","banned","checklist","get"],title:["sect-title"],precheck:["sect-precheck"],desk:["sect-desk"],imgopt:["sect-img"],skills:["sect-skills"],coach:["sect-coach"]};
 function showTab(name){
   if(name==="desk"&&typeof renderDesk==="function")renderDesk();
   Object.keys(TABMAP).forEach(function(k){TABMAP[k].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=(k===name?"":"none");});});
@@ -860,6 +912,128 @@ document.getElementById("deskClearFavs").addEventListener("click",function(){lsS
 document.getElementById("deskClearTitles").addEventListener("click",function(){lsSet("mlr_titles",[]);renderDesk();});
 document.getElementById("deskClearDescs").addEventListener("click",function(){lsSet("mlr_descs",[]);renderDesk();});
 renderDesk();
+/* image optimizer */
+var IO_SCENES={
+ hogar:{label:"家居用品",scenes:["客厅沙发旁的茶几上","卧室床头柜上","厨房台面上，背景有虚化的灶台和橱柜"],scenesEs:["sobre la mesa de centro junto al sofá de la sala","sobre el buró de la recámara","sobre la encimera de la cocina con la estufa desenfocada al fondo"]},
+ auto:{label:"汽车用品",scenes:["真实家用车驾驶位/中控台旁","汽车后备箱内","家庭车库中"],scenesEs:["junto a la consola central de un auto familiar real","dentro de la cajuela de un auto","en un garaje familiar"]},
+ outdoor:{label:"户外用品",scenes:["庭院草坪上","露营地帐篷旁","公园野餐垫上"],scenesEs:["sobre el césped de un patio","junto a una tienda de campaña en un campamento","sobre una manta de picnic en un parque"]},
+ elec:{label:"电子产品",scenes:["书桌办公场景，旁边有笔记本电脑","客厅电视柜旁","手持使用的近景特写"],scenesEs:["en un escritorio junto a una laptop","junto al mueble de TV de la sala","primer plano en la mano de una persona usándolo"]},
+ belleza:{label:"美妆个护",scenes:["浴室镜柜前","梳妆台上，自然光","简洁的浅色背景特写"],scenesEs:["frente al espejo del baño","sobre un tocador con luz natural","primer plano sobre fondo claro y limpio"]},
+ moda:{label:"服饰鞋包",scenes:["日常街景中的真人上身效果","衣柜/衣架旁的平铺展示","户外日常出行场景"],scenesEs:["puesto por una persona en una calle cotidiana","presentación en plano junto a un clóset","en una salida cotidiana al aire libre"]},
+ otro:{label:"其他",scenes:["与商品用途相关的真实生活场景","干净的浅色环境中"],scenesEs:["en un entorno real relacionado con el uso del producto","en un ambiente claro y limpio"]}
+};
+function ioMetrics(img,file,done){
+  var max=256;var scale=Math.min(1,max/Math.max(img.naturalWidth,img.naturalHeight));
+  var w=Math.max(8,Math.round(img.naturalWidth*scale)),h=Math.max(8,Math.round(img.naturalHeight*scale));
+  var cv=document.createElement("canvas");cv.width=w;cv.height=h;
+  var ctx=cv.getContext("2d");ctx.drawImage(img,0,0,w,h);
+  var d;try{d=ctx.getImageData(0,0,w,h).data;}catch(e){done(null);return;}
+  var gray=new Float32Array(w*h);var bright=0;
+  for(var i=0,p=0;i<d.length;i+=4,p++){var g=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];gray[p]=g;bright+=g;}
+  bright=bright/(w*h);
+  var lap=[],mean=0;
+  for(var y=1;y<h-1;y++)for(var x=1;x<w-1;x++){var v=4*gray[y*w+x]-gray[y*w+x-1]-gray[y*w+x+1]-gray[(y-1)*w+x]-gray[(y+1)*w+x];lap.push(v);mean+=v;}
+  mean=mean/lap.length;var variance=0;lap.forEach(function(v){variance+=(v-mean)*(v-mean);});variance=variance/lap.length;
+  var cw=Math.floor(w*0.12),ch=Math.floor(h*0.12),white=0,total=0;
+  function corner(cx,cy){for(var y=cy;y<cy+ch;y++)for(var x=cx;x<cx+cw;x++){var idx=(y*w+x)*4;total++;if(d[idx]>225&&d[idx+1]>225&&d[idx+2]>225)white++;}}
+  corner(0,0);corner(w-cw,0);corner(0,h-ch);corner(w-cw,h-ch);
+  done({w:img.naturalWidth,h:img.naturalHeight,size:file?file.size:0,type:file?file.type:"",sharp:Math.round(variance),bright:Math.round(bright),whitePct:total?Math.round(white/total*100):0});
+}
+function ioDiagHTML(m){
+  if(!m)return '<p style="color:#b00;font-size:14px">这张图读取失败（可能是格式不支持），换一张 JPG/PNG 再试。</p>';
+  var ratio=m.w/m.h;var sq=Math.abs(ratio-1)<0.03;
+  var lines=[];
+  lines.push("文件大小："+(m.size?(m.size/1024).toFixed(0)+" KB":"未知")+" ｜ 格式："+(m.type||"未知"));
+  lines.push("分辨率："+m.w+" × "+m.h+(m.w>=1200?"（达到推荐 1200）":m.w>=800?"（≥800，可开启放大镜；推荐 1200×1200）":m.w>=500?"（≥500 合格线，推荐升到 1200×1200）":"（低于 500，主图不合格，先换高清图）"));
+  lines.push("比例："+(sq?"1:1 正方形 ✓ 符合本站图组规范":ratio.toFixed(2)+":1 —— 不是 1:1，建议裁成正方形 1200×1200"));
+  lines.push("清晰度估算（算法参考值 "+m.sharp+"）："+(m.sharp>100?"画面细节较丰富":m.sharp>30?"一般，放大看边缘是否发虚":"偏模糊，建议换更清晰的原图或重拍"));
+  lines.push("四角背景亮度：约 "+m.whitePct+"% 接近纯白"+(m.whitePct>70?"，主图白底较干净":m.whitePct>35?"，背景不算纯白，主图建议换纯白底":"，背景较杂或非白色，主图建议做白底处理"));
+  var html='<div style="border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px;margin:10px 0;font-size:14px"><b>🔍 机器实测（本地计算）</b><ul style="margin:6px 0">'+lines.map(function(s){return "<li>"+s+"</li>";}).join("")+'</ul>'
+    +'<b>👀 需人工确认（机器测不了，别跳过）</b><ul style="margin:6px 0"><li>商品主体是否突出、是否居中、有没有被裁切掉边角</li><li>商品有没有拉伸变形、颜色和实物是否一致</li><li>图上文字是否过多（可把这张图传到「侵权词检测」用图片识别查文字和风险词）</li><li>图里有没有别人的品牌 logo、卡通角色、水印</li><li>图片内容和你的标题/描述是否一致</li></ul></div>';
+  return html;
+}
+var ioBefore=null,ioAfter=null,ioBeforeURL="",ioAfterURL="";
+function ioHandle(input,slot){
+  var f=input.files&&input.files[0];if(!f)return;
+  var url=URL.createObjectURL(f);var img=new Image();
+  img.onload=function(){
+    ioMetrics(img,f,function(m){
+      if(slot==="before"){ioBefore=m;ioBeforeURL=url;document.getElementById("ioFileName").textContent=f.name;var pv=document.getElementById("ioPreview");pv.src=url;pv.style.display="block";document.getElementById("ioDiag").innerHTML=ioDiagHTML(m);}
+      else{ioAfter=m;ioAfterURL=url;showToast("优化后图片已读取，点“对比两张图”");}
+    });
+  };
+  img.src=url;
+}
+function ioInfo(){
+  return {name:(document.getElementById("ioName").value||"").trim(),cat:document.getElementById("ioCat").value,brand:(document.getElementById("ioBrand").value||"").trim(),mat:(document.getElementById("ioMat").value||"").trim(),spec:(document.getElementById("ioSpec").value||"").trim(),points:(document.getElementById("ioPoints").value||"").trim(),parts:(document.getElementById("ioParts").value||"").trim()};
+}
+var IO_COMMON_TAIL="\n\n硬性要求（必须遵守）：\n- 不得改变商品的真实结构、颜色、型号、配件数量、品牌标识和功能；不得虚构商品没有的功能、认证和参数。\n- 商品外观与原图保持一致，真实比例不变形；画面里不出现商品实际不包含的配件。\n- 尺寸：1:1 正方形，1200×1200px；不加水印、不加边框、不加联系方式。\n- 目标市场：墨西哥（Mercado Libre 墨西哥站）。\n负面提示词：变形，结构改变，颜色改变，多余配件，虚构功能，文字乱码，水印，logo 变形，低清晰度，杂乱背景。";
+function ioPrompt(kind){
+  var v=ioInfo();var sc=IO_SCENES[v.cat]||IO_SCENES.otro;
+  var head="你是一名电商商品图设计师。请基于我上传的商品原图处理图片。\n商品信息（只用这些事实，不要补充）：\n- 商品名称："+(v.name||"（未填）")+"\n- 类别："+sc.label+"\n- 品牌情况："+(v.brand||"未说明")+"\n- 材质："+(v.mat||"（未填）")+"\n- 规格："+(v.spec||"（未填，需按实物）")+"\n";
+  var body="";
+  if(kind==="main"){body="任务：优化商品主图。\n- 换成纯白背景（RGB 255,255,255），商品居中，占画面约 95%。\n- 清理背景杂物和阴影，光线均匀明亮，轻微增强质感但保持真实。\n- 提升清晰度，保留全部真实细节（纹理、接口、标识）。";}
+  else if(kind==="points"){
+    var pts=v.points?v.points.split(/\n+/).map(function(s){return s.trim();}).filter(Boolean):[];
+    body="任务：生成一套卖点副图（每张一个卖点，1:1）。图组结构：核心卖点图 → 功能展示图 → 材质图 → 细节特写图 → 包装清单图。\n视觉风格：白底，深红色大标题，灰色小字说明，红色箭头/圆点引线标注，局部用圆形放大窗展示细节。\n图上文字用墨西哥西班牙语，表达自然地道，不要机器直译腔。每张图只写一句收益话。\n我的真实卖点（请逐条翻译成自然的墨西哥西班牙语后排版，不要改写出新功能）：\n"+(pts.length?pts.map(function(p,i){return (i+1)+". "+p;}).join("\n"):"（未填卖点，请先在页面第二步填写）")
+      +(v.mat?"\n材质图文字可用：Hecho de "+trWords(v.mat,MAT_ES).text+"（若翻译不完整请按实物材质修正）。":"")
+      +(v.parts?"\n包装清单图内容（只画这些）："+v.parts:"");
+  }
+  else if(kind==="scene"){body="任务：生成使用场景图。商品外观必须和原图完全一致，不改变结构和功能，不添加不存在的配件。\n推荐场景（任选其一，或按商品用途微调）：\n"+sc.scenes.map(function(s,i){return (i+1)+". "+s+"（西语描述："+sc.scenesEs[i]+"）";}).join("\n")+"\n光线自然，像真实买家秀，不要广告棚拍的假感。";}
+  else if(kind==="size"){body="任务：生成尺寸说明图。白底，商品居中，用红色双向箭头标出长、宽、高，标注文字用西班牙语（Largo / Ancho / Alto）。\n尺寸数据（必须照抄，不许估算）："+(v.spec||"（未填——请返回提醒我先实测长×宽×高再生成，不要编造数字）");}
+  else{body="任务：诊断我上传的商品图（不要修图，只出诊断报告）。请逐项检查并给出证据（指出画面位置）：\n1. 清晰度与分辨率是否够 1200×1200 上架要求\n2. 商品主体是否突出、是否居中、有无裁切\n3. 背景是否干净、是否适合做主图\n4. 有无拉伸变形、颜色失真\n5. 图上文字是否过多、是否有乱码或非西班牙语\n6. 有无疑似侵权元素（他人品牌 logo、卡通角色、明星、球队标志、水印）——只提示疑似，不要下侵权结论\n7. 图片内容与商品名称是否一致："+(v.name||"（未填）")+"\n最后按“必须改 / 建议改 / 可以保留”三档给结论。";}
+  return head+body+IO_COMMON_TAIL;
+}
+var IO_RISKS=[
+ {q:"图里有不是你自有、也未授权的品牌 logo 或商标？",lv:"review"},
+ {q:"图里有卡通角色、明星、球队或影视/游戏形象？",lv:"review"},
+ {q:"图是从别人 listing、官网或供应商图库直接下载的？",lv:"review"},
+ {q:"有效果对比图（使用前/后），且效果可能被夸大？",lv:"warn"},
+ {q:"图上写了商品实际没有的功能或效果？",lv:"warn"},
+ {q:"图里的颜色、数量、配件和实物不一致？",lv:"warn"},
+ {q:"图里有微信、电话、二维码或站外链接？",lv:"warn"},
+ {q:"主图有大面积文字、边框或水印？",lv:"warn"}
+];
+function renderIoRisks(){
+  var box=document.getElementById("ioRiskList");if(!box)return;
+  box.innerHTML=IO_RISKS.map(function(it,i){return '<div style="display:flex;gap:10px;align-items:center;border:1px solid #e5e7eb;border-radius:10px;padding:8px 10px;margin-bottom:8px;font-size:14.5px"><span style="flex:1">'+(i+1)+". "+it.q+'</span><select class="ioRiskSel" data-i="'+i+'" style="padding:8px;border-radius:8px;border:1px solid #ddd;font:inherit"><option value="no">没有</option><option value="yes">有</option><option value="unsure">不确定</option></select></div>';}).join("");
+}
+function ioRiskReport(){
+  var lvName={low:"🟢 低风险",warn:"🟠 需要注意",review:"🔵 建议人工复核"};
+  var worst="low";var rows=[];
+  document.querySelectorAll(".ioRiskSel").forEach(function(sel){
+    var it=IO_RISKS[parseInt(sel.dataset.i,10)];var v=sel.value;
+    if(v==="no")return;
+    var lv=v==="unsure"?"review":it.lv;
+    if(lv==="review")worst="review";else if(worst==="low")worst="warn";
+    rows.push({q:it.q,lv:lv,note:v==="unsure"?"你选了不确定——先核实清楚再上架。":"如实存在这个问题，建议处理后再发布。"});
+  });
+  var box=document.getElementById("ioRiskBox");document.getElementById("ioRiskResult").classList.add("show");
+  var html="<b>📋 图片合规小报告</b><div style='font-size:13px;color:#555;margin:6px 0'>总体：<b>"+lvName[worst]+"</b></div>";
+  if(!rows.length)html+="<p style='font-size:14px;margin:4px 0'>按你的回答，没发现图片合规问题。注意：这是自查结论，不是美客多官方审核结果，也不承诺一定通过审核。</p>";
+  else html+="<ul>"+rows.map(function(r){return "<li><b>"+lvName[r.lv]+"</b> "+r.q+"<br><span style='color:#666;font-size:13px'>"+r.note+"</span></li>";}).join("")+"</ul><p style='font-size:12.5px;color:#666'>以上为自查提示，不代表美客多官方审核结果。</p>";
+  box.innerHTML=html;
+}
+function ioCompareRender(){
+  var out=document.getElementById("ioCompareOut");
+  if(!ioBefore||!ioAfter){out.innerHTML='<p style="color:#b00;font-size:14px">先在第一步上传原图，并在这里上传优化后的图。</p>';return;}
+  function row(k,a,b){return "<tr><td style='padding:6px 8px;border-bottom:1px solid #eee'>"+k+"</td><td style='padding:6px 8px;border-bottom:1px solid #eee'>"+a+"</td><td style='padding:6px 8px;border-bottom:1px solid #eee'>"+b+"</td></tr>";}
+  out.innerHTML='<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:10px"><div style="flex:1;min-width:200px"><div style="font-size:13px;color:#666">优化前</div><img src="'+ioBeforeURL+'" style="width:100%;border-radius:10px;border:1px solid #ddd"></div><div style="flex:1;min-width:200px"><div style="font-size:13px;color:#666">优化后</div><img src="'+ioAfterURL+'" style="width:100%;border-radius:10px;border:1px solid #ddd"></div></div>'
+   +'<table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px"><tr><th style="text-align:left;padding:6px 8px">指标（本地实测）</th><th style="text-align:left;padding:6px 8px">优化前</th><th style="text-align:left;padding:6px 8px">优化后</th></tr>'
+   +row("分辨率",ioBefore.w+" × "+ioBefore.h,ioAfter.w+" × "+ioAfter.h)
+   +row("文件大小",(ioBefore.size/1024).toFixed(0)+" KB",(ioAfter.size/1024).toFixed(0)+" KB")
+   +row("清晰度估算",ioBefore.sharp,ioAfter.sharp)
+   +row("四角近白占比",ioBefore.whitePct+"%",ioAfter.whitePct+"%")
+   +"</table><p style='font-size:12.5px;color:#666'>清晰度为算法估算，仅供相对对比；商品结构、颜色有没有被改动，请对照原图人工确认。</p>";
+}
+
+document.getElementById("ioFile").addEventListener("change",function(){ioHandle(this,"before");});
+document.getElementById("ioFile2").addEventListener("change",function(){ioHandle(this,"after");});
+document.querySelectorAll("[data-ioprompt]").forEach(function(b){b.addEventListener("click",function(){document.getElementById("ioOut").textContent=ioPrompt(b.dataset.ioprompt);document.getElementById("ioOutWrap").classList.add("show");document.getElementById("ioOutWrap").scrollIntoView({behavior:"smooth",block:"nearest"});});});
+document.getElementById("ioCopy").addEventListener("click",function(){copyTextOf("ioOut",this);});
+document.getElementById("ioRiskGen").addEventListener("click",ioRiskReport);
+document.getElementById("ioCompare").addEventListener("click",ioCompareRender);
+renderIoRisks();
 showTab("home");
 /* CSV */
 document.getElementById("csvBtn").addEventListener("click",function(){
