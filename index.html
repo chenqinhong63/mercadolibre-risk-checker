@@ -36,7 +36,7 @@ a{color:var(--navy)} @media(prefers-color-scheme:dark){a{color:#a5b4ff}}
 .alert p{margin:0;color:var(--muted);font-size:14.5px}
 .alert strong{color:var(--ink)}
 /* stats */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0 6px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0 6px}
 .stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
 .stat b{display:block;font-size:26px;line-height:1.1}
 .stat span{font-size:13px;color:var(--muted);display:block;margin-top:6px;line-height:1.5}
@@ -128,6 +128,7 @@ section{padding-top:34px}
 .foot{margin-top:36px;border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:var(--muted);line-height:1.7}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 @media print{.nav,.checker .row,.filters,.actions{display:none!important} body{background:#fff} .card,.stat,.step,.catcard{break-inside:avoid}}
+@media (max-width:640px){.btn{min-height:44px}}
 </style>
 </head>
 <body>
@@ -150,7 +151,7 @@ section{padding-top:34px}
         <p>经多轮检索，<strong> Mercado Libre 没有公开发布过一份完整的禁用词清单</strong>。官方存在的是《使用条款》、刊登/禁售品类政策、标题与图片规范，以及品牌保护计划 BPP。下表是依据这些规则 + 卖家指南整理的<strong>风险合成表，不是官方黑名单</strong>，不要对外宣称是“官方名单”。词条后标注了依据等级：A 官方 / B 指南引用官方帮助 / C 推断或未见原文禁令。</p>
       </div>
     </div>
-    <div class="stats" style="grid-template-columns:repeat(3,1fr)">
+    <div class="stats">
       <div class="stat"><b>636 万</b><span>2026 上半年墨西哥站被检测出的违规刊登数量（同一报告）</span></div>
       <div class="stat"><b>2,159 万</b><span>同期全区域主动知识产权检测量，占 IP 删除量的 97%</span></div>
       <div class="stat"><b>278.7 万件</b><span>IMPI 在 2025-09 至 2026-10-19 查扣的仿冒产品；Operación Limpieza 自 2024-09 累计超 800 万件</span></div>
@@ -159,7 +160,9 @@ section{padding-top:34px}
   </header>
 
   <nav class="nav" id="tabBar">
-    <a href="#" data-tab="home" class="tab active">🔍 侵权词检测 · 词表</a><a href="#" data-tab="title" class="tab">✍️ 标题优化</a><a href="#" data-tab="learn" class="tab">📚 新手学习</a><a href="#" data-tab="skills" class="tab">🤖 AI Skill</a><a href="#" data-tab="coach" class="tab">🎓 教学陪跑</a>
+    <a href="#" data-tab="home" class="tab active">🔍 侵权词检测 · 词表</a><a href="#" data-tab="title" class="tab">✍️ 标题优化</a>
+    <a href="#" data-tab="precheck" class="tab">✅ 上架自查</a>
+    <a href="#" data-tab="desk" class="tab">🗂 工作台</a><a href="#" data-tab="learn" class="tab">📚 新手学习</a><a href="#" data-tab="skills" class="tab">🤖 AI Skill</a><a href="#" data-tab="coach" class="tab">🎓 教学陪跑</a>
   </nav>
   <style>.nav a.tab.active{background:var(--navy);color:#fff;border-color:var(--navy)} @media print{section{display:block!important}}</style>
 
@@ -185,14 +188,16 @@ section{padding-top:34px}
       </div>
       <div id="imgHint" style="font-size:13px;color:#d6d9ff;margin:0 0 10px"></div>
       <img id="imgPreview" alt="待识别的商品图预览" style="display:none;max-width:220px;border-radius:10px;margin:0 0 12px;border:1px solid #6b6fd6"/>
-      <textarea id="checkInput" placeholder="粘贴你的西语标题 / 描述，例如：Mochila inspirada en Disney oferta envío gratis…"></textarea>
+      <input type="text" id="titleInput" placeholder="① 商品标题：粘到这里（西语/英语/中文标题都支持）" style="margin-bottom:8px">
+      <textarea id="checkInput" placeholder="② 商品描述：粘到这里。标题和描述分开检测——兼容写法写在描述里是加分项，促销填充词只查标题"></textarea>
       <div class="row">
         <button class="btn btn-yellow" id="checkBtn">开始检测</button>
         <button class="btn btn-ghost" id="checkSample">填入示例</button>
+        <button class="btn btn-ghost" id="saveDescBtn" type="button">💾 保存描述草稿</button>
         <span id="checkHint" style="font-size:13px;color:#d6d9ff"></span>
       </div>
       <div class="result" id="checkResult"><div class="result-box" id="checkBox"></div></div>
-      <p style="font-size:12.5px;color:#d6d9ff;margin:12px 0 0">⚠️ 检测结果仅供参考：本工具按词表做关键词匹配，不代表美客多官方审核结果，也不能保证商品一定通过审核。没命中不等于无风险，图片 logo、角色形象等请人工复核。</p>
+      <p style="font-size:12.5px;color:#d6d9ff;margin:12px 0 0">⚠️ 检测结果仅供参考：本工具按本地规则库分析，不代表美客多官方审核结果，也不能保证商品一定通过审核。没命中不等于无风险，图片 logo、角色形象等请人工复核。</p>
     </div>
   </section>
 
@@ -293,6 +298,7 @@ section{padding-top:34px}
 <input class="search" id="tMat" placeholder="材质，例如：不锈钢 / 塑料 / 硅胶"/>
 <input class="search" id="tSpec" placeholder="规格，例如：20罐 500ml 30×20cm"/>
 <input class="search" id="tKw" placeholder="目标关键词（西语，逗号分开），例如：organizador de especias, giratorio"/>
+<input class="search" id="tOld" placeholder="（可选）你现在的标题，填了会生成修改前后对比"/>
 </div>
 <div class="actions"><button class="btn btn-light" id="tGen">生成标题建议</button></div>
 <div id="tOut" style="margin-top:12px"></div>
@@ -368,49 +374,76 @@ section{padding-top:34px}
       <li><b>[B]</b> 保健品上架要求（COFEPRIS / 疗效宣称）：<a href="https://grupobiotvida.com/requisitos-vender-suplementos-mercado-libre/" target="_blank" rel="noopener">grupobiotvida.com</a>；EasyLex — 商标地域性（IMPI）：<a href="https://easylex.com/blog/registro-de-marca-para-e-commerce-protege-tu-catalogo-en-amazon-mercado-libre-y-shopify" target="_blank" rel="noopener">easylex.com</a></li>
     </ul>
     </details>
-    <div class="foot">本页为卖家自查参考，不构成法律意见；词表为风险合成表、非官方黑名单，个别词的风险等级为依据投诉流程的推断（C 级，已在词表中标注）。拿不准的 SKU，先备齐发票与授权，再上架。</div>
+
+  <section class="card" id="sect-precheck">
+    <h2 style="margin-top:0">✅ 上架前自查清单</h2>
+    <p class="sub">发布前逐项确认。没勾的项会出现在自查报告里，并给出处理提示——这份报告可以存下来当上架凭证。</p>
+    <div id="preList"></div>
+    <p id="preProg" style="font-weight:700;margin:12px 0 8px"></p>
+    <div class="row">
+      <button class="btn" id="preGen" type="button">生成自查报告</button>
+      <button class="btn btn-ghost" id="preReset" type="button">全部取消勾选</button>
+    </div>
+    <div class="result" id="preResult"><div id="preBox"></div></div>
+  </section>
+
+  <section class="card" id="sect-desk">
+    <h2 style="margin-top:0">🗂 我的工作台（本地保存）</h2>
+    <p class="sub">⚠️ 数据只保存在<b>这台设备的这个浏览器</b>里（localStorage），不会上传、不会同步到其他设备；清理浏览器缓存会清空。重要内容请另行备份。</p>
+    <h3>🕘 最近检测记录</h3>
+    <div id="deskHistory"></div>
+    <button class="btn btn-ghost" id="deskClearHistory" type="button">清空检测记录</button>
+    <h3 style="margin-top:22px">✍️ 保存的标题草稿</h3>
+    <div id="deskTitles"></div>
+    <button class="btn btn-ghost" id="deskClearTitles" type="button">清空标题草稿</button>
+    <h3 style="margin-top:22px">📝 保存的描述草稿</h3>
+    <div id="deskDescs"></div>
+    <button class="btn btn-ghost" id="deskClearDescs" type="button">清空描述草稿</button>
+  </section>
+
+    <div class="foot">本站是卖家自建工具，不是美客多官方产品。本页为卖家自查参考，不构成法律意见；词表为风险合成表、非官方黑名单，个别词的风险等级为依据投诉流程的推断（C 级，已在词表中标注）。拿不准的 SKU，先备齐发票与授权，再上架。</div>
   </section>
 </div>
 
 <script>
 var WORDS=[
- {t:"réplica / replica",cn:"复制品 / 仿品",risk:"high",cat:"brand",why:"等于自认卖假货，是 BPP 投诉与删除+处罚的直接事由。(B: Upseller、Nubimetrics)",alt:"只卖正品；无品牌通用品用自有品牌或无品牌，描述功能即可。",keys:["replica","réplica"],en:"replica / knockoff / counterfeit",enk:["replica", "knockoff", "knock off", "counterfeit", "dupe"]},
- {t:"clon",cn:"克隆 / 仿造",risk:"high",cat:"brand",why:"与 réplica 同义的假货信号词。(B/C: Patentiq)",alt:"删除，只描述产品本身的功能。",keys:["clon"],en:"clone",enk:["clone"]},
- {t:"copia / pirata",cn:"盗版 / 复制",risk:"high",cat:"copy",why:"自认盗版，同时踩版权与商标两条线。(B)",alt:"删除；只卖有授权的正版内容产品。",keys:["copia","pirata"],en:"pirated copy / bootleg",enk:["bootleg", "pirated"]},
- {t:"falsificación / falso / producto falso",cn:"假货 / 伪造",risk:"high",cat:"brand",why:"自认伪造品。(B/C)",alt:"删除。",keys:["falsificacion","falsificación","falso"],en:"fake / counterfeit",enk:["fake"]},
- {t:"imitación",cn:"仿制品",risk:"high",cat:"brand",why:"假货信号词。(B/C)",alt:"删除。",keys:["imitacion","imitación"],en:"imitation",enk:["imitation"]},
- {t:"1:1",cn:"1:1 复刻",risk:"high",cat:"brand",why:"圈内“精确复刻”的代称，假货信号。未查到平台原文禁令，按高风险处理。(C)",alt:"删除；不要卖仿品牌外形的货。",keys:["1:1"],en:"1:1 exact copy",enk:[]},
- {t:"primera línea",cn:"一线复刻 / 高仿",risk:"high",cat:"brand",why:"假货圈常用话术。(B: Patentiq)",alt:"删除。",keys:["primera linea","primera línea"],en:"high-end replica",enk:[]},
- {t:"inspirado en [marca / personaje]",cn:"“灵感来自”某品牌/角色",risk:"high",cat:"copy",why:"仍构成混淆与外观/版权风险，“灵感”不是授权。(B: DTD、Patentiq)",alt:"用完全通用、无品牌/角色指向的设计，或卖有授权的产品。",keys:["inspirado en","inspirado"],en:"inspired by [brand / character]",enk:["inspired by"]},
- {t:"tipo [marca] / estilo [marca] / igual a / similar a",cn:"“某品牌款 / 同款 / 和某品牌一样”",risk:"high",cat:"brand",why:"Nubimetrics 与 Upseller 明确警告不要用；构成混淆性近似。(B)",alt:"真兼容才写 Compatible con [marca/modelo]，讲功能兼容、不讲身份相同。",keys:["tipo ","estilo ","igual a","similar a"],en:"like [brand] / same as",enk:["same as", "look like"]},
- {t:"把名牌当产品品牌写（货却不是该品牌）",cn:"冒用 Nike、Adidas、Apple、Sony、FIFA、Disney 等",risk:"high",cat:"brand",why:"商标侵权的核心理由，BPP 直接删除；FIFA/adidas 是 2026 年执法最紧的。(A/B)",alt:"用自有品牌或无品牌；品牌名最多出现在兼容说明里。",keys:["nike","adidas","apple","sony","fifa","disney","jordan","reebok","pokemon","pokémon","marvel"],en:"brand names used as the product brand",enk:["louis vuitton", "chanel"]},
- {t:"tienda oficial / distribuidor oficial / autorizado（假的）",cn:"假冒官方店 / 授权经销商",risk:"high",cat:"brand",why:"冒充官方是 BPP 的明确投诉事由。(B: Emprendedor、Asert)",alt:"没有正式任命就不写。",keys:["tienda oficial","distribuidor oficial","autorizado"],en:"official store / authorized dealer (false claim)",enk:["official store", "authorized dealer", "authorized reseller"]},
- {t:"100% original / original（货非正品时）",cn:"“100% 正品”（假货冒充）",risk:"high",cat:"brand",why:"虚假正品宣称；投诉答辩时拿不出发票即被删。未查到对词本身的原文禁令。(C 推断)",alt:"只有能出示发票/授权的正品才用；否则不写。",keys:["100% original","100%original"],en:"100% original / authentic (goods not genuine)",enk:["100% authentic"]},
- {t:"OEM（无授权时）",cn:"OEM（无授权）",risk:"high",cat:"brand",why:"暗示品牌授权，对品牌方和海关都是红旗。(B: DTD)",alt:"没有书面授权证据就不写 OEM。",keys:["oem"],en:"OEM (unauthorized)",enk:[]},
- {t:"未授权角色 / 影视 / 球队形象",cn:"Marvel、Disney、Pokémon、FIFA、球队球衣等",risk:"high",cat:"copy",why:"版权 + 授权商品侵权；授权必须覆盖墨西哥领土。(B: DTD)",alt:"只卖有授权的产品，或用原创通用设计。",keys:["marvel","disney","pokemon","pokémon","mickey","spiderman","spider-man","batman","avengers"],en:"unauthorized characters / movies / teams",enk:["hello kitty", "star wars"]},
- {t:"cura / elimina (enfermedad) / detiene / reversa",cn:"“治愈 / 消除（疾病）/ 阻止 / 逆转”",risk:"high",cat:"medical",why:"疗效宣称等于把产品当药卖，需卫生注册；COFEPRIS 与平台可直接暂停。(B: Biotvida)",alt:"有依据才写 apoya / contribuye / fortalece，或干脆不写功效。",keys:["cura ","elimina","detiene","reversa","cura,"],en:"cures / eliminates disease / reverses",enk:["cures", "cure for", "eliminates", "reverses"]},
- {t:"hormonas / anabólicos / esteroides",cn:"激素 / 合成代谢 / 类固醇",risk:"high",cat:"medical",why:"直接属于禁止品类。(B: Biotvida)",alt:"不要上架。",keys:["hormonas","anabolicos","anabólicos","esteroides"],en:"hormones / anabolics / steroids",enk:["hormones", "anabolic", "steroids"]},
- {t:"medicamentos con / sin receta（商品本身）",cn:"处方药 / 非处方药",risk:"high",cat:"medical",why:"禁止/受限品类，COFEPRIS + CANIFARMA 重点执法。(A/B)",alt:"无许可不要卖，走有资质的渠道。",keys:["medicamento","receta"],en:"prescription / OTC medicine (the product itself)",enk:["prescription"]},
- {t:"compatible con [marca]（放标题里当品牌）",cn:"“兼容某品牌”写进标题充当品牌",risk:"med",cat:"usage",why:"就算写了 compatible，把品牌放标题仍可能招品牌投诉；指南建议通用品标题不放品牌。(B: Upseller)",alt:"兼容信息放属性/描述；标题 = 自有品牌 + 产品 + 型号。",keys:["compatible con","compatible"],en:"compatible with [brand] (brand in title)",enk:["compatible with", "compatible for"]},
- {t:"genérico de / genérico tipo [marca]",cn:"“某品牌通用款”",risk:"med",cat:"brand",why:"拿 genérico 当品牌替代词，仍在借品牌引流。(C 推断)",alt:"真无品牌通用品就写功能，不挂任何品牌。",keys:["generico de","genérico de","generico tipo","genérico tipo"],en:"generic for [brand]",enk:["generic for", "generic version of"]},
- {t:"故意拼错的品牌名 / 变体",cn:"改字母、谐音品牌名",risk:"med",cat:"brand",why:"混淆性近似本身侵权；平台分析 5000+ 变量、品牌方也会搜变体。(B/C: DTD)",alt:"完全不借品牌联想。",keys:["addidas","naike","appel","sonny","gucci","pumaa"],en:"misspelled brand names",enk:[]},
- {t:"oferta / OFERTA",cn:"特价 / 促销",risk:"med",cat:"promo",why:"标题填充词，会被处罚甚至暂停刊登；促销由平台展示。注意：这不是商标侵权。(B: Orbis、Woosync)",alt:"标题不写；用平台的促销工具设置。",keys:["oferta"],en:"sale / offer / deal (title filler)",enk:["sale", "offer", "deal", "discount"]},
- {t:"envío gratis",cn:"包邮",risk:"med",cat:"promo",why:"平台按价格门槛与运费设置自动展示的属性，写进标题/主图违规。(B)",alt:"不写；在运费设置里配置。",keys:["envio gratis","envío gratis"],en:"free shipping",enk:["free shipping"]},
- {t:"meses sin intereses / MSI / cuotas",cn:"分期免息",risk:"med",cat:"promo",why:"平台与银行合作的权益，由平台展示，卖家写进标题/主图违规。(B)",alt:"不写。",keys:["meses sin intereses","msi","cuotas"],en:"interest-free installments",enk:["interest-free", "interest free", "installments"]},
- {t:"el mejor / mejor / barato / #1 / más vendido",cn:"最好 / 最便宜 / 第一 / 最畅销",risk:"med",cat:"promo",why:"标题填充 + 无依据的最高级，另有误导广告风险（LFPC/PROFECO）。(B/C)",alt:"不写；用真实参数（材质、尺寸、型号）占标题字符。",keys:["el mejor","mejor","barato","#1","mas vendido","más vendido"],en:"best / cheapest / #1 / best seller",enk:["best seller", "cheapest", "the best", "#1"]},
- {t:"garantía（不写细则的）",cn:"保修（无期限/范围）",risk:"med",cat:"promo",why:"履行不了就是误导；Clips 视频里禁止提保修。(B/C)",alt:"写清期限 + 范围 + 索赔方式，或不写。",keys:["garantia","garantía"],en:"warranty (no terms stated)",enk:["warranty", "guarantee"]},
- {t:"nuevo / usado（写在标题里）",cn:"全新 / 二手（标题里）",risk:"med",cat:"promo",why:"新旧是平台字段，写进标题属于填充。(B)",alt:"在刊登的条件字段里选，标题不写。",keys:["nuevo","usado"],en:"new / used (in title)",enk:[]},
- {t:"在标题里写颜色",cn:"颜色写进标题",risk:"med",cat:"promo",why:"颜色应走变体（variantes），不占标题。(B)",alt:"用变体管理颜色。",keys:["color:"],en:"color in title",enk:[]},
- {t:"teléfono / email / WhatsApp / 链接 / 社交账号",cn:"电话 / 邮箱 / 站外联系方式",risk:"med",cat:"contact",why:"刊登、图片、问答、私信里出现站外联系方式违规，可暂停刊登甚至封号。(B)",alt:"只通过美客多站内沟通。",keys:["whatsapp","telefono","teléfono","@gmail","@hotmail","instagram.com","facebook.com"],en:"phone / email / WhatsApp / social links",enk:["telegram", "t.me"]},
- {t:"主图加 logo / 水印 / 文字 / 平台徽章",cn:"主图放卖家 logo、水印、Full/包邮/折扣徽章",risk:"med",cat:"contact",why:"图片规范禁止；平台没给的徽章更不能自己贴。(B: Asert)",alt:"干净产品图，要求白底的类目用白底，产品居中。",keys:["full","descuento"],en:"logo / watermark / promo badges on main image",enk:[]},
- {t:"盗用品牌图 / 其他卖家的图",cn:"foto copiada de la marca / de otro vendedor",risk:"med",cat:"copy",why:"单独成立的版权投诉事由。(B: Patentiq、Nubimetrics)",alt:"自己拍图、自己写文案。",keys:[],en:"stolen brand or seller photos",enk:[]},
- {t:"compatible con（正确用法：描述/属性里）",cn:"兼容（正确用法）",risk:"low",cat:"usage",why:"指南推荐的通用品写法，但必须对所列型号真实兼容。(B: Upseller)",alt:"列出确切型号/年份 + OEM 零件号。",keys:[],en:"compatible with (correct use: description/attributes)",enk:[]},
- {t:"apto para / apto con [marca]",cn:"适用于某品牌",risk:"low",cat:"usage",why:"Upseller 推荐的 similar a 替代说法。(B)",alt:"同 compatible con 的正确用法。",keys:["apto para","apto con"],en:"fits / suitable for [brand]",enk:["suitable for"]},
- {t:"genérico（单独用、真无品牌）",cn:"通用 / 无品牌",risk:"low",cat:"usage",why:"词本身不禁；风险只在它和品牌绑定时出现。(C)",alt:"自有品牌或无品牌 + 功能描述。",keys:[],en:"generic / unbranded (standalone, genuine)",enk:[]},
- {t:"increíble / espectacular / imperdible",cn:"惊人 / 超值 / 不可错过",risk:"low",cat:"promo",why:"买家不搜的填充词，拉低相关性、可能被处罚。(B: Orbis)",alt:"不写，把字符留给参数。",keys:["increible","increíble","espectacular","imperdible"],en:"amazing / incredible / must-have",enk:["amazing", "incredible", "must have", "must-have"]},
- {t:"100% original（正品且有单据时）",cn:"100% 正品（有发票/授权）",risk:"low",cat:"usage",why:"原则上可用，但会引来品牌核查，单据要随时能拿出来。(C)",alt:"备好发票/授权，描述与实物一致。",keys:[],en:"100% original (with invoices / authorization)",enk:[]},
- {t:"garantía del fabricante",cn:"厂家保修",risk:"low",cat:"usage",why:"只有厂家保修在墨西哥真实适用、且你能走通索赔路径时才能写。(B/C)",alt:"否则写你自己的卖家保修：期限 + 缺陷范围。",keys:["garantia del fabricante","garantía del fabricante"],en:"manufacturer warranty",enk:["manufacturer warranty", "factory warranty"]},
- {t:"Buen Fin / Hot Sale（标志或写进图/视频）",cn:"大促标志",risk:"low",cat:"promo",why:"官方标志只有正式报名商家能用；Clips 里禁止提大促活动。未查到美客多单独的 Buen Fin 规则。(B)",alt:"已报名才用官方素材；刊登图和视频里永远不放。",keys:["buen fin","hot sale"],en:"Buen Fin / Hot Sale event logos",enk:[]}
+ {t:"réplica / replica",cn:"复制品 / 仿品",risk:"high",cat:"brand",why:"等于自认卖假货，是 BPP 投诉与删除+处罚的直接事由。(B: Upseller、Nubimetrics)",alt:"只卖正品；无品牌通用品用自有品牌或无品牌，描述功能即可。",keys:["replica","réplica"],en:"replica / knockoff / counterfeit",enk:["replica", "knockoff", "knock off", "counterfeit", "dupe"],ck:["仿品", "复刻", "仿冒"]},
+ {t:"clon",cn:"克隆 / 仿造",risk:"high",cat:"brand",why:"与 réplica 同义的假货信号词。(B/C: Patentiq)",alt:"删除，只描述产品本身的功能。",keys:["clon"],en:"clone",enk:["clone"],ck:["克隆"]},
+ {t:"copia / pirata",cn:"盗版 / 复制",risk:"high",cat:"copy",why:"自认盗版，同时踩版权与商标两条线。(B)",alt:"删除；只卖有授权的正版内容产品。",keys:["copia","pirata"],en:"pirated copy / bootleg",enk:["bootleg", "pirated"],ck:["盗版", "翻版"]},
+ {t:"falsificación / falso / producto falso",cn:"假货 / 伪造",risk:"high",cat:"brand",why:"自认伪造品。(B/C)",alt:"删除。",keys:["falsificacion","falsificación","falso"],en:"fake / counterfeit",enk:["fake"],ck:["假货", "假冒", "伪造"]},
+ {t:"imitación",cn:"仿制品",risk:"high",cat:"brand",why:"假货信号词。(B/C)",alt:"删除。",keys:["imitacion","imitación"],en:"imitation",enk:["imitation"],ck:["仿制", "仿制品"]},
+ {t:"1:1",cn:"1:1 复刻",risk:"high",cat:"brand",why:"圈内“精确复刻”的代称，假货信号。未查到平台原文禁令，按高风险处理。(C)",alt:"删除；不要卖仿品牌外形的货。",keys:["1:1"],en:"1:1 exact copy",enk:[],ck:["一比一"]},
+ {t:"primera línea",cn:"一线复刻 / 高仿",risk:"high",cat:"brand",why:"假货圈常用话术。(B: Patentiq)",alt:"删除。",keys:["primera linea","primera línea"],en:"high-end replica",enk:[],ck:["高仿"]},
+ {t:"inspirado en [marca / personaje]",cn:"“灵感来自”某品牌/角色",risk:"high",cat:"copy",why:"仍构成混淆与外观/版权风险，“灵感”不是授权。(B: DTD、Patentiq)",alt:"用完全通用、无品牌/角色指向的设计，或卖有授权的产品。",keys:["inspirado en","inspirado"],en:"inspired by [brand / character]",enk:["inspired by"],ck:["灵感来自", "致敬款"]},
+ {t:"tipo [marca] / estilo [marca] / igual a / similar a",cn:"“某品牌款 / 同款 / 和某品牌一样”",risk:"high",cat:"brand",why:"Nubimetrics 与 Upseller 明确警告不要用；构成混淆性近似。(B)",alt:"真兼容才写 Compatible con [marca/modelo]，讲功能兼容、不讲身份相同。",keys:["tipo ","estilo ","igual a","similar a"],en:"like [brand] / same as",enk:["same as", "look like"],ck:["同款", "平替"]},
+ {t:"把名牌当产品品牌写（货却不是该品牌）",cn:"冒用 Nike、Adidas、Apple、Sony、FIFA、Disney 等",risk:"high",cat:"brand",why:"商标侵权的核心理由，BPP 直接删除；FIFA/adidas 是 2026 年执法最紧的。(A/B)",alt:"用自有品牌或无品牌；品牌名最多出现在兼容说明里。",keys:["nike","adidas","apple","sony","fifa","disney","jordan","reebok","pokemon","pokémon","marvel"],en:"brand names used as the product brand",enk:["louis vuitton", "chanel"],ck:["正品代购"]},
+ {t:"tienda oficial / distribuidor oficial / autorizado（假的）",cn:"假冒官方店 / 授权经销商",risk:"high",cat:"brand",why:"冒充官方是 BPP 的明确投诉事由。(B: Emprendedor、Asert)",alt:"没有正式任命就不写。",keys:["tienda oficial","distribuidor oficial","autorizado"],en:"official store / authorized dealer (false claim)",enk:["official store", "authorized dealer", "authorized reseller"],ck:[]},
+ {t:"100% original / original（货非正品时）",cn:"“100% 正品”（假货冒充）",risk:"high",cat:"brand",why:"虚假正品宣称；投诉答辩时拿不出发票即被删。未查到对词本身的原文禁令。(C 推断)",alt:"只有能出示发票/授权的正品才用；否则不写。",keys:["100% original","100%original"],en:"100% original / authentic (goods not genuine)",enk:["100% authentic"],ck:["纯原", "原单", "原厂尾货"]},
+ {t:"OEM（无授权时）",cn:"OEM（无授权）",risk:"high",cat:"brand",why:"暗示品牌授权，对品牌方和海关都是红旗。(B: DTD)",alt:"没有书面授权证据就不写 OEM。",keys:["oem"],en:"OEM (unauthorized)",enk:[],ck:[]},
+ {t:"未授权角色 / 影视 / 球队形象",cn:"Marvel、Disney、Pokémon、FIFA、球队球衣等",risk:"high",cat:"copy",why:"版权 + 授权商品侵权；授权必须覆盖墨西哥领土。(B: DTD)",alt:"只卖有授权的产品，或用原创通用设计。",keys:["marvel","disney","pokemon","pokémon","mickey","spiderman","spider-man","batman","avengers"],en:"unauthorized characters / movies / teams",enk:["hello kitty", "star wars"],ck:["卡通形象", "球队同款"]},
+ {t:"cura / elimina (enfermedad) / detiene / reversa",cn:"“治愈 / 消除（疾病）/ 阻止 / 逆转”",risk:"high",cat:"medical",why:"疗效宣称等于把产品当药卖，需卫生注册；COFEPRIS 与平台可直接暂停。(B: Biotvida)",alt:"有依据才写 apoya / contribuye / fortalece，或干脆不写功效。",keys:["cura ","elimina","detiene","reversa","cura,"],en:"cures / eliminates disease / reverses",enk:["cures", "cure for", "eliminates", "reverses"],ck:["治愈", "治疗", "根除", "消除疾病"]},
+ {t:"hormonas / anabólicos / esteroides",cn:"激素 / 合成代谢 / 类固醇",risk:"high",cat:"medical",why:"直接属于禁止品类。(B: Biotvida)",alt:"不要上架。",keys:["hormonas","anabolicos","anabólicos","esteroides"],en:"hormones / anabolics / steroids",enk:["hormones", "anabolic", "steroids"],ck:["激素", "类固醇"]},
+ {t:"medicamentos con / sin receta（商品本身）",cn:"处方药 / 非处方药",risk:"high",cat:"medical",why:"禁止/受限品类，COFEPRIS + CANIFARMA 重点执法。(A/B)",alt:"无许可不要卖，走有资质的渠道。",keys:["medicamento","receta"],en:"prescription / OTC medicine (the product itself)",enk:["prescription"],ck:["处方药"]},
+ {t:"compatible con [marca]（放标题里当品牌）",cn:"“兼容某品牌”写进标题充当品牌",risk:"med",cat:"usage",why:"就算写了 compatible，把品牌放标题仍可能招品牌投诉；指南建议通用品标题不放品牌。(B: Upseller)",alt:"兼容信息放属性/描述；标题 = 自有品牌 + 产品 + 型号。",keys:["compatible con","compatible"],en:"compatible with [brand] (brand in title)",enk:["compatible with", "compatible for"],ck:["适用于", "适配"]},
+ {t:"genérico de / genérico tipo [marca]",cn:"“某品牌通用款”",risk:"med",cat:"brand",why:"拿 genérico 当品牌替代词，仍在借品牌引流。(C 推断)",alt:"真无品牌通用品就写功能，不挂任何品牌。",keys:["generico de","genérico de","generico tipo","genérico tipo"],en:"generic for [brand]",enk:["generic for", "generic version of"],ck:[]},
+ {t:"故意拼错的品牌名 / 变体",cn:"改字母、谐音品牌名",risk:"med",cat:"brand",why:"混淆性近似本身侵权；平台分析 5000+ 变量、品牌方也会搜变体。(B/C: DTD)",alt:"完全不借品牌联想。",keys:["addidas","naike","appel","sonny","gucci","pumaa"],en:"misspelled brand names",enk:[],ck:[]},
+ {t:"oferta / OFERTA",cn:"特价 / 促销",risk:"med",cat:"promo",why:"标题填充词，会被处罚甚至暂停刊登；促销由平台展示。注意：这不是商标侵权。(B: Orbis、Woosync)",alt:"标题不写；用平台的促销工具设置。",keys:["oferta"],en:"sale / offer / deal (title filler)",enk:["sale", "offer", "deal", "discount"],ck:["特价", "促销价"]},
+ {t:"envío gratis",cn:"包邮",risk:"med",cat:"promo",why:"平台按价格门槛与运费设置自动展示的属性，写进标题/主图违规。(B)",alt:"不写；在运费设置里配置。",keys:["envio gratis","envío gratis"],en:"free shipping",enk:["free shipping"],ck:["包邮", "免邮"]},
+ {t:"meses sin intereses / MSI / cuotas",cn:"分期免息",risk:"med",cat:"promo",why:"平台与银行合作的权益，由平台展示，卖家写进标题/主图违规。(B)",alt:"不写。",keys:["meses sin intereses","msi","cuotas"],en:"interest-free installments",enk:["interest-free", "interest free", "installments"],ck:["分期免息", "免息分期"]},
+ {t:"el mejor / mejor / barato / #1 / más vendido",cn:"最好 / 最便宜 / 第一 / 最畅销",risk:"med",cat:"promo",why:"标题填充 + 无依据的最高级，另有误导广告风险（LFPC/PROFECO）。(B/C)",alt:"不写；用真实参数（材质、尺寸、型号）占标题字符。",keys:["el mejor","mejor","barato","#1","mas vendido","más vendido"],en:"best / cheapest / #1 / best seller",enk:["best seller", "cheapest", "the best", "#1"],ck:["销量第一", "最便宜"]},
+ {t:"garantía（不写细则的）",cn:"保修（无期限/范围）",risk:"med",cat:"promo",why:"履行不了就是误导；Clips 视频里禁止提保修。(B/C)",alt:"写清期限 + 范围 + 索赔方式，或不写。",keys:["garantia","garantía"],en:"warranty (no terms stated)",enk:["warranty", "guarantee"],ck:["质保"]},
+ {t:"nuevo / usado（写在标题里）",cn:"全新 / 二手（标题里）",risk:"med",cat:"promo",why:"新旧是平台字段，写进标题属于填充。(B)",alt:"在刊登的条件字段里选，标题不写。",keys:["nuevo","usado"],en:"new / used (in title)",enk:[],ck:[]},
+ {t:"在标题里写颜色",cn:"颜色写进标题",risk:"med",cat:"promo",why:"颜色应走变体（variantes），不占标题。(B)",alt:"用变体管理颜色。",keys:["color:"],en:"color in title",enk:[],ck:[]},
+ {t:"teléfono / email / WhatsApp / 链接 / 社交账号",cn:"电话 / 邮箱 / 站外联系方式",risk:"med",cat:"contact",why:"刊登、图片、问答、私信里出现站外联系方式违规，可暂停刊登甚至封号。(B)",alt:"只通过美客多站内沟通。",keys:["whatsapp","telefono","teléfono","@gmail","@hotmail","instagram.com","facebook.com"],en:"phone / email / WhatsApp / social links",enk:["telegram", "t.me"],ck:["加微信", "微信号", "手机号"]},
+ {t:"主图加 logo / 水印 / 文字 / 平台徽章",cn:"主图放卖家 logo、水印、Full/包邮/折扣徽章",risk:"med",cat:"contact",why:"图片规范禁止；平台没给的徽章更不能自己贴。(B: Asert)",alt:"干净产品图，要求白底的类目用白底，产品居中。",keys:["full","descuento"],en:"logo / watermark / promo badges on main image",enk:[],ck:[]},
+ {t:"盗用品牌图 / 其他卖家的图",cn:"foto copiada de la marca / de otro vendedor",risk:"med",cat:"copy",why:"单独成立的版权投诉事由。(B: Patentiq、Nubimetrics)",alt:"自己拍图、自己写文案。",keys:[],en:"stolen brand or seller photos",enk:[],ck:[]},
+ {t:"compatible con（正确用法：描述/属性里）",cn:"兼容（正确用法）",risk:"low",cat:"usage",why:"指南推荐的通用品写法，但必须对所列型号真实兼容。(B: Upseller)",alt:"列出确切型号/年份 + OEM 零件号。",keys:[],en:"compatible with (correct use: description/attributes)",enk:[],ck:["适用于", "适配"]},
+ {t:"apto para / apto con [marca]",cn:"适用于某品牌",risk:"low",cat:"usage",why:"Upseller 推荐的 similar a 替代说法。(B)",alt:"同 compatible con 的正确用法。",keys:["apto para","apto con"],en:"fits / suitable for [brand]",enk:["suitable for"],ck:[]},
+ {t:"genérico（单独用、真无品牌）",cn:"通用 / 无品牌",risk:"low",cat:"usage",why:"词本身不禁；风险只在它和品牌绑定时出现。(C)",alt:"自有品牌或无品牌 + 功能描述。",keys:[],en:"generic / unbranded (standalone, genuine)",enk:[],ck:[]},
+ {t:"increíble / espectacular / imperdible",cn:"惊人 / 超值 / 不可错过",risk:"low",cat:"promo",why:"买家不搜的填充词，拉低相关性、可能被处罚。(B: Orbis)",alt:"不写，把字符留给参数。",keys:["increible","increíble","espectacular","imperdible"],en:"amazing / incredible / must-have",enk:["amazing", "incredible", "must have", "must-have"],ck:["必买", "超值"]},
+ {t:"100% original（正品且有单据时）",cn:"100% 正品（有发票/授权）",risk:"low",cat:"usage",why:"原则上可用，但会引来品牌核查，单据要随时能拿出来。(C)",alt:"备好发票/授权，描述与实物一致。",keys:[],en:"100% original (with invoices / authorization)",enk:[],ck:[]},
+ {t:"garantía del fabricante",cn:"厂家保修",risk:"low",cat:"usage",why:"只有厂家保修在墨西哥真实适用、且你能走通索赔路径时才能写。(B/C)",alt:"否则写你自己的卖家保修：期限 + 缺陷范围。",keys:["garantia del fabricante","garantía del fabricante"],en:"manufacturer warranty",enk:["manufacturer warranty", "factory warranty"],ck:[]},
+ {t:"Buen Fin / Hot Sale（标志或写进图/视频）",cn:"大促标志",risk:"low",cat:"promo",why:"官方标志只有正式报名商家能用；Clips 里禁止提大促活动。未查到美客多单独的 Buen Fin 规则。(B)",alt:"已报名才用官方素材；刊登图和视频里永远不放。",keys:["buen fin","hot sale"],en:"Buen Fin / Hot Sale event logos",enk:[],ck:[]}
 ];
 var riskLabel={high:"🔴 高风险",med:"🟠 中风险",low:"🟢 注意"};
 var riskClass={high:"b-high",med:"b-med",low:"b-low"};
@@ -439,32 +472,186 @@ render();
 /* checker */
 function norm(s){return s.toLowerCase();}
 document.getElementById("checkSample").addEventListener("click",function(){
-  document.getElementById("checkInput").value="Réplica 1:1 tipo Nike, oferta con envío gratis y meses sin intereses, el mejor precio, WhatsApp para más info";
+  setFields("Réplica 1:1 tipo Nike, oferta con envío gratis","El mejor precio, meses sin intereses. WhatsApp para más info. 100% original.");
 });
+function normText(s){return (s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");}
+function entryKeys(w){return (w.keys||[]).concat(w.enk||[],w.ck||[]);}
+function findRawHits(text){
+  var v=normText(text);var out=[];
+  WORDS.forEach(function(w,idx){entryKeys(w).forEach(function(k){var nk=normText(k);if(nk&&v.indexOf(nk)!==-1){out.push({idx:idx,entry:w,key:k,pos:v.indexOf(nk)});}});});
+  return out;
+}
+var FAKE_IDX=[0,1,2,3,4,5,6,7,8];
+var REVIEW_IDX=[9,10,11,12,13];
+var LEVEL_LABEL={high:"🔴 高风险",med:"🟠 中风险",low:"🟢 低风险",review:"🔵 待确认"};
+var LEVEL_CLASS={high:"b-high",med:"b-med",low:"b-low",review:"b-med"};
+function analyzeField(text,field,fakePresent){
+  if(!text||!text.trim())return [];
+  var FL=field==="title"?"标题":"描述";
+  var raw=findRawHits(text);
+  var out=[];var seen={};
+  var compatHit=null;
+  raw.forEach(function(h){
+    if(h.idx===17||h.idx===30||h.idx===31){if(!compatHit)compatHit=h;return;}
+    if((h.idx===25||h.idx===26)&&field==="desc")return;
+    if(seen[h.idx])return;seen[h.idx]=1;
+    var level=h.entry.risk;var note="";
+    if(REVIEW_IDX.indexOf(h.idx)!==-1){
+      if(fakePresent){level="high";note="文中同时出现仿冒类表达，按高风险处理。";}
+      else{level="review";note="这个词本身不等于侵权：正品、有授权时可以正常使用，工具无法核实你的授权和货源，请人工核实。";}
+    }
+    out.push({entry:h.entry,idx:h.idx,field:FL,pos:h.pos,key:h.key,level:level,note:note,review:(level==="high"||level==="review")});
+  });
+  if(compatHit){
+    if(field==="title"){out.push({entry:WORDS[17],idx:17,field:FL,pos:compatHit.pos,key:compatHit.key,level:"med",note:"兼容表达放在标题里容易被品牌方投诉，指南建议移到属性/描述。",review:true});}
+    else{out.push({entry:WORDS[30],idx:30,field:FL,pos:compatHit.pos,key:compatHit.key,level:"low",note:"兼容表达写在描述/属性里是推荐用法，前提是对所列型号真实兼容。",review:false});}
+  }
+  var order={high:0,review:1,med:2,low:3};
+  out.sort(function(a,b){return order[a.level]-order[b.level];});
+  return out;
+}
+function overallOf(hits){
+  if(!hits.length)return {level:"none",label:"✅ 未命中风险词",advice:"未命中词表关键词，但不等于无风险：图片 logo、角色形象、货源授权请再人工核对。"};
+  if(hits.some(function(h){return h.level==="high";}))return {level:"high",label:"🔴 高风险",advice:"建议暂停发布并核实：先处理高风险项，备好发票/授权再上架。"};
+  if(hits.some(function(h){return h.level==="med";}))return {level:"med",label:"🟠 中风险",advice:"建议修改或进一步确认后再发布。"};
+  if(hits.some(function(h){return h.level==="review";}))return {level:"review",label:"🔵 待确认",advice:"现有规则不足以判断，需要人工核实授权、货源或语境。"};
+  return {level:"low",label:"🟢 低风险",advice:"存在需要关注的表达，确认语境无误即可。"};
+}
+window.__lastReport=null;
 function runCheck(){
-  var v=norm(document.getElementById("checkInput").value||"");
+  var title=(document.getElementById("titleInput").value||"");
+  var desc=(document.getElementById("checkInput").value||"");
   var box=document.getElementById("checkBox"),res=document.getElementById("checkResult"),hint=document.getElementById("checkHint");
-  if(!v.trim()){hint.textContent="先粘一段标题或描述进来。";res.classList.remove("show");return;}
+  if(!title.trim()&&!desc.trim()){hint.textContent="先填标题或描述（也可以用上面的链接/图片功能自动填入）。";res.classList.remove("show");return;}
   hint.textContent="";
-  var hits=[];
-  WORDS.forEach(function(w){ (w.keys||[]).concat(w.enk||[]).forEach(function(k){ if(v.indexOf(norm(k))!==-1){ if(hits.indexOf(w)===-1)hits.push(w); } }); });
-  // avoid double-counting correct-use compatible when only generic hit is same word: keep as is, it's a提示
+  var fakePresent=findRawHits(title+" "+desc).some(function(h){return FAKE_IDX.indexOf(h.idx)!==-1;});
+  var hits=analyzeField(title,"title",fakePresent).concat(analyzeField(desc,"desc",fakePresent));
+  var overall=overallOf(hits);
+  var now=new Date();
+  var timeStr=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+" "+String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
+  var prodName=title.trim()?title.trim().slice(0,60):(desc.trim().slice(0,40)+"…");
   res.classList.add("show");
-  if(!hits.length){box.innerHTML="<b>✅ 没命中词表里的关键词。</b><p style='margin:6px 0 0;font-size:14px'>但这不等于安全：图片里的 logo、角色形象、拼错的品牌变体和没有授权的货，靠文字检测查不出来，请再过一遍自查清单。</p>"+'<div style="margin-top:10px"><button class="btn btn-light" id="copyResBtn" type="button">📋 复制检测结果</button></div>'; bindCopyRes("检测文本："+v+"\n结果：未命中词表关键词（仅供参考，不代表官方审核结果）"); return;}
-  var order={high:0,med:1,low:2}; hits.sort(function(a,b){return order[a.risk]-order[b.risk]});
-  box.innerHTML="<b>⚠️ 命中 "+hits.length+" 条风险词：</b><ul>"+hits.map(function(w){return "<li><span class='badge "+riskClass[w.risk]+"'>"+riskLabel[w.risk]+"</span><b>"+w.t+"</b> — "+w.alt+"</li>"}).join("")+"</ul><p style='margin:8px 0 0;font-size:13px;color:#555'>提示为关键词匹配，最终以词表逐条对照为准。结果仅供参考，不代表官方审核结果。</p>"+'<div style="margin-top:10px"><button class="btn btn-light" id="copyResBtn" type="button">📋 复制检测结果</button></div>'; bindCopyRes("检测文本："+v+"\n命中 "+hits.length+" 条风险词：\n"+hits.map(function(w){return "- ["+riskLabel[w.risk]+"] "+w.t+"（"+w.cn+"）→ "+w.alt;}).join("\n")+"\n（仅供参考，不代表美客多官方审核结果）");
+  var html="<b>📋 风险分析报告</b><div style='font-size:13px;color:#555;margin:6px 0'>商品："+prodName+"<br>检测时间："+timeStr+" ｜ 内容：标题 "+title.length+" 字 / 描述 "+desc.length+" 字<br>总体等级：<b>"+overall.label+"</b> — "+overall.advice+"<br>是否建议人工复核："+((overall.level==="high"||overall.level==="review"||overall.level==="med")?"是":"否（仍建议扫一眼图片与货源）")+"</div>";
+  if(!hits.length){html+="<b>✅ 没命中词表里的关键词。</b><p style='margin:6px 0 0;font-size:14px'>但这不等于安全：图片里的 logo、角色形象、拼错的品牌变体和没有授权的货，靠文字检测查不出来，请再过一遍自查清单。</p>";}
+  else{
+    html+="<ul>"+hits.map(function(h){return "<li><span class='badge "+LEVEL_CLASS[h.level]+"'>"+LEVEL_LABEL[h.level]+"</span><b>"+h.entry.t+"</b>（"+h.field+"，约第 "+(h.pos+1)+" 字，命中「"+h.key+"」）<br>原因："+h.entry.why+(h.note?"<br>语境判断："+h.note:"")+"<br>建议："+h.entry.alt+"<br>人工复核："+(h.review?"是":"否")+"</li>";}).join("")+"</ul>";
+  }
+  html+='<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-light" id="copyResBtn" type="button">📋 复制检测结果</button><button class="btn btn-light" id="exportRepBtn" type="button">⬇ 导出风险报告</button><button class="btn btn-light" id="claudeBtn" type="button">🤖 复制到 Muse 深度分析</button></div>';
+  box.innerHTML=html;
+  var lines=["美客多侵权风险检测报告","商品："+prodName,"检测时间："+timeStr,"检测内容：标题 "+title.length+" 字 / 描述 "+desc.length+" 字","总体等级："+overall.label+" — "+overall.advice,""];
+  if(!hits.length)lines.push("未命中词表关键词（仅供参考，不代表官方审核结果）。");
+  hits.forEach(function(h,i){lines.push((i+1)+". ["+LEVEL_LABEL[h.level]+"] "+h.entry.t+"（"+h.field+"，约第 "+(h.pos+1)+" 字，命中「"+h.key+"」）");lines.push("   原因："+h.entry.why);if(h.note)lines.push("   语境判断："+h.note);lines.push("   建议："+h.entry.alt);lines.push("   人工复核："+(h.review?"是":"否"));});
+  lines.push("","说明：本报告由本地规则生成，仅供参考，不代表美客多官方审核结果，不能保证通过审核。");
+  var reportText=lines.join("\n");
+  var claudePrompt="你是一名美客多墨西哥站合规专家，请帮我深度分析下面这个商品的侵权与违规风险，并给出可以直接替换的合规标题和描述。\n\n商品标题："+(title||"（未填）")+"\n商品描述："+(desc||"（未填）")+"\n\n本地工具初步检测结果：\n"+lines.slice(4).join("\n")+"\n\n请你：1）逐条判断这些命中是真风险还是误报，说明理由；2）给出修改后的西语标题（≤60 字符）和描述；3）指出工具没查出来但你认为要注意的风险（图片、货源、类目许可等）；4）明确哪些结论需要我提供发票或授权书才能确认。不要编造平台政策，没有依据的判断请标注为推测。";
+  window.__lastReport={text:reportText,prompt:claudePrompt,title:title,level:overall.label,hits:hits.length,time:timeStr};
+  bindReportButtons();
+  if(typeof recordHistory==="function")recordHistory({time:timeStr,title:prodName,level:overall.label,hits:hits.length});
+}
+function bindReportButtons(){
+  var rep=window.__lastReport;if(!rep)return;
+  function wire(id,fn){var b=document.getElementById(id);if(b)b.addEventListener("click",function(){fn(b);});}
+  function copy(text,b){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){b.textContent="✅ 已复制";}).catch(function(){b.textContent="复制失败";});}else{b.textContent="浏览器不支持自动复制";}}
+  wire("copyResBtn",function(b){copy(rep.text,b);});
+  wire("claudeBtn",function(b){copy(rep.prompt,b);});
+  wire("exportRepBtn",function(){
+    var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+rep.text],{type:"text/plain"}));a.download="risk-report.txt";document.body.appendChild(a);a.click();a.remove();
+  });
+}
+function setFields(title,desc){
+  if(title!=null)document.getElementById("titleInput").value=title;
+  if(desc!=null)document.getElementById("checkInput").value=desc;
+  runCheck();
+  document.getElementById("checkResult").scrollIntoView({behavior:"smooth",block:"nearest"});
 }
 document.getElementById("checkBtn").addEventListener("click",runCheck);
 
+
 /* tabs */
-var TABMAP={home:["bpp","checker","words","brands","banned","checklist","get"],title:["sect-title"],learn:["sect-learn"],skills:["sect-skills"],coach:["sect-coach"]};
+var TABMAP={home:["bpp","checker","words","brands","banned","checklist","get"],title:["sect-title"],precheck:["sect-precheck"],desk:["sect-desk"],learn:["sect-learn"],skills:["sect-skills"],coach:["sect-coach"]};
 function showTab(name){
+  if(name==="desk"&&typeof renderDesk==="function")renderDesk();
   Object.keys(TABMAP).forEach(function(k){TABMAP[k].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=(k===name?"":"none");});});
   document.querySelectorAll("#tabBar .tab").forEach(function(a){a.classList.toggle("active",a.dataset.tab===name);});
   window.scrollTo({top:0,behavior:"smooth"});
 }
 document.getElementById("tabBar").addEventListener("click",function(e){var a=e.target.closest("[data-tab]");if(!a)return;e.preventDefault();showTab(a.dataset.tab);});
-document.querySelectorAll('a[href="#checker"]').forEach(function(a){a.addEventListener("click",function(){showTab("home");});});
+document.querySelectorAll('a[href="#checker"]').forEach(function(a){a.addEventListener("click",function(){/* precheck + local workspace */
+var PRE_ITEMS=[
+ {id:"p1",label:"品牌授权：商品是正品，手里有发票、采购凭证或品牌授权书",tip:"没有凭证又用了品牌名，先下架品牌词或补齐凭证再发——这是被删刊登和封店最常见的原因。"},
+ {id:"p2",label:"知识产权：标题、描述、图片里没有未授权的品牌、卡通角色、球队、影视/游戏元素",tip:"把侵权词检测跑一遍，并人工看一遍图片里的 logo 和角色。"},
+ {id:"p3",label:"不夸大：没有「最好 / 第一 / 100% / 销量冠军」这类无法证明的说法",tip:"改成可验证的事实参数（材质、尺寸、数量），别用绝对化用语。"},
+ {id:"p4",label:"功效合规：没有治愈、根除、治疗疾病等医疗功效宣称，或已有合规依据",tip:"普通商品不要写医疗功效；确有资质的，把证书备好再写。"},
+ {id:"p5",label:"类目合规：商品不在禁售清单，受限类目（食品、化妆品、电子等）的许可和标签齐全",tip:"拿不准的类目先查卖家中心的禁售/受限清单。"},
+ {id:"p6",label:"图片合规：图片是自有实拍，无他人水印、logo 和盗图；主图无文字、边框和联系方式",tip:"用自己的实拍图；供应商图要确认授权，主图按平台规则保持干净白底。"},
+ {id:"p7",label:"信息完整：标题 ≤60 字符，属性、规格、价格、库存都真实填全",tip:"属性填全有助于匹配目录和搜索；价格库存别虚标。"}
+];
+function renderPrecheck(){
+  var box=document.getElementById("preList");if(!box)return;
+  box.innerHTML=PRE_ITEMS.map(function(it){return '<label style="display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid #e5e7eb;border-radius:10px;margin-bottom:8px;font-size:15px"><input type="checkbox" class="preChk" data-id="'+it.id+'" style="width:20px;height:20px;margin-top:2px;flex:none"><span>'+it.label+'</span></label>';}).join("");
+  updatePreProg();
+}
+function updatePreProg(){
+  var n=document.querySelectorAll(".preChk:checked").length;
+  var el=document.getElementById("preProg");if(el)el.textContent="已确认 "+n+" / "+PRE_ITEMS.length+" 项";
+}
+document.addEventListener("change",function(e){if(e.target.classList&&e.target.classList.contains("preChk"))updatePreProg();});
+function precheckReport(){
+  var checked={};document.querySelectorAll(".preChk").forEach(function(c){checked[c.dataset.id]=c.checked;});
+  var missing=PRE_ITEMS.filter(function(it){return !checked[it.id];});
+  var now=new Date();var ts=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+" "+String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
+  var res=document.getElementById("preResult"),box=document.getElementById("preBox");
+  res.classList.add("show");
+  var html="<b>📋 上架风险自查报告</b><div style='font-size:13px;color:#555;margin:6px 0'>时间："+ts+" ｜ 已确认 "+(PRE_ITEMS.length-missing.length)+"/"+PRE_ITEMS.length+" 项</div>";
+  if(!missing.length)html+="<b>✅ 全部确认完毕。</b><p style='font-size:14px;margin:6px 0 0'>自查通过不等于平台审核通过，上架后仍要留意平台通知。</p>";
+  else html+="<b>⚠️ 还有 "+missing.length+" 项未确认：</b><ul>"+missing.map(function(it){return "<li>"+it.label+"<br><span style='color:#666;font-size:13px'>处理提示："+it.tip+"</span></li>";}).join("")+"</ul>";
+  html+='<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-light" id="preCopyBtn" type="button">📋 复制自查报告</button></div>';
+  box.innerHTML=html;
+  var lines=["美客多上架风险自查报告","时间："+ts,"已确认 "+(PRE_ITEMS.length-missing.length)+"/"+PRE_ITEMS.length+" 项",""];
+  PRE_ITEMS.forEach(function(it){lines.push((checked[it.id]?"[✓] ":"[ ] ")+it.label);if(!checked[it.id])lines.push("    处理提示："+it.tip);});
+  lines.push("","说明：本报告为卖家自查记录，仅供参考，不代表美客多官方审核结果。");
+  var b=document.getElementById("preCopyBtn");
+  b.addEventListener("click",function(){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lines.join("\n")).then(function(){b.textContent="✅ 已复制";}).catch(function(){b.textContent="复制失败";});}});
+}
+/* localStorage workspace */
+function lsGet(k){try{return JSON.parse(localStorage.getItem(k)||"[]");}catch(e){return[];}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function recordHistory(rec){var arr=lsGet("mlr_history");arr.unshift(rec);if(arr.length>30)arr=arr.slice(0,30);lsSet("mlr_history",arr);renderDesk();}
+function saveDraft(kind,item){var key=kind==="title"?"mlr_titles":"mlr_descs";var arr=lsGet(key);arr.unshift(item);if(arr.length>30)arr=arr.slice(0,30);lsSet(key,arr);renderDesk();showToast("已保存到工作台（仅本设备）");}
+function deskRow(html){return '<div style="display:flex;gap:8px;align-items:flex-start;border:1px solid #e5e7eb;border-radius:10px;padding:8px 10px;margin-bottom:8px;font-size:14px"><div style="flex:1">'+html+'</div></div>';}
+function renderDesk(){
+  var h=document.getElementById("deskHistory");if(!h)return;
+  var hist=lsGet("mlr_history");
+  h.innerHTML=hist.length?hist.map(function(r,i){return deskRow("<b>"+r.level+"</b> · 命中 "+r.hits+" 条 · "+r.time+"<br>"+r.title+' <button class="btn btn-ghost deskDel" data-k="mlr_history" data-i="'+i+'" type="button" style="padding:2px 10px;min-height:30px">删除</button>');}).join(""):'<p class="sub">还没有检测记录，去「侵权词检测」跑一次就会出现在这里。</p>';
+  var t=document.getElementById("deskTitles");var titles=lsGet("mlr_titles");
+  t.innerHTML=titles.length?titles.map(function(r,i){return deskRow(r.time+"<br>"+r.text+' <button class="btn btn-ghost deskDel" data-k="mlr_titles" data-i="'+i+'" type="button" style="padding:2px 10px;min-height:30px">删除</button>');}).join(""):'<p class="sub">还没有标题草稿，在「标题优化」生成后点“保存为标题草稿”。</p>';
+  var d=document.getElementById("deskDescs");var descs=lsGet("mlr_descs");
+  d.innerHTML=descs.length?descs.map(function(r,i){return deskRow(r.time+"<br>"+r.text.slice(0,120)+(r.text.length>120?"…":"")+' <button class="btn btn-ghost deskDel" data-k="mlr_descs" data-i="'+i+'" type="button" style="padding:2px 10px;min-height:30px">删除</button>');}).join(""):'<p class="sub">还没有描述草稿，在检测框填好描述后点“保存描述草稿”。</p>';
+}
+document.addEventListener("click",function(e){
+  var b=e.target.closest(".deskDel");if(!b)return;
+  var arr=lsGet(b.dataset.k);arr.splice(parseInt(b.dataset.i,10),1);lsSet(b.dataset.k,arr);renderDesk();
+});
+function showToast(msg){
+  var t=document.getElementById("toast");
+  if(!t){t=document.createElement("div");t.id="toast";t.style.cssText="position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#14213d;color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;z-index:99;box-shadow:0 4px 16px rgba(0,0,0,.25)";document.body.appendChild(t);}
+  t.textContent=msg;t.style.display="block";
+  clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(function(){t.style.display="none";},2200);
+}
+
+renderPrecheck();
+document.getElementById("preGen").addEventListener("click",precheckReport);
+document.getElementById("preReset").addEventListener("click",function(){document.querySelectorAll(".preChk").forEach(function(c){c.checked=false;});updatePreProg();document.getElementById("preResult").classList.remove("show");});
+document.getElementById("saveDescBtn").addEventListener("click",function(){
+  var v=(document.getElementById("checkInput").value||"").trim();
+  if(!v){showToast("描述框是空的");return;}
+  var now=new Date();saveDraft("desc",{time:now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+" "+String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0"),text:v});
+});
+document.getElementById("deskClearHistory").addEventListener("click",function(){lsSet("mlr_history",[]);renderDesk();});
+document.getElementById("deskClearTitles").addEventListener("click",function(){lsSet("mlr_titles",[]);renderDesk();});
+document.getElementById("deskClearDescs").addEventListener("click",function(){lsSet("mlr_descs",[]);renderDesk();});
+renderDesk();
+showTab("home");});});
 document.querySelectorAll('a[href="#get"]').forEach(function(a){a.addEventListener("click",function(e){e.preventDefault();showTab("home");setTimeout(function(){document.getElementById("get").scrollIntoView({behavior:"smooth"});},60);});});
 function bindCopyRes(text){
   var b=document.getElementById("copyResBtn"); if(!b)return;
@@ -503,11 +690,7 @@ function parseMLLink(raw){
   }catch(e){}
   return out;
 }
-function setTextAndCheck(text){
-  document.getElementById("checkInput").value=text;
-  runCheck();
-  document.getElementById("checkResult").scrollIntoView({behavior:"smooth",block:"nearest"});
-}
+function setTextAndCheck(text){setFields(text,"");}
 document.getElementById("linkBtn").addEventListener("click",function(){
   var raw=(document.getElementById("linkInput").value||"").trim();
   var hint=document.getElementById("linkHint");
@@ -532,7 +715,7 @@ document.getElementById("linkBtn").addEventListener("click",function(){
     fetch("https://api.mercadolibre.com/items/"+info.id+"/description").then(function(r){return r.ok?r.json():null;}).then(function(d){
       var desc=(d&&(d.plain_text||d.text))||"";
       hint.textContent="商品 "+info.id+"：已读取标题"+(desc?"和描述":"")+"并检测。";
-      setTextAndCheck(desc?(title+"\n"+desc):title);
+      setFields(title,desc||"");
     }).catch(function(){hint.textContent="商品 "+info.id+"：已读取标题并检测。";setTextAndCheck(title);});
   }).catch(function(){fallback("美客多官方接口需要授权、暂时读不到商品全文，");});
 });
@@ -559,7 +742,7 @@ function ocrDone(text){
   var clean=(text||"").replace(/\s+/g," ").trim();
   if(!clean){hint.textContent="没从这张图里读到文字。图片里的纯 logo、卡通形象（没有文字的）识别不出来，请对照第 6 节第 3、4 条人工看一遍。";return;}
   hint.textContent="已从图片里识别出文字并自动检测。提醒：没有文字的 logo、卡通/球队形象识别不出来，请再对照第 6 节第 3、4 条人工看一遍。";
-  setTextAndCheck(clean);
+  setFields(null,clean);
 }
 function recognizeImage(source){
   var hint=document.getElementById("imgHint");
@@ -613,8 +796,8 @@ function trWords(text,dict){
   return {text:t.replace(/\s+/g," ").trim(),used:used,missing:missing};
 }
 function scanHits(text){
-  var v=(text||"").toLowerCase();var hits=[];
-  WORDS.forEach(function(w){(w.keys||[]).concat(w.enk||[]).forEach(function(k){if(v.indexOf(k.toLowerCase())!==-1&&hits.indexOf(w)===-1)hits.push(w);});});
+  var v=normText(text||"");var hits=[];
+  WORDS.forEach(function(w){entryKeys(w).forEach(function(k){if(v.indexOf(normText(k))!==-1&&hits.indexOf(w)===-1)hits.push(w);});});
   return hits;
 }
 function trim60(s){s=s.replace(/\s+/g," ").trim();if(s.length<=60)return s;var cut=s.slice(0,60);var sp=cut.lastIndexOf(" ");return (sp>20?cut.slice(0,sp):cut).trim();}
@@ -646,6 +829,21 @@ document.getElementById("tGen").addEventListener("click",function(){
     var h=scanHits(x[1]);
     html+='<div style="margin:8px 0;padding:10px;border:1px solid var(--line);border-radius:10px"><div style="font-size:12px;color:var(--muted)">'+x[0]+' · '+x[1].length+' 字符</div><div style="font-weight:700;margin:4px 0" id="tv'+i+'">'+x[1]+'</div>'+(h.length?'<div style="font-size:13px;color:var(--red)">⚠️ 侵权提醒：'+h.map(function(w){return w.t;}).join("、")+'——请按词表修改后再用。</div>':'<div style="font-size:13px;color:var(--green)">✅ 未命中侵权词表（仍不代表官方审核结果）</div>')+'<button class="btn btn-light" data-copy="tv'+i+'" style="padding:6px 12px;font-size:13px">复制这条</button></div>';
   });
+  var promoIdx=[20,21,22,23,25,26,33];
+  var promoHits=scanHits(v1).filter(function(w){return promoIdx.indexOf(WORDS.indexOf(w))!==-1;});
+  var corePos=v1&&core?v1.toLowerCase().indexOf(core.split(" ")[0].toLowerCase()):99;
+  html+='<b>标题结构检查（标准版）</b><ul>'
+    +'<li>长度：'+(v1?v1.length:0)+' / 60 字符 '+(v1&&v1.length<=60?'✓':'✗')+'</li>'
+    +'<li>产品词在标题前部：'+(corePos<=10?'✓（买家和系统先看到产品词）':'建议把产品词放最前面')+'</li>'
+    +'<li>促销填充词：'+(promoHits.length?('⚠️ 含 '+promoHits.map(function(w){return w.t;}).join("、")+'，建议删掉'):'无 ✓')+'</li>'
+    +'<li>关键词覆盖：'+(kws.length?(kws.filter(function(k){return v1.toLowerCase().indexOf(k.toLowerCase())!==-1;}).length+' / '+kws.length+' 个进入标准版'):'未填关键词')+'</li></ul>';
+  var oldT=(document.getElementById("tOld").value||"").trim();
+  if(oldT){
+    var oh=scanHits(oldT);
+    html+='<b>修改前后对比</b><div style="display:grid;gap:8px;margin:8px 0"><div style="padding:10px;border:1px solid var(--line);border-radius:10px"><div style="font-size:12px;color:var(--muted)">修改前 · '+oldT.length+' 字符'+(oldT.length>60?'（超 60，发不出去）':'')+'</div><div style="font-weight:700;margin:4px 0">'+oldT+'</div><div style="font-size:13px">'+(oh.length?('<span style="color:var(--red)">⚠️ 命中 '+oh.length+' 条：'+oh.map(function(w){return w.t;}).join("、")+'</span>'):'<span style="color:var(--green)">✅ 未命中词表</span>')+'</div></div>'
+      +'<div style="padding:10px;border:1px solid var(--line);border-radius:10px"><div style="font-size:12px;color:var(--muted)">修改后（标准版）· '+(v1?v1.length:0)+' 字符</div><div style="font-weight:700;margin:4px 0">'+v1+'</div><div style="font-size:13px">'+(scanHits(v1).length?'<span style="color:var(--red)">仍有命中，见上方提醒</span>':'<span style="color:var(--green)">✅ 未命中词表</span>')+'</div></div></div>';
+  }
+  html+='<div style="margin:10px 0"><button class="btn btn-light" id="tSaveDraft" type="button">💾 保存标准版为标题草稿</button></div>';
   html+='<b>优化建议</b><ul>';
   if(!kws.length)html+='<li>没填目标关键词：西语标题只能用名称词典拼装，建议补 1–2 个买家会搜的西语关键词，标题相关性会更好。</li>';
   kws.forEach(function(k){var inT=variants.length&&variants[0][1].toLowerCase().indexOf(k.toLowerCase())!==-1;html+='<li>关键词「'+k+'」'+(inT?'已进入标准版标题 ✓':'未进入标准版（可能被 60 字符截断），可手动放到最前面')+'。</li>';});
@@ -656,6 +854,8 @@ document.getElementById("tGen").addEventListener("click",function(){
   html+='</ul><p style="font-size:12.5px;color:var(--muted);margin:6px 0 0">本工具用本地规则和词典拼装，不编造属性；生成结果请对照实物再确认一遍。</p></div>';
   out.innerHTML=html;
   bindCopyButtons(out);
+  var sd=document.getElementById("tSaveDraft");
+  if(sd)sd.addEventListener("click",function(){var now=new Date();saveDraft("title",{time:now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+" "+String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0"),text:v1});});
 });
 function bindCopyButtons(scope){
   (scope||document).querySelectorAll("[data-copy]").forEach(function(b){
