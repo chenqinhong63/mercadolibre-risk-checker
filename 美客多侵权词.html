@@ -143,7 +143,7 @@ section{padding-top:34px}
     </div>
     <div class="actions" style="margin-top:18px">
       <a class="btn btn-yellow" href="#checker" style="text-decoration:none;background:var(--yellow);color:#111">🔍 立即免费检测</a>
-      <a class="btn btn-light" href="#get" style="text-decoration:none">🛠 店铺全检 / 定制词表</a>
+      <button class="btn btn-light" data-goto="coach" type="button">🎓 教学陪跑 / 店铺全检</button>
     </div>
     <p class="note" style="margin-top:16px">⚠️ 美客多没有公开发布过官方“完整黑名单”。本表是按官方规则 + 卖家经验整理的<b>风险合成表，不是官方名单</b>。</p>
 
@@ -173,8 +173,7 @@ section{padding-top:34px}
 
   <nav class="nav" id="tabBar">
     <a href="#" data-tab="home" class="tab active">🔍 侵权词检测器</a><a href="#" data-tab="title" class="tab">✍️ 标题优化</a>
-    <a href="#" data-tab="precheck" class="tab">✅ 上架自查</a>
-    <a href="#" data-tab="desk" class="tab">🗂 工作台</a><a href="#" data-tab="imgopt" class="tab">🖼 图片优化</a><a href="#" data-tab="video" class="tab">🎬 视频生成</a><a href="#" data-tab="coach" class="tab">🎓 教学陪跑</a>
+    <a href="#" data-tab="imgopt" class="tab">🖼 图片优化</a><a href="#" data-tab="video" class="tab">🎬 视频生成</a><a href="#" data-tab="coach" class="tab">🎓 教学陪跑</a>
   </nav>
   <style>.nav a.tab.active{background:var(--navy);color:#fff;border-color:var(--navy)} @media print{section{display:block!important}}</style>
 
@@ -217,7 +216,6 @@ section{padding-top:34px}
       <div class="row">
         <button class="btn btn-yellow" id="checkBtn">开始检测</button>
         <button class="btn btn-ghost" id="checkSample">填入示例</button>
-        <button class="btn btn-ghost" id="saveDescBtn" type="button">💾 保存描述草稿</button>
         <span id="checkHint" style="font-size:13px;color:#d6d9ff"></span>
       </div>
       <div class="result" id="checkResult"><div class="result-box" id="checkBox"></div></div>
@@ -227,64 +225,13 @@ section{padding-top:34px}
 
 
 
-  <section id="brands">
-    <div class="sec-head"><span class="num">3</span><div><h2>2026 年执法最紧的品牌</h2><p>不是黑名单，是今年投诉和查扣最集中的对象；任何注册商标同理。</p></div></div>
-    <div class="brands">
-      <span class="brand hot">FIFA ⚽ 世界杯年最紧</span><span class="brand hot">adidas</span><span class="brand hot">Jordan / Nike</span><span class="brand">Reebok</span><span class="brand">Umbro</span><span class="brand">New Balance</span><span class="brand">Fila</span><span class="brand">Apple</span><span class="brand">Sony</span><span class="brand">Disney</span><span class="brand">Marvel</span><span class="brand">Pokémon</span>
-    </div>
-    <p class="note">投诉最集中的类目：美妆、医药、时尚、运动、科技。故意拼错品牌名没用——看“本质上不可区分”，包装外形也算；授权书必须写明覆盖墨西哥。</p>
-  </section>
+  
 
-  <section id="banned">
-    <div class="sec-head"><span class="num">4</span><div><h2>禁售与受限品类（墨西哥站）</h2><p>上架前对照一遍；受限类目要许可/认证，完整政策以官方帮助页为准。</p></div></div>
-    <div class="catgrid">
-      <div class="catcard"><span class="tag tag-ban">禁止</span><h3>武器弹药</h3><p>枪支、气枪、步枪、手枪、刀具、爆炸物、手榴弹、火药。</p></div>
-      <div class="catcard"><span class="tag tag-ban">禁止</span><h3>毒品与管制物质</h3><p>麻醉品、致幻剂及任何法律不允许的物质；宣扬吸毒的刊登。</p></div>
-      <div class="catcard"><span class="tag tag-ban">禁止</span><h3>假货 / 盗版</h3><p>无授权仿冒注册品牌的产品；盗版书籍、音乐、影视、软件、游戏。</p></div>
-      <div class="catcard"><span class="tag tag-ban">禁止</span><h3>赃物 / 来源不明</h3><p>被举报、克隆、黑名单中的手机等来源可疑商品。</p></div>
-      <div class="catcard"><span class="tag tag-ban">禁止</span><h3>动物与衍生品</h3><p>珍稀、濒危动物及其制品（皮毛、羽毛等）；活体动物普遍受限。</p></div>
-      <div class="catcard"><span class="tag tag-ban">禁止</span><h3>危险品</h3><p>未授权危险化学品、易燃易爆品（同时也被美客多物流禁运）。</p></div>
-      <div class="catcard"><span class="tag tag-lim">受限 · 需许可</span><h3>药品与医疗器械</h3><p>处方/非处方药须 COFEPRIS 注册许可；无注册药品是 CANIFARMA 的重点打击对象，前约 3 个月已下架 300+ 条。</p></div>
-      <div class="catcard"><span class="tag tag-lim">受限 · 需许可</span><h3>保健品 / 补充剂</h3><p>须向 COFEPRIS 报备、按 NOM-051 标注，且<strong>不得有治疗宣称</strong>；激素、合成代谢类、类固醇直接禁止。</p></div>
-      <div class="catcard"><span class="tag tag-lim">受限 · 需许可</span><h3>酒类</h3><p>仅限官方店/受邀账号并备齐许可：COFEPRIS 营业通知、SAT 酒类登记、广告许可与健康警示。</p></div>
-      <div class="catcard"><span class="tag tag-lim">受限 · 需规范</span><h3>食品饮料（预包装）</h3><p>须符合 NOM-051 标签与警示印章，标签照片要能看清印章。</p></div>
-      <div class="catcard"><span class="tag tag-lim">受限 · 需认证</span><h3>电子 / 电器</h3><p>可能要求 NOM 认证（如 NOM-001、NOM-019），平台可随时索要；无认证电信产品有被监管处罚先例。</p></div>
-      <div class="catcard"><span class="tag tag-lim">受限 · 需西语标签</span><h3>所有在墨销售商品</h3><p>NOM-050 要求西语商业信息：通用名、数量、制造商/进口商名称地址、原产国、说明与警示、如有保修须注明。PROFECO 可在销售端扣货。</p></div>
-    </div>
-  </section>
+  
 
-  <section id="checklist">
-    <div class="sec-head"><span class="num">5</span><div><h2>上架前 10 项自查</h2><p>每个 SKU 过一遍。在墨西哥承担责任的是进口商，不是中国工厂——供应商说“没问题”不算数。</p></div></div>
-    <ol class="checklist">
-      <li><b>货是真的吗？发票在手吗？</b><span>只卖能证明的正品；发票就是 4 天答辩期的救命文件。</span></li>
-      <li><b>标题里能放品牌名吗？</b><span>正品才用“产品+品牌+型号”；兼容品把品牌写进 Compatible con，别当产品品牌。</span></li>
-      <li><b>图片里有别人的 logo 吗？</b><span>干净产品图；不放 logo、水印、二维码、联系方式，不盗用别人的图。</span></li>
-      <li><b>有角色 / 球队 / 影视形象吗？</b><span>能认出的卡通、球队、影视形象都要墨西哥授权书，“灵感来自”不是授权。</span></li>
-      <li><b>“兼容”写对了吗？</b><span>写清确切型号/年份，不声称是品牌原厂件。</span></li>
-      <li><b>类目选对了吗？</b><span>确认类目是否要 GTIN、NOM 证书或卫生注册。</span></li>
-      <li><b>是受监管产品吗？</b><span>药品、保健品、美妆、酒、食品、电子，先查 COFEPRIS 与西语标签规范。</span></li>
-      <li><b>标题 ≤60 字符、无填充词？</b><span>产品+品牌+型号+1–2 个参数；不写 oferta、envío gratis、el mejor，不写颜色和价格。</span></li>
-      <li><b>描述是自己写的吗？</b><span>自己写描述；保修只写能履行的；不写疗效承诺；不抄品牌文案。</span></li>
-      <li><b>有自有品牌吗？去 IMPI 注册</b><span>商标只在墨西哥有效；注册后能保护自己，也能投诉抄你的人。</span></li>
-    </ol>
-    <h3 style="margin:26px 0 0;font-size:18px">这些话术不要写</h3>
-    <div class="dont">
-      <div><b>❌ “100% original / auténtico”</b>证明不了就别写，投诉时 4 天内拿不出发票就删。</div>
-      <div><b>❌ 厂家保修</b>履行不了就别承诺；只写真实保修 + 期限 + 索赔路径。</div>
-      <div><b>❌ 疗效承诺</b>治愈、消除疾病、神奇减肥，没依据一律不写。</div>
-      <div><b>❌ “distribuidor oficial / tienda oficial”</b>没有正式任命就写，是 BPP 明确投诉事由。</div>
-      <div><b>❌ 用 OEM 暗示品牌授权</b>没有书面授权，OEM 就是红旗词。</div>
-      <div><b>❌ 把保修/优惠写进标题、主图、Clips</b>这些由平台展示，自己写就是违规。</div>
-    </div>
-  </section>
+  
 
-  <section id="get">
-    <div class="sec-head"><span class="num">6</span><div><h2>让你的店铺一次查完</h2><p>自己一个个查太慢——下面两条路，选一条：</p></div></div>
-    <div class="catgrid">
-      <div class="catcard"><b>🔗 分享给卖家朋友</b>好工具值得传出去，朋友避坑也会记得你。<br><button class="btn btn-light" id="shareBtn" style="margin-top:10px">复制网站链接</button><span id="shareHint" style="font-size:12.5px;color:var(--muted);margin-left:8px"></span></div>
-      <div class="catcard"><b>🛠 店铺批量全检 / 定制词表</b>整店标题、图片一次查完，或按你的类目定制词表，加微信聊：<br><span id="contactSlot" style="display:inline-block;margin-top:8px;font-weight:900">微信：czqshy888888</span> <button class="btn btn-light" id="wxCopyBtn" style="padding:6px 12px;font-size:13px">复制微信号</button><span id="wxHint" style="font-size:12.5px;color:var(--muted);margin-left:6px"></span></div>
-    </div>
-  </section>
+  
 
 <section id="sect-title">
 <div class="sec-head"><span class="num">✍️</span><div><h2>Listing 标题优化</h2><p>只填你产品的真实信息，下面的工具用本地词典拼装，<b>不会添加你没提供的品牌、认证或功能</b>。西语标题 ≤60 字符；词典没收录的词会标出来，请人工确认后再用。</p></div></div>
@@ -324,55 +271,12 @@ section{padding-top:34px}
 <article class="card"><div class="term">🚧 服务边界</div><p style="font-size:14px;margin:8px 0 0">不收账号密码、不接管账号、不承诺销量和利润、不保证通过平台审核；模板为单店授权；客户数据不外传。</p></article>
 </div>
 <p class="note">可定制的工作流：商机筛选 · 上架流水线 · 图片生产 · 广告周诊断 · 售前问答 · 库存 Full · 财务对账 · 周报。服务边界：不收你的账号密码、不接管账号、不承诺销量。</p>
-<div class="actions"><a class="btn btn-yellow" href="#get" style="text-decoration:none;background:var(--yellow);color:#111">去文末加微信咨询</a></div>
+
 </section>
 
-  <section id="sources">
-    <div class="sec-head"><span class="num">7</span><div><h2>来源与说明</h2></div></div>
-    <details><summary style="cursor:pointer;font-size:14px;color:var(--muted)">展开看来源与可信度（调研日期 2026-11-08）</summary>
-    <ul class="sources">
-      <li><b>[A]</b> 美客多墨西哥帮助 / 使用条款（ayuda/991）：<a href="https://www.mercadolibre.com.mx/ayuda/991" target="_blank" rel="noopener">mercadolibre.com.mx/ayuda/991</a>（页面标题已确认，正文为 JS 渲染、本次未抓到全文）</li>
-      <li><b>[A]</b> IMPI / 墨西哥政府 — 2026-10-21 平台知识产权原则声明：<a href="http://www.gob.mx/impi/prensa/autoridades-industria-y-plataformas-digitales-fortalecen-la-cooperacion-contra-el-comercio-ilicito?state=published" target="_blank" rel="noopener">gob.mx/impi/prensa</a></li>
-      <li><b>[B]</b> 美客多品牌保护高级经理 Juan Cichero 访谈（BPP 覆盖权利、投诉流程）：<a href="https://abogados.com.ar/index.php/en-mercado-libre-trabajamos-en-toda-la-region-para-brindar-a-titulares-de-derechos-herramientas-efectivas-para-proteger-sus-derechos-de-propiedad-intelectual/26713" target="_blank" rel="noopener">abogados.com.ar</a></li>
-      <li><b>[B]</b> Upseller — BPP 指南（2026-11-05 更新；暂停、4+4 天、删除流程）：<a href="https://www.upseller.com/es/blog-article-177-Brand-Protection-Program-de-Mercado-Libre" target="_blank" rel="noopener">upseller.com</a></li>
-      <li><b>[B]</b> Nubimetrics — 如何避免账号被停（tipo / igual a 禁用、停权梯度）：<a href="https://academia.nubimetrics.com/suspension-cuenta-mercado-libre" target="_blank" rel="noopener">academia.nubimetrics.com</a></li>
-      <li><b>[B]</b> Asert — BPP 可投诉事项（2026-10-22）：<a href="https://www.asert.ar/articulos/lecciones-aprendidas/brand-protection-que-se-puede-denunciar/" target="_blank" rel="noopener">asert.ar</a>；图片规范：<a href="https://www.asert.ar/articulos/fotos-publicacion-politicas-que-no-se-permite/" target="_blank" rel="noopener">asert.ar/fotos</a></li>
-      <li><b>[B]</b> Orbis 2026 卖家指南（标题填充词处罚）：<a href="https://orbis.agency/blog/como-vender-en-mercado-libre/" target="_blank" rel="noopener">orbis.agency</a>；Woosync：<a href="https://woosync.io/blog/cambios-descripcion-publicaciones-html-mercadolibre/" target="_blank" rel="noopener">woosync.io</a></li>
-      <li><b>[B]</b> DTD Express — 从中国进口的知识产权风险（2026；进口商担责、授权链、红旗话术）：<a href="https://dtdexpress.mx/es/mayoristas/propiedad-intelectual-marca-registrada-falsificacion-importar-china-mexico-2026/" target="_blank" rel="noopener">dtdexpress.mx</a></li>
-      <li><b>[B]</b> 第 12 份透明度报告转述（2026 上半年数据）：<a href="https://momentocorporativo.com/2026/09/30/mercado-libre-detecta-de-forma-proactiva-99-7-de-las-publicaciones-que-infringen-sus-reglas/" target="_blank" rel="noopener">momentocorporativo.com</a>；<a href="https://www.expoknews.com/la-medida-rota/" target="_blank" rel="noopener">expoknews.com</a>（均为平台自报数据，非独立审计）</li>
-      <li><b>[B]</b> CANIPEC 美妆协议（2026-03-11）：<a href="https://grupoenconcreto.com/empresa/mercado-libre-y-canipec-combaten-falsificacion-de-cosmeticos/" target="_blank" rel="noopener">grupoenconcreto.com</a>；CANIFARMA 医药协议（2026-06-15）：<a href="https://www.sumedico.com/lideres-de-la-salud/2026/6/15/canifarma-mercado-libre-cierran-filas-contra-infracciones-de-marca-58179.html" target="_blank" rel="noopener">sumedico.com</a></li>
-      <li><b>[B]</b> 保健品上架要求（COFEPRIS / 疗效宣称）：<a href="https://grupobiotvida.com/requisitos-vender-suplementos-mercado-libre/" target="_blank" rel="noopener">grupobiotvida.com</a>；EasyLex — 商标地域性（IMPI）：<a href="https://easylex.com/blog/registro-de-marca-para-e-commerce-protege-tu-catalogo-en-amazon-mercado-libre-y-shopify" target="_blank" rel="noopener">easylex.com</a></li>
-    </ul>
-    </details>
+  
 
-  <section class="card" id="sect-precheck">
-    <h2 style="margin-top:0">✅ 上架前自查清单</h2>
-    <p class="sub">发布前逐项确认。没勾的项会出现在自查报告里，并给出处理提示——这份报告可以存下来当上架凭证。</p>
-    <div id="preList"></div>
-    <p id="preProg" style="font-weight:700;margin:12px 0 8px"></p>
-    <div class="row">
-      <button class="btn" id="preGen" type="button">生成自查报告</button>
-      <button class="btn btn-ghost" id="preReset" type="button">全部取消勾选</button>
-    </div>
-    <div class="result" id="preResult"><div id="preBox"></div></div>
-  </section>
-
-  <section class="card" id="sect-desk">
-    <h2 style="margin-top:0">🗂 我的工作台（本地保存）</h2>
-    <p class="sub">⚠️ 数据只保存在<b>这台设备的这个浏览器</b>里（localStorage），不会上传、不会同步到其他设备；清理浏览器缓存会清空。重要内容请另行备份。</p>
-    <h3>🕘 最近检测记录</h3>
-    <div id="deskHistory"></div>
-    <button class="btn btn-ghost" id="deskClearHistory" type="button">清空检测记录</button>
-    <h3 style="margin-top:22px">⭐ 收藏的商品</h3>
-    <div id="deskFavs"></div>
-    <button class="btn btn-ghost" id="deskClearFavs" type="button">清空收藏</button>
-    <h3 style="margin-top:22px">✍️ 保存的标题草稿</h3>
-    <div id="deskTitles"></div>
-    <button class="btn btn-ghost" id="deskClearTitles" type="button">清空标题草稿</button>
-    <h3 style="margin-top:22px">📝 保存的描述草稿</h3>
-    <div id="deskDescs"></div>
-    <button class="btn btn-ghost" id="deskClearDescs" type="button">清空描述草稿</button>
-  </section>
+  
 
 
   <section class="card" id="sect-img">
@@ -500,7 +404,7 @@ section{padding-top:34px}
     <div style="display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
       <div style="border:1.5px solid #2e7d32;border-radius:12px;padding:12px">
         <b style="color:#2e7d32">✅ 免费功能（本站直接用，不收费）</b>
-        <ul style="margin:8px 0 0;font-size:14.5px"><li>侵权词检测（文字/链接/图片）</li><li>基础标题优化</li><li>基础图片提示词</li><li>基础视频脚本生成</li><li>上架自查、工作台（本地保存）</li></ul>
+        <ul style="margin:8px 0 0;font-size:14.5px"><li>侵权词检测（文字/链接/图片）</li><li>基础标题优化</li><li>基础图片提示词</li><li>基础视频脚本生成</li></ul>
       </div>
       <div style="border:1.5px solid #14213d;border-radius:12px;padding:12px">
         <b style="color:#14213d">🎓 付费服务（微信咨询，走闲鱼下单）</b>
@@ -510,18 +414,10 @@ section{padding-top:34px}
     <p style="font-size:13px;color:#666;margin:10px 0 0">免费工具不需要付费解锁；付费的是人工服务和陪跑时间。任何服务都不承诺销量、利润，也不保证通过美客多审核。</p>
   </section>
 
-  <section class="card" id="sect-faq">
-    <h2 style="margin-top:0">❓ 常见问题</h2>
-    <details style="margin-bottom:8px"><summary style="cursor:pointer;font-weight:700">这些工具真的免费吗？要注册吗？</summary><p style="font-size:14.5px;margin:6px 0 0">全免费，不注册、不登录。检测和生成都在你自己的浏览器里运行，不上传你的商品数据。</p></details>
-    <details style="margin-bottom:8px"><summary style="cursor:pointer;font-weight:700">检测没命中，是不是就不会被投诉下架？</summary><p style="font-size:14.5px;margin:6px 0 0">不是。词表是按官方规则和卖家经验整理的风险合成表，不是官方黑名单；图片里的 logo、角色、货源授权等问题文字检测查不出来，请结合上架自查清单人工确认。检测结果仅供参考，不代表美客多官方审核结果。</p></details>
-    <details style="margin-bottom:8px"><summary style="cursor:pointer;font-weight:700">标题、图片、视频规则会变吗？</summary><p style="font-size:14.5px;margin:6px 0 0">会。标题 60 字符、图片尺寸、Clips 时长等要求以美客多官方最新规则为准，本站标注的数字是整理时的参考值，发布前请在卖家中心再确认一遍。</p></details>
-    <details style="margin-bottom:8px"><summary style="cursor:pointer;font-weight:700">陪跑服务是卖 Skill 文件吗？</summary><p style="font-size:14.5px;margin:6px 0 0">不是只卖文件。陪跑是帮你把店里重复的工作做成 AI 工作流，并带着你做一遍、每周复盘，直到你能自己跑。先加微信 czqshy888888 沟通需求，确认后再走闲鱼下单。</p></details>
-    <details style="margin-bottom:8px"><summary style="cursor:pointer;font-weight:700">陪跑能保证出单或通过审核吗？</summary><p style="font-size:14.5px;margin:6px 0 0">不能，也不会这样承诺。销量取决于选品、价格、物流等很多因素；陪跑能帮你把内容制作和上架流程做规范、提效率，但不承诺销量、利润和审核结果。</p></details>
-    <details><summary style="cursor:pointer;font-weight:700">我的检测记录和草稿存在哪里？</summary><p style="font-size:14.5px;margin:6px 0 0">只存在你这台设备的浏览器本地（工作台），不同步、不上传，换设备或清缓存就没了，重要内容请自行备份。</p></details>
-  </section>
+  
 
     <div class="foot">本站是卖家自建工具，不是美客多官方产品。本页为卖家自查参考，不构成法律意见；词表为风险合成表、非官方黑名单，个别词的风险等级为依据投诉流程的推断（C 级，已在词表中标注）。拿不准的 SKU，先备齐发票与授权，再上架。</div>
-  </section>
+  
 </div>
 
 <script>
@@ -635,7 +531,7 @@ function runCheck(){
   else{
     html+="<ul>"+hits.map(function(h){return "<li><span class='badge "+LEVEL_CLASS[h.level]+"'>"+LEVEL_LABEL[h.level]+"</span><b>"+h.entry.t+"</b>（"+h.field+"，约第 "+(h.pos+1)+" 字，命中「"+h.key+"」）<br>原因："+h.entry.why+(h.note?"<br>语境判断："+h.note:"")+"<br>建议："+h.entry.alt+"<br>人工复核："+(h.review?"是":"否")+"</li>";}).join("")+"</ul>";
   }
-  html+='<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-light" id="copyResBtn" type="button">📋 复制检测结果</button><button class="btn btn-light" id="exportRepBtn" type="button">⬇ 导出风险报告</button><button class="btn btn-light" id="claudeBtn" type="button">🤖 复制到 Muse 深度分析</button><button class="btn btn-light" id="favBtn" type="button">⭐ 收藏这个商品</button></div>';
+  html+='<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-light" id="copyResBtn" type="button">📋 复制检测结果</button><button class="btn btn-light" id="exportRepBtn" type="button">⬇ 导出风险报告</button><button class="btn btn-light" id="claudeBtn" type="button">🤖 复制到 Muse 深度分析</button></div>';
   box.innerHTML=html;
   var lines=["美客多侵权风险检测报告","商品："+prodName,"检测时间："+timeStr,"检测内容：标题 "+title.length+" 字 / 描述 "+desc.length+" 字","总体等级："+overall.label+" — "+overall.advice,""];
   if(!hits.length)lines.push("未命中词表关键词（仅供参考，不代表官方审核结果）。");
@@ -651,7 +547,6 @@ function bindReportButtons(){
   var rep=window.__lastReport;if(!rep)return;
   function wire(id,fn){var b=document.getElementById(id);if(b)b.addEventListener("click",function(){fn(b);});}
   function copy(text,b){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){b.textContent="✅ 已复制";}).catch(function(){b.textContent="复制失败";});}else{b.textContent="浏览器不支持自动复制";}}
-  wire("favBtn",function(b){if(typeof saveFav==="function"){saveFav({time:rep.time,title:rep.title||"（无标题）",level:rep.level,hits:rep.hits});b.textContent="⭐ 已收藏";}});
   wire("copyResBtn",function(b){copy(rep.text,b);});
   wire("claudeBtn",function(b){copy(rep.prompt,b);});
   wire("exportRepBtn",function(){
@@ -668,7 +563,7 @@ document.getElementById("checkBtn").addEventListener("click",runCheck);
 
 
 /* tabs */
-var TABMAP={home:["sect-core","bpp","checker","brands","banned","checklist","get","sect-free","sect-faq"],title:["sect-title"],precheck:["sect-precheck"],desk:["sect-desk"],imgopt:["sect-img"],video:["sect-video"],coach:["sect-coach"]};
+var TABMAP={home:["sect-core","bpp","checker","sect-free"],title:["sect-title"],imgopt:["sect-img"],video:["sect-video"],coach:["sect-coach"]};
 function showTab(name){
   if(name==="desk"&&typeof renderDesk==="function")renderDesk();
   Object.keys(TABMAP).forEach(function(k){TABMAP[k].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=(k===name?"":"none");});});
@@ -798,17 +693,8 @@ document.getElementById("imgUrlBtn").addEventListener("click",function(){
   recognizeImage(u);
 });
 
-document.getElementById("wxCopyBtn").addEventListener("click",function(){
-  var hint=document.getElementById("wxHint");
-  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText("czqshy888888").then(function(){hint.textContent="已复制，打开微信粘贴添加。";}).catch(function(){hint.textContent="手动输入：czqshy888888";});}
-  else{hint.textContent="手动输入：czqshy888888";}
-});
-document.getElementById("shareBtn").addEventListener("click",function(){
-  var url="https://chenqinhong63.github.io/mercadolibre-risk-checker/";
-  var hint=document.getElementById("shareHint");
-  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){hint.textContent="已复制，去粘贴分享吧。";}).catch(function(){hint.textContent=url;});}
-  else{hint.textContent=url;}
-});
+
+
 
 /* title tool */
 var MAT_ES={"不锈钢":"acero inoxidable","硅胶":"silicón","塑料":"plástico","金属":"metal","玻璃":"vidrio","陶瓷":"cerámica","皮革":"cuero","铝合金":"aleación de aluminio","铝":"aluminio","铁":"hierro","竹":"bambú","木":"madera","布":"tela","纸":"papel","橡胶":"goma","尼龙":"nailon","聚酯":"poliéster","棉":"algodón","亚克力":"acrílico"};
@@ -867,7 +753,6 @@ document.getElementById("tGen").addEventListener("click",function(){
     html+='<b>修改前后对比</b><div style="display:grid;gap:8px;margin:8px 0"><div style="padding:10px;border:1px solid var(--line);border-radius:10px"><div style="font-size:12px;color:var(--muted)">修改前 · '+oldT.length+' 字符'+(oldT.length>60?'（超 60，发不出去）':'')+'</div><div style="font-weight:700;margin:4px 0">'+oldT+'</div><div style="font-size:13px">'+(oh.length?('<span style="color:var(--red)">⚠️ 命中 '+oh.length+' 条：'+oh.map(function(w){return w.t;}).join("、")+'</span>'):'<span style="color:var(--green)">✅ 未命中词表</span>')+'</div></div>'
       +'<div style="padding:10px;border:1px solid var(--line);border-radius:10px"><div style="font-size:12px;color:var(--muted)">修改后（标准版）· '+(v1?v1.length:0)+' 字符</div><div style="font-weight:700;margin:4px 0">'+v1+'</div><div style="font-size:13px">'+(scanHits(v1).length?'<span style="color:var(--red)">仍有命中，见上方提醒</span>':'<span style="color:var(--green)">✅ 未命中词表</span>')+'</div></div></div>';
   }
-  html+='<div style="margin:10px 0"><button class="btn btn-light" id="tSaveDraft" type="button">💾 保存标准版为标题草稿</button></div>';
   html+='<b>优化建议</b><ul>';
   if(!kws.length)html+='<li>没填目标关键词：西语标题只能用名称词典拼装，建议补 1–2 个买家会搜的西语关键词，标题相关性会更好。</li>';
   kws.forEach(function(k){var inT=variants.length&&variants[0][1].toLowerCase().indexOf(k.toLowerCase())!==-1;html+='<li>关键词「'+k+'」'+(inT?'已进入标准版标题 ✓':'未进入标准版（可能被 60 字符截断），可手动放到最前面')+'。</li>';});
@@ -878,8 +763,6 @@ document.getElementById("tGen").addEventListener("click",function(){
   html+='</ul><p style="font-size:12.5px;color:var(--muted);margin:6px 0 0">本工具用本地规则和词典拼装，不编造属性；生成结果请对照实物再确认一遍。</p></div>';
   out.innerHTML=html;
   bindCopyButtons(out);
-  var sd=document.getElementById("tSaveDraft");
-  if(sd)sd.addEventListener("click",function(){var now=new Date();saveDraft("title",{time:now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+" "+String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0"),text:v1});});
 });
 function bindCopyButtons(scope){
   (scope||document).querySelectorAll("[data-copy]").forEach(function(b){
@@ -954,19 +837,7 @@ function showToast(msg){
   clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(function(){t.style.display="none";},2200);
 }
 
-renderPrecheck();
-document.getElementById("preGen").addEventListener("click",precheckReport);
-document.getElementById("preReset").addEventListener("click",function(){document.querySelectorAll(".preChk").forEach(function(c){c.checked=false;});updatePreProg();document.getElementById("preResult").classList.remove("show");});
-document.getElementById("saveDescBtn").addEventListener("click",function(){
-  var v=(document.getElementById("checkInput").value||"").trim();
-  if(!v){showToast("描述框是空的");return;}
-  var now=new Date();saveDraft("desc",{time:now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+" "+String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0"),text:v});
-});
-document.getElementById("deskClearHistory").addEventListener("click",function(){lsSet("mlr_history",[]);renderDesk();});
-document.getElementById("deskClearFavs").addEventListener("click",function(){lsSet("mlr_favs",[]);renderDesk();});
-document.getElementById("deskClearTitles").addEventListener("click",function(){lsSet("mlr_titles",[]);renderDesk();});
-document.getElementById("deskClearDescs").addEventListener("click",function(){lsSet("mlr_descs",[]);renderDesk();});
-renderDesk();
+
 /* image optimizer */
 var IO_SCENES={
  hogar:{label:"家居用品",scenes:["客厅沙发旁的茶几上","卧室床头柜上","厨房台面上，背景有虚化的灶台和橱柜"],scenesEs:["sobre la mesa de centro junto al sofá de la sala","sobre el buró de la recámara","sobre la encimera de la cocina con la estufa desenfocada al fondo"]},
