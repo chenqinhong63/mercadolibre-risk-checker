@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <meta name="color-scheme" content="light dark"/>
 <link rel="icon" href="data:,"/>
-<title>美客多卖家助手 — 墨西哥站侵权与合规风险检测 · 标题优化 · 上架工作台 · 利润计算器</title>
+<title>美客多卖家助手 — 墨西哥站·巴西站侵权与合规风险检测 · 标题优化 · 上架工作台 · 利润计算器</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@700;900&display=swap" rel="stylesheet">
 <style>
@@ -212,25 +212,25 @@ section{padding-top:34px}
   <header class="hero">
     <div style="font-weight:900;letter-spacing:.08em;font-size:12px;color:var(--navy)">卖家自查文档 · PROPIEDAD INTELECTUAL</div>
     <h1>美客多<span>卖家助手</span></h1>
-    <p class="lead">墨西哥站卖家工具箱：侵权与合规风险检测、Listing 标题优化、图片优化、视频生成、上架自查。粘贴标题、商品链接或商品图，10 秒查出会招投诉、下架、封号的风险词。免费，无需注册。</p>
+    <p class="lead">墨西哥站 / 巴西站卖家工具箱：侵权与合规风险检测、Listing 标题优化、图片优化、视频生成、上架自查。粘贴标题、商品链接或商品图，10 秒查出会招投诉、下架、封号的风险词。免费，无需注册。</p>
     <div class="meta">
       <span class="pill">站点：mercadolibre.com.mx</span><span class="pill">覆盖：商标 · 版权 · 专利/外观 · 禁售品类</span><span class="pill">词表：37 条 · 按风险分级</span>
     </div>
     <div class="actions" style="margin-top:18px">
       <a class="btn btn-yellow" href="#checker" style="text-decoration:none;background:var(--yellow);color:#111">🔍 立即免费检测</a>
-      <button class="btn btn-light" data-goto="coach" type="button">🎓 教学陪跑 / 店铺全检</button>
+      
     </div>
     <p class="note" style="margin-top:16px">⚠️ 美客多没有公开发布过官方“完整黑名单”。本表是按官方规则 + 卖家经验整理的<b>风险合成表，不是官方名单</b>。</p>
 
     <div id="consultHero" style="margin-top:16px;background:linear-gradient(135deg,#fff7cc,#ffe600);border:2px solid #14213d;border-radius:14px;padding:16px;color:#111">
       <div style="font-weight:900;font-size:18px">美客多新手不会操作？</div>
-      <p style="margin:6px 0 10px;font-size:15px">免费工具 + 新手教学陪跑，帮助你从商品资料到上架内容制作。</p>
+      <p style="margin:6px 0 10px;font-size:15px">免费工具帮助你从商品资料到上架内容制作，拿不准的加微信咨询。</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
         <span style="font-size:16px">微信号：<b style="font-size:18px;letter-spacing:.02em">czqshy888888</b></span>
         <button class="btn wxCopy" type="button" style="background:#14213d;color:#fff;border:0">📋 复制微信号</button>
-        <button class="btn wxCopy" type="button" style="background:#fff;color:#14213d;border:2px solid #14213d;font-weight:800">微信咨询 / 获取陪跑方案</button>
+        <button class="btn wxCopy" type="button" style="background:#fff;color:#14213d;border:2px solid #14213d;font-weight:800">微信咨询 / 获取服务方案</button>
       </div>
-      <p style="margin:8px 0 0;font-size:12.5px;color:#444">添加时备注「美客多工具」，先说清你的店铺阶段和最头疼的事，我按陪跑方案回复你。</p>
+      <p style="margin:8px 0 0;font-size:12.5px;color:#444">添加时备注「美客多工具」，先说清你的店铺阶段和最头疼的事，我按你的情况回复你。</p>
     </div>
 
       <div>
@@ -246,9 +246,15 @@ section{padding-top:34px}
     </div>
   </header>
 
+  <div class="card" style="padding:12px 16px;margin:0 0 12px">
+    <b>当前站点：</b>
+    <button class="btn btn-yellow" id="siteMx" type="button">🇲🇽 墨西哥站（西语 · MXN）</button>
+    <button class="btn btn-light" id="siteBr" type="button">🇧🇷 巴西站（葡语 · BRL）</button>
+    <span style="font-size:13px;color:#666">切换后，利润计算器、选品分析、上架工作台的币种会按所选站点显示（MXN ↔ BRL），检测器两种语言都查。图片/视频的提示词模板目前以西语为主，巴西站使用时请在提示词中注明「输出葡萄牙语」。</span>
+  </div>
   <nav class="nav" id="tabBar">
     <a href="#" data-tab="home" class="tab active">🔍 侵权与合规风险检测器</a><a href="#" data-tab="title" class="tab">✍️ 标题优化</a>
-    <a href="#" data-tab="imgopt" class="tab">🖼 图片优化</a><a href="#" data-tab="video" class="tab">🎬 视频生成</a><a href="#" data-tab="coach" class="tab">🎓 教学陪跑</a>
+    <a href="#" data-tab="imgopt" class="tab">🖼 图片优化</a><a href="#" data-tab="video" class="tab">🎬 视频生成</a>
     <a href="#" data-tab="bench" class="tab">📦 上架工作台</a>
     <a href="#" data-tab="profit" class="tab">🧮 利润计算器</a>
 <a href="#" data-tab="pick" onclick="return false">🎯 选品分析</a>
@@ -258,7 +264,7 @@ section{padding-top:34px}
 
 
   <section id="sect-core">
-    <div class="sec-head"><span class="num">🧰</span><div><h2>七大核心工具（全部免费）</h2><p>本站所有工具都在浏览器本地运行，免费、无需注册。不会操作可以加微信咨询陪跑（微信号 czqshy888888）。</p></div></div>
+    <div class="sec-head"><span class="num">🧰</span><div><h2>七大核心工具（全部免费）</h2><p>本站所有工具都在浏览器本地运行，免费、无需注册。不会操作可以加微信咨询（微信号 czqshy888888）。</p></div></div>
     <div class="grid">
       <article class="card"><div class="term">🔍 侵权与合规风险检测</div><p style="font-size:14px;margin:8px 0">标题、描述、商品链接、商品图四种查法，37 条风险词库，中英西三语，带语境判断和风险报告。</p><button class="btn btn-light" data-goto="home" type="button">去检测</button></article>
       <article class="card"><div class="term">✍️ 标题优化</div><p style="font-size:14px;margin:8px 0">本地词典生成 ≤60 字符西语标题，自动过侵权词表，带结构检查和修改前后对比。</p><button class="btn btn-light" data-goto="title" type="button">去优化标题</button></article>
@@ -285,7 +291,7 @@ section{padding-top:34px}
     <div class="sec-head"><span class="num">2</span><div><h2>免费检测</h2><p>标题、描述、商品链接、商品图，四种都能查。本地检测，不上传你的数据；没命中不等于绝对安全。</p></div></div>
     <div class="checker">
       <h3>🔍 侵权与合规风险检测器</h3>
-      <p>西语、英语标题都可以查。除了侵权词，还会查合规问题：受限品类词、功效/医疗宣称、站外引流、绝对化用语，命中后在报告里分类标出。示例可直接试：<i>Réplica 1:1 tipo Nike oferta envío gratis</i>，或英语：<i>Replica Nike backpack, best seller, free shipping</i> —— 看看会命中几条。</p>
+      <p>西语、英语标题都可以查。除了侵权词，还会查合规问题：受限品类词、功效/医疗宣称、站外引流、绝对化用语，命中后在报告里分类标出。巴西站（葡萄牙语）的标题和描述也能查，已内置葡语功效、受限品类和站外引流词。示例可直接试：<i>Réplica 1:1 tipo Nike oferta envío gratis</i>，或英语：<i>Replica Nike backpack, best seller, free shipping</i> —— 看看会命中几条。</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px">
         <input id="linkInput" type="url" placeholder="或者粘贴美客多商品链接：https://articulo.mercadolibre.com.mx/MLM-…" style="flex:1;min-width:240px;border-radius:12px;border:0;padding:13px 14px;font:inherit;font-size:15px;color:#111;background:#fff"/>
         <button class="btn btn-yellow" id="linkBtn" type="button">🔗 用链接检测</button>
@@ -332,7 +338,7 @@ section{padding-top:34px}
 <input class="search" id="tKw" placeholder="目标关键词（西语，逗号分开），例如：organizador de especias, giratorio"/>
 <input class="search" id="tOld" placeholder="（可选）你现在的标题，填了会生成修改前后对比"/>
 </div>
-<div class="actions"><button class="btn btn-light" id="tGen">生成标题建议</button></div>
+<div class="actions"><select class="search" id="tLang" style="max-width:260px"><option value="es">站点语言：西班牙语（墨西哥站）</option><option value="pt">站点语言：葡萄牙语（巴西站）</option></select> <button class="btn btn-light" id="tGen">生成标题建议</button></div>
 <div id="tOut" style="margin-top:12px"></div>
 </div>
 </section>
@@ -341,26 +347,7 @@ section{padding-top:34px}
 
 
 
-<section id="sect-coach">
-<div class="sec-head"><span class="num">🎓</span><div><h2>教学陪跑</h2><p>不只给工具文件，而是把你店里最耗时的重复工作做成可复用的 AI 工作流，陪你落地。本站暂不在线收款：先微信沟通需求，确认后走闲鱼下单，价格以闲鱼商品页为准。</p></div></div>
-<div class="grid">
-<article class="card"><div class="term">A · 店铺诊断包</div><p style="font-size:14px;margin:8px 0 0">选品、Listing、广告、图片四项诊断 + 优先动作清单。适合刚开店、不知道先改哪里的卖家。</p></article>
-<article class="card"><div class="term">B · 上架加速包</div><p style="font-size:14px;margin:8px 0 0">每批 ≤10 个 SKU：事实卡、60 字符西语标题、卖点副图、视频脚本、描述、问答模板，一次交付齐。</p></article>
-<article class="card"><div class="term">C · 30 天陪跑包</div><p style="font-size:14px;margin:8px 0 0">诊断 + 每月一批上架 + 每周复盘 + 按你最耗时的事定制 1–3 条专属工作流。主推款，适合已经出单、想提效的卖家。</p></article>
-<article class="card"><div class="term">D · 企业效率改造</div><p style="font-size:14px;margin:8px 0 0">多店铺/团队：先诊断、后报价，含工作流定制、团队培训和试运行。</p></article>
-</div>
-<div style="border:2px solid #14213d;border-radius:12px;padding:12px 14px;margin:14px 0;background:rgba(255,230,0,.12)"><b>陪跑的重点：不是只卖 Skill 文件，而是帮助新手学会使用 AI 工具完成实际商品内容制作</b>——诊断、带着做一遍、每周复盘，直到你能自己跑。</div>
-<div class="grid">
-<article class="card"><div class="term">👥 适合人群</div><p style="font-size:14px;margin:8px 0 0">刚开店的新手；有店但不会用 AI 提效的卖家；想把重复工作流程化的小团队。</p></article>
-<article class="card"><div class="term">🛠 服务内容</div><p style="font-size:14px;margin:8px 0 0">店铺诊断、上架流水线搭建、图片与视频内容指导、广告周诊断、按你最耗时的事定制专属工作流。</p></article>
-<article class="card"><div class="term">📦 交付成果</div><p style="font-size:14px;margin:8px 0 0">诊断报告与优先动作清单；每批 SKU 的西语标题、卖点副图、视频脚本、描述、问答模板；定制工作流文件；每周复盘记录。</p></article>
-<article class="card"><div class="term">🗓 服务周期</div><p style="font-size:14px;margin:8px 0 0">诊断包：一次性交付；上架包：按批（≤10 SKU）；陪跑包：30 天；企业改造：按项目评估。</p></article>
-<article class="card"><div class="term">💬 咨询方式</div><p style="font-size:14px;margin:8px 0 0">微信 <b>czqshy888888</b>（点下方按钮复制）→ 说清店铺阶段和需求 → 确认后走闲鱼下单，本站不在线收款。</p></article>
-<article class="card"><div class="term">🚧 服务边界</div><p style="font-size:14px;margin:8px 0 0">不收账号密码、不接管账号、不承诺销量和利润、不保证通过平台审核；模板为单店授权；客户数据不外传。</p></article>
-</div>
-<p class="note">可定制的工作流：商机筛选 · 上架流水线 · 图片生产 · 广告周诊断 · 售前问答 · 库存 Full · 财务对账 · 周报。服务边界：不收你的账号密码、不接管账号、不承诺销量。</p>
 
-</section>
 
   
 
@@ -495,11 +482,11 @@ section{padding-top:34px}
         <ul style="margin:8px 0 0;font-size:14.5px"><li>侵权与合规风险检测（文字/链接/图片）</li><li>基础标题优化</li><li>基础图片提示词</li><li>基础视频脚本生成</li></ul>
       </div>
       <div style="border:1.5px solid #14213d;border-radius:12px;padding:12px">
-        <b style="color:#14213d">🎓 付费服务（微信咨询，走闲鱼下单）</b>
-        <ul style="margin:8px 0 0;font-size:14.5px"><li>店铺诊断</li><li>上架内容人工检查</li><li>定制 Skill 与工作流</li><li>商品内容制作指导</li><li>教学陪跑（30 天）</li></ul>
+        <b style="color:#14213d">💬 人工服务（微信咨询，具体内容和价格沟通确认）</b>
+        <ul style="margin:8px 0 0;font-size:14.5px"><li>店铺诊断</li><li>上架内容人工检查</li><li>定制 Skill 与工作流</li><li>商品内容制作指导</li></ul>
       </div>
     </div>
-    <p style="font-size:13px;color:#666;margin:10px 0 0">免费工具不需要付费解锁；付费的是人工服务和陪跑时间。任何服务都不承诺销量、利润，也不保证通过美客多审核。</p>
+    <p style="font-size:13px;color:#666;margin:10px 0 0">免费工具不需要付费解锁；付费的是人工服务时间。任何服务都不承诺销量、利润，也不保证通过美客多审核。</p>
   </section>
 
   
@@ -906,10 +893,10 @@ var LEVEL_LABEL={high:"🔴 高风险",med:"🟠 中风险",low:"🟢 低风险"
 var LEVEL_CLASS={high:"b-high",med:"b-med",low:"b-low",review:"b-med"};
 
 var COMP_RULES=[
- {label:"功效/医疗宣称",lv:"high",why:"功效/医疗宣称在美客多和墨西哥广告法规下都属于严管内容，无资质、无依据的治疗、减肥、美白宣称容易被下架甚至封号。",alt:"删掉功效承诺，改写成材质、规格、使用场景等客观描述；清洁漂白类实物请人工确认语境。",k:["cura","curar","adelgazar","bajar de peso","blanqueador","治疗","治愈","根治","减肥","瘦身","美白","祛斑","降血压","降血糖","抗癌","cure","weight loss","whitening"]},
- {label:"受限品类",lv:"med",why:"这类词指向受限或需要资质、类目准入的品类（如药品、保健、烟草、杀虫剂），无资质上架可能被拦截或下架。",alt:"先在卖家中心确认该类目是否开放、需要什么资质；不确定的先别上架。",k:["medicamento","farmaco","suplemento","pesticida","insecticida","tabaco","cigarrillo","vapeador","bebida alcoholica","药品","保健品","杀虫剂","烟草","电子烟","酒精饮料","supplement","pesticide","tobacco","vape"]},
- {label:"站外引流",lv:"med",why:"引导买家到站外（微信、邮箱、电话等）联系或交易是平台重点违规，可能限流、下架或封号。",alt:"删除站外联系方式，沟通和交易都留在平台内完成。",k:["wechat","微信","telegram","fuera de mercado libre","contactame por","contáctame por","邮箱联系"]},
- {label:"绝对化用语",lv:"low",why:"「第一、最、顶级」等绝对化表达缺乏依据时，容易被投诉或判定为夸大宣传。",alt:"改成可验证的具体信息，如材质、参数和真实销量数据。",k:["销量第一","全网第一","最好","顶级","numero uno","el numero 1","the best","number one"]}
+ {label:"功效/医疗宣称",lv:"high",why:"功效/医疗宣称在美客多和墨西哥广告法规下都属于严管内容，无资质、无依据的治疗、减肥、美白宣称容易被下架甚至封号。",alt:"删掉功效承诺，改写成材质、规格、使用场景等客观描述；清洁漂白类实物请人工确认语境。",k:["cura","curar","adelgazar","bajar de peso","blanqueador","治疗","治愈","根治","减肥","瘦身","美白","祛斑","降血压","降血糖","抗癌","cure","weight loss","whitening","emagrecer","emagrecimento","clareador","perder peso","queimar gordura","tirar manchas"]},
+ {label:"受限品类",lv:"med",why:"这类词指向受限或需要资质、类目准入的品类（如药品、保健、烟草、杀虫剂），无资质上架可能被拦截或下架。",alt:"先在卖家中心确认该类目是否开放、需要什么资质；不确定的先别上架。",k:["medicamento","farmaco","suplemento","pesticida","insecticida","tabaco","cigarrillo","vapeador","bebida alcoholica","药品","保健品","杀虫剂","烟草","电子烟","酒精饮料","supplement","pesticide","tobacco","vape","remedio","inseticida","suplemento alimentar"]},
+ {label:"站外引流",lv:"med",why:"引导买家到站外（微信、邮箱、电话等）联系或交易是平台重点违规，可能限流、下架或封号。",alt:"删除站外联系方式，沟通和交易都留在平台内完成。",k:["wechat","微信","telegram","fuera de mercado libre","contactame por","contáctame por","邮箱联系","me chama no zap","contato por fora","fora do mercado livre"]},
+ {label:"绝对化用语",lv:"low",why:"「第一、最、顶级」等绝对化表达缺乏依据时，容易被投诉或判定为夸大宣传。",alt:"改成可验证的具体信息，如材质、参数和真实销量数据。",k:["销量第一","全网第一","最好","顶级","numero uno","el numero 1","the best","number one","o melhor","melhor do brasil","numero 1"]}
 ];
 function analyzeField(text,field,fakePresent){
   if(!text||!text.trim())return [];
@@ -1011,7 +998,7 @@ document.getElementById("checkBtn").addEventListener("click",runCheck);
 
 
 /* tabs */
-var TABMAP={home:["sect-core","sect-bench-entry","bpp","checker","sect-free"],title:["sect-title"],imgopt:["sect-img"],video:["sect-video"],coach:["sect-coach"],bench:["sect-bench"],profit:["sect-profit"],pick:["sect-pick"],barcode:["sect-barcode"]};
+var TABMAP={home:["sect-core","sect-bench-entry","bpp","checker","sect-free"],title:["sect-title"],imgopt:["sect-img"],video:["sect-video"],bench:["sect-bench"],profit:["sect-profit"],pick:["sect-pick"],barcode:["sect-barcode"]};
 function showTab(name){
   if(name==="desk"&&typeof renderDesk==="function")renderDesk();if(name==="bench"&&typeof wbRender==="function")wbRender();if(name==="profit"&&typeof pfRefreshProjects==="function")pfRefreshProjects();if(name==="barcode"&&typeof bcRefreshProjects==="function")bcRefreshProjects();
   Object.keys(TABMAP).forEach(function(k){TABMAP[k].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=(k===name?"":"none");});});
@@ -1147,6 +1134,9 @@ document.getElementById("imgUrlBtn").addEventListener("click",function(){
 /* title tool */
 var MAT_ES={"不锈钢":"acero inoxidable","硅胶":"silicón","塑料":"plástico","金属":"metal","玻璃":"vidrio","陶瓷":"cerámica","皮革":"cuero","铝合金":"aleación de aluminio","铝":"aluminio","铁":"hierro","竹":"bambú","木":"madera","布":"tela","纸":"papel","橡胶":"goma","尼龙":"nailon","聚酯":"poliéster","棉":"algodón","亚克力":"acrílico"};
 var FUNC_ES={"防水":"impermeable","防滑":"antideslizante","折叠":"plegable","可调节":"ajustable","便携":"portátil","大容量":"gran capacidad","加厚":"grueso","轻便":"ligero","耐用":"durable","易清洗":"fácil de limpiar","收纳":"organizador","旋转":"giratorio","电动":"eléctrico","手动":"manual","无线":"inalámbrico","带盖":"con tapa","多功能":"multifuncional","一次性":"desechable","防潮":"anti humedad","静音":"silencioso"};
+var MAT_PT={"不锈钢":"aço inoxidável","硅胶":"silicone","塑料":"plástico","金属":"metal","玻璃":"vidro","陶瓷":"cerâmica","皮革":"couro","铝合金":"liga de alumínio","铝":"alumínio","铁":"ferro","竹":"bambu","木":"madeira","布":"tecido","纸":"papel","橡胶":"borracha","尼龙":"nylon","聚酯":"poliéster","棉":"algodão","亚克力":"acrílico"};
+var FUNC_PT={"防水":"impermeável","防滑":"antiderrapante","折叠":"dobrável","可调节":"ajustável","便携":"portátil","大容量":"grande capacidade","加厚":"reforçado","轻便":"leve","耐用":"durável","易清洗":"fácil de limpar","收纳":"organizador","旋转":"giratório","电动":"elétrico","手动":"manual","无线":"sem fio","带盖":"com tampa","多功能":"multifuncional","一次性":"descartável","防潮":"anti umidade","静音":"silencioso"};
+
 function trWords(text,dict){
   var t=text||"";var used=[];
   Object.keys(dict).sort(function(a,b){return b.length-a.length;}).forEach(function(k){if(t.indexOf(k)!==-1){t=t.split(k).join(" "+dict[k]+" ");used.push(dict[k]);}});
@@ -1169,9 +1159,10 @@ document.getElementById("tGen").addEventListener("click",function(){
   var out=document.getElementById("tOut");
   if(!name){out.innerHTML='<p style="color:var(--red);font-size:14px">先填商品中文名称。</p>';return;}
   var kws=kwRaw?kwRaw.split(/[,，、]/).map(function(s){return s.trim();}).filter(Boolean):[];
-  var matT=trWords(mat,MAT_ES),funcT=trWords(func,FUNC_ES),nameT=trWords(name,Object.assign({},MAT_ES,FUNC_ES));
+  var PT=(document.getElementById("tLang")&&document.getElementById("tLang").value==="pt");var MATD=PT?MAT_PT:MAT_ES,FUNCD=PT?FUNC_PT:FUNC_ES;
+  var matT=trWords(mat,MATD),funcT=trWords(func,FUNCD),nameT=trWords(name,Object.assign({},MATD,FUNCD));
   var core=kws[0]||nameT.text;
-  var specES=spec.replace(/(\d+)罐/g,"$1 frascos").replace(/(\d+)件套/g,"set de $1").replace(/(\d+)个装/g,"paquete de $1");
+  var specES=PT?spec.replace(/(\d+)罐/g,"$1 potes").replace(/(\d+)件套/g,"kit com $1").replace(/(\d+)个装/g,"pacote com $1"):spec.replace(/(\d+)罐/g,"$1 frascos").replace(/(\d+)件套/g,"set de $1").replace(/(\d+)个装/g,"paquete de $1");
   function build(parts){return trim60(cap1(parts.filter(Boolean).join(" ")));}
   var v1=build([core,matT.text,funcT.used[0]||"",specES]);
   var v2=build([core,kws[1]||"",matT.text,specES]);
@@ -1182,7 +1173,7 @@ document.getElementById("tGen").addEventListener("click",function(){
   var misses=[].concat(matT.missing,funcT.missing);
   var html='<div class="result-box" style="background:var(--surface);border:1px solid var(--line);color:var(--ink)">';
   html+='<b>中文标题建议</b><ul><li>'+cn1+'</li><li>'+cn2+'</li></ul>';
-  html+='<b>西语标题建议（≤60 字符）</b>';
+  html+='<b>'+(PT?'葡语':'西语')+'标题建议（≤60 字符）</b>';
   variants.forEach(function(x,i){
     var h=scanHits(x[1]);
     html+='<div style="margin:8px 0;padding:10px;border:1px solid var(--line);border-radius:10px"><div style="font-size:12px;color:var(--muted)">'+x[0]+' · '+x[1].length+' 字符</div><div style="font-weight:700;margin:4px 0" id="tv'+i+'">'+x[1]+'</div>'+(h.length?'<div style="font-size:13px;color:var(--red)">⚠️ 侵权提醒：'+h.map(function(w){return w.t;}).join("、")+'——请按词表修改后再用。</div>':'<div style="font-size:13px;color:var(--green)">✅ 未命中侵权词表（仍不代表官方审核结果）</div>')+'<button class="btn btn-light" data-copy="tv'+i+'" style="padding:6px 12px;font-size:13px">复制这条</button></div>';
@@ -1458,7 +1449,7 @@ var PF_EXTRAS=[
 {k:"ins",t:"保险费用",hint:"货运险等单件分摊"},
 {k:"ops",t:"其他运营成本",hint:"打包、贴标等其他单件运营支出"}];
 function pfCalc(o){
-function f(v,cur){v=parseFloat(v);if(isNaN(v))v=0;return cur==="MXN"?v:v/o.rate;}
+function f(v,cur){v=parseFloat(v);if(isNaN(v))v=0;return cur!=="CNY"?v:v/o.rate;}
 if(!(parseFloat(o.rate)>0))return {error:"汇率必须大于 0，请填你实际使用的汇率（1 MXN =? CNY）。"};
 if(o.price===""||o.price===null||isNaN(parseFloat(o.price)))return {error:"请填写商品售价（数字）。"};
 if(o.cost===""||o.cost===null||isNaN(parseFloat(o.cost)))return {error:"请填写商品采购成本（数字）。"};
@@ -1590,7 +1581,7 @@ var out=document.getElementById("pf_batchOut");
 var o=pfGather();var r=pfCalc(o);
 if(r.error){out.innerHTML='<div class="pf-err">先把上方主计算填好（'+r.error+'）</div>';return;}
 var rate=r.rate;
-function f(v,cur){v=parseFloat(v);if(isNaN(v))v=0;return cur==="MXN"?v:v/rate;}
+function f(v,cur){v=parseFloat(v);if(isNaN(v))v=0;return cur!=="CNY"?v:v/rate;}
 var qty=parseInt(pfNum("pf_bQty"))||0;
 if(qty<1){out.innerHTML='<div class="pf-err">请填写计划测试商品数量（至少 1）。</div>';return;}
 var unit=f(pfNum("pf_bUnit"),document.getElementById("pf_bUnitCur").value);
@@ -2205,6 +2196,49 @@ document.getElementById("pkImportCsvFile").value="";};
 rd.readAsText(f);});
 pkRenderList();
 
+
+/* ===== 站点切换（墨西哥 / 巴西） ===== */
+function mlrSite(){try{return localStorage.getItem("mlr_site")==="br"?"br":"mx";}catch(e){return "mx";}}
+function mlrApplySite(){
+  var br=mlrSite()==="br";
+  var bm=document.getElementById("siteMx"),bb=document.getElementById("siteBr");
+  if(bm&&bb){bm.className="btn "+(br?"btn-light":"btn-yellow");bb.className="btn "+(br?"btn-yellow":"btn-light");}
+  var pairs=br?[["MXN","BRL"],["墨西哥比索","巴西雷亚尔"],["目标市场：墨西哥","目标市场：巴西"]]:[["BRL","MXN"],["巴西雷亚尔","墨西哥比索"],["目标市场：巴西","目标市场：墨西哥"]];
+  ["sect-profit","sect-pick","sect-bench"].forEach(function(id){
+    var root=document.getElementById(id);if(!root)return;
+    var walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:function(n){
+      if(!n.nodeValue||(!n.nodeValue.includes("MXN")&&!n.nodeValue.includes("BRL")&&!n.nodeValue.includes("墨西哥")&&!n.nodeValue.includes("巴西")))return NodeFilter.FILTER_REJECT;
+      if(n.parentElement&&n.parentElement.closest("[data-fx]"))return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;}});
+    var nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+    nodes.forEach(function(n){var v=n.nodeValue;pairs.forEach(function(p){v=v.split(p[0]).join(p[1]);});n.nodeValue=v;});
+  });
+}
+function mlrSetSite(s){
+  try{localStorage.setItem("mlr_site",s);}catch(e){}
+  var br=s==="br";
+  [["pf_rate",br?"1.35":"0.385",br?"0.385":"1.35"],["pk_rate",br?"1.35":"0.385",br?"0.385":"1.35"]].forEach(function(cfg){
+    var el=document.getElementById(cfg[0]);if(el&&(el.value===cfg[2]||!el.value))el.value=cfg[1];});
+  if(typeof pfRender==="function"&&document.getElementById("pf_price")&&(document.getElementById("pf_price").value||document.getElementById("pf_cost").value))pfRender();
+  mlrApplySite();
+  showToast(br?"已切换到巴西站：币种按 BRL 显示，汇率已填示例值（1 BRL ≈ 1.35 CNY），请按实际汇率修改":"已切换到墨西哥站：币种按 MXN 显示，汇率已填示例值 0.385，请按实际汇率修改");
+}
+(function(){
+  document.querySelectorAll("#sect-profit select").forEach(function(sel){
+    var hasM=false,hasB=false;
+    for(var i=0;i<sel.options.length;i++){if(sel.options[i].value==="MXN")hasM=true;if(sel.options[i].value==="BRL")hasB=true;}
+    if(hasM&&!hasB){var o=document.createElement("option");o.value="BRL";o.textContent="巴西雷亚尔";o.setAttribute("data-fx","1");sel.appendChild(o);}
+  });
+  var bm=document.getElementById("siteMx"),bb=document.getElementById("siteBr");
+  if(bm)bm.addEventListener("click",function(){mlrSetSite("mx");});
+  if(bb)bb.addEventListener("click",function(){mlrSetSite("br");});
+  ["pfRender","pfBatchRun","wbRender","pkRenderList","pkRenderScore","pkRenderComp"].forEach(function(fn){
+    if(typeof window[fn]==="function"){var orig=window[fn];window[fn]=function(){var r=orig.apply(this,arguments);mlrApplySite();return r;};}
+  });
+  if(typeof wbBlank==="function"){var _wb=wbBlank;wbBlank=function(){var p=_wb();if(mlrSite()==="br")p.market="巴西";return p;};}
+  mlrApplySite();
+})();
+
 /* image optimizer */
 var IO_SCENES={
  hogar:{label:"家居用品",scenes:["客厅沙发旁的茶几上","卧室床头柜上","厨房台面上，背景有虚化的灶台和橱柜"],scenesEs:["sobre la mesa de centro junto al sofá de la sala","sobre el buró de la recámara","sobre la encimera de la cocina con la estufa desenfocada al fondo"]},
@@ -2546,7 +2580,7 @@ showTab("home");
 <div id="wxBar">
   <div style="flex:1;min-width:0">
     <div style="font-weight:800;font-size:14.5px">美客多 AI 卖家助手</div>
-    <div style="font-size:12px;opacity:.85">免费工具 · Skill · 教学陪跑</div>
+    <div style="font-size:12px;opacity:.85">免费工具 · 选品 · 上架 · 利润</div>
   </div>
   <button class="btn wxCopy" type="button" style="background:#ffe600;color:#111;border:0;font-weight:800;white-space:nowrap">微信咨询</button>
   <button id="wxBarClose" type="button" aria-label="关闭咨询栏" style="background:none;border:0;color:#fff;font-size:18px;cursor:pointer;padding:4px 6px">✕</button>
