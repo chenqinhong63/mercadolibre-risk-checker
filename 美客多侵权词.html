@@ -829,7 +829,7 @@ function precheckReport(){
 /* localStorage workspace */
 function lsGet(k){try{return JSON.parse(localStorage.getItem(k)||"[]");}catch(e){return[];}}
 function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
-function recordHistory(rec){var arr=lsGet("mlr_history");arr.unshift(rec);if(arr.length>30)arr=arr.slice(0,30);lsSet("mlr_history",arr);renderDesk();}
+function recordHistory(rec){var arr=lsGet("mlr_history");if(arr.length&&arr[0].title===rec.title&&arr[0].level===rec.level&&arr[0].time===rec.time)return;arr.unshift(rec);if(arr.length>30)arr=arr.slice(0,30);lsSet("mlr_history",arr);renderDesk();}
 function saveDraft(kind,item){var key=kind==="title"?"mlr_titles":"mlr_descs";var arr=lsGet(key);arr.unshift(item);if(arr.length>30)arr=arr.slice(0,30);lsSet(key,arr);renderDesk();showToast("已保存到工作台（仅本设备）");}
 function deskRow(html){return '<div style="display:flex;gap:8px;align-items:flex-start;border:1px solid #e5e7eb;border-radius:10px;padding:8px 10px;margin-bottom:8px;font-size:14px"><div style="flex:1">'+html+'</div></div>';}
 function renderDesk(){
