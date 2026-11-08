@@ -176,6 +176,11 @@ section{padding-top:34px}
     <div class="checker">
       <h3>🔍 侵权词检测器</h3>
       <p>示例可直接试：<i>Réplica 1:1 tipo Nike oferta envío gratis</i> —— 看看会命中几条。</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+        <input id="linkInput" type="url" placeholder="或者粘贴美客多商品链接：https://articulo.mercadolibre.com.mx/MLM-…" style="flex:1;min-width:240px;border-radius:12px;border:0;padding:13px 14px;font:inherit;font-size:15px;color:#111;background:#fff"/>
+        <button class="btn btn-yellow" id="linkBtn" type="button">🔗 用链接检测</button>
+      </div>
+      <div id="linkHint" style="font-size:13px;color:#d6d9ff;margin:-4px 0 10px"></div>
       <textarea id="checkInput" placeholder="粘贴你的西语标题 / 描述，例如：Mochila inspirada en Disney oferta envío gratis…"></textarea>
       <div class="row">
         <button class="btn btn-yellow" id="checkBtn">开始检测</button>
@@ -355,7 +360,7 @@ function norm(s){return s.toLowerCase();}
 document.getElementById("checkSample").addEventListener("click",function(){
   document.getElementById("checkInput").value="Réplica 1:1 tipo Nike, oferta con envío gratis y meses sin intereses, el mejor precio, WhatsApp para más info";
 });
-document.getElementById("checkBtn").addEventListener("click",function(){
+function runCheck(){
   var v=norm(document.getElementById("checkInput").value||"");
   var box=document.getElementById("checkBox"),res=document.getElementById("checkResult"),hint=document.getElementById("checkHint");
   if(!v.trim()){hint.textContent="先粘一段标题或描述进来。";res.classList.remove("show");return;}
@@ -367,6 +372,62 @@ document.getElementById("checkBtn").addEventListener("click",function(){
   if(!hits.length){box.innerHTML="<b>✅ 没命中词表里的关键词。</b><p style='margin:6px 0 0;font-size:14px'>但这不等于安全：图片里的 logo、角色形象、拼错的品牌变体和没有授权的货，靠文字检测查不出来，请再过一遍第 6 节自查清单。</p>";return;}
   var order={high:0,med:1,low:2}; hits.sort(function(a,b){return order[a.risk]-order[b.risk]});
   box.innerHTML="<b>⚠️ 命中 "+hits.length+" 条风险词：</b><ul>"+hits.map(function(w){return "<li><span class='badge "+riskClass[w.risk]+"'>"+riskLabel[w.risk]+"</span><b>"+w.t+"</b> — "+w.alt+"</li>"}).join("")+"</ul><p style='margin:8px 0 0;font-size:13px;color:#555'>提示为关键词匹配，最终以第 3 节词表逐条对照为准。</p>";
+}
+document.getElementById("checkBtn").addEventListener("click",runCheck);
+/* link checker */
+function parseMLLink(raw){
+  var out={id:"",catalog:false,slugText:""};
+  if(!raw)return out;
+  var m=raw.match(/\/p\/(MLM\d+)/i);
+  if(m){out.id=m[1].toUpperCase();out.catalog=true;}
+  if(!out.id){m=raw.match(/(MLM)-?(\d{6,})/i);if(m)out.id="MLM"+m[2];}
+  try{
+    var u=new URL(raw.indexOf("http")===0?raw:"https://"+raw);
+    var segs=u.pathname.split("/").filter(function(s){return s;});
+    var words=[];
+    segs.forEach(function(s){
+      var t=s;
+      try{t=decodeURIComponent(s);}catch(e){}
+      t=t.replace(/\.html?$/i,"").replace(/_JM.*$/i,"").replace(/^MLM-?\d+-?/i,"").replace(/^(articulo|p|up)$/i,"");
+      t=t.replace(/-/g," ").trim();
+      if(/[a-záéíóúñü]{2,}/i.test(t))words.push(t);
+    });
+    out.slugText=words.join(" ");
+  }catch(e){}
+  return out;
+}
+function setTextAndCheck(text){
+  document.getElementById("checkInput").value=text;
+  runCheck();
+  document.getElementById("checkResult").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+document.getElementById("linkBtn").addEventListener("click",function(){
+  var raw=(document.getElementById("linkInput").value||"").trim();
+  var hint=document.getElementById("linkHint");
+  if(!raw){hint.textContent="先把美客多商品链接粘进来。";return;}
+  var info=parseMLLink(raw);
+  if(!info.id&&!info.slugText){hint.textContent="没能从这个链接里识别出商品，请确认是美客多商品链接，或直接把标题粘到下面的检测框。";return;}
+  hint.textContent="正在读取商品信息…";
+  function fallback(reason){
+    if(info.slugText.split(" ").filter(Boolean).length>=2){
+      hint.textContent=(info.id?("商品 "+info.id+"："):"")+reason+"已先按链接里的标题文字检测；想查描述全文，把描述粘到检测框再点一次开始检测。";
+      setTextAndCheck(info.slugText);
+    }else{
+      hint.textContent=(info.id?("商品 "+info.id+"："):"")+reason+"这个链接里没有标题文字，请把标题或描述粘到下面的检测框检测。";
+    }
+  }
+  if(!info.id){fallback("");return;}
+  var api=info.catalog?("https://api.mercadolibre.com/products/"+info.id):("https://api.mercadolibre.com/items/"+info.id);
+  fetch(api).then(function(r){if(!r.ok)throw new Error("http "+r.status);return r.json();}).then(function(j){
+    var title=j.title||j.name||"";
+    if(!title)throw new Error("empty");
+    if(info.catalog){hint.textContent="商品 "+info.id+"（目录）：已读取目录名称并检测。";setTextAndCheck(title);return;}
+    fetch("https://api.mercadolibre.com/items/"+info.id+"/description").then(function(r){return r.ok?r.json():null;}).then(function(d){
+      var desc=(d&&(d.plain_text||d.text))||"";
+      hint.textContent="商品 "+info.id+"：已读取标题"+(desc?"和描述":"")+"并检测。";
+      setTextAndCheck(desc?(title+"\n"+desc):title);
+    }).catch(function(){hint.textContent="商品 "+info.id+"：已读取标题并检测。";setTextAndCheck(title);});
+  }).catch(function(){fallback("美客多官方接口需要授权、暂时读不到商品全文，");});
 });
 /* CSV */
 document.getElementById("csvBtn").addEventListener("click",function(){
