@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <meta name="color-scheme" content="light dark"/>
 <link rel="icon" href="data:,"/>
-<title>美客多侵权词 — 墨西哥站侵权与违规清单</title>
+<title>美客多卖家助手 — 墨西哥站侵权词检测 · 标题优化 · 新手学习</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@700;900&display=swap" rel="stylesheet">
 <style>
@@ -131,12 +131,12 @@ section{padding-top:34px}
 </style>
 </head>
 <body>
-<div class="topbar"><span>● MERCADO LIBRE MÉXICO — 美客多墨西哥站</span><span>免费自查工具</span></div>
+<div class="topbar"><span>● 美客多卖家助手 · MERCADO LIBRE MÉXICO</span><span>免费自查工具</span></div>
 <div class="wrap">
   <header class="hero">
     <div style="font-weight:900;letter-spacing:.08em;font-size:12px;color:var(--navy)">卖家自查文档 · PROPIEDAD INTELECTUAL</div>
-    <h1>美客多<span>侵权词</span><br>与违规清单</h1>
-    <p class="lead">粘贴标题、商品链接或商品图，10 秒查出会招投诉、下架、封号的侵权词。免费，无需注册。</p>
+    <h1>美客多<span>卖家助手</span></h1>
+    <p class="lead">墨西哥站卖家工具箱：侵权词检测、Listing 标题优化、新手学习、AI Skill。粘贴标题、商品链接或商品图，10 秒查出会招投诉、下架、封号的风险词。免费，无需注册。</p>
     <div class="meta">
       <span class="pill">站点：mercadolibre.com.mx</span><span class="pill">覆盖：商标 · 版权 · 专利/外观 · 禁售品类</span><span class="pill">词表：37 条 · 按风险分级</span>
     </div>
@@ -150,15 +150,18 @@ section{padding-top:34px}
         <p>经多轮检索，<strong> Mercado Libre 没有公开发布过一份完整的禁用词清单</strong>。官方存在的是《使用条款》、刊登/禁售品类政策、标题与图片规范，以及品牌保护计划 BPP。下表是依据这些规则 + 卖家指南整理的<strong>风险合成表，不是官方黑名单</strong>，不要对外宣称是“官方名单”。词条后标注了依据等级：A 官方 / B 指南引用官方帮助 / C 推断或未见原文禁令。</p>
       </div>
     </div>
+    <div class="stats" style="grid-template-columns:repeat(3,1fr)">
       <div class="stat"><b>636 万</b><span>2026 上半年墨西哥站被检测出的违规刊登数量（同一报告）</span></div>
       <div class="stat"><b>2,159 万</b><span>同期全区域主动知识产权检测量，占 IP 删除量的 97%</span></div>
       <div class="stat"><b>278.7 万件</b><span>IMPI 在 2025-09 至 2026-10-19 查扣的仿冒产品；Operación Limpieza 自 2024-09 累计超 800 万件</span></div>
     </div>
+    </div>
   </header>
 
-  <nav class="nav">
-    <a href="#checker">免费检测</a><a href="#words">侵权词表</a><a href="#brands">重点品牌</a><a href="#banned">禁售品类</a><a href="#checklist">上架自查</a><a href="#get">领取完整版</a>
+  <nav class="nav" id="tabBar">
+    <a href="#" data-tab="home" class="tab active">🔍 侵权词检测</a><a href="#" data-tab="words" class="tab">📋 侵权词表</a><a href="#" data-tab="title" class="tab">✍️ 标题优化</a><a href="#" data-tab="learn" class="tab">📚 新手学习</a><a href="#" data-tab="skills" class="tab">🤖 AI Skill</a><a href="#" data-tab="coach" class="tab">🎓 教学陪跑</a>
   </nav>
+  <style>.nav a.tab.active{background:var(--navy);color:#fff;border-color:var(--navy)} @media print{section{display:block!important}}</style>
 
   <section id="bpp">
     <div class="sec-head"><span class="num">1</span><div><h2>被投诉会怎样</h2><p>品牌方通过 BPP 投诉后：<b>投诉 → 刊登立即暂停 → 你有 4 天提交发票/授权答辩 → 品牌 4 天内确认 → 永久删除，多次违规可封号</b>。正品转售不算侵权，能出示正规进货发票，投诉就不成立——发票务必留好。</p></div></div>
@@ -189,6 +192,7 @@ section{padding-top:34px}
         <span id="checkHint" style="font-size:13px;color:#d6d9ff"></span>
       </div>
       <div class="result" id="checkResult"><div class="result-box" id="checkBox"></div></div>
+      <p style="font-size:12.5px;color:#d6d9ff;margin:12px 0 0">⚠️ 检测结果仅供参考：本工具按词表做关键词匹配，不代表美客多官方审核结果，也不能保证商品一定通过审核。没命中不等于无风险，图片 logo、角色形象等请人工复核。</p>
     </div>
   </section>
 
@@ -279,6 +283,73 @@ section{padding-top:34px}
       <div class="catcard"><b>🛠 店铺批量全检 / 定制词表</b>整店标题、图片一次查完，或按你的类目定制词表，加微信聊：<br><span id="contactSlot" style="display:inline-block;margin-top:8px;font-weight:900">微信：czqshy888888</span> <button class="btn btn-light" id="wxCopyBtn" style="padding:6px 12px;font-size:13px">复制微信号</button><span id="wxHint" style="font-size:12.5px;color:var(--muted);margin-left:6px"></span></div>
     </div>
   </section>
+
+<section id="sect-title">
+<div class="sec-head"><span class="num">✍️</span><div><h2>Listing 标题优化</h2><p>只填你产品的真实信息，下面的工具用本地词典拼装，<b>不会添加你没提供的品牌、认证或功能</b>。西语标题 ≤60 字符；词典没收录的词会标出来，请人工确认后再用。</p></div></div>
+<div class="filters">
+<div style="display:grid;gap:10px">
+<input class="search" id="tName" placeholder="商品中文名称（必填），例如：旋转调料架"/>
+<input class="search" id="tFunc" placeholder="主要功能，例如：收纳 防潮 旋转（多个用空格分开）"/>
+<input class="search" id="tMat" placeholder="材质，例如：不锈钢 / 塑料 / 硅胶"/>
+<input class="search" id="tSpec" placeholder="规格，例如：20罐 500ml 30×20cm"/>
+<input class="search" id="tKw" placeholder="目标关键词（西语，逗号分开），例如：organizador de especias, giratorio"/>
+</div>
+<div class="actions"><button class="btn btn-light" id="tGen">生成标题建议</button></div>
+<div id="tOut" style="margin-top:12px"></div>
+</div>
+</section>
+
+<section id="sect-learn">
+<div class="sec-head"><span class="num">📚</span><div><h2>新手运营学习区</h2><p>先把这 8 个概念搞懂，再谈选品和广告。例子里的数字只为帮你理解，平台规则和费率以后台为准。</p></div></div>
+<div class="catgrid">
+<div class="catcard"><h3>什么是 Listing</h3><p>一条 Listing 就是一个商品销售页面：标题、图片、价格、描述、物流方式打包在一起。你上架一个水杯，就生成一条 Listing，链接长这样：articulo.mercadolibre.com.mx/MLM-…。买家看到的、平台审核的，都是它。</p></div>
+<div class="catcard"><h3>什么是 ROAS</h3><p>广告花出去的钱换回多少销售额：ROAS = 广告带来的销售额 ÷ 广告花费。例子：花 100 比索广告费，卖出 400 比索货，ROAS = 4。越高越赚钱；低到连成本都盖不住，就该停广告或改 Listing。</p></div>
+<div class="catcard"><h3>什么是 DOTD</h3><p>Deal of the Day，每日特惠：平台的日常促销活动位，报名或受邀参加，给折扣换曝光和转化。适合有价格优势、库存够的款。参加资格、折扣要求以卖家后台活动页为准。</p></div>
+<div class="catcard"><h3>什么是 LD</h3><p>Lightning Deal，闪电特惠：限时几小时的秒杀型活动，节奏比 DOTD 更快、更拼价格和库存深度。库存浅的款别硬上，卖断货或发不出货都伤账号。规则以后台活动页为准。</p></div>
+<div class="catcard"><h3>选品基础</h3><p>四个问题：① 有没有人买（需求）② 多少人在卖（竞争）③ 卖一单赚不赚钱（利润）④ 能不能合规卖（侵权、类目限制）。例子（仅示意）：售价 200 比索，成本 80 + 运费 40 + 平台费用 30，还剩 50 才值得测。</p></div>
+<div class="catcard"><h3>商品上架基础</h3><p>标题 ≤60 字符：产品 + 品牌（正品/自有）+ 型号 + 关键参数；主图干净白底、无水印无文字；属性填全；类目选对；价格库存真实；想好物流用 Full 仓还是自发货。这几样做错，流量和转化都会掉。</p></div>
+<div class="catcard"><h3>广告基础</h3><p>美客多广告（Product Ads）按点击付费：有人点才扣钱。新手先小预算测款，按顺序看四个数：曝光（有没有展示）→ 点击率（图和标题吸不吸引人）→ 转化率（详情页能不能成交）→ ROAS（赚不赚钱）。</p></div>
+<div class="catcard"><h3>墨西哥站新手入门流程</h3><p>① 注册卖家账号 → ② 选品（先过侵权和利润）→ ③ 确认货源与发货方式 → ④ 写标题、做图、上架 → ⑤ 出单后按时发货 → ⑥ 小预算广告测款 → ⑦ 每周复盘数据、优化 Listing。别跳步，先合规再放量。</p></div>
+</div>
+</section>
+
+<section id="sect-skills">
+<div class="sec-head"><span class="num">🤖</span><div><h2>AI Skill 工具专区</h2><p>把重复运营工作做成可复用的 AI 工作流。每个 Skill 都附一段可直接粘贴给 Muse 的提示词，先免费用起来；完整 Skill 包和定制服务在“教学陪跑”里。</p></div></div>
+<div class="grid">
+<article class="card"><div class="term">🎯 美客多选品 Skill</div><dl>
+<div><dt>功能介绍</dt><dd>按需求、竞争、利润、合规四项给产品方向打分，输出值得测的款和风险点，不编造销量数据。</dd></div>
+<div><dt>适用人群</dt><dd>不知道卖什么、选品靠感觉的新手卖家。</dd></div>
+<div><dt>使用方法</dt><dd>复制下面提示词到 Muse，把换成你的类目和价格带。</dd></div>
+</dl><pre id="prompt1" style="white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:13px;margin:10px 0 0">你是一名美客多墨西哥站选品顾问。类目：，价格带：比索。请按需求、竞争、利润、合规四项打分，给出值得测的 3 个产品方向和每个方向的风险点；不要编造销量数据，没有数据就直接说明。</pre><div class="actions"><button class="btn btn-light" data-copy="prompt1">📋 复制提示词</button></div></article>
+<article class="card"><div class="term">✍️ 美客多 Listing 优化 Skill</div><dl>
+<div><dt>功能介绍</dt><dd>一张产品事实卡，生成西语标题、卖点副图文字、描述和售前问答模板，并做跨内容一致性检查。</dd></div>
+<div><dt>适用人群</dt><dd>上架慢、标题和图片总是返工的卖家。</dd></div>
+<div><dt>使用方法</dt><dd>复制提示词，把产品事实填全——给多少事实，用多少事实。</dd></div>
+</dl><pre id="prompt2" style="white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:13px;margin:10px 0 0">你是美客多墨西哥站 Listing 优化专家。产品事实：。请生成：60 字符内的西语标题（不用 oferta、envío gratis 等填充词）、卖点副图文字（西语）、描述（西语）和售前问答模板；只用我给的事实，不要添加品牌、认证或我没提供的功能。</pre><div class="actions"><button class="btn btn-light" data-copy="prompt2">📋 复制提示词</button></div></article>
+<article class="card"><div class="term">🛡 美客多侵权词检测 Skill</div><dl>
+<div><dt>功能介绍</dt><dd>按商标、版权、医疗宣称、促销填充四类筛标题和描述，给风险等级和合规替代写法。本页面的检测器就是它的在线版。</dd></div>
+<div><dt>适用人群</dt><dd>怕被投诉下架、想上架前自查的卖家。</dd></div>
+<div><dt>使用方法</dt><dd>在本页检测器直接查，或复制提示词到 Muse 批量查。</dd></div>
+</dl><pre id="prompt3" style="white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:13px;margin:10px 0 0">你是美客多墨西哥站合规审核员。下面是我的标题/描述：。请按高/中/低风险列出可能涉及商标、版权、医疗宣称、促销填充的词，给出合规替代写法；并说明这只是风险提示，不代表官方审核结果。</pre><div class="actions"><button class="btn btn-light" data-copy="prompt3">📋 复制提示词</button></div></article>
+<article class="card"><div class="term">🖼 美客多商品图片美工 Skill</div><dl>
+<div><dt>功能介绍</dt><dd>从一张主图规划整套卖点副图：一图一个卖点，附墨西哥西语文案；规格 1:1、推荐 1200×1200。</dd></div>
+<div><dt>适用人群</dt><dd>没有美工、副图靠拼凑的卖家。</dd></div>
+<div><dt>使用方法</dt><dd>复制提示词，附上产品图和真实参数，让 Muse 先出图组规划再做图。</dd></div>
+</dl><pre id="prompt4" style="white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:13px;margin:10px 0 0">你是美客多商品视觉设计师。产品：，真实参数：。请规划主图 + 副图共 8–12 张（1:1，1200×1200），一图一个卖点，写明每张图的西语文案和画面元素；不得使用品牌 logo、水印、促销文字和联系方式。</pre><div class="actions"><button class="btn btn-light" data-copy="prompt4">📋 复制提示词</button></div></article>
+</div>
+</section>
+
+<section id="sect-coach">
+<div class="sec-head"><span class="num">🎓</span><div><h2>教学陪跑</h2><p>不只给工具文件，而是把你店里最耗时的重复工作做成可复用的 AI 工作流，陪你落地。本站暂不在线收款：先微信沟通需求，确认后走闲鱼下单，价格以闲鱼商品页为准。</p></div></div>
+<div class="grid">
+<article class="card"><div class="term">A · 店铺诊断包</div><p style="font-size:14px;margin:8px 0 0">选品、Listing、广告、图片四项诊断 + 优先动作清单。适合刚开店、不知道先改哪里的卖家。</p></article>
+<article class="card"><div class="term">B · 上架加速包</div><p style="font-size:14px;margin:8px 0 0">每批 ≤10 个 SKU：事实卡、60 字符西语标题、卖点副图、视频脚本、描述、问答模板，一次交付齐。</p></article>
+<article class="card"><div class="term">C · 30 天陪跑包</div><p style="font-size:14px;margin:8px 0 0">诊断 + 每月一批上架 + 每周复盘 + 按你最耗时的事定制 1–3 条专属工作流。主推款，适合已经出单、想提效的卖家。</p></article>
+<article class="card"><div class="term">D · 企业效率改造</div><p style="font-size:14px;margin:8px 0 0">多店铺/团队：先诊断、后报价，含工作流定制、团队培训和试运行。</p></article>
+</div>
+<p class="note">可定制的工作流：商机筛选 · 上架流水线 · 图片生产 · 广告周诊断 · 售前问答 · 库存 Full · 财务对账 · 周报。服务边界：不收你的账号密码、不接管账号、不承诺销量。</p>
+<div class="actions"><a class="btn btn-yellow" href="#get" style="text-decoration:none;background:var(--yellow);color:#111">去文末加微信咨询</a></div>
+</section>
 
   <section id="sources">
     <div class="sec-head"><span class="num">8</span><div><h2>来源与说明</h2></div></div>
@@ -379,11 +450,37 @@ function runCheck(){
   WORDS.forEach(function(w){ (w.keys||[]).concat(w.enk||[]).forEach(function(k){ if(v.indexOf(norm(k))!==-1){ if(hits.indexOf(w)===-1)hits.push(w); } }); });
   // avoid double-counting correct-use compatible when only generic hit is same word: keep as is, it's a提示
   res.classList.add("show");
-  if(!hits.length){box.innerHTML="<b>✅ 没命中词表里的关键词。</b><p style='margin:6px 0 0;font-size:14px'>但这不等于安全：图片里的 logo、角色形象、拼错的品牌变体和没有授权的货，靠文字检测查不出来，请再过一遍第 6 节自查清单。</p>";return;}
+  if(!hits.length){box.innerHTML="<b>✅ 没命中词表里的关键词。</b><p style='margin:6px 0 0;font-size:14px'>但这不等于安全：图片里的 logo、角色形象、拼错的品牌变体和没有授权的货，靠文字检测查不出来，请再过一遍自查清单。</p>"+'<div style="margin-top:10px"><button class="btn btn-light" id="copyResBtn" type="button">📋 复制检测结果</button></div>'; bindCopyRes("检测文本："+v+"\n结果：未命中词表关键词（仅供参考，不代表官方审核结果）"); return;}
   var order={high:0,med:1,low:2}; hits.sort(function(a,b){return order[a.risk]-order[b.risk]});
-  box.innerHTML="<b>⚠️ 命中 "+hits.length+" 条风险词：</b><ul>"+hits.map(function(w){return "<li><span class='badge "+riskClass[w.risk]+"'>"+riskLabel[w.risk]+"</span><b>"+w.t+"</b> — "+w.alt+"</li>"}).join("")+"</ul><p style='margin:8px 0 0;font-size:13px;color:#555'>提示为关键词匹配，最终以第 3 节词表逐条对照为准。</p>";
+  box.innerHTML="<b>⚠️ 命中 "+hits.length+" 条风险词：</b><ul>"+hits.map(function(w){return "<li><span class='badge "+riskClass[w.risk]+"'>"+riskLabel[w.risk]+"</span><b>"+w.t+"</b> — "+w.alt+"</li>"}).join("")+"</ul><p style='margin:8px 0 0;font-size:13px;color:#555'>提示为关键词匹配，最终以词表逐条对照为准。结果仅供参考，不代表官方审核结果。</p>"+'<div style="margin-top:10px"><button class="btn btn-light" id="copyResBtn" type="button">📋 复制检测结果</button></div>'; bindCopyRes("检测文本："+v+"\n命中 "+hits.length+" 条风险词：\n"+hits.map(function(w){return "- ["+riskLabel[w.risk]+"] "+w.t+"（"+w.cn+"）→ "+w.alt;}).join("\n")+"\n（仅供参考，不代表美客多官方审核结果）");
 }
 document.getElementById("checkBtn").addEventListener("click",runCheck);
+
+/* tabs */
+var TABMAP={home:["bpp","checker","brands","banned","checklist","get"],words:["words"],title:["sect-title"],learn:["sect-learn"],skills:["sect-skills"],coach:["sect-coach"]};
+function showTab(name){
+  Object.keys(TABMAP).forEach(function(k){TABMAP[k].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=(k===name?"":"none");});});
+  document.querySelectorAll("#tabBar .tab").forEach(function(a){a.classList.toggle("active",a.dataset.tab===name);});
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.getElementById("tabBar").addEventListener("click",function(e){var a=e.target.closest("[data-tab]");if(!a)return;e.preventDefault();showTab(a.dataset.tab);});
+document.querySelectorAll('a[href="#checker"]').forEach(function(a){a.addEventListener("click",function(){showTab("home");});});
+document.querySelectorAll('a[href="#get"]').forEach(function(a){a.addEventListener("click",function(e){e.preventDefault();showTab("home");setTimeout(function(){document.getElementById("get").scrollIntoView({behavior:"smooth"});},60);});});
+function bindCopyRes(text){
+  var b=document.getElementById("copyResBtn"); if(!b)return;
+  b.addEventListener("click",function(){
+    function done(){b.textContent="✅ 已复制";}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done).catch(function(){b.textContent="复制失败，请手动选中结果文字";});}
+    else{b.textContent="当前浏览器不支持自动复制";}
+  });
+}
+function copyTextOf(id,btn){
+  var el=document.getElementById(id); if(!el)return;
+  var text=el.textContent;
+  function done(){btn.textContent="✅ 已复制";}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done).catch(function(){btn.textContent="复制失败";});}
+  else{btn.textContent="浏览器不支持自动复制";}
+}
 /* link checker */
 function parseMLLink(raw){
   var out={id:"",catalog:false,slugText:""};
@@ -505,6 +602,69 @@ document.getElementById("shareBtn").addEventListener("click",function(){
   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){hint.textContent="已复制，去粘贴分享吧。";}).catch(function(){hint.textContent=url;});}
   else{hint.textContent=url;}
 });
+
+/* title tool */
+var MAT_ES={"不锈钢":"acero inoxidable","硅胶":"silicón","塑料":"plástico","金属":"metal","玻璃":"vidrio","陶瓷":"cerámica","皮革":"cuero","铝合金":"aleación de aluminio","铝":"aluminio","铁":"hierro","竹":"bambú","木":"madera","布":"tela","纸":"papel","橡胶":"goma","尼龙":"nailon","聚酯":"poliéster","棉":"algodón","亚克力":"acrílico"};
+var FUNC_ES={"防水":"impermeable","防滑":"antideslizante","折叠":"plegable","可调节":"ajustable","便携":"portátil","大容量":"gran capacidad","加厚":"grueso","轻便":"ligero","耐用":"durable","易清洗":"fácil de limpiar","收纳":"organizador","旋转":"giratorio","电动":"eléctrico","手动":"manual","无线":"inalámbrico","带盖":"con tapa","多功能":"multifuncional","一次性":"desechable","防潮":"anti humedad","静音":"silencioso"};
+function trWords(text,dict){
+  var t=text||"";var used=[];
+  Object.keys(dict).sort(function(a,b){return b.length-a.length;}).forEach(function(k){if(t.indexOf(k)!==-1){t=t.split(k).join(" "+dict[k]+" ");used.push(dict[k]);}});
+  var missing=(t.match(/[\u4e00-\u9fa5]+/g)||[]);
+  return {text:t.replace(/\s+/g," ").trim(),used:used,missing:missing};
+}
+function scanHits(text){
+  var v=(text||"").toLowerCase();var hits=[];
+  WORDS.forEach(function(w){(w.keys||[]).concat(w.enk||[]).forEach(function(k){if(v.indexOf(k.toLowerCase())!==-1&&hits.indexOf(w)===-1)hits.push(w);});});
+  return hits;
+}
+function trim60(s){s=s.replace(/\s+/g," ").trim();if(s.length<=60)return s;var cut=s.slice(0,60);var sp=cut.lastIndexOf(" ");return (sp>20?cut.slice(0,sp):cut).trim();}
+function cap1(s){return s?s.charAt(0).toUpperCase()+s.slice(1):s;}
+document.getElementById("tGen").addEventListener("click",function(){
+  var name=(document.getElementById("tName").value||"").trim();
+  var func=(document.getElementById("tFunc").value||"").trim();
+  var mat=(document.getElementById("tMat").value||"").trim();
+  var spec=(document.getElementById("tSpec").value||"").trim();
+  var kwRaw=(document.getElementById("tKw").value||"").trim();
+  var out=document.getElementById("tOut");
+  if(!name){out.innerHTML='<p style="color:var(--red);font-size:14px">先填商品中文名称。</p>';return;}
+  var kws=kwRaw?kwRaw.split(/[,，、]/).map(function(s){return s.trim();}).filter(Boolean):[];
+  var matT=trWords(mat,MAT_ES),funcT=trWords(func,FUNC_ES),nameT=trWords(name,Object.assign({},MAT_ES,FUNC_ES));
+  var core=kws[0]||nameT.text;
+  var specES=spec.replace(/(\d+)罐/g,"$1 frascos").replace(/(\d+)件套/g,"set de $1").replace(/(\d+)个装/g,"paquete de $1");
+  function build(parts){return trim60(cap1(parts.filter(Boolean).join(" ")));}
+  var v1=build([core,matT.text,funcT.used[0]||"",specES]);
+  var v2=build([core,kws[1]||"",matT.text,specES]);
+  var v3=build([core,funcT.used.join(" "),specES]);
+  var variants=[["标准版（产品+材质+功能+规格）",v1],["关键词版（产品+次关键词+材质+规格）",v2],["功能版（产品+功能+规格）",v3]].filter(function(x){return x[1];});
+  var cn1=[name,mat,func,spec].filter(Boolean).join(" · ");
+  var cn2=[name].concat(kws).concat([spec]).filter(Boolean).join(" · ");
+  var misses=[].concat(matT.missing,funcT.missing);
+  var html='<div class="result-box" style="background:var(--surface);border:1px solid var(--line);color:var(--ink)">';
+  html+='<b>中文标题建议</b><ul><li>'+cn1+'</li><li>'+cn2+'</li></ul>';
+  html+='<b>西语标题建议（≤60 字符）</b>';
+  variants.forEach(function(x,i){
+    var h=scanHits(x[1]);
+    html+='<div style="margin:8px 0;padding:10px;border:1px solid var(--line);border-radius:10px"><div style="font-size:12px;color:var(--muted)">'+x[0]+' · '+x[1].length+' 字符</div><div style="font-weight:700;margin:4px 0" id="tv'+i+'">'+x[1]+'</div>'+(h.length?'<div style="font-size:13px;color:var(--red)">⚠️ 侵权提醒：'+h.map(function(w){return w.t;}).join("、")+'——请按词表修改后再用。</div>':'<div style="font-size:13px;color:var(--green)">✅ 未命中侵权词表（仍不代表官方审核结果）</div>')+'<button class="btn btn-light" data-copy="tv'+i+'" style="padding:6px 12px;font-size:13px">复制这条</button></div>';
+  });
+  html+='<b>优化建议</b><ul>';
+  if(!kws.length)html+='<li>没填目标关键词：西语标题只能用名称词典拼装，建议补 1–2 个买家会搜的西语关键词，标题相关性会更好。</li>';
+  kws.forEach(function(k){var inT=variants.length&&variants[0][1].toLowerCase().indexOf(k.toLowerCase())!==-1;html+='<li>关键词「'+k+'」'+(inT?'已进入标准版标题 ✓':'未进入标准版（可能被 60 字符截断），可手动放到最前面')+'。</li>';});
+  if(v1&&v1.length<40)html+='<li>标准版标题偏短（'+v1.length+' 字符）：可以再补一个真实参数或第二个关键词，但不要塞促销词。</li>';
+  if(!spec)html+='<li>没填规格：标题里加上容量/数量/尺寸这类真实参数，点击和转化通常更好。</li>';
+  if(misses.length)html+='<li>这些词不在本地词典里，已在标题中跳过或保留原文，请人工确认西语：'+misses.join("、")+'。</li>';
+  html+='<li>可读性：标题按“产品词在最前、参数在后”排列；不要整句大写，不要重复堆同一个词。</li>';
+  html+='</ul><p style="font-size:12.5px;color:var(--muted);margin:6px 0 0">本工具用本地规则和词典拼装，不编造属性；生成结果请对照实物再确认一遍。</p></div>';
+  out.innerHTML=html;
+  bindCopyButtons(out);
+});
+function bindCopyButtons(scope){
+  (scope||document).querySelectorAll("[data-copy]").forEach(function(b){
+    if(b.dataset.bound)return;b.dataset.bound="1";
+    b.addEventListener("click",function(){copyTextOf(b.dataset.copy,b);});
+  });
+}
+bindCopyButtons(document);
+showTab("home");
 /* CSV */
 document.getElementById("csvBtn").addEventListener("click",function(){
   function q(s){return '"'+String(s).replace(/"/g,'""')+'"';}

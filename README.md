@@ -1,6 +1,6 @@
-# 美客多侵权词查询工具（Mercado Libre Risk Checker）
+# 美客多卖家助手（Mercado Libre Seller Assistant）
 
-面向中国跨境电商卖家、美客多墨西哥站卖家的侵权与违规自查工具（单页 HTML，无需服务器，免费托管于 GitHub Pages）。
+面向中国跨境电商卖家、美客多墨西哥站卖家的在线工具站（单页 HTML，无需服务器，免费托管于 GitHub Pages）。顶部标签切换六个模块：侵权词检测、侵权词表、Listing 标题优化（本地词典规则生成，不编造属性）、新手学习区（8 个概念）、AI Skill 专区（4 个 Skill + 可复制的 Muse 提示词）、教学陪跑（介绍页，不在线收款）。
 
 ## 定位
 
