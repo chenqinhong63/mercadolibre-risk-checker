@@ -576,82 +576,7 @@ function showTab(name){
   window.scrollTo({top:0,behavior:"smooth"});
 }
 document.getElementById("tabBar").addEventListener("click",function(e){var a=e.target.closest("[data-tab]");if(!a)return;e.preventDefault();showTab(a.dataset.tab);});
-document.querySelectorAll('a[href="#checker"]').forEach(function(a){a.addEventListener("click",function(){/* precheck + local workspace */
-var PRE_ITEMS=[
- {id:"p1",label:"品牌授权：商品是正品，手里有发票、采购凭证或品牌授权书",tip:"没有凭证又用了品牌名，先下架品牌词或补齐凭证再发——这是被删刊登和封店最常见的原因。"},
- {id:"p2",label:"知识产权：标题、描述、图片里没有未授权的品牌、卡通角色、球队、影视/游戏元素",tip:"把侵权词检测跑一遍，并人工看一遍图片里的 logo 和角色。"},
- {id:"p3",label:"不夸大：没有「最好 / 第一 / 100% / 销量冠军」这类无法证明的说法",tip:"改成可验证的事实参数（材质、尺寸、数量），别用绝对化用语。"},
- {id:"p4",label:"功效合规：没有治愈、根除、治疗疾病等医疗功效宣称，或已有合规依据",tip:"普通商品不要写医疗功效；确有资质的，把证书备好再写。"},
- {id:"p5",label:"类目合规：商品不在禁售清单，受限类目（食品、化妆品、电子等）的许可和标签齐全",tip:"拿不准的类目先查卖家中心的禁售/受限清单。"},
- {id:"p6",label:"图片合规：图片是自有实拍，无他人水印、logo 和盗图；主图无文字、边框和联系方式",tip:"用自己的实拍图；供应商图要确认授权，主图按平台规则保持干净白底。"},
- {id:"p7",label:"信息完整：标题 ≤60 字符，属性、规格、价格、库存都真实填全",tip:"属性填全有助于匹配目录和搜索；价格库存别虚标。"}
-];
-function renderPrecheck(){
-  var box=document.getElementById("preList");if(!box)return;
-  box.innerHTML=PRE_ITEMS.map(function(it){return '<label style="display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid #e5e7eb;border-radius:10px;margin-bottom:8px;font-size:15px"><input type="checkbox" class="preChk" data-id="'+it.id+'" style="width:20px;height:20px;margin-top:2px;flex:none"><span>'+it.label+'</span></label>';}).join("");
-  updatePreProg();
-}
-function updatePreProg(){
-  var n=document.querySelectorAll(".preChk:checked").length;
-  var el=document.getElementById("preProg");if(el)el.textContent="已确认 "+n+" / "+PRE_ITEMS.length+" 项";
-}
-document.addEventListener("change",function(e){if(e.target.classList&&e.target.classList.contains("preChk"))updatePreProg();});
-function precheckReport(){
-  var checked={};document.querySelectorAll(".preChk").forEach(function(c){checked[c.dataset.id]=c.checked;});
-  var missing=PRE_ITEMS.filter(function(it){return !checked[it.id];});
-  var now=new Date();var ts=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+" "+String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
-  var res=document.getElementById("preResult"),box=document.getElementById("preBox");
-  res.classList.add("show");
-  var html="<b>📋 上架风险自查报告</b><div style='font-size:13px;color:#555;margin:6px 0'>时间："+ts+" ｜ 已确认 "+(PRE_ITEMS.length-missing.length)+"/"+PRE_ITEMS.length+" 项</div>";
-  if(!missing.length)html+="<b>✅ 全部确认完毕。</b><p style='font-size:14px;margin:6px 0 0'>自查通过不等于平台审核通过，上架后仍要留意平台通知。</p>";
-  else html+="<b>⚠️ 还有 "+missing.length+" 项未确认：</b><ul>"+missing.map(function(it){return "<li>"+it.label+"<br><span style='color:#666;font-size:13px'>处理提示："+it.tip+"</span></li>";}).join("")+"</ul>";
-  html+='<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-light" id="preCopyBtn" type="button">📋 复制自查报告</button></div>';
-  box.innerHTML=html;
-  var lines=["美客多上架风险自查报告","时间："+ts,"已确认 "+(PRE_ITEMS.length-missing.length)+"/"+PRE_ITEMS.length+" 项",""];
-  PRE_ITEMS.forEach(function(it){lines.push((checked[it.id]?"[✓] ":"[ ] ")+it.label);if(!checked[it.id])lines.push("    处理提示："+it.tip);});
-  lines.push("","说明：本报告为卖家自查记录，仅供参考，不代表美客多官方审核结果。");
-  var b=document.getElementById("preCopyBtn");
-  b.addEventListener("click",function(){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lines.join("\n")).then(function(){b.textContent="✅ 已复制";}).catch(function(){b.textContent="复制失败";});}});
-}
-/* localStorage workspace */
-function lsGet(k){try{return JSON.parse(localStorage.getItem(k)||"[]");}catch(e){return[];}}
-function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
-function recordHistory(rec){var arr=lsGet("mlr_history");arr.unshift(rec);if(arr.length>30)arr=arr.slice(0,30);lsSet("mlr_history",arr);renderDesk();}
-function saveDraft(kind,item){var key=kind==="title"?"mlr_titles":"mlr_descs";var arr=lsGet(key);arr.unshift(item);if(arr.length>30)arr=arr.slice(0,30);lsSet(key,arr);renderDesk();showToast("已保存到工作台（仅本设备）");}
-function deskRow(html){return '<div style="display:flex;gap:8px;align-items:flex-start;border:1px solid #e5e7eb;border-radius:10px;padding:8px 10px;margin-bottom:8px;font-size:14px"><div style="flex:1">'+html+'</div></div>';}
-function renderDesk(){
-  var h=document.getElementById("deskHistory");if(!h)return;
-  var hist=lsGet("mlr_history");
-  h.innerHTML=hist.length?hist.map(function(r,i){return deskRow("<b>"+r.level+"</b> · 命中 "+r.hits+" 条 · "+r.time+"<br>"+r.title+' <button class="btn btn-ghost deskDel" data-k="mlr_history" data-i="'+i+'" type="button" style="padding:2px 10px;min-height:30px">删除</button>');}).join(""):'<p class="sub">还没有检测记录，去「侵权词检测」跑一次就会出现在这里。</p>';
-  var t=document.getElementById("deskTitles");var titles=lsGet("mlr_titles");
-  t.innerHTML=titles.length?titles.map(function(r,i){return deskRow(r.time+"<br>"+r.text+' <button class="btn btn-ghost deskDel" data-k="mlr_titles" data-i="'+i+'" type="button" style="padding:2px 10px;min-height:30px">删除</button>');}).join(""):'<p class="sub">还没有标题草稿，在「标题优化」生成后点“保存为标题草稿”。</p>';
-  var d=document.getElementById("deskDescs");var descs=lsGet("mlr_descs");
-  d.innerHTML=descs.length?descs.map(function(r,i){return deskRow(r.time+"<br>"+r.text.slice(0,120)+(r.text.length>120?"…":"")+' <button class="btn btn-ghost deskDel" data-k="mlr_descs" data-i="'+i+'" type="button" style="padding:2px 10px;min-height:30px">删除</button>');}).join(""):'<p class="sub">还没有描述草稿，在检测框填好描述后点“保存描述草稿”。</p>';
-}
-document.addEventListener("click",function(e){
-  var b=e.target.closest(".deskDel");if(!b)return;
-  var arr=lsGet(b.dataset.k);arr.splice(parseInt(b.dataset.i,10),1);lsSet(b.dataset.k,arr);renderDesk();
-});
-function showToast(msg){
-  var t=document.getElementById("toast");
-  if(!t){t=document.createElement("div");t.id="toast";t.style.cssText="position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#14213d;color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;z-index:99;box-shadow:0 4px 16px rgba(0,0,0,.25)";document.body.appendChild(t);}
-  t.textContent=msg;t.style.display="block";
-  clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(function(){t.style.display="none";},2200);
-}
-
-renderPrecheck();
-document.getElementById("preGen").addEventListener("click",precheckReport);
-document.getElementById("preReset").addEventListener("click",function(){document.querySelectorAll(".preChk").forEach(function(c){c.checked=false;});updatePreProg();document.getElementById("preResult").classList.remove("show");});
-document.getElementById("saveDescBtn").addEventListener("click",function(){
-  var v=(document.getElementById("checkInput").value||"").trim();
-  if(!v){showToast("描述框是空的");return;}
-  var now=new Date();saveDraft("desc",{time:now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+" "+String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0"),text:v});
-});
-document.getElementById("deskClearHistory").addEventListener("click",function(){lsSet("mlr_history",[]);renderDesk();});
-document.getElementById("deskClearTitles").addEventListener("click",function(){lsSet("mlr_titles",[]);renderDesk();});
-document.getElementById("deskClearDescs").addEventListener("click",function(){lsSet("mlr_descs",[]);renderDesk();});
-renderDesk();
-showTab("home");});});
+document.querySelectorAll('a[href="#checker"]').forEach(function(a){a.addEventListener("click",function(){showTab("home");});});
 document.querySelectorAll('a[href="#get"]').forEach(function(a){a.addEventListener("click",function(e){e.preventDefault();showTab("home");setTimeout(function(){document.getElementById("get").scrollIntoView({behavior:"smooth"});},60);});});
 function bindCopyRes(text){
   var b=document.getElementById("copyResBtn"); if(!b)return;
@@ -864,6 +789,81 @@ function bindCopyButtons(scope){
   });
 }
 bindCopyButtons(document);
+/* precheck + local workspace */
+var PRE_ITEMS=[
+ {id:"p1",label:"品牌授权：商品是正品，手里有发票、采购凭证或品牌授权书",tip:"没有凭证又用了品牌名，先下架品牌词或补齐凭证再发——这是被删刊登和封店最常见的原因。"},
+ {id:"p2",label:"知识产权：标题、描述、图片里没有未授权的品牌、卡通角色、球队、影视/游戏元素",tip:"把侵权词检测跑一遍，并人工看一遍图片里的 logo 和角色。"},
+ {id:"p3",label:"不夸大：没有「最好 / 第一 / 100% / 销量冠军」这类无法证明的说法",tip:"改成可验证的事实参数（材质、尺寸、数量），别用绝对化用语。"},
+ {id:"p4",label:"功效合规：没有治愈、根除、治疗疾病等医疗功效宣称，或已有合规依据",tip:"普通商品不要写医疗功效；确有资质的，把证书备好再写。"},
+ {id:"p5",label:"类目合规：商品不在禁售清单，受限类目（食品、化妆品、电子等）的许可和标签齐全",tip:"拿不准的类目先查卖家中心的禁售/受限清单。"},
+ {id:"p6",label:"图片合规：图片是自有实拍，无他人水印、logo 和盗图；主图无文字、边框和联系方式",tip:"用自己的实拍图；供应商图要确认授权，主图按平台规则保持干净白底。"},
+ {id:"p7",label:"信息完整：标题 ≤60 字符，属性、规格、价格、库存都真实填全",tip:"属性填全有助于匹配目录和搜索；价格库存别虚标。"}
+];
+function renderPrecheck(){
+  var box=document.getElementById("preList");if(!box)return;
+  box.innerHTML=PRE_ITEMS.map(function(it){return '<label style="display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid #e5e7eb;border-radius:10px;margin-bottom:8px;font-size:15px"><input type="checkbox" class="preChk" data-id="'+it.id+'" style="width:20px;height:20px;margin-top:2px;flex:none"><span>'+it.label+'</span></label>';}).join("");
+  updatePreProg();
+}
+function updatePreProg(){
+  var n=document.querySelectorAll(".preChk:checked").length;
+  var el=document.getElementById("preProg");if(el)el.textContent="已确认 "+n+" / "+PRE_ITEMS.length+" 项";
+}
+document.addEventListener("change",function(e){if(e.target.classList&&e.target.classList.contains("preChk"))updatePreProg();});
+function precheckReport(){
+  var checked={};document.querySelectorAll(".preChk").forEach(function(c){checked[c.dataset.id]=c.checked;});
+  var missing=PRE_ITEMS.filter(function(it){return !checked[it.id];});
+  var now=new Date();var ts=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+" "+String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
+  var res=document.getElementById("preResult"),box=document.getElementById("preBox");
+  res.classList.add("show");
+  var html="<b>📋 上架风险自查报告</b><div style='font-size:13px;color:#555;margin:6px 0'>时间："+ts+" ｜ 已确认 "+(PRE_ITEMS.length-missing.length)+"/"+PRE_ITEMS.length+" 项</div>";
+  if(!missing.length)html+="<b>✅ 全部确认完毕。</b><p style='font-size:14px;margin:6px 0 0'>自查通过不等于平台审核通过，上架后仍要留意平台通知。</p>";
+  else html+="<b>⚠️ 还有 "+missing.length+" 项未确认：</b><ul>"+missing.map(function(it){return "<li>"+it.label+"<br><span style='color:#666;font-size:13px'>处理提示："+it.tip+"</span></li>";}).join("")+"</ul>";
+  html+='<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-light" id="preCopyBtn" type="button">📋 复制自查报告</button></div>';
+  box.innerHTML=html;
+  var lines=["美客多上架风险自查报告","时间："+ts,"已确认 "+(PRE_ITEMS.length-missing.length)+"/"+PRE_ITEMS.length+" 项",""];
+  PRE_ITEMS.forEach(function(it){lines.push((checked[it.id]?"[✓] ":"[ ] ")+it.label);if(!checked[it.id])lines.push("    处理提示："+it.tip);});
+  lines.push("","说明：本报告为卖家自查记录，仅供参考，不代表美客多官方审核结果。");
+  var b=document.getElementById("preCopyBtn");
+  b.addEventListener("click",function(){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lines.join("\n")).then(function(){b.textContent="✅ 已复制";}).catch(function(){b.textContent="复制失败";});}});
+}
+/* localStorage workspace */
+function lsGet(k){try{return JSON.parse(localStorage.getItem(k)||"[]");}catch(e){return[];}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function recordHistory(rec){var arr=lsGet("mlr_history");arr.unshift(rec);if(arr.length>30)arr=arr.slice(0,30);lsSet("mlr_history",arr);renderDesk();}
+function saveDraft(kind,item){var key=kind==="title"?"mlr_titles":"mlr_descs";var arr=lsGet(key);arr.unshift(item);if(arr.length>30)arr=arr.slice(0,30);lsSet(key,arr);renderDesk();showToast("已保存到工作台（仅本设备）");}
+function deskRow(html){return '<div style="display:flex;gap:8px;align-items:flex-start;border:1px solid #e5e7eb;border-radius:10px;padding:8px 10px;margin-bottom:8px;font-size:14px"><div style="flex:1">'+html+'</div></div>';}
+function renderDesk(){
+  var h=document.getElementById("deskHistory");if(!h)return;
+  var hist=lsGet("mlr_history");
+  h.innerHTML=hist.length?hist.map(function(r,i){return deskRow("<b>"+r.level+"</b> · 命中 "+r.hits+" 条 · "+r.time+"<br>"+r.title+' <button class="btn btn-ghost deskDel" data-k="mlr_history" data-i="'+i+'" type="button" style="padding:2px 10px;min-height:30px">删除</button>');}).join(""):'<p class="sub">还没有检测记录，去「侵权词检测」跑一次就会出现在这里。</p>';
+  var t=document.getElementById("deskTitles");var titles=lsGet("mlr_titles");
+  t.innerHTML=titles.length?titles.map(function(r,i){return deskRow(r.time+"<br>"+r.text+' <button class="btn btn-ghost deskDel" data-k="mlr_titles" data-i="'+i+'" type="button" style="padding:2px 10px;min-height:30px">删除</button>');}).join(""):'<p class="sub">还没有标题草稿，在「标题优化」生成后点“保存为标题草稿”。</p>';
+  var d=document.getElementById("deskDescs");var descs=lsGet("mlr_descs");
+  d.innerHTML=descs.length?descs.map(function(r,i){return deskRow(r.time+"<br>"+r.text.slice(0,120)+(r.text.length>120?"…":"")+' <button class="btn btn-ghost deskDel" data-k="mlr_descs" data-i="'+i+'" type="button" style="padding:2px 10px;min-height:30px">删除</button>');}).join(""):'<p class="sub">还没有描述草稿，在检测框填好描述后点“保存描述草稿”。</p>';
+}
+document.addEventListener("click",function(e){
+  var b=e.target.closest(".deskDel");if(!b)return;
+  var arr=lsGet(b.dataset.k);arr.splice(parseInt(b.dataset.i,10),1);lsSet(b.dataset.k,arr);renderDesk();
+});
+function showToast(msg){
+  var t=document.getElementById("toast");
+  if(!t){t=document.createElement("div");t.id="toast";t.style.cssText="position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#14213d;color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;z-index:99;box-shadow:0 4px 16px rgba(0,0,0,.25)";document.body.appendChild(t);}
+  t.textContent=msg;t.style.display="block";
+  clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(function(){t.style.display="none";},2200);
+}
+
+renderPrecheck();
+document.getElementById("preGen").addEventListener("click",precheckReport);
+document.getElementById("preReset").addEventListener("click",function(){document.querySelectorAll(".preChk").forEach(function(c){c.checked=false;});updatePreProg();document.getElementById("preResult").classList.remove("show");});
+document.getElementById("saveDescBtn").addEventListener("click",function(){
+  var v=(document.getElementById("checkInput").value||"").trim();
+  if(!v){showToast("描述框是空的");return;}
+  var now=new Date();saveDraft("desc",{time:now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+" "+String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0"),text:v});
+});
+document.getElementById("deskClearHistory").addEventListener("click",function(){lsSet("mlr_history",[]);renderDesk();});
+document.getElementById("deskClearTitles").addEventListener("click",function(){lsSet("mlr_titles",[]);renderDesk();});
+document.getElementById("deskClearDescs").addEventListener("click",function(){lsSet("mlr_descs",[]);renderDesk();});
+renderDesk();
 showTab("home");
 /* CSV */
 document.getElementById("csvBtn").addEventListener("click",function(){
