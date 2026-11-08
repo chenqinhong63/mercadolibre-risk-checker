@@ -162,7 +162,7 @@ section{padding-top:34px}
   <nav class="nav" id="tabBar">
     <a href="#" data-tab="home" class="tab active">🔍 侵权词检测 · 词表</a><a href="#" data-tab="title" class="tab">✍️ 标题优化</a>
     <a href="#" data-tab="precheck" class="tab">✅ 上架自查</a>
-    <a href="#" data-tab="desk" class="tab">🗂 工作台</a><a href="#" data-tab="imgopt" class="tab">🖼 图片优化</a><a href="#" data-tab="skills" class="tab">🤖 AI Skill</a><a href="#" data-tab="coach" class="tab">🎓 教学陪跑</a>
+    <a href="#" data-tab="desk" class="tab">🗂 工作台</a><a href="#" data-tab="imgopt" class="tab">🖼 图片优化</a><a href="#" data-tab="video" class="tab">🎬 视频生成</a><a href="#" data-tab="skills" class="tab">🤖 AI Skill</a><a href="#" data-tab="coach" class="tab">🎓 教学陪跑</a>
   </nav>
   <style>.nav a.tab.active{background:var(--navy);color:#fff;border-color:var(--navy)} @media print{section{display:block!important}}</style>
 
@@ -444,6 +444,75 @@ section{padding-top:34px}
     <div id="ioCompareOut"></div>
   </section>
 
+
+  <section class="card" id="sect-video">
+    <h2 style="margin-top:0">🎬 AI 商品视频生成器 <span style="font-size:13px;color:#666">Mercado Libre AI Product Video Studio</span></h2>
+    <p class="sub">先说清：本站是静态页面、没有视频生成接口，<b>这里生成的是视频脚本、分镜表和 Muse 视频提示词</b>，真正的视频请拿提示词到 Muse 等视频工具里生成——不会假装本站能直接出视频。默认按美客多 Clips 建议：9:16 竖屏、10–60 秒；具体格式与审核要求以美客多官方最新规则为准（可在卖家中心帮助里搜 “Clips” 核对）。</p>
+
+    <h3>第一部分：商品素材上传（图片或实拍视频）</h3>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <label class="btn btn-ghost" for="vdFile" style="cursor:pointer;margin:0">📤 上传图片/视频</label>
+      <input id="vdFile" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime" style="display:none">
+      <button class="btn btn-ghost" id="vdDelFile" type="button">删除素材</button>
+      <span id="vdFileName" style="font-size:13px;color:#666">未选择素材</span>
+    </div>
+    <div id="vdPreviewWrap" style="margin-top:10px"></div>
+    <div id="vdMeta" style="font-size:14px"></div>
+
+    <h3 style="margin-top:22px">第二部分：商品信息（只用你填的事实，不编造）</h3>
+    <input class="search" id="vdName" placeholder="商品名称（中文），例如：20罐旋转调料架">
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <select id="vdCat" style="flex:1;min-width:150px;padding:12px;border-radius:12px;border:1px solid #ddd;font:inherit"><option value="hogar">家居用品</option><option value="auto">汽车用品</option><option value="outdoor">户外用品</option><option value="elec">电子产品</option><option value="belleza">美妆个护</option><option value="moda">服饰鞋包</option><option value="otro">其他</option></select>
+      <input class="search" id="vdBrand" style="flex:1;min-width:150px" placeholder="品牌（无品牌就填：无品牌）">
+      <input class="search" id="vdModel" style="flex:1;min-width:150px" placeholder="型号（没有可留空）">
+    </div>
+    <input class="search" id="vdFunc" placeholder="商品真实功能，例如：旋转取物、密封防潮">
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <input class="search" id="vdMat" style="flex:1;min-width:150px" placeholder="材质（中文），例如：不锈钢">
+      <input class="search" id="vdSize" style="flex:1;min-width:150px" placeholder="尺寸（实测），例如：直径27cm 高28cm">
+    </div>
+    <textarea id="vdPoints" rows="3" placeholder="真实卖点（一行一个），例如：&#10;360度旋转，拿取方便&#10;透明罐身，余量看得见"></textarea>
+    <input class="search" id="vdScene" placeholder="使用场景，例如：家庭厨房台面（留空则按类别自动推荐）">
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <input class="search" id="vdMarket" style="flex:1;min-width:150px" value="墨西哥 Mercado Libre">
+      <input class="search" id="vdEsName" style="flex:1;min-width:150px" placeholder="西语品名（可选），例如：organizador giratorio de especias">
+    </div>
+
+    <h3 style="margin-top:22px">第三部分：视频类型与参数</h3>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <select id="vdType" style="flex:1;min-width:170px;padding:12px;border-radius:12px;border:1px solid #ddd;font:inherit"><option value="showcase">1. 商品展示视频</option><option value="function">2. 商品功能演示视频</option><option value="scene">3. 商品使用场景视频</option><option value="detail">4. 商品细节展示视频</option><option value="install">5. 商品安装教程视频</option><option value="voiceover">6. 西语解说视频</option><option value="ad">7. AI 商品广告创意视频</option></select>
+      <select id="vdRatio" style="flex:1;min-width:130px;padding:12px;border-radius:12px;border:1px solid #ddd;font:inherit"><option value="9:16">9:16 竖屏（Clips 推荐）</option><option value="1:1">1:1 方形（自定义）</option><option value="16:9">16:9 横屏（自定义）</option></select>
+      <select id="vdDur" style="flex:1;min-width:110px;padding:12px;border-radius:12px;border:1px solid #ddd;font:inherit"><option value="15">15 秒</option><option value="30" selected>30 秒</option><option value="45">45 秒</option><option value="60">60 秒</option></select>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+      <select id="vdStyle" style="flex:1;min-width:150px;padding:12px;border-radius:12px;border:1px solid #ddd;font:inherit"><option>真实商品展示</option><option>专业电商广告</option><option>电影级商业摄影</option><option>简洁产品展示</option><option>生活场景展示</option></select>
+      <select id="vdVoice" style="flex:1;min-width:150px;padding:12px;border-radius:12px;border:1px solid #ddd;font:inherit"><option value="es">墨西哥西班牙语配音</option><option value="none">无旁白</option><option value="custom">自定义旁白</option></select>
+      <select id="vdSub" style="flex:1;min-width:150px;padding:12px;border-radius:12px;border:1px solid #ddd;font:inherit"><option value="es">墨西哥西班牙语字幕</option><option value="es_cn">西语字幕+中文辅助说明</option><option value="none">不添加字幕</option></select>
+    </div>
+    <textarea id="vdVoiceCustom" rows="2" placeholder="自定义旁白（一行对应一个镜头，留空则用模板旁白）" style="display:none"></textarea>
+
+    <h3 style="margin-top:22px">第四部分：脚本、分镜与 Muse 提示词</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn" id="vdGen" type="button">🎬 生成脚本与分镜</button>
+      <button class="btn btn-light" id="vdCopyPrompt" type="button">📋 复制 Muse 提示词</button>
+      <button class="btn btn-light" id="vdExport" type="button">⬇ 导出制作方案</button>
+      <button class="btn btn-ghost" id="vdClear" type="button">清空当前内容</button>
+    </div>
+    <div id="vdScript" style="margin-top:12px"></div>
+    <div class="result" id="vdPromptWrap"><div class="result-box" style="background:var(--surface);border:1px solid var(--line);color:var(--ink)"><div style="font-weight:700;margin-bottom:6px">🤖 Muse AI 视频制作提示词</div><pre id="vdPrompt" style="white-space:pre-wrap;font-size:13.5px;margin:0"></pre></div></div>
+
+    <h3 style="margin-top:22px">第五部分：视频合规检查</h3>
+    <div id="vdAuto"></div>
+    <div id="vdRiskList"></div>
+    <div class="row" style="margin-top:10px"><button class="btn" id="vdRiskGen" type="button">生成视频合规小报告</button></div>
+    <div class="result" id="vdRiskResult"><div id="vdRiskBox"></div></div>
+
+    <h3 style="margin-top:22px">第六部分：历史方案（保存在本浏览器）</h3>
+    <p class="sub">⚠️ 历史只存在这台设备的浏览器本地，不同步、清缓存会清空。</p>
+    <div id="vdHistory"></div>
+    <button class="btn btn-ghost" id="vdClearHistory" type="button">清空历史</button>
+  </section>
+
     <div class="foot">本站是卖家自建工具，不是美客多官方产品。本页为卖家自查参考，不构成法律意见；词表为风险合成表、非官方黑名单，个别词的风险等级为依据投诉流程的推断（C 级，已在词表中标注）。拿不准的 SKU，先备齐发票与授权，再上架。</div>
   </section>
 </div>
@@ -612,7 +681,7 @@ document.getElementById("checkBtn").addEventListener("click",runCheck);
 
 
 /* tabs */
-var TABMAP={home:["bpp","checker","words","brands","banned","checklist","get"],title:["sect-title"],precheck:["sect-precheck"],desk:["sect-desk"],imgopt:["sect-img"],skills:["sect-skills"],coach:["sect-coach"]};
+var TABMAP={home:["bpp","checker","words","brands","banned","checklist","get"],title:["sect-title"],precheck:["sect-precheck"],desk:["sect-desk"],imgopt:["sect-img"],video:["sect-video"],skills:["sect-skills"],coach:["sect-coach"]};
 function showTab(name){
   if(name==="desk"&&typeof renderDesk==="function")renderDesk();
   Object.keys(TABMAP).forEach(function(k){TABMAP[k].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=(k===name?"":"none");});});
@@ -1034,6 +1103,183 @@ document.getElementById("ioCopy").addEventListener("click",function(){copyTextOf
 document.getElementById("ioRiskGen").addEventListener("click",ioRiskReport);
 document.getElementById("ioCompare").addEventListener("click",ioCompareRender);
 renderIoRisks();
+/* video studio */
+var VD_SHOTS={
+showcase:[
+{w:2,view:"全景：{NAME} 完整出场，环境干净",angle:"平视全景",move:"缓慢推近",narr:["Te presento {P}.","为你介绍这款产品。"]},
+{w:3,view:"主体多角度展示：正面、侧面、背面依次呈现",angle:"平视中景",move:"环绕运镜",narr:["Diseño pensado para tu día a día.","为日常使用而设计。"]},
+{w:3,view:"核心卖点演示：{PT1}",angle:"特写",move:"固定镜头",narr:["Fíjate en este detalle.","注意看这个细节。"]},
+{w:2,view:"材质与做工特写：{MAT}",angle:"微距特写",move:"缓慢横移",narr:["Hecho de {MATES}.","采用{MAT}材质。"]},
+{w:2,view:"使用场景收尾：{SCENE}，商品定格",angle:"平视全景",move:"缓慢拉远",narr:["Listo para usar cuando lo necesites.","需要的时候，随手就能用。"]}],
+function:[
+{w:2,view:"钩子镜头：日常困扰场景（只拍真实场景，不夸张表演）",angle:"平视中景",move:"固定镜头",narr:["¿Te pasa esto?","你是不是也遇到过这种情况？"]},
+{w:3,view:"功能演示一：{PT1}",angle:"特写",move:"跟随运镜",narr:["Mira cómo funciona.","看它是怎么工作的。"]},
+{w:3,view:"功能演示二：{PT2}",angle:"特写",move:"固定镜头",narr:["Y también puede hacer esto.","它还可以这样用。"]},
+{w:2,view:"在真实场景中使用：{SCENE}",angle:"平视中景",move:"缓慢推近",narr:["En tu casa, así de práctico.","在家里用，就是这么顺手。"]},
+{w:2,view:"结尾：商品全景定格",angle:"平视全景",move:"固定镜头",narr:["Así de fácil.","就是这么简单。"]}],
+scene:[
+{w:2,view:"场景引入：{SCENE} 的环境全景",angle:"平视全景",move:"缓慢横移",narr:["Imagina esto en tu espacio.","想象它出现在你的空间里。"]},
+{w:3,view:"商品进入场景，被自然地拿起/放好",angle:"平视中景",move:"跟随运镜",narr:["Se integra sin esfuerzo.","自然地融入场景。"]},
+{w:3,view:"使用过程演示：{PT1}",angle:"特写",move:"固定镜头",narr:["Úsalo así, paso a paso.","像这样一步步使用。"]},
+{w:2,view:"细节特写：{MAT}",angle:"微距特写",move:"缓慢推近",narr:["Cada detalle cuenta.","每个细节都用心。"]},
+{w:2,view:"场景收尾全景，商品融入环境",angle:"平视全景",move:"缓慢拉远",narr:["Se ve bien y funciona mejor.","好看，也更好用。"]}],
+detail:[
+{w:2,view:"整体外观全景，缓慢旋转一周",angle:"平视全景",move:"环绕运镜",narr:["Conócelo de cerca.","近距离了解一下。"]},
+{w:3,view:"材质特写：{MAT}，手指轻触表面",angle:"微距特写",move:"缓慢横移",narr:["Hecho de {MATES}.","采用{MAT}材质。"]},
+{w:3,view:"结构特写：关键结构与连接处",angle:"特写",move:"缓慢推近",narr:["Estructura firme y bien pensada.","结构扎实，设计合理。"]},
+{w:2,view:"做工细节：边缘、接口、表面处理",angle:"微距特写",move:"固定镜头",narr:["Acabados que se notan.","做工看得见。"]},
+{w:2,view:"整体收尾，中景定格",angle:"平视中景",move:"缓慢拉远",narr:["Calidad en cada detalle.","品质在每个细节里。"]}],
+install:[
+{w:2,view:"包装内容平铺展示：{PARTS}",angle:"俯拍全景",move:"固定镜头",narr:["Esto es lo que incluye el paquete.","这就是包装里的全部内容。"]},
+{w:3,view:"安装步骤一：按说明书顺序演示（手部特写）",angle:"俯拍特写",move:"固定镜头",narr:["Paso uno: prepáralo así.","第一步：这样准备。"]},
+{w:3,view:"安装步骤二：关键步骤特写，动作放慢",angle:"特写",move:"固定镜头",narr:["Paso dos: fíjate en este punto.","第二步：注意这个关键点。"]},
+{w:2,view:"安装完成效果展示",angle:"平视全景",move:"缓慢推近",narr:["Y así queda instalado.","安装完成就是这样。"]},
+{w:2,view:"注意事项：镜头扫过说明书与商品细节",angle:"特写",move:"缓慢横移",narr:["Revisa el manual antes de usarlo.","使用前请再看一遍说明书。"]}],
+voiceover:[
+{w:2,view:"开场全景：{NAME} 出场",angle:"平视全景",move:"缓慢推近",narr:["Hoy te presento {P}, pensado para hacer tu rutina más simple.","今天为你介绍这款产品，让日常更简单。"]},
+{w:3,view:"卖点讲解一：{PT1}",angle:"特写",move:"固定镜头",narr:["Su punto más fuerte se nota desde el primer uso, sin complicaciones.","它的核心优势一用就明白，毫不复杂。"]},
+{w:3,view:"卖点讲解二：{PT2}",angle:"特写",move:"缓慢横移",narr:["Además, está hecho de {MATES}, con un acabado limpio y duradero en apariencia.","而且它采用{MAT}，外观干净利落。"]},
+{w:2,view:"场景中使用：{SCENE}",angle:"平视中景",move:"跟随运镜",narr:["En el uso diario se adapta a tu ritmo, sin ocupar de más.","日常使用顺手，不多占地方。"]},
+{w:2,view:"结尾定格，品名出现",angle:"平视全景",move:"固定镜头",narr:["Esto es {P}. Simple, práctico y listo para ti.","这就是这款产品：简单、实用、为你准备。"]}],
+ad:[
+{w:1,view:"3 秒钩子：商品特写快速入画（不写价格、不写促销字样）",angle:"特写",move:"快速推近",narr:["¡Espera! Mira esto.","等等！看这个。"]},
+{w:2,view:"痛点快剪：日常困扰的两个快速镜头",angle:"平视中景",move:"快速切换",narr:["¿Cansado de lo mismo?","受够了同样的麻烦？"]},
+{w:3,view:"产品正式登场：多角度展示",angle:"平视中景",move:"环绕运镜",narr:["Llegó {P}.","它来了。"]},
+{w:3,view:"卖点快剪：{PT1}；{PT2}",angle:"特写",move:"快速切换",narr:["Funciona así de simple.","用起来就是这么简单。"]},
+{w:2,view:"结尾定格：商品与品名，不出现价格和促销信息",angle:"平视全景",move:"固定镜头",narr:["Encuéntralo aquí, en Mercado Libre.","就在 Mercado Libre 找它。"]}
+]
+};
+var VD_TYPE_LABEL={showcase:"商品展示视频",function:"商品功能演示视频",scene:"商品使用场景视频",detail:"商品细节展示视频",install:"商品安装教程视频",voiceover:"墨西哥西班牙语解说视频",ad:"AI 商品广告创意视频"};
+var vdMeta=null,vdLastPlan=null;
+function vdInfo(){
+return {name:(document.getElementById("vdName").value||"").trim(),cat:document.getElementById("vdCat").value,brand:(document.getElementById("vdBrand").value||"").trim(),model:(document.getElementById("vdModel").value||"").trim(),func:(document.getElementById("vdFunc").value||"").trim(),mat:(document.getElementById("vdMat").value||"").trim(),size:(document.getElementById("vdSize").value||"").trim(),points:(document.getElementById("vdPoints").value||"").split(/\n+/).map(function(s){return s.trim();}).filter(Boolean),scene:(document.getElementById("vdScene").value||"").trim(),market:(document.getElementById("vdMarket").value||"").trim(),esName:(document.getElementById("vdEsName").value||"").trim(),type:document.getElementById("vdType").value,ratio:document.getElementById("vdRatio").value,dur:parseInt(document.getElementById("vdDur").value,10),style:document.getElementById("vdStyle").value,voice:document.getElementById("vdVoice").value,voiceCustom:(document.getElementById("vdVoiceCustom").value||"").split(/\n+/).map(function(s){return s.trim();}).filter(Boolean),sub:document.getElementById("vdSub").value};
+}
+function vdBuild(){
+var v=vdInfo();var sc=IO_SCENES[v.cat]||IO_SCENES.otro;
+var scene=v.scene||sc.scenes[0];
+var matEs=v.mat?trWords(v.mat,MAT_ES).text:"";
+var P=v.esName||"este producto";
+var shots=VD_SHOTS[v.type].map(function(s){return {w:s.w,view:s.view,angle:s.angle,move:s.move,narr:s.narr.slice()};});
+var totalW=shots.reduce(function(a,s){return a+s.w;},0);var used=0;
+shots.forEach(function(s,i){
+var d=i===shots.length-1?v.dur-used:Math.max(2,Math.round(v.dur*s.w/totalW));used+=d;s.dur=d;
+function fill(t){return t.replace(/\{NAME\}/g,v.name||"商品").replace(/\{PT1\}/g,v.points[0]||"展示商品核心用法").replace(/\{PT2\}/g,v.points[1]||v.points[0]||"展示商品另一个真实细节").replace(/\{MAT\}/g,v.mat||"材质细节").replace(/\{MATES\}/g,matEs||"materiales de calidad").replace(/\{SCENE\}/g,scene).replace(/\{PARTS\}/g,"包装内全部物品（按实物）").replace(/\{P\}/g,P);}
+s.view=fill(s.view);s.narr=[fill(s.narr[0]),fill(s.narr[1])];
+if(v.voice==="none")s.narr=["（无旁白）","（无旁白）"];
+if(v.voice==="custom"&&v.voiceCustom[i])s.narr=[v.voiceCustom[i],"（自定义旁白）"];
+s.sub=v.sub==="none"?"—":s.narr[0];
+});
+return {v:v,scene:scene,matEs:matEs,shots:shots};
+}
+function vdRender(plan){
+var v=plan.v;
+var head="<b>🎬 视频脚本 — "+VD_TYPE_LABEL[v.type]+"</b><div style='font-size:13px;color:#555;margin:6px 0'>商品："+(v.name||"（未填）")+" ｜ 市场："+(v.market||"墨西哥 Mercado Libre")+" ｜ "+v.ratio+" ｜ "+v.dur+" 秒 ｜ 风格："+v.style+"<br>主题：用 "+v.dur+" 秒讲清 "+(v.name||"这款商品")+" 的真实卖点"+(v.points.length?"（"+v.points.join("；")+"）":"")+"。开场 3 秒先给商品特写，结尾定格不放价格和促销信息。</div>";
+var rows=plan.shots.map(function(s,i){
+return "<tr><td style='padding:6px 8px;border-bottom:1px solid #eee'>镜 "+(i+1)+"<br>"+s.dur+"s</td><td style='padding:6px 8px;border-bottom:1px solid #eee'>"+s.view+"<br><span style='color:#666;font-size:12.5px'>"+s.angle+" · "+s.move+"</span></td><td style='padding:6px 8px;border-bottom:1px solid #eee'>"+s.narr[0]+"<br><span style='color:#666;font-size:12.5px'>"+s.narr[1]+"</span></td><td style='padding:6px 8px;border-bottom:1px solid #eee'>"+s.sub+"</td></tr>";
+}).join("");
+var table="<div style='overflow-x:auto'><table style='width:100%;border-collapse:collapse;font-size:13.5px;min-width:560px'><tr><th style='text-align:left;padding:6px 8px'>镜头</th><th style='text-align:left;padding:6px 8px'>画面 / 角度 / 运镜</th><th style='text-align:left;padding:6px 8px'>旁白（西语 / 中文）</th><th style='text-align:left;padding:6px 8px'>字幕</th></tr>"+rows+"</table></div>";
+document.getElementById("vdScript").innerHTML='<div style="border:1px solid #e5e7eb;border-radius:10px;padding:12px">'+head+table+"</div>";
+var L=[];
+L.push("你是一名电商短视频导演。请根据我上传的商品图片/视频素材，生成一条商品视频。");
+L.push("");
+L.push("（只能使用以下事实，不得补充）");
+L.push("- 商品名称："+(v.name||"（未填）"));
+L.push("- 类别："+(IO_SCENES[v.cat]||IO_SCENES.otro).label+"；品牌："+(v.brand||"未说明")+(v.model?"；型号："+v.model:""));
+L.push("- 功能："+(v.func||"（未填）")+"；材质："+(v.mat||"（未填）")+(plan.matEs?"（西语："+plan.matEs+"）":"")+"；尺寸："+(v.size||"（未填）"));
+L.push("- 真实卖点："+(v.points.length?v.points.join("；"):"（未填）"));
+L.push("- 使用场景："+plan.scene);
+L.push("");
+L.push("目标市场："+(v.market||"墨西哥 Mercado Libre")+"；类型："+VD_TYPE_LABEL[v.type]+"；比例："+v.ratio+"；时长："+v.dur+" 秒；风格："+v.style+"；光线：明亮均匀、真实自然；摄影：按下方分镜的角度和运镜执行。");
+L.push(""+(v.voice==="none"?"无旁白。":v.voice==="custom"?"旁白使用我在分镜中给出的自定义文案，用墨西哥西班牙语自然口播。":"旁白使用下方分镜的墨西哥西班牙语文案，自然口语，不要夸张。")+(v.sub==="none"?"不加字幕。":"字幕不要让视频模型直接生成文字（容易出乱码和错别字），请生成无字幕版本，字幕由我后期按分镜文案添加。"));
+L.push("");
+L.push("");
+plan.shots.forEach(function(s,i){L.push("镜头 "+(i+1)+"（"+s.dur+" 秒）："+s.view+"｜角度："+s.angle+"｜运镜："+s.move+"｜旁白："+s.narr[0]);});
+L.push("");
+L.push("全片商品外观、颜色、结构、品牌、型号、配件数量必须与参考素材完全一致，前后镜头不得变化；不得虚构配件和功能；不得出现价格、促销字样、联系方式和水印。");
+L.push("商品变形，结构改变，颜色漂移，多余配件，虚构功能，错误文字，乱码字幕，水印，联系方式，价格标签，低清晰度，镜头抖动。");
+document.getElementById("vdPrompt").textContent=L.join("\n");
+document.getElementById("vdPromptWrap").classList.add("show");
+vdLastPlan={plan:plan,prompt:L.join("\n")};
+var now=new Date();var ts=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+" "+String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
+var arr=lsGet("mlr_video_plans");arr.unshift({time:ts,name:v.name||"（未填商品）",type:VD_TYPE_LABEL[v.type],dur:v.dur,prompt:L.join("\n")});if(arr.length>20)arr=arr.slice(0,20);lsSet("mlr_video_plans",arr);renderVdHistory();
+showToast("脚本与分镜已生成，并存入历史");
+}
+function renderVdHistory(){
+var box=document.getElementById("vdHistory");if(!box)return;
+var arr=lsGet("mlr_video_plans");
+box.innerHTML=arr.length?arr.map(function(r,i){return '<div style="display:flex;gap:8px;align-items:flex-start;border:1px solid #e5e7eb;border-radius:10px;padding:8px 10px;margin-bottom:8px;font-size:14px"><div style="flex:1">'+r.time+" ｜ "+r.name+" ｜ "+r.type+" ｜ "+r.dur+' 秒</div><button class="btn btn-ghost vdHistCopy" data-i="'+i+'" type="button" style="padding:2px 10px;min-height:30px">复制提示词</button><button class="btn btn-ghost vdHistDel" data-i="'+i+'" type="button" style="padding:2px 10px;min-height:30px">删除</button></div>';}).join(""):'<p class="sub">还没有历史方案，生成一次脚本就会出现在这里。</p>';
+}
+var VD_RISKS=[
+{q:"视频里的商品和你刊登的商品不是同一款（颜色/型号/配件不一致）？",lv:"review"},
+{q:"用了未经授权的品牌素材、音乐、图片或他人视频片段？",lv:"review"},
+{q:"视频里出现联系方式（微信、电话、二维码、站外链接）？",lv:"warn"},
+{q:"视频里出现价格或促销优惠信息？",lv:"warn"},
+{q:"有过度夸大的宣传（效果承诺、第一/最好等无法证明的说法）？",lv:"warn"},
+{q:"有大型水印遮挡商品？",lv:"warn"},
+{q:"用静态图片幻灯片代替真实视频动态展示？",lv:"warn"},
+{q:"展示了商品实际没有的功能或效果，可能误导买家？",lv:"review"}
+];
+function renderVdRisks(){
+var box=document.getElementById("vdRiskList");if(!box)return;
+box.innerHTML=VD_RISKS.map(function(it,i){return '<div style="display:flex;gap:10px;align-items:center;border:1px solid #e5e7eb;border-radius:10px;padding:8px 10px;margin-bottom:8px;font-size:14.5px"><span style="flex:1">'+(i+1)+". "+it.q+'</span><select class="vdRiskSel" data-i="'+i+'" style="padding:8px;border-radius:8px;border:1px solid #ddd;font:inherit"><option value="no">没有</option><option value="yes">有</option><option value="unsure">不确定</option></select></div>';}).join("");
+}
+function vdAutoCheck(){
+var box=document.getElementById("vdAuto");if(!box)return;
+if(!vdMeta){box.innerHTML='<p class="sub">自动实测：上传实拍视频后，这里会实测是否竖屏、时长是否在 10–60 秒。</p>';return;}
+var ratio=vdMeta.w/vdMeta.h;var vertical=vdMeta.h>vdMeta.w;
+var near916=Math.abs(ratio-0.5625)<0.08;
+var durOk=vdMeta.dur>=10&&vdMeta.dur<=60;
+box.innerHTML='<div style="border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:14px"><b>📐 素材自动实测</b><ul style="margin:6px 0"><li>分辨率：'+vdMeta.w+" × "+vdMeta.h+" — "+(vertical?"竖屏 ✓":"横屏，Clips 建议竖屏 9:16")+(near916?"（接近 9:16）":"")+'</li><li>时长：'+vdMeta.dur.toFixed(1)+" 秒 — "+(durOk?"在 10–60 秒建议范围内 ✓":"不在 10–60 秒建议范围内，发布前对照官方最新规则确认")+"</li></ul></div>";
+}
+function vdRiskReport(){
+var lvName={low:"🟢 低风险",warn:"🟠 需要注意",review:"🔵 建议人工复核"};
+var worst="low";var rows=[];
+document.querySelectorAll(".vdRiskSel").forEach(function(sel){
+var it=VD_RISKS[parseInt(sel.dataset.i,10)];var v=sel.value;if(v==="no")return;
+var lv=v==="unsure"?"review":it.lv;
+if(lv==="review")worst="review";else if(worst==="low")worst="warn";
+rows.push({q:it.q,lv:lv,note:v==="unsure"?"你选了不确定——先核实清楚再发布。":"建议处理后再发布。"});
+});
+var box=document.getElementById("vdRiskBox");document.getElementById("vdRiskResult").classList.add("show");
+var html="<b>📋 视频合规小报告</b><div style='font-size:13px;color:#555;margin:6px 0'>总体：<b>"+lvName[worst]+"</b></div>";
+if(!rows.length)html+="<p style='font-size:14px;margin:4px 0'>按你的回答，没发现合规问题。注意：这是自查结论，不是美客多官方审核结果，也不承诺一定通过审核；格式与时长要求以官方最新规则为准。</p>";
+else html+="<ul>"+rows.map(function(r){return "<li><b>"+lvName[r.lv]+"</b> "+r.q+"<br><span style='color:#666;font-size:13px'>"+r.note+"</span></li>";}).join("")+"</ul><p style='font-size:12.5px;color:#666'>规则参考美客多官方 Clips 规则整理，以官方最新版本为准；本报告不代表官方审核结果。</p>";
+box.innerHTML=html;
+}
+
+document.getElementById("vdFile").addEventListener("change",function(){
+  var f=this.files&&this.files[0];var wrap=document.getElementById("vdPreviewWrap"),meta=document.getElementById("vdMeta");
+  if(!f)return;
+  var isImg=f.type.indexOf("image/")===0,isVid=f.type.indexOf("video/")===0;
+  if(!isImg&&!isVid){meta.innerHTML='<span style="color:#b00">只支持图片（JPG/PNG/WEBP）或视频（MP4/WEBM/MOV）。</span>';return;}
+  var mb=f.size/1048576;
+  if(isImg&&mb>10){meta.innerHTML='<span style="color:#b00">图片 '+mb.toFixed(1)+' MB，超过 10 MB，请压缩后再传。</span>';return;}
+  if(isVid&&mb>200){meta.innerHTML='<span style="color:#b00">视频 '+mb.toFixed(0)+' MB 太大，建议压缩到 200 MB 以内。</span>';return;}
+  document.getElementById("vdFileName").textContent=f.name+"（"+mb.toFixed(1)+" MB）";
+  var url=URL.createObjectURL(f);
+  if(isImg){var im=new Image();im.onload=function(){vdMeta=null;meta.innerHTML="图片素材："+im.naturalWidth+" × "+im.naturalHeight+"｜"+f.type;vdAutoCheck();};im.src=url;wrap.innerHTML='<img src="'+url+'" style="max-width:280px;border-radius:10px;border:1px solid #ddd">';}
+  else{wrap.innerHTML='<video src="'+url+'" controls style="max-width:280px;border-radius:10px;border:1px solid #ddd"></video>';var vv=wrap.querySelector("video");vv.addEventListener("loadedmetadata",function(){vdMeta={w:vv.videoWidth,h:vv.videoHeight,dur:vv.duration};meta.innerHTML="视频素材："+vv.videoWidth+" × "+vv.videoHeight+"｜时长 "+vv.duration.toFixed(1)+" 秒｜"+f.type;vdAutoCheck();});}
+});
+document.getElementById("vdDelFile").addEventListener("click",function(){document.getElementById("vdFile").value="";document.getElementById("vdPreviewWrap").innerHTML="";document.getElementById("vdMeta").innerHTML="";document.getElementById("vdFileName").textContent="未选择素材";vdMeta=null;vdAutoCheck();});
+document.getElementById("vdVoice").addEventListener("change",function(){document.getElementById("vdVoiceCustom").style.display=this.value==="custom"?"":"none";});
+document.getElementById("vdGen").addEventListener("click",function(){vdRender(vdBuild());document.getElementById("vdScript").scrollIntoView({behavior:"smooth",block:"nearest"});});
+document.getElementById("vdCopyPrompt").addEventListener("click",function(){if(!vdLastPlan){showToast("先生成脚本与分镜");return;}var b=this;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(vdLastPlan.prompt).then(function(){b.textContent="✅ 已复制";}).catch(function(){b.textContent="复制失败";});}});
+document.getElementById("vdExport").addEventListener("click",function(){
+  if(!vdLastPlan){showToast("先生成脚本与分镜");return;}
+  var plan=vdLastPlan.plan,v=plan.v;
+  var lines=["美客多商品视频制作方案","类型："+VD_TYPE_LABEL[v.type]+"｜"+v.ratio+"｜"+v.dur+" 秒｜风格："+v.style,"商品："+(v.name||"")+"｜品牌："+(v.brand||"")+"｜型号："+(v.model||""),"功能："+(v.func||"")+"｜材质："+(v.mat||"")+"｜尺寸："+(v.size||""),"卖点："+v.points.join("；"),"","分镜："];
+  plan.shots.forEach(function(s,i){lines.push("镜头 "+(i+1)+"（"+s.dur+"s）"+s.view+"｜"+s.angle+"｜"+s.move+"｜旁白："+s.narr[0]+"（"+s.narr[1]+"）｜字幕："+s.sub);});
+  lines.push("","Muse 提示词：",vdLastPlan.prompt);
+  var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain"}));a.download="video-plan.txt";document.body.appendChild(a);a.click();a.remove();
+});
+document.getElementById("vdClear").addEventListener("click",function(){["vdName","vdBrand","vdModel","vdFunc","vdMat","vdSize","vdPoints","vdScene","vdEsName","vdVoiceCustom"].forEach(function(id){document.getElementById(id).value="";});document.getElementById("vdScript").innerHTML="";document.getElementById("vdPromptWrap").classList.remove("show");vdLastPlan=null;showToast("已清空当前内容");});
+document.getElementById("vdRiskGen").addEventListener("click",vdRiskReport);
+document.getElementById("vdClearHistory").addEventListener("click",function(){lsSet("mlr_video_plans",[]);renderVdHistory();});
+document.addEventListener("click",function(e){
+  var c=e.target.closest(".vdHistCopy");if(c){var arr=lsGet("mlr_video_plans");var r=arr[parseInt(c.dataset.i,10)];if(r&&navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(r.prompt).then(function(){c.textContent="✅ 已复制";});}return;}
+  var d=e.target.closest(".vdHistDel");if(d){var arr2=lsGet("mlr_video_plans");arr2.splice(parseInt(d.dataset.i,10),1);lsSet("mlr_video_plans",arr2);renderVdHistory();}
+});
+renderVdRisks();renderVdHistory();vdAutoCheck();
 showTab("home");
 /* CSV */
 document.getElementById("csvBtn").addEventListener("click",function(){
