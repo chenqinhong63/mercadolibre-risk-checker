@@ -920,6 +920,8 @@ function showToast(msg){
 
 
 /* ===== 商品上架工作台 ===== */
+function wbCopy(t){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){showToast("提示词已复制，去 Muse 对话里粘贴");}).catch(function(){showToast("复制失败，请手动复制");});}else{var ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");showToast("提示词已复制，去 Muse 对话里粘贴");}catch(e){showToast("复制失败，请手动复制");}ta.remove();}}
+function wbEsc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");}
 var WB_KEY="mlr_projects_v1";
 var WB_STATUSES=["未开始","进行中","已完成","需要重新检查"];
 var WB_REQ=[["name","商品名称"],["cat","商品类目"],["brand","商品品牌"],["spec","商品规格"],["cost","采购成本"]];
@@ -958,7 +960,7 @@ function wbRender(){
   else if(!shown.length)html='<div class="note">没有符合条件的项目，换个关键词或状态试试。</div>';
   shown.forEach(function(p){
     var ov=wbOverall(p);var cls=ov==="已完成"?"done":(ov==="进行中"?"doing":"");
-    html+='<button type="button" class="wb-item'+(p.id===wbSel?" sel":"")+'" data-wbopen="'+p.id+'"><b>'+esc(p.name||"未命名商品")+'</b> <span class="wb-chip '+cls+'">'+ov+'</span><div class="wb-meta">编号 '+esc(p.code||"")+' · 类目 '+(esc(p.cat)||"未填")+' · 进度 '+wbProgress(p)+'% · 修改于 '+esc(p.updated||"")+'</div><div class="wb-bar"><i style="width:'+wbProgress(p)+'%"></i></div></button>';});
+    html+='<button type="button" class="wb-item'+(p.id===wbSel?" sel":"")+'" data-wbopen="'+p.id+'"><b>'+wbEsc(p.name||"未命名商品")+'</b> <span class="wb-chip '+cls+'">'+ov+'</span><div class="wb-meta">编号 '+wbEsc(p.code||"")+' · 类目 '+(wbEsc(p.cat)||"未填")+' · 进度 '+wbProgress(p)+'% · 修改于 '+wbEsc(p.updated||"")+'</div><div class="wb-bar"><i style="width:'+wbProgress(p)+'%"></i></div></button>';});
   box.innerHTML=html;
   var ed=document.getElementById("wbEditor");
   var p=wbSel?wbGet(wbSel):null;
@@ -981,10 +983,10 @@ function wbRender(){
     if(s.act==="prompt")sh+='<button class="btn btn-yellow" type="button" id="wbDescPrompt">📋 复制 Muse 描述提示词</button> ';
     if(s.act==="profit"){
       var pr=p.profit||{};
-      sh+='<div class="wb-grid"><div class="wb-field"><label>售价（MXN 比索）</label><input class="search" data-wbp="price" inputmode="decimal" placeholder="例如：349" value="'+esc(pr.price||"")+'"></div>'
-        +'<div class="wb-field"><label>汇率（1 人民币 = ? 比索）</label><input class="search" data-wbp="rate" inputmode="decimal" placeholder="按当天汇率填，例如：2.6" value="'+esc(pr.rate||"")+'"></div>'
-        +'<div class="wb-field"><label>平台佣金 %（按类目确认）</label><input class="search" data-wbp="fee" inputmode="decimal" placeholder="例如：15" value="'+esc(pr.fee||"")+'"></div>'
-        +'<div class="wb-field"><label>预估运费（元人民币）</label><input class="search" data-wbp="ship" inputmode="decimal" placeholder="例如：28" value="'+esc(pr.ship||"")+'"></div></div>'
+      sh+='<div class="wb-grid"><div class="wb-field"><label>售价（MXN 比索）</label><input class="search" data-wbp="price" inputmode="decimal" placeholder="例如：349" value="'+wbEsc(pr.price||"")+'"></div>'
+        +'<div class="wb-field"><label>汇率（1 人民币 = ? 比索）</label><input class="search" data-wbp="rate" inputmode="decimal" placeholder="按当天汇率填，例如：2.6" value="'+wbEsc(pr.rate||"")+'"></div>'
+        +'<div class="wb-field"><label>平台佣金 %（按类目确认）</label><input class="search" data-wbp="fee" inputmode="decimal" placeholder="例如：15" value="'+wbEsc(pr.fee||"")+'"></div>'
+        +'<div class="wb-field"><label>预估运费（元人民币）</label><input class="search" data-wbp="ship" inputmode="decimal" placeholder="例如：28" value="'+wbEsc(pr.ship||"")+'"></div></div>'
         +'<div class="actions" style="margin-top:8px"><button class="btn btn-yellow" type="button" id="wbProfitCalc">计算估算利润</button></div><div id="wbProfitOut" style="margin-top:8px"></div>';}
     sh+='<label style="font-size:13px;font-weight:700;margin-left:4px">状态 <select data-wbstep="'+s.k+'">'+WB_STATUSES.map(function(x){return '<option'+(x===st?" selected":"")+'>'+x+'</option>';}).join("")+'</select></label>';
     sh+='<details><summary>查看操作说明</summary><p style="margin:6px 0 0">'+s.guide+'</p></details></div>';});
@@ -1000,7 +1002,7 @@ function wbRender(){
   if(dp)dp.addEventListener("click",function(){
     var miss=wbMissing(p);
     var txt="请根据以下真实商品资料，写一份 Mercado Libre 墨西哥站的西班牙语商品描述。要求：地道墨西哥西语、口语化但专业；分段写清卖点、规格、使用场景和包装清单；数字和规格只能用我给的，不要编造品牌、认证或功效；缺的资料标注「待补充」不要猜。\n商品名称："+(p.name||"待补充")+"\n类目："+(p.cat||"待补充")+"\n品牌："+(p.brand||"待补充")+"\n型号："+(p.model||"待补充")+"\n规格："+(p.spec||"待补充")+"\n重量："+(p.weight||"待补充")+"\n尺寸："+(p.size||"待补充")+"\n备注："+(p.note||"无")+(miss.length?"\n（注意：以下必填项还没填："+miss.join("、")+"）":"");
-    copyText(txt);});
+    wbCopy(txt);});
 }
 function wbProfitRun(){
   var p=wbSel?wbGet(wbSel):null;if(!p)return;
