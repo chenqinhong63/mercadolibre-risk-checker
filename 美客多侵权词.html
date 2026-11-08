@@ -1348,7 +1348,7 @@ document.addEventListener("click",function(e){
   var w=e.target.closest(".wxCopy");if(w){copyWx();return;}
   var g=e.target.closest("[data-goto]");if(g){showTab(g.dataset.goto);window.scrollTo({top:0,behavior:"smooth"});}
 });
-(function(){
+document.addEventListener("DOMContentLoaded",function(){
   var bar=document.getElementById("wxBar");
   var closed=false;try{closed=sessionStorage.getItem("mlr_wxbar_closed")==="1";}catch(e){}
   if(bar&&!closed){bar.classList.add("on");document.body.classList.add("bar-on");}
@@ -1356,7 +1356,7 @@ document.addEventListener("click",function(e){
   if(c)c.addEventListener("click",function(){bar.classList.remove("on");document.body.classList.remove("bar-on");try{sessionStorage.setItem("mlr_wxbar_closed","1");}catch(e){}});
   var fb=document.getElementById("wxFloatBtn"),fp=document.getElementById("wxFloatPanel");
   if(fb&&fp)fb.addEventListener("click",function(){fp.classList.toggle("open");});
-})();
+});
 showTab("home");
 /* CSV */
 document.getElementById("csvBtn").addEventListener("click",function(){
