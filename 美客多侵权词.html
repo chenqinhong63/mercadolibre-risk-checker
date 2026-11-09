@@ -202,6 +202,12 @@ section{padding-top:34px}
 .pk-fav{color:#f5a300;font-size:17px}
 /* ===== 条码助手 ===== */
 .bc-svgwrap{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:16px;text-align:center;overflow-x:auto}
+.bc-genlist{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin:10px 0}
+.bc-genitem{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid #e5e7eb;border-radius:8px;padding:6px 10px;background:#fff}
+.bc-gencode{cursor:pointer;font-size:15px;letter-spacing:.5px}
+.bc-gencode:hover{color:#b45309}
+.bc-gencopy{padding:2px 10px;font-size:13px}
+@media(max-width:640px){.bc-genlist{grid-template-columns:1fr}}
 .bc-svgwrap svg{max-width:100%;height:auto}
 .bc-warn{border:1.5px solid #f5b301;background:#fffbe8;border-radius:12px;padding:12px;font-size:14px}
 /* ===== Listing 全套生成器 ===== */
@@ -774,9 +780,24 @@ section{padding-top:34px}
 
   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.12.1/JsBarcode.all.min.js"></script>
-  <section class="card" id="sect-barcode">
+    <section class="card" id="sect-barcode">
     <div class="sec-head"><span class="num">🔢</span><div><h2>UPC 条码生成</h2><p>输入你拥有或已获授权的 UPC / EAN 编码，在浏览器本地生成可下载的条码图片</p></div></div>
-    <div class="bc-warn">⚠️ <b>先说清：</b>本工具只把编码画成条码图片，<b>不提供商品条码注册服务</b>。请通过正规渠道（如 GS1）获取属于你的商品条码，并以 Mercado Libre 当前商品类目和销售国家要求为准；随机编的码不要用于销售或上架。</div>
+    <div class="bc-warn">⚠️ <b>先说清：</b>本工具只按 UPC 规则拼编码、画条码图片，<b>不提供商品条码注册服务</b>。下方随机拼出的编码没有在 GS1 注册过，可能与真实商品的条码相同；是否使用请自行判断，并以 Mercado Libre 当前商品类目和销售国家要求为准。</div>
+    <h3 style="margin:16px 0 6px">1. 随机生成一组 UPC 编码（12 位，含正确校验位）</h3>
+    <div class="wb-grid">
+      <div class="wb-field"><label for="bc_r_flag">首位数字（旗码）</label><select class="search" id="bc_r_flag"><option value="">随机</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option selected>7</option><option>8</option><option>9</option></select></div>
+      <div class="wb-field"><label for="bc_r_mfr">厂商代码（5 位数字）</label><input class="search" id="bc_r_mfr" placeholder="留空 = 随机，例如 76795" maxlength="5"></div>
+      <div class="wb-field"><label for="bc_r_item">商品代码（5 位数字，起始）</label><input class="search" id="bc_r_item" placeholder="留空 = 随机，例如 91049" maxlength="5"></div>
+      <div class="wb-field"><label for="bc_r_count">生成数量</label><select class="search" id="bc_r_count"><option>5</option><option selected>10</option><option>20</option></select></div>
+    </div>
+    <div class="wb-toolbar">
+      <button class="btn btn-yellow" id="bcGenSeq" type="button">生成（商品代码依次 +1）</button>
+      <button class="btn btn-light" id="bcGenRand" type="button">随机生成</button>
+      <button class="btn btn-light" id="bcCopyAll" type="button">全部复制</button>
+    </div>
+    <div id="bcRandOut"></div>
+    <p class="wb-meta">点列表里的任意一条编码，会自动填入下方条码图片生成框。这些编码只是按规则拼出的数字（含正确校验位），未在 GS1 注册，可能与真实商品条码重复。</p>
+    <h3 style="margin:20px 0 6px">2. 生成条码图片（用你自己拥有或已获授权的编码）</h3>
     <div class="wb-grid">
       <div class="wb-field"><label for="bc_draw_code">要生成图片的编码</label><input class="search" id="bc_draw_code" placeholder="例如 036000291452（UPC-A 12 位）"></div>
       <div class="wb-field"><label for="bc_size">打印尺寸</label><select class="search" id="bc_size"><option value="s">小（标签纸常用）</option><option value="m" selected>中</option><option value="l">大</option></select></div>
@@ -790,6 +811,7 @@ section{padding-top:34px}
     <div class="bc-svgwrap" id="bcSvgWrap" style="display:none"><svg id="bcSvg"></svg></div>
     <p class="wb-meta">支持 8 / 12 / 13 / 14 位数字编码；生成前会自动校验格式和校验位，错码画不出来。条码图由开源库 JsBarcode（MIT 许可证）在你的浏览器本地生成，不上传服务器。14 位 GTIN 没有对应的零售条码制式，本工具用 Code 128 把这串数字画出来，打印前请先用扫码枪/手机实测能否扫出。</p>
   </section>
+
 
 
 
@@ -1836,6 +1858,52 @@ document.getElementById("bcDownload").addEventListener("click",function(){
     var ctx=cv.getContext("2d");ctx.fillStyle="#ffffff";ctx.fillRect(0,0,cv.width,cv.height);ctx.drawImage(img,0,0);
     cv.toBlob(function(b){var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="barcode-"+document.getElementById("bc_draw_code").value.replace(/\s/g,"")+".png";document.body.appendChild(a);a.click();a.remove();showToast("已下载条码图片");},"image/png");};
   img.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(xml);
+});
+function bcPad(n,l){var s=String(n);while(s.length<l)s="0"+s;return s;}
+function bcMakeUpc(flag,mfr,item){var data=flag+mfr+item;return data+bcCheckDigitStr(data);}
+function bcRandDigits(n){var s="";for(var i=0;i<n;i++)s+=String(Math.floor(Math.random()*10));return s;}
+var bcGenList=[];
+function bcRenderGen(){
+  var out=document.getElementById("bcRandOut");
+  if(!bcGenList.length){out.innerHTML="";return;}
+  var h='<div class="bc-genlist">';
+  bcGenList.forEach(function(c){h+='<div class="bc-genitem"><b class="bc-gencode" data-code="'+c+'" title="点击填入下方生成条码图">'+c+'</b><button class="btn btn-light bc-gencopy" data-code="'+c+'" type="button">复制</button></div>';});
+  h+='</div>';
+  out.innerHTML=h;
+}
+function bcGenRun(randomMode){
+  var flag=document.getElementById("bc_r_flag").value;
+  var mfr=document.getElementById("bc_r_mfr").value.trim();
+  var item=document.getElementById("bc_r_item").value.trim();
+  var cnt=parseInt(document.getElementById("bc_r_count").value,10)||10;
+  if(mfr&&!/^\d{5}$/.test(mfr)){showToast("厂商代码要填 5 位数字，或留空随机");return;}
+  if(item&&!/^\d{5}$/.test(item)){showToast("商品代码要填 5 位数字，或留空随机");return;}
+  bcGenList=[];
+  var baseItem=item?parseInt(item,10):Math.floor(Math.random()*100000);
+  for(var i=0;i<cnt;i++){
+    var f=(flag==="")?String(Math.floor(Math.random()*10)):flag;
+    var m=mfr||bcRandDigits(5);
+    var it;
+    if(randomMode){it=bcRandDigits(5);}
+    else{it=bcPad((baseItem+i)%100000,5);}
+    bcGenList.push(bcMakeUpc(f,m,it));
+  }
+  bcRenderGen();
+  showToast("已生成 "+bcGenList.length+" 条 UPC 编码");
+}
+document.getElementById("bcGenSeq").addEventListener("click",function(){bcGenRun(false);});
+document.getElementById("bcGenRand").addEventListener("click",function(){bcGenRun(true);});
+document.getElementById("bcCopyAll").addEventListener("click",function(){
+  if(!bcGenList.length){showToast("先生成一组编码");return;}
+  wbCopy(bcGenList.join("\n"));
+});
+document.getElementById("bcRandOut").addEventListener("click",function(e){
+  var t=e.target;
+  if(t.classList&&t.classList.contains("bc-gencopy")){wbCopy(t.getAttribute("data-code"));return;}
+  if(t.classList&&t.classList.contains("bc-gencode")){
+    document.getElementById("bc_draw_code").value=t.getAttribute("data-code");
+    showToast("已填入下方条码图生成框，点「生成条码图片」出图");
+  }
 });
 
 /* ===== AI 选品分析助手 ===== */
