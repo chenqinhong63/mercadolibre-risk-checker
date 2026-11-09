@@ -222,31 +222,12 @@ section{padding-top:34px}
 </style>
 </head>
 <body>
-<div class="topbar"><span>● 美客多卖家助手 · MERCADO LIBRE MÉXICO</span><span>免费自查工具</span></div>
+<div class="topbar"><span>● 美客多卖家助手</span></div>
 <div class="wrap">
   <header class="hero">
-    <div style="font-weight:900;letter-spacing:.08em;font-size:12px;color:var(--navy)">卖家自查文档 · PROPIEDAD INTELECTUAL</div>
     <h1>美客多<span>卖家助手</span></h1>
-    <p class="lead">墨西哥站 / 巴西站卖家工具箱：侵权与合规风险检测、Listing 全套生成、图片优化、视频生成。粘贴标题、商品链接或商品图，10 秒查出会招投诉、下架、封号的风险词。免费，无需注册。</p>
-    <div class="meta">
-      <span class="pill">站点：mercadolibre.com.mx</span><span class="pill">覆盖：商标 · 版权 · 专利/外观 · 禁售品类</span><span class="pill">词表：37 条 · 按风险分级</span>
-    </div>
-    <div class="actions" style="margin-top:18px">
-      <a class="btn btn-yellow" href="#checker" style="text-decoration:none;background:var(--yellow);color:#111">🔍 立即免费检测</a>
-      
-    </div>
-    <p class="note" style="margin-top:16px">⚠️ 美客多没有公开发布过官方“完整黑名单”。本表是按官方规则 + 卖家经验整理的<b>风险合成表，不是官方名单</b>。</p>
 
-    <div id="consultHero" style="margin-top:16px;background:linear-gradient(135deg,#fff7cc,#ffe600);border:2px solid #14213d;border-radius:14px;padding:16px;color:#111">
-      <div style="font-weight:900;font-size:18px">美客多新手不会操作？</div>
-      <p style="margin:6px 0 10px;font-size:15px">免费工具帮助你从商品资料到上架内容制作，拿不准的加微信咨询。</p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-        <span style="font-size:16px">微信号：<b style="font-size:18px;letter-spacing:.02em">czqshy888888</b></span>
-        <button class="btn wxCopy" type="button" style="background:#14213d;color:#fff;border:0">📋 复制微信号</button>
-        <button class="btn wxCopy" type="button" style="background:#fff;color:#14213d;border:2px solid #14213d;font-weight:800">微信咨询 / 获取服务方案</button>
-      </div>
-      <p style="margin:8px 0 0;font-size:12.5px;color:#444">添加时备注「美客多工具」，先说清你的店铺阶段和最头疼的事，我按你的情况回复你。</p>
-    </div>
+    
 
       <div>
         <h2>先说清：美客多没有一份官方“完整黑名单”</h2>
@@ -927,6 +908,17 @@ section{padding-top:34px}
       <article class="card"><div class="term">🧮 利润诊断</div><p style="font-size:14px;margin:8px 0">利润算不清先别谈运营：单件利润、盈亏平衡、ROAS、批次回本一次算清。</p><button class="btn btn-light" data-goto="profit" type="button">去利润计算器</button></article>
     </div>
   </section>
+
+<div id="consultHero" style="margin-top:16px;background:linear-gradient(135deg,#fff7cc,#ffe600);border:2px solid #14213d;border-radius:14px;padding:16px;color:#111">
+      <div style="font-weight:900;font-size:18px">美客多新手不会操作？</div>
+      <p style="margin:6px 0 10px;font-size:15px">免费工具帮助你从商品资料到上架内容制作，拿不准的加微信咨询。</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <span style="font-size:16px">微信号：<b style="font-size:18px;letter-spacing:.02em">czqshy888888</b></span>
+        <button class="btn wxCopy" type="button" style="background:#14213d;color:#fff;border:0">📋 复制微信号</button>
+        <button class="btn wxCopy" type="button" style="background:#fff;color:#14213d;border:2px solid #14213d;font-weight:800">微信咨询 / 获取服务方案</button>
+      </div>
+      <p style="margin:8px 0 0;font-size:12.5px;color:#444">添加时备注「美客多工具」，先说清你的店铺阶段和最头疼的事，我按你的情况回复你。</p>
+    </div>
 
 <script>
 var WORDS=[
@@ -2945,38 +2937,9 @@ document.addEventListener("DOMContentLoaded",function(){
 showTab("home");
 </script>
 
-<style>
-#wxBar{display:none}
-@media (max-width:760px){
-  #wxBar.on{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:80;background:#14213d;color:#fff;align-items:center;gap:10px;padding:10px 12px;box-shadow:0 -2px 12px rgba(0,0,0,.25)}
-  body.bar-on{padding-bottom:66px}
-}
-#wxFloat{display:none}
-@media (min-width:761px){
-  #wxFloat{display:block;position:fixed;right:18px;bottom:18px;z-index:80;text-align:right}
-}
-#wxFloatPanel{display:none;background:var(--surface,#fff);color:var(--ink,#111);border:1.5px solid #14213d;border-radius:14px;padding:14px;width:250px;box-shadow:0 8px 28px rgba(0,0,0,.22);text-align:left;margin-bottom:10px}
-#wxFloatPanel.open{display:block}
-.wxQR{border:1.5px dashed #999;border-radius:10px;height:150px;display:flex;align-items:center;justify-content:center;color:#888;font-size:13px;margin:10px 0;background:rgba(0,0,0,.03)}
-</style>
-<div id="wxBar">
-  <div style="flex:1;min-width:0">
-    <div style="font-weight:800;font-size:14.5px">美客多 AI 卖家助手</div>
-    <div style="font-size:12px;opacity:.85">免费工具 · 选品 · 上架 · 利润</div>
-  </div>
-  <button class="btn wxCopy" type="button" style="background:#ffe600;color:#111;border:0;font-weight:800;white-space:nowrap">微信咨询</button>
-  <button id="wxBarClose" type="button" aria-label="关闭咨询栏" style="background:none;border:0;color:#fff;font-size:18px;cursor:pointer;padding:4px 6px">✕</button>
-</div>
-<div id="wxFloat">
-  <div id="wxFloatPanel">
-    <div style="font-weight:800">微信咨询</div>
-    <p style="font-size:13.5px;margin:6px 0">微信号：<b>czqshy888888</b></p>
-    <button class="btn wxCopy" type="button" style="background:#14213d;color:#fff;border:0;width:100%">📋 复制微信号</button>
-    <div class="wxQR">微信二维码<br>（待上传）</div>
-    <p style="font-size:12.5px;color:#666;margin:0">添加好友时请备注：<b>美客多工具</b>，并简单说下你的店铺阶段。</p>
-  </div>
-  <button id="wxFloatBtn" class="btn" type="button" style="background:#14213d;color:#fff;border:0;border-radius:999px;padding:12px 20px;font-weight:800;box-shadow:0 6px 20px rgba(0,0,0,.25)">💬 微信咨询</button>
-</div>
+
+
+
 
 </body>
 </html>
