@@ -872,6 +872,7 @@ section{padding-top:34px}
       <div class="wb-grid">
         <div class="wb-field"><label>描述风格</label><select class="search" id="lsDescStyle"><option>专业销售型</option><option>简洁实用型</option><option>场景营销型</option><option>高转化型</option></select></div>
         <div class="wb-field"><label>描述长度</label><select class="search" id="lsDescLen"><option>标准版</option><option>简短版</option><option>详细版</option></select></div>
+        <div class="wb-field"><label>描述模板</label><select class="search" id="lsDescTpl"><option value="std">标准版（12 部分结构）</option><option value="pro">专业版（A-F 结构 · 墨西哥站 · 详细版）</option></select></div>
         <div class="wb-field"><label>输出语言</label><select class="search" id="lsDescLang"><option>墨西哥西班牙语</option><option>葡萄牙语（巴西站）</option><option>中文</option><option>中西双语</option></select></div>
       </div>
       <div class="wb-toolbar"><button class="btn btn-yellow" data-lsgen="desc" type="button">生成描述提示词</button><button class="btn btn-light" data-lscopy="desc" type="button">复制提示词</button></div>
@@ -2368,7 +2369,7 @@ function lsPrompt(kind,p){
   var info="[商品信息]\n"+lsInfo(p)+"\n\n";
   var langName=lsLang(p)==="pt"?"巴西葡萄牙语":"墨西哥西班牙语";
   if(kind==="title")return "你是 Mercado Libre "+p.market+"资深运营。请根据商品信息生成标题。\n\n"+info+"[要求] 1）先分析商品真实属性，识别核心关键词；2）用自然地道的"+langName+"，不要生硬直译；3）不要关键词堆砌；4）不要用未经授权的品牌词；5）不要写商品没有的功能；6）每条标题 ≤60 字符（按"+p.market+"普通刊登上限先核实，如类目有特殊限制请指出）。\n[输出格式] 标题版本 A / B / C（各附中文解释）→ 关键词布局说明 → 标题优化建议 → 潜在风险提醒。不要编造搜索量、排名或关键词热度。\n"+LS_RULE_TAIL;
-  if(kind==="desc"){var st=document.getElementById("lsDescStyle").value,ln=document.getElementById("lsDescLen").value,lg=document.getElementById("lsDescLang").value;
+  if(kind==="desc"){if(document.getElementById("lsDescTpl").value==="pro")return lsDescPro(p);var st=document.getElementById("lsDescStyle").value,ln=document.getElementById("lsDescLen").value,lg=document.getElementById("lsDescLang").value;
     return "你是 Mercado Libre "+p.market+"商品描述专家。请按「"+st+"」风格、「"+ln+"」长度，用「"+lg+"」输出商品描述。\n\n"+info+"[输出结构（12 部分，缺一不可）] 1 商品简介；2 核心卖点；3 商品功能；4 使用场景；5 商品规格；6 材质和尺寸；7 使用注意事项；8 包装内容；9 SEO 关键词布局（自然融入，不要堆砌）；10 合规检查报告（自查侵权词、夸大宣传、虚假认证）；11 中文对照（语言为中文或单语时可省略对照并说明）；12 最终可复制上架版本（单独成段，方便直接粘贴）。\n"+LS_RULE_TAIL;}
   if(kind==="points"){var st2=document.getElementById("lsPointsStyle").value;
     return "你是 Mercado Libre "+p.market+"卖点文案专家。风格："+st2+"。请根据商品信息提炼 3-5 个核心卖点。\n\n"+info+"[要求] 每个卖点 = 一句"+langName+"标题 + 1-2 句说明，并附中文对照；只写商品真实优势，不夸大、不承诺效果；面向"+(p.audience||"当地消费者")+"的阅读习惯。最后附一节「这些卖点里哪些还需要我补充证据」。\n"+LS_RULE_TAIL;}
@@ -2381,6 +2382,13 @@ function lsPrompt(kind,p){
   if(kind==="comp"){var t=document.getElementById("lsChkTitle").value,ds=document.getElementById("lsChkDesc").value,pt=document.getElementById("lsChkPoints").value;
     return "你是 Mercado Libre "+p.market+"合规审核专家。请检查下面这份 Listing 文案的风险。\n\n"+info+"[待检查文案]\n标题："+(t||"未提供")+"\n描述："+(ds||"未提供")+"\n卖点："+(pt||"未提供")+"\n\n[检查项] 1 标题侵权与品牌词；2 描述侵权；3 卖点侵权；4 潜在品牌词风险；5 敏感表达；6 夸大宣传与绝对化用语；7 虚假认证/专利宣称；8 关键词堆砌；9 站外引流；10 与商品信息不一致的编造内容。\n[输出] 总体风险等级（低/中/高/信息不足，必须说明依据）→ 逐条问题（位置+原文+原因+修改建议）→ 修改后的安全版本。不得保证通过平台官方审核。\n"+LS_RULE_TAIL;}
   return "";}
+
+function lsDescPro(p){
+  function v(x){return (x&&String(x).trim())?String(x).trim():"未提供";}
+  var spec=[p.model?("型号："+p.model):"",p.weight?("重量："+p.weight):""].filter(Boolean).join("；");
+  var info=["商品名称："+v(p.name),"商品类目："+v(p.cat),"商品材质："+v(p.material),"商品尺寸："+v(p.size),"商品颜色："+v(p.color),"商品功能："+v(p.coreFunc),"使用场景："+v(p.scenes),"目标消费者："+v(p.audience),"核心卖点："+v(p.points),"商品规格："+(spec||"未提供"),"包装内容："+v(p.pack),"目标关键词："+v(p.keywords),"竞品描述参考："+v(p.compDesc)].join("\n");
+  return "你是一名拥有多年 Mercado Libre 墨西哥站运营经验的资深跨境电商运营专家、墨西哥西班牙语商品文案专家和 SEO 优化专家。你的任务是根据我提供的商品信息，生成专业、详细、具有销售吸引力且符合美客多墨西哥站要求的商品描述。\n设定：目标市场墨西哥 / 目标语言墨西哥西班牙语 / 描述风格专业销售型 / 描述长度详细版 / 关键词优化开启 / 合规检查开启。\n\n[商品信息]\n"+info+"\n没提供的信息不要自行编造，直接跳过相关内容或标记为「待确认」。\n\n[文案要求]\n1. 专业销售型：突出商品真实价值，强调消费者实际能获得的使用体验，把功能转化为容易理解的购买理由；语言自然，不要过度营销；避免机械翻译；不使用夸张、虚假或无法验证的宣传语。\n2. 墨西哥西班牙语本地化：自然地道，符合墨西哥日常表达和电商页面习惯；避免直译中文句式；避免过度使用其他西语地区的特殊表达。\n3. 关键词 SEO：核心关键词优先出现在商品简介中，相关关键词自然分布在不同段落，可用合理的西语同义词；关键词必须与商品真实功能属性相关；不得堆砌、不得为 SEO 牺牲可读性；不得编造搜索量、排名或关键词热度。\n\n[描述结构]\n1. 商品简介：一段专业简洁有吸引力的西语介绍——是什么、核心用途、自然融入主要关键词、让消费者快速理解价值。\n2. 核心卖点：3-5 个，每个含卖点标题 + 卖点说明（该功能如何帮消费者解决问题），不得虚构不存在的功能。\n3. 功能与使用场景：主要功能、适用场景、如何使用、能解决的实际需求，按真实信息展开，不夸大效果。\n4. 商品规格：材质、尺寸、颜色、型号、重量及其他重要属性，缺失信息不许自行补充。\n5. 使用注意事项：按商品实际特点给必要建议；我没提供相关信息时不要虚构特殊注意事项。\n6. 包装内容：明确列出实际包含内容；未知则标「待确认」，不得猜测。\n\n[合规检查]\n生成后独立检查：1) 未经授权的品牌词；2) 潜在侵权表达；3) 虚假或夸大宣传；4) 无法验证的认证、专利或性能声明；5) 与商品实际不符的描述；6) 不自然的关键词堆砌；7) 可能违反美客多刊登规则的表达。不得宣称已通过美客多官方审核，不得保证一定能上架或不会被处罚；无法确认的风险标记为「需要人工核实」；合规检查仅作辅助参考，不能代替平台审核或法律意见。\n\n[最终输出格式]\nA. 商品描述（墨西哥西班牙语）：完整、可直接编辑。\nB. 中文对照：对应中文翻译，帮我理解文案。\nC. SEO 关键词布局：核心关键词 / 相关关键词 / 长尾关键词建议，并注明这些关键词来自商品信息分析，不代表已验证搜索量。\nD. 合规检查报告（表格：检查项目 | 检查结果 | 修改建议；行依次为：品牌词风险、侵权表达、虚假宣传、关键词堆砌、信息真实性、平台规则风险）。\nE. 优化建议：3 条进一步优化描述的建议。\nF. 最终上架版本：检查后重新整理的干净完整的墨西哥西班牙语描述，不含中文解释、检查报告或额外分析，可直接复制到美客多商品描述编辑器。\n\n[质量控制]\n输出前自查：西语是否自然、商品信息是否准确、关键词是否自然、文案是否有销售吸引力、是否存在虚构信息、是否存在重复内容、是否适合墨西哥消费者阅读。商品信息不足时，先指出缺少哪些重要信息，不要为了凑完整而编造。";
+}
 
 var LS_ATTR_BASE=[["品牌","Marca","通常必填"],["型号","Modelo","通常必填"],["材质","Material","通常必填"],["颜色","Color","通常必填"],["重量","Peso","选填但建议填"],["尺寸","Dimensiones","选填但建议填"],["包装清单","Contenido del paquete","选填"]];
 var LS_ATTR_CAT=[
