@@ -243,6 +243,8 @@ textarea.ls-out{min-height:72px}
 .aiL-kw{display:inline-block;background:#eef2ff;border:1px solid #c7d2fe;border-radius:999px;padding:2px 10px;margin:2px 4px 2px 0;font-size:13.5px}
 .aiL-mini{font-size:13px;color:#667}
 
+.aiL-bar{height:10px;background:#e6e9f2;border-radius:999px;overflow:hidden;margin:8px 0 2px}
+.aiL-bar>i{display:block;height:100%;width:0;background:var(--navy);border-radius:999px;transition:width .3s}
 </style>
 </head>
 <body>
@@ -270,7 +272,7 @@ textarea.ls-out{min-height:72px}
       <article class="card"><div class="term">📝 Listing 全套生成器</div><p style="font-size:14px;margin:8px 0">填一次商品信息，生成标题、描述、卖点、关键词、属性、图片、视频全套上架资料的 AI 提示词，汇总导出。</p><button class="btn btn-light" data-goto="listing" type="button">打开 Listing 生成器</button></article>
       <article class="card"><div class="term">📦 商品上架工作台</div><p style="font-size:14px;margin:8px 0">一个商品一个项目：资料、利润、标题、描述、图片、视频、风险检查、上架清单，8 步走完，本地保存可导出备份。</p><button class="btn btn-light" data-goto="bench" type="button">打开上架工作台</button></article>
       <article class="card"><div class="term">🩺 AI 运营诊断</div><p style="font-size:14px;margin:8px 0">填一份店铺问卷，生成可复制的诊断提示词，并直达本站选品、利润、Listing 合规等诊断工具。</p><button class="btn btn-light" data-goto="diag" type="button">去做诊断</button></article>
-      <article class="card"><div class="term">🤖 AI Listing 生成（真 AI）</div><p style="font-size:14px;margin:8px 0">接入 Muse Spark：填商品信息，直接生成墨西哥站西语标题、描述、卖点和关键词（需先部署你自己的免费 Worker，见页内设置说明）。</p><button class="btn btn-light" data-goto="ailisting" type="button">打开 AI 生成</button></article>
+      <article class="card"><div class="term">🤖 本地 AI Listing 生成</div><p style="font-size:14px;margin:8px 0">完全免费：AI 模型在你自己的设备上运行（约 1.6 GB，首次下载），不调云端 API、不要 Key、不上传数据，生成西语标题、描述、卖点和关键词。</p><button class="btn btn-light" data-goto="ailisting" type="button">打开 AI 生成</button></article>
     </div>
   </section>
 
@@ -479,20 +481,27 @@ textarea.ls-out{min-height:72px}
   
 </div>
 
+  
+
   <section class="card" id="sect-ailisting" style="display:none">
-    <div class="sec-head"><span class="num">🤖</span><div><h2>AI Listing 生成器（真 AI）</h2><p>调用 Meta Muse Spark 生成墨西哥站西语 Listing。和「Listing 生成器」的提示词版互补：那个是复制提示词去 AI 对话里用，这个是本站直接生成。</p></div></div>
-    <div class="note">🔒 <b>隐私与真实性：</b>商品信息只发送到<b>你自己部署的 Cloudflare Worker</b>，再由 Worker 调用 Meta Model API；本站是静态页面，没有服务器，不保存你的商品信息。AI 不得编造参数、认证与功效，生成内容<b>必须人工审核</b>后才能上架，本工具不保证符合 Mercado Libre 最新规则。</div>
+    <div class="sec-head"><span class="num">🤖</span><div><h2>本地 AI Listing 生成器（完全免费）</h2><p>AI 模型直接在你自己的设备上运行：不调任何云端 API、不要 Key、不花钱、不上传商品数据。</p></div></div>
+    <div class="note">💡 <b>先说清效果边界：</b>本地模型是 1.5B 小模型，西语自然度和连贯性<b>明显弱于</b>云端大模型（如 Muse Spark），偶尔会输出格式跑偏或顺嘴编内容。所以生成后本站会再用 37 条风险词库复核标题，参数也请逐项人工核对。设备不支持时用「Listing 生成器」的规则模式，同样免费。</div>
 
     <div class="aiL-box">
-      <h3 style="margin:2px 0 6px">① 连接设置（只需设置一次）</h3>
-      <p class="wb-meta" style="margin:0 0 8px">先按交付文档《Muse API 接入教程》部署好你自己的 Cloudflare Worker（约 10 分钟），把 Worker 地址粘贴到这里保存。地址只存在你这台设备的浏览器里。</p>
-      <div class="wb-grid">
-        <div class="wb-field" style="grid-column:1/-1"><label>我的 Worker 地址（如 https://mlr-ai.你的名字.workers.dev）</label><input class="search" id="aiL_worker" placeholder="尚未配置：粘贴 Worker 地址后点保存"></div>
-      </div>
+      <h3 style="margin:2px 0 6px">① 设备与模型</h3>
+      <p style="font-size:14.5px;margin:4px 0">模型：<b>Qwen2.5-1.5B-Instruct</b>（量化版，WebLLM / WebGPU 本地推理）<br>
+      首次下载：约 <b>1.6 GB</b>（只在你点「下载并加载」后才开始，建议 Wi-Fi；下载后缓存在浏览器里，下次不用重下）<br>
+      设备要求：支持 WebGPU 的浏览器（Windows 用 Chrome / Edge 最稳；安卓旗舰机可用；老设备和旧浏览器可能不支持），建议设备内存 8 GB 以上、磁盘剩余空间 4 GB 以上。</p>
+      <p style="font-size:14.5px;margin:6px 0">设备检测：<b id="aiL_gpuState">检测中…</b></p>
+      <div class="aiL-bar" id="aiL_barWrap" style="display:none"><i id="aiL_bar"></i></div>
+      <p class="wb-meta" id="aiL_modelState" style="margin:4px 0">模型尚未加载。</p>
       <div class="wb-toolbar">
-        <button class="btn btn-yellow" id="aiL_workerSave" type="button">保存地址</button>
-        <button class="btn btn-light" id="aiL_ping" type="button">测试连接</button>
-        <span class="wb-meta" id="aiL_workerState" style="margin-left:8px">未配置</span>
+        <button class="btn btn-yellow" id="aiL_load" type="button">⬇️ 下载并加载模型（约 1.6 GB）</button>
+        <button class="btn btn-light" id="aiL_unload" type="button" style="display:none">释放模型</button>
+      </div>
+      <div id="aiL_ruleBox" style="display:none;border:1.5px solid #f0b429;background:#fff8e1;border-radius:10px;padding:10px 12px;margin-top:8px">
+        <b>你的设备暂时用不了本地 AI。</b><span style="font-size:14.5px">不用担心，网站的其他工具照常用。Listing 可以改用免费的规则模式：本地词典生成标题 + 提示词生成器（复制到你常用的 AI 对话里用）。</span>
+        <div class="wb-toolbar"><button class="btn btn-yellow" data-goto="listing" type="button">去用规则模式（Listing 生成器）</button></div>
       </div>
     </div>
 
@@ -507,14 +516,14 @@ textarea.ls-out{min-height:72px}
       <div class="wb-field"><label>目标售价（MXN，可选）</label><input class="search" id="aiL_price" type="number" min="0" step="0.01" placeholder="如：349"></div>
       <div class="wb-field" style="grid-column:1/-1"><label>商品关键词（中文或西语，逗号分隔，可选）</label><input class="search" id="aiL_kw" placeholder="如：调料收纳, 厨房置物, especiero"></div>
     </div>
-    <p class="wb-meta">带 * 的是必填。选填项没有就留空——AI 会在「完整性检查」里指出缺什么，缺失的参数绝不会替你编。</p>
+    <p class="wb-meta">带 * 的是必填。选填项没有就留空——生成时不让 AI 编造，缺失项会在「完整性检查」里列出来。</p>
     <div class="aiL-box" style="margin-top:6px">
       <b>信息完整性（本地预检）</b>
       <div id="aiL_pre" style="font-size:14.5px;margin-top:4px">尚未填写。</div>
     </div>
     <div class="aiL-err" id="aiL_err"></div>
     <div class="wb-toolbar">
-      <button class="btn btn-yellow" id="aiL_gen" type="button">🤖 生成 Listing</button>
+      <button class="btn btn-yellow" id="aiL_gen" type="button">🤖 本地生成 Listing</button>
       <span id="aiL_status" style="font-size:14.5px"></span>
     </div>
 
@@ -528,11 +537,12 @@ textarea.ls-out{min-height:72px}
       <div class="aiL-out"><h4>商品信息完整性检查</h4><p id="aiL_r_comp"></p></div>
       <div class="aiL-out"><h4>标题优化建议</h4><p id="aiL_r_tips"></p></div>
       <div class="aiL-out"><h4>品牌词 / 侵权风险提醒</h4><p id="aiL_r_warn"></p></div>
+      <div class="aiL-out" id="aiL_rawWrap" style="display:none"><h4>模型原文（格式异常时显示）</h4><p id="aiL_r_raw"></p></div>
       <div class="wb-toolbar">
         <button class="btn btn-yellow" id="aiL_copyAll" type="button">📋 复制全部结果</button>
         <button class="btn btn-light" id="aiL_toListing" type="button">复制标题（去 Listing 生成器汇总里粘贴）</button>
       </div>
-      <p class="wb-meta">⚠️ AI 生成内容仅供参考：请逐项核对参数、品牌词与西语表达后再上架；本工具不保证生成内容符合 Mercado Libre 最新规则。</p>
+      <p class="wb-meta">⚠️ 本地小模型生成内容仅供参考：请逐项核对参数、品牌词与西语表达后再上架；本工具不保证生成内容符合 Mercado Libre 最新规则。</p>
     </div>
   </section>
 
@@ -2996,18 +3006,15 @@ document.addEventListener("DOMContentLoaded",function(){
   var fb=document.getElementById("wxFloatBtn"),fp=document.getElementById("wxFloatPanel");
   if(fb&&fp)fb.addEventListener("click",function(){fp.classList.toggle("open");});
 });
-/* ===== AI Listing 生成器 ===== */
-var aiLBusy=false;
+/* ===== 本地 AI Listing 生成器（WebLLM / WebGPU，完全免费） ===== */
+var aiLEngine=null,aiLModelReady=false,aiLLoading=false,aiLBusy=false,aiLGpuOk=false;
+var aiL_MODEL_ID="Qwen2.5-1.5B-Instruct-q4f16_1-MLC";
+var aiL_CDNS=["https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.87/+esm","https://esm.run/@mlc-ai/web-llm"];
 function aiLGet(id){return document.getElementById(id);}
-function aiLWorkerUrl(){
-  var v="";
-  try{v=localStorage.getItem("mlr_ai_worker_url")||"";}catch(e){}
-  return v.replace(/\/+$/,"");
-}
-function aiLSetWorkerState(){
-  var st=aiLGet("aiL_workerState");if(!st)return;
-  var u=aiLWorkerUrl();
-  st.textContent=u?("已配置："+u):"未配置";
+function aiLShowErr(msg){
+  var e=aiLGet("aiL_err");if(!e)return;
+  if(msg){e.style.display="block";e.textContent="⚠️ "+msg;}
+  else{e.style.display="none";e.textContent="";}
 }
 function aiLPreCheck(){
   var name=(aiLGet("aiL_name").value||"").trim();
@@ -3020,63 +3027,143 @@ function aiLPreCheck(){
   });
   var box=aiLGet("aiL_pre");
   if(box){
-    if(miss.length)box.innerHTML="❌ 还缺必填项："+miss.join("、")+"。补上才能生成。"+(sugg.length?("<br>💡 建议补充（可留空，AI 不会编造）："+"、".replace("、","")+sugg.join("、")):"");
-    else box.innerHTML="✅ 必填项已齐。"+(sugg.length?("💡 建议补充（可留空，AI 不会编造）："+"、".replace("、","")+sugg.join("、")):"所有选填项也已填写，信息完整。");
+    if(miss.length)box.innerHTML="❌ 还缺必填项："+miss.join("、")+"。补上才能生成。"+(sugg.length?("<br>💡 建议补充（可留空，AI 不会编造）："+sugg.join("、")):"");
+    else box.innerHTML="✅ 必填项已齐。"+(sugg.length?("💡 建议补充（可留空，AI 不会编造）："+sugg.join("、")):"所有选填项也已填写，信息完整。");
   }
   return miss.length===0;
 }
-function aiLShowErr(msg){
-  var e=aiLGet("aiL_err");
-  if(!e)return;
-  if(msg){e.style.display="block";e.textContent="⚠️ "+msg;}
-  else{e.style.display="none";e.textContent="";}
+function aiLDetect(){
+  var st=aiLGet("aiL_gpuState");
+  function unsupported(msg){
+    aiLGpuOk=false;
+    if(st)st.textContent=msg;
+    var rb=aiLGet("aiL_ruleBox");if(rb)rb.style.display="block";
+    var lb=aiLGet("aiL_load");if(lb)lb.disabled=true;
+    var ms=aiLGet("aiL_modelState");if(ms)ms.textContent="本地 AI 不可用，请使用下方规则模式或其他工具（网站基础功能不受影响）。";
+  }
+  if(!("gpu" in navigator)){unsupported("❌ 当前浏览器不支持 WebGPU");return;}
+  navigator.gpu.requestAdapter().then(function(ad){
+    if(!ad){unsupported("❌ 未检测到可用的 GPU（WebGPU 适配器为空）");return;}
+    aiLGpuOk=true;
+    if(st)st.textContent="✅ 支持 WebGPU，可以使用本地 AI";
+  }).catch(function(){unsupported("❌ WebGPU 检测失败");});
 }
-function aiLFetchJson(url,opts,timeoutMs){
-  var ctrl=new AbortController();
-  var timer=setTimeout(function(){ctrl.abort();},timeoutMs);
-  var o=opts||{};o.signal=ctrl.signal;
-  return fetch(url,o).then(function(r){
-    clearTimeout(timer);
-    return r.text().then(function(t){
-      var j=null;try{j=JSON.parse(t);}catch(e){}
-      return {status:r.status,json:j,text:t};
+function aiLImportLib(){
+  var chain=Promise.reject(new Error("start"));
+  aiL_CDNS.forEach(function(u){
+    chain=chain.catch(function(){return import(/* @vite-ignore */u);});
+  });
+  return chain;
+}
+function aiLLoadModel(){
+  if(aiLLoading||aiLModelReady)return;
+  if(!aiLGpuOk){aiLShowErr("当前设备不支持 WebGPU，无法加载本地模型。请用规则模式（Listing 生成器），或换一台支持 WebGPU 的设备（Windows + Chrome/Edge）。");return;}
+  aiLShowErr("");
+  aiLLoading=true;
+  var btn=aiLGet("aiL_load"),ms=aiLGet("aiL_modelState"),barWrap=aiLGet("aiL_barWrap"),bar=aiLGet("aiL_bar");
+  btn.disabled=true;btn.textContent="加载中…";
+  if(barWrap)barWrap.style.display="block";
+  aiLImportLib().then(function(webllm){
+    return webllm.CreateMLCEngine(aiL_MODEL_ID,{
+      initProgressCallback:function(p){
+        if(bar&&typeof p.progress==="number")bar.style.width=Math.round(p.progress*100)+"%";
+        if(ms)ms.textContent="正在加载模型："+(p.text||"")+(typeof p.progress==="number"?"（"+Math.round(p.progress*100)+"%）":"");
+      }
     });
-  },function(err){clearTimeout(timer);throw err;});
+  }).then(function(engine){
+    aiLEngine=engine;aiLModelReady=true;aiLLoading=false;
+    if(ms)ms.textContent="✅ 模型已加载到本机，可以生成了。推理全程在你的设备上进行，不联网调用任何 API。";
+    btn.style.display="none";
+    var un=aiLGet("aiL_unload");if(un)un.style.display="";
+    if(bar)bar.style.width="100%";
+  }).catch(function(err){
+    aiLLoading=false;
+    btn.disabled=false;btn.textContent="⬇️ 重新下载并加载模型（约 1.6 GB）";
+    if(ms)ms.textContent="模型加载失败。";
+    var m=(err&&err.message)||String(err);
+    aiLShowErr("模型加载失败："+m.slice(0,180)+"。常见原因：网络中断（换 Wi-Fi 重试）、磁盘剩余空间不足（至少留 4 GB）、显卡驱动太旧（更新驱动或换 Chrome/Edge 最新版）。加载失败不影响网站其他功能，也可以改用规则模式。");
+  });
+}
+function aiLUnload(){
+  if(aiLEngine&&aiLEngine.unload){try{aiLEngine.unload();}catch(e){}}
+  aiLEngine=null;aiLModelReady=false;
+  var ms=aiLGet("aiL_modelState");if(ms)ms.textContent="模型已释放（浏览器缓存还在，下次加载会快很多）。";
+  var btn=aiLGet("aiL_load");if(btn){btn.style.display="";btn.disabled=false;btn.textContent="⬇️ 重新加载模型";}
+  var un=aiLGet("aiL_unload");if(un)un.style.display="none";
+}
+var aiL_SYSTEM=[
+  "你是 Mercado Libre 墨西哥站的商品文案助手。根据卖家信息生成 Listing。",
+  "铁律：只能用卖家提供的信息，不得编造参数、尺寸、材质、认证、品牌或功效；没提供的信息在 completeness 里指出。",
+  "不得写站外联系方式，不得用绝对化用语（如 el mejor）。西语标题不超过60个字符，产品词放最前面。",
+  "只输出一个 JSON 对象，不要解释，不要代码块。字段：",
+  '{"titleEs":"西语标题","descEs":"西语描述(100-160词)","points":["西语卖点,共5条"],"keywords":["西语关键词,8到12个"],"titleCn":"标题中文翻译","descCn":"描述中文翻译","completeness":["中文完整性检查"],"titleTips":["中文标题建议"],"brandWarnings":["中文品牌风险提醒"]}'
+].join("\n");
+function aiLUserPrompt(){
+  function v(id){return (aiLGet(id).value||"").trim();}
+  return [
+    "商品中文名称："+v("aiL_name"),
+    "商品主要功能："+v("aiL_func"),
+    "商品材质："+(v("aiL_mat")||"未提供"),
+    "商品规格："+(v("aiL_spec")||"未提供"),
+    "使用场景："+(v("aiL_scene")||"未提供"),
+    "目标售价："+(v("aiL_price")?v("aiL_price")+" MXN":"未提供"),
+    "目标市场：墨西哥站",
+    "商品关键词："+(v("aiL_kw")||"未提供")
+  ].join("\n");
+}
+function aiLExtractJson(text){
+  if(!text)return null;
+  var t=String(text).trim().replace(/^```(?:json)?\s*/i,"").replace(/```\s*$/,"");
+  var a=t.indexOf("{"),b=t.lastIndexOf("}");
+  if(a<0||b<=a)return null;
+  try{return JSON.parse(t.slice(a,b+1));}catch(e){return null;}
+}
+function aiLAsArr(v){
+  if(Array.isArray(v))return v.map(function(x){return String(x);}).filter(Boolean);
+  if(typeof v==="string"&&v.trim())return [v.trim()];
+  return [];
+}
+function aiLNormalize(j){
+  if(!j||typeof j!=="object")return null;
+  var out={
+    titleEs:typeof j.titleEs==="string"?j.titleEs.trim():"",
+    descEs:typeof j.descEs==="string"?j.descEs.trim():"",
+    points:aiLAsArr(j.points),keywords:aiLAsArr(j.keywords),
+    titleCn:typeof j.titleCn==="string"?j.titleCn.trim():"",
+    descCn:typeof j.descCn==="string"?j.descCn.trim():"",
+    completeness:aiLAsArr(j.completeness),titleTips:aiLAsArr(j.titleTips),brandWarnings:aiLAsArr(j.brandWarnings)
+  };
+  if(!out.titleEs&&!out.descEs)return null;
+  return out;
 }
 function aiLGenerate(){
   if(aiLBusy)return;
   aiLShowErr("");
-  var url=aiLWorkerUrl();
-  if(!url){aiLShowErr("还没配置 Worker 地址：先在上方第 ① 步粘贴你部署好的 Cloudflare Worker 地址并保存。部署方法见交付文档《Muse API 接入教程》。");return;}
+  if(!aiLModelReady){aiLShowErr("模型还没加载：先在上方第 ① 步点「下载并加载模型」。设备不支持 WebGPU 的话，请用规则模式（Listing 生成器）。");return;}
   if(!aiLPreCheck()){aiLShowErr("必填项还没填齐（见上方完整性预检），补上后再生成。");return;}
-  var payload={
-    name:(aiLGet("aiL_name").value||"").trim(),
-    func:(aiLGet("aiL_func").value||"").trim(),
-    material:(aiLGet("aiL_mat").value||"").trim(),
-    spec:(aiLGet("aiL_spec").value||"").trim(),
-    scene:(aiLGet("aiL_scene").value||"").trim(),
-    price:(aiLGet("aiL_price").value||"").trim(),
-    keywords:(aiLGet("aiL_kw").value||"").trim(),
-    market:"墨西哥站"
-  };
   aiLBusy=true;
   var btn=aiLGet("aiL_gen"),st=aiLGet("aiL_status");
   btn.disabled=true;
-  st.innerHTML='<span class="aiL-spin"></span>AI 生成中，一般 10–30 秒…';
-  aiLFetchJson(url+"/api/ai/listing",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)},35000).then(function(res){
-    if(res.status===429){throw new Error((res.json&&res.json.error)||"调用太频繁，已被限流，请过一会儿再试。");}
-    if(!res.json){throw new Error("Worker 返回了无法解析的内容（HTTP "+res.status+"）：请确认 Worker 部署的是最新代码。");}
-    if(!res.json.ok){throw new Error(res.json.error||("生成失败（HTTP "+res.status+"）"));}
-    aiLRender(res.json.data||{});
-    st.textContent="✅ 生成完成，请逐项核对后再上架。";
+  st.innerHTML='<span class="aiL-spin"></span>本地生成中，小模型速度取决于你的设备，一般 20–90 秒…';
+  aiLEngine.chat.completions.create({
+    messages:[{role:"system",content:aiL_SYSTEM},{role:"user",content:aiLUserPrompt()}],
+    temperature:0.3,max_tokens:1000
+  }).then(function(res){
+    var content=res&&res.choices&&res.choices[0]&&res.choices[0].message?res.choices[0].message.content:"";
+    var parsed=aiLNormalize(aiLExtractJson(content));
+    if(parsed){aiLRender(parsed);st.textContent="✅ 生成完成（本地模型），请逐项核对后再上架。";}
+    else{
+      aiLRender({titleEs:"",descEs:"",points:[],keywords:[],titleCn:"",descCn:"",completeness:[],titleTips:[],brandWarnings:[]});
+      var rw=aiLGet("aiL_rawWrap"),rr=aiLGet("aiL_r_raw");
+      if(rw)rw.style.display="block";
+      if(rr)rr.textContent=content||"（模型没有返回内容）";
+      st.textContent="";
+      aiLShowErr("这次模型输出的格式跑偏了，没能自动整理成表格。原文已放在结果区最下方，可以直接看；或者点一次重新生成，小模型多试一次通常就正常了。");
+    }
   }).catch(function(err){
     st.textContent="";
-    if(err&&err.name==="AbortError")aiLShowErr("请求超时（35 秒）：可能是网络慢或 Meta API 繁忙，请重试；若反复超时，按教程的错误排查检查 Worker 日志。");
-    else if(err&&err instanceof TypeError)aiLShowErr("连不上你的 Worker：请检查地址是否填错、Worker 是否已成功部署（先点上方「测试连接」）。");
-    else aiLShowErr((err&&err.message)||"生成失败，请重试。");
-  }).then(function(){
-    aiLBusy=false;btn.disabled=false;
-  });
+    aiLShowErr("本地生成失败："+(((err&&err.message)||String(err)).slice(0,160))+"。可以重试；若反复失败，释放模型后重新加载，或改用规则模式。");
+  }).then(function(){aiLBusy=false;btn.disabled=false;});
 }
 function aiLListText(arr){
   if(!arr||!arr.length)return "（无）";
@@ -3084,6 +3171,7 @@ function aiLListText(arr){
 }
 function aiLRender(d){
   var box=aiLGet("aiL_result");if(!box)return;
+  var rw=aiLGet("aiL_rawWrap");if(rw)rw.style.display="none";
   var title=d.titleEs||"";
   aiLGet("aiL_r_title").textContent=title||"（未生成）";
   aiLGet("aiL_r_titleMeta").textContent=title?("标题长度："+title.length+" / 60 字符"+(title.length>60?"（超限，请按下方优化建议删减）":"")):"";
@@ -3114,45 +3202,22 @@ function aiLAllText(){
   return "===== 西班牙语标题 =====\n"+t("aiL_r_title")+"\n\n===== 西班牙语描述 =====\n"+t("aiL_r_desc")+"\n\n===== 商品卖点 =====\n"+t("aiL_r_points")+"\n\n===== 关键词建议 =====\n"+t("aiL_r_kws")+"\n\n===== 中文翻译 =====\n"+t("aiL_r_cn")+"\n\n===== 商品信息完整性检查 =====\n"+t("aiL_r_comp")+"\n\n===== 标题优化建议 =====\n"+t("aiL_r_tips")+"\n\n===== 品牌词/侵权风险提醒 =====\n"+t("aiL_r_warn");
 }
 (function(){
-  var w=aiLGet("aiL_worker");
-  if(w&&aiLWorkerUrl())w.value=aiLWorkerUrl();
-  aiLSetWorkerState();
-  var save=aiLGet("aiL_workerSave");
-  if(save)save.addEventListener("click",function(){
-    var v=(aiLGet("aiL_worker").value||"").trim().replace(/\/+$/,"");
-    if(v&&v.indexOf("https://")!==0){aiLShowErr("Worker 地址要以 https:// 开头，请检查。");return;}
-    try{localStorage.setItem("mlr_ai_worker_url",v);}catch(e){}
-    aiLSetWorkerState();
-    showToast(v?"Worker 地址已保存":"Worker 地址已清空");
-  });
-  var ping=aiLGet("aiL_ping");
-  if(ping)ping.addEventListener("click",function(){
-    var url=aiLWorkerUrl();
-    if(!url){aiLShowErr("还没配置 Worker 地址，无法测试。");return;}
-    var st=aiLGet("aiL_workerState");st.textContent="测试中…";
-    aiLFetchJson(url+"/api/health",{method:"GET"},8000).then(function(res){
-      if(res.json&&res.json.ok){st.textContent="✅ 连接正常（Worker 在线）";}
-      else{st.textContent="❌ Worker 有响应但状态异常（HTTP "+res.status+"）";}
-    }).catch(function(){
-      st.textContent="❌ 连不上 Worker：检查地址与部署状态";
-    });
-  });
+  aiLDetect();
+  var load=aiLGet("aiL_load");if(load)load.addEventListener("click",aiLLoadModel);
+  var un=aiLGet("aiL_unload");if(un)un.addEventListener("click",aiLUnload);
   ["aiL_name","aiL_func","aiL_mat","aiL_spec","aiL_scene","aiL_kw"].forEach(function(id){
     var el=aiLGet(id);if(el)el.addEventListener("input",aiLPreCheck);
   });
   aiLPreCheck();
-  var gen=aiLGet("aiL_gen");
-  if(gen)gen.addEventListener("click",aiLGenerate);
+  var gen=aiLGet("aiL_gen");if(gen)gen.addEventListener("click",aiLGenerate);
   document.querySelectorAll("[data-aicopy]").forEach(function(b){
     b.addEventListener("click",function(){
       var el=aiLGet(b.getAttribute("data-aicopy"));
       if(el)wbCopy(el.textContent);
     });
   });
-  var ca=aiLGet("aiL_copyAll");
-  if(ca)ca.addEventListener("click",function(){wbCopy(aiLAllText());});
-  var tl=aiLGet("aiL_toListing");
-  if(tl)tl.addEventListener("click",function(){
+  var ca=aiLGet("aiL_copyAll");if(ca)ca.addEventListener("click",function(){wbCopy(aiLAllText());});
+  var tl=aiLGet("aiL_toListing");if(tl)tl.addEventListener("click",function(){
     var t=aiLGet("aiL_r_title").textContent||"";
     if(t&&t!=="（未生成）"){wbCopy(t);showToast("标题已复制，去 Listing 生成器的汇总标题栏粘贴");}
   });
