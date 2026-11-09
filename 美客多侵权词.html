@@ -276,12 +276,12 @@ section{padding-top:34px}
     <div class="grid">
       <article class="card"><div class="term">🔍 侵权与合规风险检测</div><p style="font-size:14px;margin:8px 0">标题、描述、商品链接、商品图四种查法，37 条风险词库，中英西三语，带语境判断和风险报告。</p><button class="btn btn-light" data-goto="home" type="button">去检测</button></article>
       <article class="card"><div class="term">✍️ 标题优化</div><p style="font-size:14px;margin:8px 0">本地词典生成 ≤60 字符西语标题，自动过侵权词表，带结构检查和修改前后对比。</p><button class="btn btn-light" data-goto="title" type="button">去优化标题</button></article>
-      <article class="card"><div class="term">🖼 图片优化</div><p style="font-size:14px;margin:8px 0">上传图本地实测（分辨率/比例/清晰度/白底），生成主图、卖点图、场景图的 Muse 提示词。</p><button class="btn btn-light" data-goto="imgopt" type="button">去优化图片</button></article>
-      <article class="card"><div class="term">🎬 视频生成</div><p style="font-size:14px;margin:8px 0">7 种视频类型的脚本和分镜（西语旁白+中文对照），一键生成 Muse 视频提示词。</p><button class="btn btn-light" data-goto="video" type="button">去生成分镜</button></article>
+      <article class="card"><div class="term">🖼 图片优化</div><p style="font-size:14px;margin:8px 0">上传图本地实测（分辨率/比例/清晰度/白底），生成主图、卖点图、场景图的 AI 提示词。</p><button class="btn btn-light" data-goto="imgopt" type="button">去优化图片</button></article>
+      <article class="card"><div class="term">🎬 视频生成</div><p style="font-size:14px;margin:8px 0">7 种视频类型的脚本和分镜（西语旁白+中文对照），一键生成 AI 视频提示词。</p><button class="btn btn-light" data-goto="video" type="button">去生成分镜</button></article>
       <article class="card"><div class="term">🧮 利润计算器</div><p style="font-size:14px;margin:8px 0">单件利润、利润率、盈亏平衡售价、目标利润售价和多售价对比，还能读取上架工作台的项目并把结果存回去。</p><button class="btn btn-light" data-goto="profit" type="button">去算利润</button></article>
       <article class="card"><div class="term">🎯 选品分析</div><p style="font-size:14px;margin:8px 0">把你查到的市场、竞品、成本数据整理成候选清单，算利润、打评分、生成诊断和测试计划。</p><button class="btn btn-light" data-goto="pick" type="button">打开选品分析</button></article>
       <article class="card"><div class="term">🔢 条码助手</div><p style="font-size:14px;margin:8px 0">UPC / EAN / GTIN 格式与校验位检查、条码图片生成、测试编码演示和条码要求核实清单。</p><button class="btn btn-light" data-goto="barcode" type="button">打开条码助手</button></article>
-      <article class="card"><div class="term">📝 Listing 全套生成器</div><p style="font-size:14px;margin:8px 0">填一次商品信息，生成标题、描述、卖点、关键词、属性、图片、视频全套上架资料的 Muse 提示词，汇总导出。</p><button class="btn btn-light" data-goto="listing" type="button">打开 Listing 生成器</button></article>
+      <article class="card"><div class="term">📝 Listing 全套生成器</div><p style="font-size:14px;margin:8px 0">填一次商品信息，生成标题、描述、卖点、关键词、属性、图片、视频全套上架资料的 AI 提示词，汇总导出。</p><button class="btn btn-light" data-goto="listing" type="button">打开 Listing 生成器</button></article>
     </div>
   </section>
 
@@ -365,7 +365,7 @@ section{padding-top:34px}
 
   <section class="card" id="sect-img">
     <h2 style="margin-top:0">🖼 AI 商品图片优化器</h2>
-    <p class="sub">流程：① 上传图片 → ② 填商品信息 → ③ 选优化类型生成提示词 → ④ 复制到 Muse 里生成/优化图片 → ⑤ 把新图传回来对比检查。<br>说明：本站是静态页面、没有接 AI 接口，所以<b>图片诊断分两部分</b>：尺寸、文件大小、清晰度估算、背景亮度是浏览器本地实测；主体突出、变形、侵权元素这类要靠人眼和 Muse 看图判断，本模块会给你检查清单和现成的诊断提示词，不会假装机器全都能识别。</p>
+    <p class="sub">流程：① 上传图片 → ② 填商品信息 → ③ 选优化类型生成提示词 → ④ 复制到 AI 里生成/优化图片 → ⑤ 把新图传回来对比检查。<br>说明：本站是静态页面、没有接 AI 接口，所以<b>图片诊断分两部分</b>：尺寸、文件大小、清晰度估算、背景亮度是浏览器本地实测；主体突出、变形、侵权元素这类要靠人眼和 AI 看图判断，本模块会给你检查清单和现成的诊断提示词，不会假装机器全都能识别。</p>
 
     <h3>第一步：上传商品图片（JPG / PNG / WEBP）</h3>
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
@@ -389,7 +389,7 @@ section{padding-top:34px}
     <textarea id="ioPoints" rows="3" placeholder="核心卖点（一行一个，只写真实卖点），例如：&#10;360度旋转，拿取方便&#10;透明罐身，余量看得见"></textarea>
     <input class="search" id="ioParts" placeholder="包装包含什么（做包装图用），例如：主机×1、调料罐×20、标签贴×1套">
 
-    <h3 style="margin-top:22px">第三步：生成 Muse 提示词</h3>
+    <h3 style="margin-top:22px">第三步：生成 AI 提示词</h3>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
       <button class="btn" data-ioprompt="main" type="button">生成主图优化提示词</button>
       <button class="btn btn-light" data-ioprompt="points" type="button">生成卖点图提示词</button>
@@ -405,7 +405,7 @@ section{padding-top:34px}
     <div class="result" id="ioRiskResult"><div id="ioRiskBox"></div></div>
 
     <h3 style="margin-top:22px">第五步：优化前后对比</h3>
-    <p class="sub">把 Muse 优化后的图片传到这里，和第一步的原图并排对比（尺寸、大小、清晰度估算都是本地实测）。</p>
+    <p class="sub">把 AI 优化后的图片传到这里，和第一步的原图并排对比（尺寸、大小、清晰度估算都是本地实测）。</p>
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
       <label class="btn btn-ghost" for="ioFile2" style="cursor:pointer;margin:0">📤 上传优化后的图片</label>
       <input id="ioFile2" type="file" accept="image/jpeg,image/png,image/webp" style="display:none">
@@ -417,7 +417,7 @@ section{padding-top:34px}
 
   <section class="card" id="sect-video">
     <h2 style="margin-top:0">🎬 AI 商品视频生成器 <span style="font-size:13px;color:#666">Mercado Libre AI Product Video Studio</span></h2>
-    <p class="sub">先说清：本站是静态页面、没有视频生成接口，<b>这里生成的是视频脚本、分镜表和 Muse 视频提示词</b>，真正的视频请拿提示词到 Muse 等视频工具里生成——不会假装本站能直接出视频。默认按美客多 Clips 建议：9:16 竖屏、10–60 秒；具体格式与审核要求以美客多官方最新规则为准（可在卖家中心帮助里搜 “Clips” 核对）。</p>
+    <p class="sub">先说清：本站是静态页面、没有视频生成接口，<b>这里生成的是视频脚本、分镜表和 AI 视频提示词</b>，真正的视频请拿提示词到 AI 等视频工具里生成——不会假装本站能直接出视频。默认按美客多 Clips 建议：9:16 竖屏、10–60 秒；具体格式与审核要求以美客多官方最新规则为准（可在卖家中心帮助里搜 “Clips” 核对）。</p>
 
     <h3>第一部分：商品素材上传（图片或实拍视频）</h3>
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
@@ -461,15 +461,15 @@ section{padding-top:34px}
     </div>
     <textarea id="vdVoiceCustom" rows="2" placeholder="自定义旁白（一行对应一个镜头，留空则用模板旁白）" style="display:none"></textarea>
 
-    <h3 style="margin-top:22px">第四部分：脚本、分镜与 Muse 提示词</h3>
+    <h3 style="margin-top:22px">第四部分：脚本、分镜与 AI 提示词</h3>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
       <button class="btn" id="vdGen" type="button">🎬 生成脚本与分镜</button>
-      <button class="btn btn-light" id="vdCopyPrompt" type="button">📋 复制 Muse 提示词</button>
+      <button class="btn btn-light" id="vdCopyPrompt" type="button">📋 复制 AI 提示词</button>
       <button class="btn btn-light" id="vdExport" type="button">⬇ 导出制作方案</button>
       <button class="btn btn-ghost" id="vdClear" type="button">清空当前内容</button>
     </div>
     <div id="vdScript" style="margin-top:12px"></div>
-    <div class="result" id="vdPromptWrap"><div class="result-box" style="background:var(--surface);border:1px solid var(--line);color:var(--ink)"><div style="font-weight:700;margin-bottom:6px">🤖 Muse AI 视频制作提示词</div><pre id="vdPrompt" style="white-space:pre-wrap;font-size:13.5px;margin:0"></pre></div></div>
+    <div class="result" id="vdPromptWrap"><div class="result-box" style="background:var(--surface);border:1px solid var(--line);color:var(--ink)"><div style="font-weight:700;margin-bottom:6px">🤖 AI 视频制作提示词</div><pre id="vdPrompt" style="white-space:pre-wrap;font-size:13.5px;margin:0"></pre></div></div>
 
     <h3 style="margin-top:22px">第五部分：视频合规检查</h3>
     <div id="vdAuto"></div>
@@ -547,7 +547,7 @@ section{padding-top:34px}
       <p class="wb-meta" id="wbTimes"></p>
 
       <h3 style="margin:20px 0 6px">③ 制作流程（8 步）</h3>
-      <p style="font-size:13.5px;color:#666;margin:0">每一步都可以手动改状态；有现成功能的步骤直接跳过去做，还没有的步骤提供可复制的 Muse 提示词。状态和资料都会自动保存。</p>
+      <p style="font-size:13.5px;color:#666;margin:0">每一步都可以手动改状态；有现成功能的步骤直接跳过去做，还没有的步骤提供可复制的 AI 提示词。状态和资料都会自动保存。</p>
       <div id="wbSteps"></div>
 
       <h3 style="margin:20px 0 6px">④ 上架前检查清单</h3>
@@ -675,7 +675,7 @@ section{padding-top:34px}
   </section>
   <section class="card" id="sect-pick">
     <div class="sec-head"><span class="num">🎯</span><div><h2>美客多 AI 选品分析助手</h2><p>从市场研究、商品筛选、利润核算到风险诊断，帮助新手做出更理性的选品决策</p></div></div>
-    <div class="note">📌 <b>先说清：</b>本站不接任何外部数据接口，不会替你抓取大麦、蓝鲸、ERP 或美客多的数据，也不会编造销量和搜索量。这里是把<b>你自己查到的数据</b>整理好，用真实公式算利润、用可解释的规则评分，再生成能粘贴给 Muse 的诊断提示词。数据只存在当前浏览器（localStorage），不是云端同步，记得导出备份。</div>
+    <div class="note">📌 <b>先说清：</b>本站不接任何外部数据接口，不会替你抓取大麦、蓝鲸、ERP 或美客多的数据，也不会编造销量和搜索量。这里是把<b>你自己查到的数据</b>整理好，用真实公式算利润、用可解释的规则评分，再生成能粘贴给 AI 的诊断提示词。数据只存在当前浏览器（localStorage），不是云端同步，记得导出备份。</div>
     <div class="pk-subnav">
       <button class="btn btn-light" data-pkscroll="pkResearch" type="button">1 市场研究</button>
       <button class="btn btn-light" data-pkscroll="pkListBox" type="button">2 候选商品</button>
@@ -744,7 +744,7 @@ section{padding-top:34px}
     <div id="pkScoreOut"><div class="note">还没有选商品。在候选商品列表里点任意商品，这里会显示它的 100 分评分明细、数据完整度和本地诊断。</div></div>
     <div class="wb-toolbar">
       <button class="btn btn-yellow" id="pkDiagLocal" type="button">本地规则诊断</button>
-      <button class="btn btn-light" id="pkDiagCopy" type="button">📋 复制给 Muse 深度分析</button>
+      <button class="btn btn-light" id="pkDiagCopy" type="button">📋 复制给 AI 深度分析</button>
     </div>
     <div id="pkDiagOut"></div>
 
@@ -844,7 +844,7 @@ section{padding-top:34px}
 
   <section class="card" id="sect-listing">
     <div class="sec-head"><span class="num">📝</span><div><h2>Listing 全套生成器</h2><p>填一次商品信息，生成标题、描述、卖点、关键词、属性、图片、视频的全套上架资料</p></div></div>
-    <div class="note">📌 <b>工作方式先说清：</b>本站不直接调用 AI。这里根据你填的商品信息，<b>本地生成专业的 Muse 提示词</b>（一键复制，去 Muse 里生成内容），再把结果粘回下面的汇总工作台统一管理、导出。合规检查和属性建议是本站本地规则实时算的。所有数据只存在当前浏览器，不上传服务器。</div>
+    <div class="note">📌 <b>工作方式先说清：</b>本站不直接调用 AI。这里根据你填的商品信息，<b>本地生成专业的 AI 提示词</b>（一键复制，去 AI 里生成内容），再把结果粘回下面的汇总工作台统一管理、导出。合规检查和属性建议是本站本地规则实时算的。所有数据只存在当前浏览器，不上传服务器。</div>
 
     <h3 style="margin:16px 0 6px">1. 商品项目与基础信息</h3>
     <div class="wb-toolbar">
@@ -860,13 +860,13 @@ section{padding-top:34px}
     </div>
     <div id="lsProg" style="margin:8px 0"></div>
     <div class="wb-grid" id="lsForm"></div>
-    <p class="wb-meta">带 * 的是必填。选填项没有就留空——生成提示词时会标注「未提供」，并要求 Muse 不得编造。</p>
+    <p class="wb-meta">带 * 的是必填。选填项没有就留空——生成提示词时会标注「未提供」，并要求 AI 不得编造。</p>
 
-    <h3 style="margin:20px 0 6px">2. 提示词生成器（复制到 Muse 生成内容）</h3>
+    <h3 style="margin:20px 0 6px">2. 提示词生成器（复制到 AI 生成内容）</h3>
 
     <div class="ls-gen"><h4>① 西班牙语标题提示词</h4>
       <div class="wb-toolbar"><button class="btn btn-yellow" data-lsgen="title" type="button">生成标题提示词</button><button class="btn btn-light" id="lsQuickTitle" type="button">⚡ 本地快速标题（词典版）</button><button class="btn btn-light" data-lscopy="title" type="button">复制提示词</button></div>
-      <textarea class="search ls-out" id="lsOut_title" readonly placeholder="点「生成标题提示词」，这里会出现可复制给 Muse 的完整提示词"></textarea>
+      <textarea class="search ls-out" id="lsOut_title" readonly placeholder="点「生成标题提示词」，这里会出现可复制给 AI 的完整提示词"></textarea>
       <div id="lsQuickOut"></div>
     </div>
 
@@ -878,7 +878,7 @@ section{padding-top:34px}
         <div class="wb-field"><label>输出语言</label><select class="search" id="lsDescLang"><option>墨西哥西班牙语</option><option>葡萄牙语（巴西站）</option><option>中文</option><option>中西双语</option></select></div>
       </div>
       <div class="wb-toolbar"><button class="btn btn-yellow" data-lsgen="desc" type="button">生成描述提示词</button><button class="btn btn-light" data-lscopy="desc" type="button">复制提示词</button></div>
-      <textarea class="search ls-out" id="lsOut_desc" readonly placeholder="生成后复制到 Muse，它会按 12 个部分输出完整描述"></textarea>
+      <textarea class="search ls-out" id="lsOut_desc" readonly placeholder="生成后复制到 AI，它会按 12 个部分输出完整描述"></textarea>
     </div>
 
     <div class="ls-gen"><h4>③ 商品卖点提示词</h4>
@@ -915,7 +915,7 @@ section{padding-top:34px}
       <textarea class="search ls-out" id="lsOut_comp" readonly placeholder="合规检查提示词会出现在这里"></textarea>
     </div>
 
-    <h3 style="margin:20px 0 6px">3. 汇总工作台（把 Muse 生成的结果粘回来统一管理）</h3>
+    <h3 style="margin:20px 0 6px">3. 汇总工作台（把 AI 生成的结果粘回来统一管理）</h3>
     <div id="lsFinalForm"></div>
     <h4 style="margin:14px 0 6px">上架前检查清单</h4>
     <div id="lsChecks"></div>
@@ -1064,7 +1064,7 @@ function runCheck(){
   else{
     html+="<ul>"+hits.map(function(h){return "<li><span class='badge "+LEVEL_CLASS[h.level]+"'>"+LEVEL_LABEL[h.level]+"</span><b>"+h.entry.t+"</b>（"+h.field+"，约第 "+(h.pos+1)+" 字，命中「"+h.key+"」）<br>原因："+h.entry.why+(h.note?"<br>语境判断："+h.note:"")+"<br>建议："+h.entry.alt+"<br>人工复核："+(h.review?"是":"否")+"</li>";}).join("")+"</ul>";
   }
-  html+='<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-light" id="copyResBtn" type="button">📋 复制检测结果</button><button class="btn btn-light" id="exportRepBtn" type="button">⬇ 导出风险报告</button><button class="btn btn-light" id="claudeBtn" type="button">🤖 复制到 Muse 深度分析</button></div>';
+  html+='<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-light" id="copyResBtn" type="button">📋 复制检测结果</button><button class="btn btn-light" id="exportRepBtn" type="button">⬇ 导出风险报告</button><button class="btn btn-light" id="claudeBtn" type="button">🤖 复制到 AI 深度分析</button></div>';
   box.innerHTML=html;
   var lines=["美客多侵权与合规风险检测报告","商品："+prodName,"检测时间："+timeStr,"检测内容：标题 "+title.length+" 字 / 描述 "+desc.length+" 字","总体等级："+overall.label+" — "+overall.advice,"命中分类："+catSum,""];
   if(!hits.length)lines.push("未命中词表关键词（仅供参考，不代表官方审核结果）。");
@@ -1378,7 +1378,7 @@ function showToast(msg){
 
 
 /* ===== 商品上架工作台 ===== */
-function wbCopy(t){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){showToast("提示词已复制，去 Muse 对话里粘贴");}).catch(function(){showToast("复制失败，请手动复制");});}else{var ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");showToast("提示词已复制，去 Muse 对话里粘贴");}catch(e){showToast("复制失败，请手动复制");}ta.remove();}}
+function wbCopy(t){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){showToast("提示词已复制，去 AI 对话里粘贴");}).catch(function(){showToast("复制失败，请手动复制");});}else{var ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");showToast("提示词已复制，去 AI 对话里粘贴");}catch(e){showToast("复制失败，请手动复制");}ta.remove();}}
 function wbEsc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");}
 var WB_KEY="mlr_projects_v1";
 var WB_STATUSES=["未开始","进行中","已完成","需要重新检查"];
@@ -1388,9 +1388,9 @@ var WB_STEPS=[
  {k:"s1",t:"第一步：商品资料整理",d:"把名称、类目、品牌、规格、成本等真实资料填全。缺什么上面会红字提示，不要编造。",guide:"在本页上方「商品资料」里逐项填写。品牌没有就写「无品牌」，型号没有可留空；尺寸重量请实测后再填，后面算运费和做尺寸图都要用。",act:"form"},
  {k:"s2",t:"第二步：选品与利润分析",d:"用下面的小计算器估算单件利润（只是估算，不是平台数据）。",guide:"填入你打算卖的墨西哥比索售价、汇率、平台佣金比例和预估运费，点计算。佣金比例按你的类目和刊登类型在卖家中心确认，不要凭感觉填。也可以用顶部「🧮 利润计算器」做完整测算（盈亏平衡、目标售价、多售价对比），并把结果保存回本项目。",act:"profit"},
  {k:"s3",t:"第三步：Listing 标题优化",d:"用本站的标题优化器生成 60 字符内的外语标题（西语/葡语，按站点）。",guide:"先在本页把商品名称、规格填好，再去标题优化器：填中文名、材质、功能、规格，生成后挑一条，回到这里把这一步标为已完成。",act:"goto",tab:"title",label:"✍️ 进入标题优化"},
- {k:"s4",t:"第四步：商品描述（西语/葡语）",d:"用下面的按钮复制 Muse 提示词，到 Muse 里生成地道外语描述（语言按本项目站点）。",guide:"点「复制 Muse 描述提示词」，把商品资料自动带入提示词（缺的字段会标注待补充），在 Muse 对话里粘贴发送，拿到描述后人工核对数字和规格再用。",act:"prompt"},
+ {k:"s4",t:"第四步：商品描述（西语/葡语）",d:"用下面的按钮复制 AI 提示词，到 AI 里生成地道外语描述（语言按本项目站点）。",guide:"点「复制 AI 描述提示词」，把商品资料自动带入提示词（缺的字段会标注待补充），在 AI 对话里粘贴发送，拿到描述后人工核对数字和规格再用。",act:"prompt"},
  {k:"s5",t:"第五步：商品图片优化",d:"用本站图片优化器诊断主图并生成图片提示词。",guide:"先准备好商品原图，再去图片优化器按 5 步走：上传诊断 → 填信息 → 生成提示词 → 合规自查 → 前后对比。尺寸图必须用你实测的尺寸。",act:"goto",tab:"imgopt",label:"🖼 进入图片优化"},
- {k:"s6",t:"第六步：商品视频制作",d:"用本站视频生成器做分镜脚本和 Muse 视频提示词。",guide:"先有图片素材再做视频。去视频生成器：上传素材 → 填商品信息 → 选类型生成分镜 → 复制提示词到 Muse 生成 → 回来过一遍合规检查。",act:"goto",tab:"video",label:"🎬 进入视频生成"},
+ {k:"s6",t:"第六步：商品视频制作",d:"用本站视频生成器做分镜脚本和 AI 视频提示词。",guide:"先有图片素材再做视频。去视频生成器：上传素材 → 填商品信息 → 选类型生成分镜 → 复制提示词到 AI 生成 → 回来过一遍合规检查。",act:"goto",tab:"video",label:"🎬 进入视频生成"},
  {k:"s7",t:"第七步：侵权及风险检查",d:"用本站检测器查标题、描述、链接和图片文字。",guide:"把最终标题和描述粘到检测器里查一遍，有高风险先改；商品图也要过图片识别。检测结果仅供参考，不代表官方审核。",act:"goto",tab:"home",label:"🔍 进入侵权词检测器"},
  {k:"s8",t:"第八步：上架前最终检查",d:"逐项勾完下方检查清单，再做最后人工复核。",guide:"对照实物和刊登页逐项勾选；全部勾完会出现「上架前检查完成」。注意：这不等于官方审核通过，上架后还要留意平台通知。",act:"checklist"}
 ];
@@ -1438,7 +1438,7 @@ function wbRender(){
     if(s.act==="form")sh+='<button class="btn btn-light" type="button" data-wbscroll="wbF_name">去填写资料 ↑</button> ';
     if(s.act==="goto")sh+='<button class="btn btn-yellow" type="button" data-goto="'+s.tab+'">'+s.label+'</button> ';
     if(s.act==="checklist")sh+='<button class="btn btn-light" type="button" data-wbscroll="wbChecks">去勾检查清单 ↓</button> ';
-    if(s.act==="prompt")sh+='<button class="btn btn-yellow" type="button" id="wbDescPrompt">📋 复制 Muse 描述提示词</button> ';
+    if(s.act==="prompt")sh+='<button class="btn btn-yellow" type="button" id="wbDescPrompt">📋 复制 AI 描述提示词</button> ';
     if(s.act==="profit"){
       var pr=p.profit||{};
       sh+='<div class="wb-grid"><div class="wb-field"><label>售价（MXN 比索）</label><input class="search" data-wbp="price" inputmode="decimal" placeholder="例如：349" value="'+wbEsc(pr.price||"")+'"></div>'
@@ -2083,7 +2083,7 @@ else lines.push("· 合规提醒：名称/关键词未命中现有词库（不�
 if(sc.scaled===null)lines.push("· 评分：数据不足，暂不给折算分。");
 else{var sug=sc.scaled>=70&&sc.completeness>=60?"建议小批量测试（先看测试计划）":sc.scaled>=50?"建议进一步调查 / 建议询价":(c.risk==="有"?"建议淘汰":"建议暂缓");
 lines.push("· 折算评分 "+sc.scaled+" 分 → 本地下一步建议（仅供参考）："+sug+"。");}
-lines.push("· 说明：以上是本地规则按你录入的数据生成的，不调用 AI、不预测销量。想要深度分析，点「复制给 Muse 深度分析」。");
+lines.push("· 说明：以上是本地规则按你录入的数据生成的，不调用 AI、不预测销量。想要深度分析，点「复制给 AI 深度分析」。");
 return lines.join("\n");
 }
 function pkPrompt(c){
@@ -2423,7 +2423,7 @@ h+='<div class="wb-field"><label>目标市场 *</label><select class="search" da
 return h;}
 function lsFinalHTML(){
 return LS_FINAL.map(function(f){
-return '<div class="wb-field"><label>'+f[1]+'</label><textarea class="search ls-final" data-lsfinal="'+f[0]+'" placeholder="把 Muse 生成的结果粘贴到这里统一管理"></textarea><div class="wb-toolbar" style="margin:4px 0 10px"><button class="btn btn-light" type="button" data-lscopyf="'+f[0]+'">复制'+f[1]+'</button></div></div>';}).join("");}
+return '<div class="wb-field"><label>'+f[1]+'</label><textarea class="search ls-final" data-lsfinal="'+f[0]+'" placeholder="把 AI 生成的结果粘贴到这里统一管理"></textarea><div class="wb-toolbar" style="margin:4px 0 10px"><button class="btn btn-light" type="button" data-lscopyf="'+f[0]+'">复制'+f[1]+'</button></div></div>';}).join("");}
 function lsProgress(){
 var p=lsSel?lsProj(lsSel):null;var box=document.getElementById("lsProg");
 if(!p){box.innerHTML="";return;}
@@ -2499,7 +2499,7 @@ if(!p.name||!p.cat){showToast("先把商品名称和类目填上，提示词才�
 var kind=b.dataset.lsgen;
 document.getElementById("lsOut_"+kind).value=lsPrompt(kind,p);
 lsGenFlags[kind]=true;lsProgress();
-showToast("提示词已生成，点「复制提示词」粘贴到 Muse");});});
+showToast("提示词已生成，点「复制提示词」粘贴到 AI");});});
 document.querySelectorAll("[data-lscopy]").forEach(function(b){b.addEventListener("click",function(){
 var ta=document.getElementById("lsOut_"+b.dataset.lscopy);
 if(!ta.value){showToast("先生成提示词再复制");return;}wbCopy(ta.value);});});
@@ -2519,7 +2519,7 @@ var out=document.getElementById("lsQuickOut");
 var miss=[].concat(nameT.missing,matT.missing,funcT.missing);
 out.innerHTML='<div class="note">⚡ 本地快速标题（词典规则版，不是 AI）：<br>标准版：<b>'+wbEsc(v1)+'</b>（'+v1.length+' 字符）<br>关键词版：<b>'+wbEsc(v2)+'</b>（'+v2.length+' 字符）'
 +(miss.length?'<br><span style="color:#b3261e">这些词词典里没有、保留了原文，请人工确认：'+wbEsc(miss.join("、"))+'</span>':"")
-+'<br><span class="wb-meta">想要更地道的标题，用上面的「生成标题提示词」去 Muse 生成。</span></div>';});
++'<br><span class="wb-meta">想要更地道的标题，用上面的「生成标题提示词」去 AI 生成。</span></div>';});
 var lsAttrLast="";
 document.getElementById("lsAttrGen").addEventListener("click",function(){
 var p=lsSel?lsProj(lsSel):null;if(!p){showToast("先选择商品");return;}
@@ -2878,7 +2878,7 @@ document.getElementById("vdExport").addEventListener("click",function(){
   var plan=vdLastPlan.plan,v=plan.v;
   var lines=["美客多商品视频制作方案","类型："+VD_TYPE_LABEL[v.type]+"｜"+v.ratio+"｜"+v.dur+" 秒｜风格："+v.style,"商品："+(v.name||"")+"｜品牌："+(v.brand||"")+"｜型号："+(v.model||""),"功能："+(v.func||"")+"｜材质："+(v.mat||"")+"｜尺寸："+(v.size||""),"卖点："+v.points.join("；"),"","分镜："];
   plan.shots.forEach(function(s,i){lines.push("镜头 "+(i+1)+"（"+s.dur+"s）"+s.view+"｜"+s.angle+"｜"+s.move+"｜旁白："+s.narr[0]+"（"+s.narr[1]+"）｜字幕："+s.sub);});
-  lines.push("","Muse 提示词：",vdLastPlan.prompt);
+  lines.push("","AI 提示词：",vdLastPlan.prompt);
   var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain"}));a.download="video-plan.txt";document.body.appendChild(a);a.click();a.remove();
 });
 document.getElementById("vdClear").addEventListener("click",function(){["vdName","vdBrand","vdModel","vdFunc","vdMat","vdSize","vdPoints","vdScene","vdEsName","vdVoiceCustom"].forEach(function(id){document.getElementById(id).value="";});document.getElementById("vdScript").innerHTML="";document.getElementById("vdPromptWrap").classList.remove("show");vdLastPlan=null;showToast("已清空当前内容");});
