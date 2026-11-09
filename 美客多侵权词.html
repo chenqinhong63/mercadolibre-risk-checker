@@ -257,7 +257,7 @@ section{padding-top:34px}
     <b>当前站点：</b>
     <button class="btn btn-yellow" id="siteMx" type="button">🇲🇽 墨西哥站（西语 · MXN）</button>
     <button class="btn btn-light" id="siteBr" type="button">🇧🇷 巴西站（葡语 · BRL）</button>
-    <span style="font-size:13px;color:#666">切换后，利润计算器、选品分析、上架工作台的币种会按所选站点显示（MXN ↔ BRL），检测器两种语言都查。图片/视频的提示词模板目前以西语为主，巴西站使用时请在提示词中注明「输出葡萄牙语」。</span>
+    <span style="font-size:13px;color:#666">切换后，利润计算器、选品分析、上架工作台、Listing 生成器按所选站点显示币种（MXN ↔ BRL）；标题优化、图片优化、视频生成、条码助手、检测器也都支持墨西哥站（西语）和巴西站（葡语）。</span>
   </div>
   <nav class="nav" id="tabBar">
     <a href="#" data-tab="home" class="tab active">🔍 侵权与合规风险检测器</a><a href="#" data-tab="title" class="tab">✍️ 标题优化</a>
@@ -445,7 +445,7 @@ section{padding-top:34px}
     <input class="search" id="vdScene" placeholder="使用场景，例如：家庭厨房台面（留空则按类别自动推荐）">
     <div style="display:flex;gap:10px;flex-wrap:wrap">
       <input class="search" id="vdMarket" style="flex:1;min-width:150px" value="墨西哥 Mercado Libre">
-      <input class="search" id="vdEsName" style="flex:1;min-width:150px" placeholder="西语品名（可选），例如：organizador giratorio de especias">
+      <input class="search" id="vdEsName" style="flex:1;min-width:150px" placeholder="外语品名（可选），例如：organizador giratorio / giratório de especias">
     </div>
 
     <h3 style="margin-top:22px">第三部分：视频类型与参数</h3>
@@ -775,6 +775,7 @@ section{padding-top:34px}
   </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.12.1/JsBarcode.all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.12.1/JsBarcode.all.min.js"></script>
   <section class="card" id="sect-barcode">
     <div class="sec-head"><span class="num">🔢</span><div><h2>美客多商品条码助手</h2><p>UPC / EAN / GTIN 条码基础检查与商品资料辅助</p></div></div>
     <div class="bc-warn">⚠️ <b>先说清：</b>本工具用于条码格式检查和测试条码演示，<b>不提供商品条码注册服务</b>。格式正确不代表条码真实有效或拥有合法使用权。请通过正规渠道获取商品条码，并以 Mercado Libre 当前商品类目和销售国家要求为准。</div>
@@ -811,7 +812,7 @@ section{padding-top:34px}
 
     <h3 style="margin:20px 0 6px">4. 美客多条码要求辅助判断（只给核实方向，不编政策）</h3>
     <div class="wb-grid">
-      <div class="wb-field"><label for="bc_j_country">商品销售国家</label><select class="search" id="bc_j_country"><option>墨西哥</option><option>其他国家</option></select></div>
+      <div class="wb-field"><label for="bc_j_country">商品销售国家</label><select class="search" id="bc_j_country"><option>墨西哥</option><option>巴西</option><option>其他国家</option></select></div>
       <div class="wb-field"><label for="bc_j_cat">商品类目</label><input class="search" id="bc_j_cat" placeholder="例如：厨房收纳"></div>
       <div class="wb-field"><label for="bc_j_type">商品类型</label><select class="search" id="bc_j_type"><option>普通商品</option><option>自有品牌商品</option><option>手工作品</option><option>二手商品</option></select></div>
       <div class="wb-field"><label for="bc_j_has">是否拥有正规商品条码</label><select class="search" id="bc_j_has"><option>有（GS1 正规渠道）</option><option>没有</option><option>不确定</option></select></div>
@@ -839,6 +840,7 @@ section{padding-top:34px}
     <details class="faq"><summary>7. 如何了解正规商品条码的获取方式？</summary><p>正规渠道是 GS1：中国企业一般找中国物品编码中心（GS1 中国）申请厂商识别代码，墨西哥本地公司找 GS1 México；有品牌的找品牌方或供应商要授权使用的条码。具体费用和流程以 GS1 官方公布为准，本站不代办、不卖码。</p></details>
     <details class="faq"><summary>8. 商品没有条码时应该怎么办？</summary><p>先确认类目要求：到卖家中心按你的类目实际走一遍刊登，看 GTIN 字段是必填、可选还是有「无条码」类选项（不同国家、类目、商品类型可能不同，本站不写死）。普通刊登和目录刊登的要求也可能不一样。实在没有，又确认类目必须要，就走 GS1 正规申请，不要买假码凑数。</p></details>
   </section>
+
 
   <section class="card" id="sect-listing">
     <div class="sec-head"><span class="num">📝</span><div><h2>Listing 全套生成器</h2><p>填一次商品信息，生成标题、描述、卖点、关键词、属性、图片、视频的全套上架资料</p></div></div>
@@ -1381,22 +1383,22 @@ function wbEsc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g
 var WB_KEY="mlr_projects_v1";
 var WB_STATUSES=["未开始","进行中","已完成","需要重新检查"];
 var WB_REQ=[["name","商品名称"],["cat","商品类目"],["brand","商品品牌"],["spec","商品规格"],["cost","采购成本"]];
-var WB_CHECKS=["商品信息是否真实完整","商品品牌是否准确","商品型号是否准确","标题是否清晰","西班牙语是否自然","图片是否清晰","图片是否与实物一致","商品规格是否准确","是否检查常见侵权风险","是否检查平台及类目要求","是否确认价格和库存","是否完成最终人工复核"];
+var WB_CHECKS=["商品信息是否真实完整","商品品牌是否准确","商品型号是否准确","标题是否清晰","外语（西语/葡语）是否自然","图片是否清晰","图片是否与实物一致","商品规格是否准确","是否检查常见侵权风险","是否检查平台及类目要求","是否确认价格和库存","是否完成最终人工复核"];
 var WB_STEPS=[
  {k:"s1",t:"第一步：商品资料整理",d:"把名称、类目、品牌、规格、成本等真实资料填全。缺什么上面会红字提示，不要编造。",guide:"在本页上方「商品资料」里逐项填写。品牌没有就写「无品牌」，型号没有可留空；尺寸重量请实测后再填，后面算运费和做尺寸图都要用。",act:"form"},
  {k:"s2",t:"第二步：选品与利润分析",d:"用下面的小计算器估算单件利润（只是估算，不是平台数据）。",guide:"填入你打算卖的墨西哥比索售价、汇率、平台佣金比例和预估运费，点计算。佣金比例按你的类目和刊登类型在卖家中心确认，不要凭感觉填。也可以用顶部「🧮 利润计算器」做完整测算（盈亏平衡、目标售价、多售价对比），并把结果保存回本项目。",act:"profit"},
- {k:"s3",t:"第三步：Listing 标题优化",d:"用本站的标题优化器生成 60 字符内的西语标题。",guide:"先在本页把商品名称、规格填好，再去标题优化器：填中文名、材质、功能、规格，生成后挑一条，回到这里把这一步标为已完成。",act:"goto",tab:"title",label:"✍️ 进入标题优化"},
- {k:"s4",t:"第四步：西班牙语商品描述",d:"本站暂无描述生成器，用下面的按钮复制 Muse 提示词，到 Muse 里生成地道西语描述。",guide:"点「复制 Muse 描述提示词」，把商品资料自动带入提示词（缺的字段会标注待补充），在 Muse 对话里粘贴发送，拿到描述后人工核对数字和规格再用。",act:"prompt"},
+ {k:"s3",t:"第三步：Listing 标题优化",d:"用本站的标题优化器生成 60 字符内的外语标题（西语/葡语，按站点）。",guide:"先在本页把商品名称、规格填好，再去标题优化器：填中文名、材质、功能、规格，生成后挑一条，回到这里把这一步标为已完成。",act:"goto",tab:"title",label:"✍️ 进入标题优化"},
+ {k:"s4",t:"第四步：商品描述（西语/葡语）",d:"用下面的按钮复制 Muse 提示词，到 Muse 里生成地道外语描述（语言按本项目站点）。",guide:"点「复制 Muse 描述提示词」，把商品资料自动带入提示词（缺的字段会标注待补充），在 Muse 对话里粘贴发送，拿到描述后人工核对数字和规格再用。",act:"prompt"},
  {k:"s5",t:"第五步：商品图片优化",d:"用本站图片优化器诊断主图并生成图片提示词。",guide:"先准备好商品原图，再去图片优化器按 5 步走：上传诊断 → 填信息 → 生成提示词 → 合规自查 → 前后对比。尺寸图必须用你实测的尺寸。",act:"goto",tab:"imgopt",label:"🖼 进入图片优化"},
  {k:"s6",t:"第六步：商品视频制作",d:"用本站视频生成器做分镜脚本和 Muse 视频提示词。",guide:"先有图片素材再做视频。去视频生成器：上传素材 → 填商品信息 → 选类型生成分镜 → 复制提示词到 Muse 生成 → 回来过一遍合规检查。",act:"goto",tab:"video",label:"🎬 进入视频生成"},
- {k:"s7",t:"第七步：侵权及风险检查",d:"用本站检测器查标题、描述、链接和图片文字。",guide:"把最终标题和描述粘到检测器里查一遍，有高风险先改；商品图也要过图片识别。检测结果仅供参考，不代表官方审核。",act:"goto",tab:"home",label:"🔍 进入侵权与合规风险检测器"},
+ {k:"s7",t:"第七步：侵权及风险检查",d:"用本站检测器查标题、描述、链接和图片文字。",guide:"把最终标题和描述粘到检测器里查一遍，有高风险先改；商品图也要过图片识别。检测结果仅供参考，不代表官方审核。",act:"goto",tab:"home",label:"🔍 进入侵权词检测器"},
  {k:"s8",t:"第八步：上架前最终检查",d:"逐项勾完下方检查清单，再做最后人工复核。",guide:"对照实物和刊登页逐项勾选；全部勾完会出现「上架前检查完成」。注意：这不等于官方审核通过，上架后还要留意平台通知。",act:"checklist"}
 ];
 function wbLoad(){try{var v=JSON.parse(localStorage.getItem(WB_KEY)||"[]");return Array.isArray(v)?v:[];}catch(e){return[];}}
 function wbSave(list){try{localStorage.setItem(WB_KEY,JSON.stringify(list));}catch(e){showToast("保存失败：浏览器存储不可用或已满");}}
 function wbNow(){var n=new Date();return n.getFullYear()+"-"+String(n.getMonth()+1).padStart(2,"0")+"-"+String(n.getDate()).padStart(2,"0")+" "+String(n.getHours()).padStart(2,"0")+":"+String(n.getMinutes()).padStart(2,"0");}
 function wbCode(){var n=new Date();return "MLM-"+n.getFullYear()+String(n.getMonth()+1).padStart(2,"0")+String(n.getDate()).padStart(2,"0")+"-"+Math.random().toString(36).slice(2,6).toUpperCase();}
-function wbBlank(){var t=wbNow();var p={id:"p"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),code:wbCode(),name:"",cat:"",brand:"",model:"",spec:"",cost:"",weight:"",size:"",supplier:"",note:"",barcode:"",barcodeType:"",barcodeCheck:"",barcodeNote:"",market:"墨西哥",created:t,updated:t,steps:{},checks:{},profit:{price:"",rate:"",fee:"",ship:""}};WB_STEPS.forEach(function(s){p.steps[s.k]="未开始";});return p;}
+function wbBlank(){var t=wbNow();var p={id:"p"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),code:wbCode(),name:"",cat:"",brand:"",model:"",spec:"",cost:"",weight:"",size:"",supplier:"",note:"",market:"墨西哥",created:t,updated:t,steps:{},checks:{},profit:{price:"",rate:"",fee:"",ship:""}};WB_STEPS.forEach(function(s){p.steps[s.k]="未开始";});return p;}
 function wbOverall(p){var done=WB_STEPS.every(function(s){return p.steps[s.k]==="已完成";});if(done)return"已完成";var touched=WB_STEPS.some(function(s){return p.steps[s.k]!=="未开始";})||p.name||p.cat;return touched?"进行中":"未开始";}
 function wbProgress(p){var d=WB_STEPS.filter(function(s){return p.steps[s.k]==="已完成";}).length;return Math.round(d/WB_STEPS.length*100);}
 var wbSel=null;
@@ -1457,7 +1459,7 @@ function wbRender(){
   var dp=document.getElementById("wbDescPrompt");
   if(dp)dp.addEventListener("click",function(){
     var miss=wbMissing(p);
-    var txt="请根据以下真实商品资料，写一份 Mercado Libre 墨西哥站的西班牙语商品描述。要求：地道墨西哥西语、口语化但专业；分段写清卖点、规格、使用场景和包装清单；数字和规格只能用我给的，不要编造品牌、认证或功效；缺的资料标注「待补充」不要猜。\n商品名称："+(p.name||"待补充")+"\n类目："+(p.cat||"待补充")+"\n品牌："+(p.brand||"待补充")+"\n型号："+(p.model||"待补充")+"\n规格："+(p.spec||"待补充")+"\n重量："+(p.weight||"待补充")+"\n尺寸："+(p.size||"待补充")+"\n备注："+(p.note||"无")+(miss.length?"\n（注意：以下必填项还没填："+miss.join("、")+"）":"");
+    var txt="请根据以下真实商品资料，写一份 Mercado Libre "+p.market+"站的"+(p.market==="巴西"?"葡萄牙语":"西班牙语")+"商品描述。要求：地道"+(p.market==="巴西"?"巴西葡语":"墨西哥西语")+"、口语化但专业；分段写清卖点、规格、使用场景和包装清单；数字和规格只能用我给的，不要编造品牌、认证或功效；缺的资料标注「待补充」不要猜。\n商品名称："+(p.name||"待补充")+"\n类目："+(p.cat||"待补充")+"\n品牌："+(p.brand||"待补充")+"\n型号："+(p.model||"待补充")+"\n规格："+(p.spec||"待补充")+"\n重量："+(p.weight||"待补充")+"\n尺寸："+(p.size||"待补充")+"\n备注："+(p.note||"无")+(miss.length?"\n（注意：以下必填项还没填："+miss.join("、")+"）":"");
     wbCopy(txt);});
 }
 function wbProfitRun(){
@@ -1893,6 +1895,7 @@ document.getElementById("bcJudge").addEventListener("click",function(){
   var L=[];
   L.push("<b>辅助判断结果（只是核实方向，不是官方结论）</b>");
   L.push("· 销售国家："+country+"；类目："+cat+"；类型："+type+"。不同国家、类目、商品类型的条码要求可能不同，最终以你实际刊登时卖家中心该类目的字段要求为准。");
+  if(country==="巴西")L.push("· 巴西站提示：正规条码向 GS1 Brasil（gs1br.org）申请厂商识别代码；巴西卖家中心是 mercadolivre.com.br 体系，帮助搜索词用葡萄牙语「código de barras」「GTIN」。");
   L.push("· 是否需要查类目条码要求：<b>需要</b>。最可靠的做法：在卖家中心按这个类目真实走一遍刊登流程，看 GTIN/条码字段是必填、可选，还是有无条码选项；目录刊登和普通刊登的要求可能不同。");
   if(has.indexOf("有")===0)L.push("· 你已有正规条码：准备资料——条码对应的商品信息页/GS1 证书、采购凭证；如果是品牌方的码，还要品牌授权证明。刊登时填的码要和包装上印的一致。");
   else if(has==="没有")L.push("· 你目前没有正规条码：先按上面方法确认这个类目是否必须要码。确认必须要之后，正规做法是走 GS1 申请（见教学第 7 条），不要买来路不明的码、不要用本站测试编码凑数。");
@@ -1988,6 +1991,9 @@ var hasMed=wordHits.some(function(h){return WORDS[h.idx]&&WORDS[h.idx].risk==="m
 var cb="风险自评："+c.risk+" → 基础 "+base+" 分";
 if(hasHigh){base=Math.min(base,3);cb+="；名称/关键词命中高风险侵权词，封顶 3 分";}
 else if(hasMed){base=Math.min(base,10);cb+="；名称/关键词命中中风险词，封顶 10 分";}
+var compHits=(typeof analyzeField==="function")?analyzeField(scanText,"desc",false).filter(function(x){return x.comp;}):[];
+if(compHits.some(function(x){return x.level==="high";})){base=Math.min(base,3);cb+="；名称/关键词命中高风险合规词（功效/医疗宣称等，西葡语都查），封顶 3 分";}
+else if(compHits.length){base=Math.min(base,10);cb+="；名称/关键词命中合规风险词（受限品类/站外引流/绝对化），封顶 10 分";}
 dims.push({n:"合规与侵权风险",max:15,score:base,basis:cb,rule:"自评 无→15 · 待验证→7 · 有→0；命中侵权词库另行封顶"});
 var earned=0,possible=0;
 dims.forEach(function(d){if(d.score!==null){earned+=d.score;possible+=d.max;}});
@@ -2294,10 +2300,9 @@ document.getElementById("pkImportCsvFile").value="";};
 rd.readAsText(f);});
 pkRenderList();
 
-
 /* ===== 站点切换（墨西哥 / 巴西） ===== */
 function mlrSite(){try{return localStorage.getItem("mlr_site")==="br"?"br":"mx";}catch(e){return "mx";}}
-function mlrApplySite(){
+function mlrApplySite(){var _tl=document.getElementById("tLang");if(_tl)_tl.value=(mlrSite()==="br")?"pt":"es";
   var br=mlrSite()==="br";
   var bm=document.getElementById("siteMx"),bb=document.getElementById("siteBr");
   if(bm&&bb){bm.className="btn "+(br?"btn-light":"btn-yellow");bb.className="btn "+(br?"btn-yellow":"btn-light");}
@@ -2355,7 +2360,7 @@ function lsBlank(){var t=wbNow();var p={id:"l"+Date.now().toString(36)+Math.rand
 LS_FIELDS.forEach(function(f){p[f[0]]="";});LS_FINAL.forEach(function(f){p.out[f[0]]="";});return p;}
 function lsLoad(){try{var v=JSON.parse(localStorage.getItem(LS_KEY)||"[]");return Array.isArray(v)?v:[];}catch(e){return[];}}
 function lsSaveAll(l){try{localStorage.setItem(LS_KEY,JSON.stringify(l));}catch(e){showToast("保存失败：浏览器存储不可用或已满");}}
-function lsGet(id){return lsLoad().filter(function(p){return p.id===id;})[0]||null;}
+function lsProj(id){return lsLoad().filter(function(p){return p.id===id;})[0]||null;}
 function lsPut(p){var l=lsLoad();var i=-1;l.forEach(function(x,j){if(x.id===p.id)i=j;});if(i>=0)l[i]=p;else l.unshift(p);lsSaveAll(l);}
 var lsSel=null,lsGenFlags={};
 function lsLang(p){return p.market==="巴西站"?"pt":"es";}
@@ -2397,13 +2402,15 @@ var LS_ATTR_CAT=[
 {k:["衣","服装","鞋","包"],items:[["尺码","Talla","通常必填"],["面料","Tela / Composición","通常必填"],["版型","Corte / Ajuste","选填"]]},
 {k:["美妆","护肤","美容","个护"],items:[["净含量","Contenido neto","通常必填"],["适用肤质","Tipo de piel","选填"],["有效期","Fecha de caducidad","待确认"]]},
 {k:["玩具","儿童","母婴"],items:[["适用年龄","Edad recomendada","通常必填"],["是否含小零件","Piezas pequeñas","待确认（安全相关）"]]}];
+var LS_ATTR_PT={"Marca":"Marca","Modelo":"Modelo","Material":"Material","Color":"Cor","Peso":"Peso","Dimensiones":"Dimensões","Contenido del paquete":"Conteúdo da embalagem","Capacidad":"Capacidade","Cantidad de piezas":"Quantidade de peças","Apto para lavavajillas":"Pode ir à lava-louças","Voltaje":"Voltagem","Potencia":"Potência","Batería":"Bateria","Conectividad":"Conectividade","Talla":"Tamanho","Tela / Composición":"Tecido / Composição","Corte / Ajuste":"Corte / Ajuste","Contenido neto":"Conteúdo líquido","Tipo de piel":"Tipo de pele","Fecha de caducidad":"Data de validade","Edad recomendada":"Idade recomendada","Piezas pequeñas":"Peças pequenas"};
 function lsAttrText(p){
 var valMap={brand:p.brand,model:p.model,material:p.material,color:p.color,weight:p.weight,size:p.size,pack:p.pack};
 var order=["brand","model","material","color","weight","size","pack"];
-var lines=["[商品属性填写建议] "+(p.name||"未命名")+"（类目："+(p.cat||"未填")+"）","说明：本站读不到你的卖家后台，以下是按类目整理的常见属性；实际必填项以刊登时该类目的页面提示为准。"];
-LS_ATTR_BASE.forEach(function(a,i){var v=valMap[order[i]];lines.push("· "+a[0]+"（"+a[1]+"）— "+a[2]+" — "+((v&&String(v).trim())?("建议填："+v):"待确认：请按实物填写，不要编造"));});
+function an(a){return (lsLang(p)==="pt"&&LS_ATTR_PT[a[1]])?LS_ATTR_PT[a[1]]:a[1];}
+  var lines=["[商品属性填写建议] "+(p.name||"未命名")+"（类目："+(p.cat||"未填")+"）","说明：本站读不到你的卖家后台，以下是按类目整理的常见属性；实际必填项以刊登时该类目的页面提示为准。"];
+LS_ATTR_BASE.forEach(function(a,i){var v=valMap[order[i]];lines.push("· "+a[0]+"（"+an(a)+"）— "+a[2]+" — "+((v&&String(v).trim())?("建议填："+v):"待确认：请按实物填写，不要编造"));});
 var hay=((p.cat||"")+" "+(p.name||""));
-LS_ATTR_CAT.forEach(function(g){if(g.k.some(function(k){return hay.indexOf(k)>=0;})){lines.push("");g.items.forEach(function(a){lines.push("· "+a[0]+"（"+a[1]+"）— "+a[2]);});}});
+LS_ATTR_CAT.forEach(function(g){if(g.k.some(function(k){return hay.indexOf(k)>=0;})){lines.push("");g.items.forEach(function(a){lines.push("· "+a[0]+"（"+an(a)+"）— "+a[2]);});}});
 lines.push("提醒：规格类数字（尺寸、重量、容量）必须实测或来自供应商确认资料，猜的数字会导致退货和投诉。");
 return lines.join("\n");}
 function lsFormHTML(){
@@ -2416,7 +2423,7 @@ function lsFinalHTML(){
 return LS_FINAL.map(function(f){
 return '<div class="wb-field"><label>'+f[1]+'</label><textarea class="search ls-final" data-lsfinal="'+f[0]+'" placeholder="把 Muse 生成的结果粘贴到这里统一管理"></textarea><div class="wb-toolbar" style="margin:4px 0 10px"><button class="btn btn-light" type="button" data-lscopyf="'+f[0]+'">复制'+f[1]+'</button></div></div>';}).join("");}
 function lsProgress(){
-var p=lsSel?lsGet(lsSel):null;var box=document.getElementById("lsProg");
+var p=lsSel?lsProj(lsSel):null;var box=document.getElementById("lsProg");
 if(!p){box.innerHTML="";return;}
 var req=["name","cat","use","coreFunc","market"].filter(function(k){return (p[k]||"").trim();}).length;
 var opt=LS_FIELDS.filter(function(f){return!f[3]&&(p[f[0]]||"").trim();}).length;
@@ -2435,28 +2442,28 @@ if(lsSel)sel.value=lsSel;
 var wb=(typeof wbLoad==="function")?wbLoad():[];var ws=document.getElementById("lsWbSel");
 ws.innerHTML=wb.length?wb.map(function(x){return '<option value="'+x.id+'">'+wbEsc(x.code)+" · "+wbEsc(x.name||"未命名")+'</option>';}).join(""):'<option value="">（上架工作台暂无项目）</option>';}
 function lsOpen(id){
-lsSel=id;var p=lsGet(id);
+lsSel=id;var p=lsProj(id);
 document.querySelectorAll("[data-lsf]").forEach(function(el){el.value=p?(p[el.dataset.lsf]||""):"";});
 document.querySelectorAll("[data-lsfinal]").forEach(function(el){el.value=p?(p.out[el.dataset.lsfinal]||""):"";});
 lsRenderChecks();lsRefreshSel();lsProgress();}
 function lsRenderChecks(){
-var p=lsSel?lsGet(lsSel):null;
+var p=lsSel?lsProj(lsSel):null;
 document.getElementById("lsChecks").innerHTML=LS_CHECKS.map(function(t,i){var on=p&&p.checks["c"+i];
 return '<label style="display:block;font-size:14.5px;padding:5px 0"><input type="checkbox" data-lscheck="c'+i+'"'+(on?" checked":"")+'> '+t+'</label>';}).join("");}
 document.getElementById("lsForm").innerHTML=lsFormHTML();
 document.getElementById("lsFinalForm").innerHTML=lsFinalHTML();
 document.getElementById("lsForm").addEventListener("input",function(){
-var p=lsSel?lsGet(lsSel):null;if(!p)return;
+var p=lsSel?lsProj(lsSel):null;if(!p)return;
 document.querySelectorAll("[data-lsf]").forEach(function(el){p[el.dataset.lsf]=el.value;});
 p.updated=wbNow();lsPut(p);lsProgress();
 clearTimeout(window.__lsT);window.__lsT=setTimeout(lsRefreshSel,800);});
 document.getElementById("lsFinalForm").addEventListener("input",function(){
-var p=lsSel?lsGet(lsSel):null;if(!p)return;
+var p=lsSel?lsProj(lsSel):null;if(!p)return;
 document.querySelectorAll("[data-lsfinal]").forEach(function(el){p.out[el.dataset.lsfinal]=el.value;});
 p.updated=wbNow();lsPut(p);lsProgress();});
 document.getElementById("lsChecks").addEventListener("change",function(e){
 var cb=e.target.closest("[data-lscheck]");if(!cb)return;
-var p=lsSel?lsGet(lsSel):null;if(!p)return;
+var p=lsSel?lsProj(lsSel):null;if(!p)return;
 p.checks[cb.dataset.lscheck]=cb.checked;p.updated=wbNow();lsPut(p);});
 document.getElementById("lsSel").addEventListener("change",function(){lsOpen(this.value);});
 document.getElementById("lsNew").addEventListener("click",function(){
@@ -2464,17 +2471,17 @@ var list=lsLoad();var empty=list.filter(function(p){return!p.name;})[0];
 if(empty){lsOpen(empty.id);showToast("已有一个空白项目，先填它，避免重复");return;}
 var p=lsBlank();list.unshift(p);lsSaveAll(list);lsOpen(p.id);showToast("已新建 Listing 项目");});
 document.getElementById("lsDelete").addEventListener("click",function(){
-var p=lsSel?lsGet(lsSel):null;if(!p)return;
+var p=lsSel?lsProj(lsSel):null;if(!p)return;
 if(!confirm("确定删除 Listing 项目「"+(p.name||"未命名")+"」（"+p.code+"）吗？删除后无法恢复，建议先导出 JSON。"))return;
 var rest=lsLoad().filter(function(x){return x.id!==p.id;});
 if(!rest.length)rest=[lsBlank()];
 lsSaveAll(rest);lsOpen(rest[0].id);showToast("已删除");});
 document.getElementById("lsClearForm").addEventListener("click",function(){
-var p=lsSel?lsGet(lsSel):null;if(!p)return;
+var p=lsSel?lsProj(lsSel):null;if(!p)return;
 if(!confirm("清空当前商品的基础信息表单？（项目保留，汇总内容不动）"))return;
 LS_FIELDS.forEach(function(f){p[f[0]]="";});p.updated=wbNow();lsPut(p);lsOpen(p.id);showToast("已清空表单");});
 document.getElementById("lsCopyInfo").addEventListener("click",function(){
-var p=lsSel?lsGet(lsSel):null;if(!p)return;wbCopy("== 商品基础信息 =="+p.code+"\n"+lsInfo(p));});
+var p=lsSel?lsProj(lsSel):null;if(!p)return;wbCopy("== 商品基础信息 =="+p.code+"\n"+lsInfo(p));});
 document.getElementById("lsWbImport").addEventListener("click",function(){
 var id=document.getElementById("lsWbSel").value;if(!id){showToast("上架工作台里还没有项目可导入");return;}
 var w=wbGet(id);if(!w)return;
@@ -2485,7 +2492,7 @@ p.use="";p.coreFunc=w.spec||"";
 var list=lsLoad();list.unshift(p);lsSaveAll(list);lsOpen(p.id);
 showToast("已从工作台导入为新 Listing 项目（用途请补填）");});
 document.querySelectorAll("[data-lsgen]").forEach(function(b){b.addEventListener("click",function(){
-var p=lsSel?lsGet(lsSel):null;if(!p){showToast("先新建或选择一个商品");return;}
+var p=lsSel?lsProj(lsSel):null;if(!p){showToast("先新建或选择一个商品");return;}
 if(!p.name||!p.cat){showToast("先把商品名称和类目填上，提示词才有依据");return;}
 var kind=b.dataset.lsgen;
 document.getElementById("lsOut_"+kind).value=lsPrompt(kind,p);
@@ -2495,7 +2502,7 @@ document.querySelectorAll("[data-lscopy]").forEach(function(b){b.addEventListene
 var ta=document.getElementById("lsOut_"+b.dataset.lscopy);
 if(!ta.value){showToast("先生成提示词再复制");return;}wbCopy(ta.value);});});
 document.getElementById("lsQuickTitle").addEventListener("click",function(){
-var p=lsSel?lsGet(lsSel):null;if(!p||!p.name){showToast("先填商品中文名称");return;}
+var p=lsSel?lsProj(lsSel):null;if(!p||!p.name){showToast("先填商品中文名称");return;}
 var pt=lsLang(p)==="pt";
 var MATD=pt?MAT_PT:MAT_ES,FUNCD=pt?FUNC_PT:FUNC_ES,PRODD=pt?PROD_PT:PROD_ES;
 var nameT=trWords(p.name,Object.assign({},MATD,FUNCD,PRODD));
@@ -2513,7 +2520,7 @@ out.innerHTML='<div class="note">⚡ 本地快速标题（词典规则版，不�
 +'<br><span class="wb-meta">想要更地道的标题，用上面的「生成标题提示词」去 Muse 生成。</span></div>';});
 var lsAttrLast="";
 document.getElementById("lsAttrGen").addEventListener("click",function(){
-var p=lsSel?lsGet(lsSel):null;if(!p){showToast("先选择商品");return;}
+var p=lsSel?lsProj(lsSel):null;if(!p){showToast("先选择商品");return;}
 lsAttrLast=lsAttrText(p);
 document.getElementById("lsAttrOut").innerHTML='<div class="note" style="white-space:pre-wrap">'+wbEsc(lsAttrLast)+'</div>';
 var ta=document.querySelector('[data-lsfinal="fAttr"]');
@@ -2521,7 +2528,7 @@ if(ta&&!ta.value.trim()){ta.value=lsAttrLast;p.out.fAttr=lsAttrLast;p.updated=wb
 lsGenFlags.attr=true;lsProgress();});
 document.getElementById("lsAttrCopy").addEventListener("click",function(){if(!lsAttrLast){showToast("先生成属性建议");return;}wbCopy(lsAttrLast);});
 document.getElementById("lsCompRun").addEventListener("click",function(){
-var p=lsSel?lsGet(lsSel):null;if(!p){showToast("先选择商品");return;}
+var p=lsSel?lsProj(lsSel):null;if(!p){showToast("先选择商品");return;}
 var t=document.getElementById("lsChkTitle").value.trim(),d=document.getElementById("lsChkDesc").value.trim(),s=document.getElementById("lsChkPoints").value.trim();
 var box=document.getElementById("lsCompOut");
 if(!t&&!d&&!s){box.innerHTML='<div class="note">⚪ <b>信息不足</b>：标题、描述、卖点都是空的，没法检查。先粘贴要检查的文案。</div>';return;}
@@ -2551,33 +2558,33 @@ function lsFullText(p){
 function lsDownload(name,content,type){
 var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([content],{type:type}));a.download=name;document.body.appendChild(a);a.click();a.remove();}
 document.getElementById("lsCopyAll").addEventListener("click",function(){
-var p=lsSel?lsGet(lsSel):null;if(!p)return;wbCopy(lsFullText(p));});
+var p=lsSel?lsProj(lsSel):null;if(!p)return;wbCopy(lsFullText(p));});
 document.getElementById("lsExpTxt").addEventListener("click",function(){
-var p=lsSel?lsGet(lsSel):null;if(!p)return;lsDownload("listing-"+p.code+".txt",lsFullText(p),"text/plain");showToast("已导出 TXT");});
+var p=lsSel?lsProj(lsSel):null;if(!p)return;lsDownload("listing-"+p.code+".txt",lsFullText(p),"text/plain");showToast("已导出 TXT");});
 document.getElementById("lsExpJson").addEventListener("click",function(){
-var p=lsSel?lsGet(lsSel):null;if(!p)return;lsDownload("listing-"+p.code+".json",JSON.stringify(p,null,2),"application/json");showToast("已导出 JSON");});
+var p=lsSel?lsProj(lsSel):null;if(!p)return;lsDownload("listing-"+p.code+".json",JSON.stringify(p,null,2),"application/json");showToast("已导出 JSON");});
 document.getElementById("lsExpCsv").addEventListener("click",function(){
-var p=lsSel?lsGet(lsSel):null;if(!p)return;
+var p=lsSel?lsProj(lsSel):null;if(!p)return;
 function q(v){return '"'+String(v==null?"":v).replace(/"/g,'""')+'"';}
 var rows=[["字段","内容"],["项目编号",p.code],["目标市场",p.market]];
 LS_FIELDS.forEach(function(f){rows.push([f[1].replace(" *",""),p[f[0]]||""]);});
 LS_FINAL.forEach(function(f){rows.push([f[1],p.out[f[0]]||""]);});
 lsDownload("listing-"+p.code+".csv","\ufeff"+rows.map(function(r){return r.map(q).join(",");}).join("\n"),"text/csv");showToast("已导出 CSV");});
 document.getElementById("lsClearFinal").addEventListener("click",function(){
-var p=lsSel?lsGet(lsSel):null;if(!p)return;
+var p=lsSel?lsProj(lsSel):null;if(!p)return;
 if(!confirm("清空当前商品的汇总内容（8 栏）？基础信息保留。"))return;
 LS_FINAL.forEach(function(f){p.out[f[0]]="";});p.updated=wbNow();lsPut(p);lsOpen(p.id);showToast("已清空汇总内容");});
 (function(){var l=lsLoad();if(!l.length){l=[lsBlank()];lsSaveAll(l);}lsOpen(l[0].id);})();
 
 /* image optimizer */
 var IO_SCENES={
- hogar:{label:"家居用品",scenes:["客厅沙发旁的茶几上","卧室床头柜上","厨房台面上，背景有虚化的灶台和橱柜"],scenesEs:["sobre la mesa de centro junto al sofá de la sala","sobre el buró de la recámara","sobre la encimera de la cocina con la estufa desenfocada al fondo"]},
- auto:{label:"汽车用品",scenes:["真实家用车驾驶位/中控台旁","汽车后备箱内","家庭车库中"],scenesEs:["junto a la consola central de un auto familiar real","dentro de la cajuela de un auto","en un garaje familiar"]},
- outdoor:{label:"户外用品",scenes:["庭院草坪上","露营地帐篷旁","公园野餐垫上"],scenesEs:["sobre el césped de un patio","junto a una tienda de campaña en un campamento","sobre una manta de picnic en un parque"]},
- elec:{label:"电子产品",scenes:["书桌办公场景，旁边有笔记本电脑","客厅电视柜旁","手持使用的近景特写"],scenesEs:["en un escritorio junto a una laptop","junto al mueble de TV de la sala","primer plano en la mano de una persona usándolo"]},
- belleza:{label:"美妆个护",scenes:["浴室镜柜前","梳妆台上，自然光","简洁的浅色背景特写"],scenesEs:["frente al espejo del baño","sobre un tocador con luz natural","primer plano sobre fondo claro y limpio"]},
- moda:{label:"服饰鞋包",scenes:["日常街景中的真人上身效果","衣柜/衣架旁的平铺展示","户外日常出行场景"],scenesEs:["puesto por una persona en una calle cotidiana","presentación en plano junto a un clóset","en una salida cotidiana al aire libre"]},
- otro:{label:"其他",scenes:["与商品用途相关的真实生活场景","干净的浅色环境中"],scenesEs:["en un entorno real relacionado con el uso del producto","en un ambiente claro y limpio"]}
+ hogar:{label:"家居用品",scenes:["客厅沙发旁的茶几上","卧室床头柜上","厨房台面上，背景有虚化的灶台和橱柜"],scenesEs:["sobre la mesa de centro junto al sofá de la sala","sobre el buró de la recámara","sobre la encimera de la cocina con la estufa desenfocada al fondo"],scenesPt:["sobre a mesa de centro ao lado do sofá da sala","sobre a mesa de cabeceira do quarto","sobre a bancada da cozinha, com o fogão desfocado ao fundo"]},
+ auto:{label:"汽车用品",scenes:["真实家用车驾驶位/中控台旁","汽车后备箱内","家庭车库中"],scenesEs:["junto a la consola central de un auto familiar real","dentro de la cajuela de un auto","en un garaje familiar"],scenesPt:["ao lado do console central de um carro familiar de verdade","dentro do porta-malas de um carro","em uma garagem residencial"]},
+ outdoor:{label:"户外用品",scenes:["庭院草坪上","露营地帐篷旁","公园野餐垫上"],scenesEs:["sobre el césped de un patio","junto a una tienda de campaña en un campamento","sobre una manta de picnic en un parque"],scenesPt:["sobre a grama de um quintal","ao lado de uma barraca em um acampamento","sobre uma toalha de piquenique em um parque"]},
+ elec:{label:"电子产品",scenes:["书桌办公场景，旁边有笔记本电脑","客厅电视柜旁","手持使用的近景特写"],scenesEs:["en un escritorio junto a una laptop","junto al mueble de TV de la sala","primer plano en la mano de una persona usándolo"],scenesPt:["sobre uma mesa de escritório ao lado de um notebook","ao lado do rack da TV da sala","close em uma pessoa usando, segurando com a mão"]},
+ belleza:{label:"美妆个护",scenes:["浴室镜柜前","梳妆台上，自然光","简洁的浅色背景特写"],scenesEs:["frente al espejo del baño","sobre un tocador con luz natural","primer plano sobre fondo claro y limpio"],scenesPt:["em frente ao espelho do banheiro","sobre uma penteadeira com luz natural","close sobre fundo claro e limpo"]},
+ moda:{label:"服饰鞋包",scenes:["日常街景中的真人上身效果","衣柜/衣架旁的平铺展示","户外日常出行场景"],scenesEs:["puesto por una persona en una calle cotidiana","presentación en plano junto a un clóset","en una salida cotidiana al aire libre"],scenesPt:["vestido por uma pessoa em uma rua comum","exibição deitada ao lado de um guarda-roupa","em um passeio comum ao ar livre"]},
+ otro:{label:"其他",scenes:["与商品用途相关的真实生活场景","干净的浅色环境中"],scenesEs:["en un entorno real relacionado con el uso del producto","en un ambiente claro y limpio"],scenesPt:["em um ambiente real relacionado ao uso do produto","em um ambiente claro e limpo"]}
 };
 function ioMetrics(img,file,done){
   var max=256;var scale=Math.min(1,max/Math.max(img.naturalWidth,img.naturalHeight));
@@ -2627,19 +2634,20 @@ function ioInfo(){
 var IO_COMMON_TAIL="\n\n硬性要求（必须遵守）：\n- 不得改变商品的真实结构、颜色、型号、配件数量、品牌标识和功能；不得虚构商品没有的功能、认证和参数。\n- 商品外观与原图保持一致，真实比例不变形；画面里不出现商品实际不包含的配件。\n- 尺寸：1:1 正方形，1200×1200px；不加水印、不加边框、不加联系方式。\n- 目标市场：墨西哥（Mercado Libre 墨西哥站）。\n负面提示词：变形，结构改变，颜色改变，多余配件，虚构功能，文字乱码，水印，logo 变形，低清晰度，杂乱背景。";
 function ioPrompt(kind){
   var v=ioInfo();var sc=IO_SCENES[v.cat]||IO_SCENES.otro;
+  var br=(typeof mlrSite==="function"&&mlrSite()==="br");var langName=br?"巴西葡萄牙语":"墨西哥西班牙语";var MATD=br?MAT_PT:MAT_ES;var scenesL=br?(sc.scenesPt||sc.scenesEs):sc.scenesEs;
   var head="你是一名电商商品图设计师。请基于我上传的商品原图处理图片。\n商品信息（只用这些事实，不要补充）：\n- 商品名称："+(v.name||"（未填）")+"\n- 类别："+sc.label+"\n- 品牌情况："+(v.brand||"未说明")+"\n- 材质："+(v.mat||"（未填）")+"\n- 规格："+(v.spec||"（未填，需按实物）")+"\n";
   var body="";
   if(kind==="main"){body="任务：优化商品主图。\n- 换成纯白背景（RGB 255,255,255），商品居中，占画面约 95%。\n- 清理背景杂物和阴影，光线均匀明亮，轻微增强质感但保持真实。\n- 提升清晰度，保留全部真实细节（纹理、接口、标识）。";}
   else if(kind==="points"){
     var pts=v.points?v.points.split(/\n+/).map(function(s){return s.trim();}).filter(Boolean):[];
-    body="任务：生成一套卖点副图（每张一个卖点，1:1）。图组结构：核心卖点图 → 功能展示图 → 材质图 → 细节特写图 → 包装清单图。\n视觉风格：白底，深红色大标题，灰色小字说明，红色箭头/圆点引线标注，局部用圆形放大窗展示细节。\n图上文字用墨西哥西班牙语，表达自然地道，不要机器直译腔。每张图只写一句收益话。\n我的真实卖点（请逐条翻译成自然的墨西哥西班牙语后排版，不要改写出新功能）：\n"+(pts.length?pts.map(function(p,i){return (i+1)+". "+p;}).join("\n"):"（未填卖点，请先在页面第二步填写）")
-      +(v.mat?"\n材质图文字可用：Hecho de "+trWords(v.mat,MAT_ES).text+"（若翻译不完整请按实物材质修正）。":"")
+    body="任务：生成一套卖点副图（每张一个卖点，1:1）。图组结构：核心卖点图 → 功能展示图 → 材质图 → 细节特写图 → 包装清单图。\n视觉风格：白底，深红色大标题，灰色小字说明，红色箭头/圆点引线标注，局部用圆形放大窗展示细节。\n图上文字用"+langName+"，表达自然地道，不要机器直译腔。每张图只写一句收益话。\n我的真实卖点（请逐条翻译成自然的"+langName+"后排版，不要改写出新功能）：\n"+(pts.length?pts.map(function(p,i){return (i+1)+". "+p;}).join("\n"):"（未填卖点，请先在页面第二步填写）")
+      +(v.mat?"\n材质图文字可用："+(br?"Feito de ":"Hecho de ")+trWords(v.mat,MATD).text+"（若翻译不完整请按实物材质修正）。":"")
       +(v.parts?"\n包装清单图内容（只画这些）："+v.parts:"");
   }
-  else if(kind==="scene"){body="任务：生成使用场景图。商品外观必须和原图完全一致，不改变结构和功能，不添加不存在的配件。\n推荐场景（任选其一，或按商品用途微调）：\n"+sc.scenes.map(function(s,i){return (i+1)+". "+s+"（西语描述："+sc.scenesEs[i]+"）";}).join("\n")+"\n光线自然，像真实买家秀，不要广告棚拍的假感。";}
-  else if(kind==="size"){body="任务：生成尺寸说明图。白底，商品居中，用红色双向箭头标出长、宽、高，标注文字用西班牙语（Largo / Ancho / Alto）。\n尺寸数据（必须照抄，不许估算）："+(v.spec||"（未填——请返回提醒我先实测长×宽×高再生成，不要编造数字）");}
-  else{body="任务：诊断我上传的商品图（不要修图，只出诊断报告）。请逐项检查并给出证据（指出画面位置）：\n1. 清晰度与分辨率是否够 1200×1200 上架要求\n2. 商品主体是否突出、是否居中、有无裁切\n3. 背景是否干净、是否适合做主图\n4. 有无拉伸变形、颜色失真\n5. 图上文字是否过多、是否有乱码或非西班牙语\n6. 有无疑似侵权元素（他人品牌 logo、卡通角色、明星、球队标志、水印）——只提示疑似，不要下侵权结论\n7. 图片内容与商品名称是否一致："+(v.name||"（未填）")+"\n最后按“必须改 / 建议改 / 可以保留”三档给结论。";}
-  return head+body+IO_COMMON_TAIL;
+  else if(kind==="scene"){body="任务：生成使用场景图。商品外观必须和原图完全一致，不改变结构和功能，不添加不存在的配件。\n推荐场景（任选其一，或按商品用途微调）：\n"+sc.scenes.map(function(s,i){return (i+1)+". "+s+"（外语描述："+scenesL[i]+"）";}).join("\n")+"\n光线自然，像真实买家秀，不要广告棚拍的假感。";}
+  else if(kind==="size"){body="任务：生成尺寸说明图。白底，商品居中，用红色双向箭头标出长、宽、高，标注文字用"+(br?"葡萄牙语（Comprimento / Largura / Altura）":"西班牙语（Largo / Ancho / Alto）")+"。\n尺寸数据（必须照抄，不许估算）："+(v.spec||"（未填——请返回提醒我先实测长×宽×高再生成，不要编造数字）");}
+  else{body="任务：诊断我上传的商品图（不要修图，只出诊断报告）。请逐项检查并给出证据（指出画面位置）：\n1. 清晰度与分辨率是否够 1200×1200 上架要求\n2. 商品主体是否突出、是否居中、有无裁切\n3. 背景是否干净、是否适合做主图\n4. 有无拉伸变形、颜色失真\n5. 图上文字是否过多、是否有乱码或非"+langName+"\n6. 有无疑似侵权元素（他人品牌 logo、卡通角色、明星、球队标志、水印）——只提示疑似，不要下侵权结论\n7. 图片内容与商品名称是否一致："+(v.name||"（未填）")+"\n最后按“必须改 / 建议改 / 可以保留”三档给结论。";}
+  return head+body+IO_COMMON_TAIL.replace("目标市场：墨西哥（Mercado Libre 墨西哥站）","目标市场："+(br?"巴西（Mercado Livre 巴西站）":"墨西哥（Mercado Libre 墨西哥站）"));
 }
 var IO_RISKS=[
  {q:"图里有不是你自有、也未授权的品牌 logo 或商标？",lv:"review"},
@@ -2737,22 +2745,30 @@ ad:[
 {w:2,view:"结尾定格：商品与品名，不出现价格和促销信息",angle:"平视全景",move:"固定镜头",narr:["Encuéntralo aquí, en Mercado Libre.","就在 Mercado Libre 找它。"]}
 ]
 };
-var VD_TYPE_LABEL={showcase:"商品展示视频",function:"商品功能演示视频",scene:"商品使用场景视频",detail:"商品细节展示视频",install:"商品安装教程视频",voiceover:"墨西哥西班牙语解说视频",ad:"AI 商品广告创意视频"};
+var VD_TYPE_LABEL={showcase:"商品展示视频",function:"商品功能演示视频",scene:"商品使用场景视频",detail:"商品细节展示视频",install:"商品安装教程视频",voiceover:"外语解说视频（西语/葡语）",ad:"AI 商品广告创意视频"};
 var vdMeta=null,vdLastPlan=null;
 function vdInfo(){
 return {name:(document.getElementById("vdName").value||"").trim(),cat:document.getElementById("vdCat").value,brand:(document.getElementById("vdBrand").value||"").trim(),model:(document.getElementById("vdModel").value||"").trim(),func:(document.getElementById("vdFunc").value||"").trim(),mat:(document.getElementById("vdMat").value||"").trim(),size:(document.getElementById("vdSize").value||"").trim(),points:(document.getElementById("vdPoints").value||"").split(/\n+/).map(function(s){return s.trim();}).filter(Boolean),scene:(document.getElementById("vdScene").value||"").trim(),market:(document.getElementById("vdMarket").value||"").trim(),esName:(document.getElementById("vdEsName").value||"").trim(),type:document.getElementById("vdType").value,ratio:document.getElementById("vdRatio").value,dur:parseInt(document.getElementById("vdDur").value,10),style:document.getElementById("vdStyle").value,voice:document.getElementById("vdVoice").value,voiceCustom:(document.getElementById("vdVoiceCustom").value||"").split(/\n+/).map(function(s){return s.trim();}).filter(Boolean),sub:document.getElementById("vdSub").value};
 }
+var VD_NARR_PT={
+showcase:["Apresento a você {P}.","Design pensado para o seu dia a dia.","Repare neste detalhe.","Feito de {MATES}.","Pronto para usar quando você precisar."],
+function:["Isso acontece com você?","Veja como funciona.","E ele também faz isso.","Na sua casa, é muito prático.","Simples assim."],
+scene:["Imagine isso no seu espaço.","Combina com tudo, sem esforço.","Use assim, passo a passo.","Cada detalhe importa.","É bonito e funciona ainda melhor."],
+detail:["Conheça de perto.","Feito de {MATES}.","Estrutura firme e bem pensada.","Acabamento que se nota.","Qualidade em cada detalhe."],
+install:["Isto é o que vem na embalagem.","Passo um: prepare assim.","Passo dois: repare neste ponto.","E assim fica instalado.","Leia o manual antes de usar."],
+voiceover:["Hoje apresento {P}, pensado para deixar sua rotina mais simples.","Seu ponto mais forte você percebe desde o primeiro uso, sem complicação.","Além disso, é feito de {MATES}, com acabamento limpo e aparência durável.","No dia a dia, se adapta ao seu ritmo, sem ocupar espaço demais.","Este é o {P}. Simples, prático e pronto para você."],
+ad:["Espera! Olha isso.","Cansado da mesma coisa?","Chegou {P}.","Funciona assim, simples.","Encontre aqui, no Mercado Livre."]};
 function vdBuild(){
 var v=vdInfo();var sc=IO_SCENES[v.cat]||IO_SCENES.otro;
 var scene=v.scene||sc.scenes[0];
-var matEs=v.mat?trWords(v.mat,MAT_ES).text:"";
-var P=v.esName||"este producto";
+var br=(typeof mlrSite==="function"&&mlrSite()==="br");var matEs=v.mat?trWords(v.mat,br?MAT_PT:MAT_ES).text:"";
+var P=v.esName||(br?"este produto":"este producto");
 var shots=VD_SHOTS[v.type].map(function(s){return {w:s.w,view:s.view,angle:s.angle,move:s.move,narr:s.narr.slice()};});
 var totalW=shots.reduce(function(a,s){return a+s.w;},0);var used=0;
 shots.forEach(function(s,i){
 var d=i===shots.length-1?v.dur-used:Math.max(2,Math.round(v.dur*s.w/totalW));used+=d;s.dur=d;
-function fill(t){return t.replace(/\{NAME\}/g,v.name||"商品").replace(/\{PT1\}/g,v.points[0]||"展示商品核心用法").replace(/\{PT2\}/g,v.points[1]||v.points[0]||"展示商品另一个真实细节").replace(/\{MAT\}/g,v.mat||"材质细节").replace(/\{MATES\}/g,matEs||"materiales de calidad").replace(/\{SCENE\}/g,scene).replace(/\{PARTS\}/g,"包装内全部物品（按实物）").replace(/\{P\}/g,P);}
-s.view=fill(s.view);s.narr=[fill(s.narr[0]),fill(s.narr[1])];
+function fill(t){return t.replace(/\{NAME\}/g,v.name||"商品").replace(/\{PT1\}/g,v.points[0]||"展示商品核心用法").replace(/\{PT2\}/g,v.points[1]||v.points[0]||"展示商品另一个真实细节").replace(/\{MAT\}/g,v.mat||"材质细节").replace(/\{MATES\}/g,matEs||(br?"materiais de qualidade":"materiales de calidad")).replace(/\{SCENE\}/g,scene).replace(/\{PARTS\}/g,"包装内全部物品（按实物）").replace(/\{P\}/g,P);}
+s.view=fill(s.view);s.narr=[fill(s.narr[0]),fill(s.narr[1])];if(br&&VD_NARR_PT[v.type]&&VD_NARR_PT[v.type][i])s.narr[0]=fill(VD_NARR_PT[v.type][i]);
 if(v.voice==="none")s.narr=["（无旁白）","（无旁白）"];
 if(v.voice==="custom"&&v.voiceCustom[i])s.narr=[v.voiceCustom[i],"（自定义旁白）"];
 s.sub=v.sub==="none"?"—":s.narr[0];
@@ -2781,7 +2797,7 @@ L.push("- 真实卖点："+(v.points.length?v.points.join("；"):"（未填）")
 L.push("- 使用场景："+plan.scene);
 L.push("");
 L.push("目标市场："+(v.market||"墨西哥 Mercado Libre")+"；类型："+VD_TYPE_LABEL[v.type]+"；比例："+v.ratio+"；时长："+v.dur+" 秒；风格："+v.style+"；光线：明亮均匀、真实自然；摄影：按下方分镜的角度和运镜执行。");
-L.push(""+(v.voice==="none"?"无旁白。":v.voice==="custom"?"旁白使用我在分镜中给出的自定义文案，用墨西哥西班牙语自然口播。":"旁白使用下方分镜的墨西哥西班牙语文案，自然口语，不要夸张。")+(v.sub==="none"?"不加字幕。":"字幕不要让视频模型直接生成文字（容易出乱码和错别字），请生成无字幕版本，字幕由我后期按分镜文案添加。"));
+L.push(""+(v.voice==="none"?"无旁白。":v.voice==="custom"?"旁白使用我在分镜中给出的自定义文案，用"+((typeof mlrSite==="function"&&mlrSite()==="br")?"巴西葡萄牙语":"墨西哥西班牙语")+"自然口播。":"旁白使用下方分镜的"+((typeof mlrSite==="function"&&mlrSite()==="br")?"巴西葡萄牙语":"墨西哥西班牙语")+"文案，自然口语，不要夸张。")+(v.sub==="none"?"不加字幕。":"字幕不要让视频模型直接生成文字（容易出乱码和错别字），请生成无字幕版本，字幕由我后期按分镜文案添加。"));
 L.push("");
 L.push("");
 plan.shots.forEach(function(s,i){L.push("镜头 "+(i+1)+"（"+s.dur+" 秒）："+s.view+"｜角度："+s.angle+"｜运镜："+s.move+"｜旁白："+s.narr[0]);});
