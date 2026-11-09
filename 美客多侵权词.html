@@ -204,6 +204,13 @@ section{padding-top:34px}
 .bc-svgwrap{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:16px;text-align:center;overflow-x:auto}
 .bc-svgwrap svg{max-width:100%;height:auto}
 .bc-warn{border:1.5px solid #f5b301;background:#fffbe8;border-radius:12px;padding:12px;font-size:14px}
+/* ===== Listing 全套生成器 ===== */
+.ls-out{width:100%;min-height:110px;font-size:13.5px;line-height:1.55}
+.ls-final{width:100%;min-height:74px;font-size:14px}
+.ls-gen{border:1.5px solid var(--line);border-radius:12px;padding:12px;margin:10px 0;background:#fff}
+.ls-gen h4{margin:0 0 8px;font-size:15.5px;color:#14213d}
+.ls-chip{display:inline-block;padding:3px 10px;border-radius:99px;background:#eef1f6;font-size:12.5px;margin:0 6px 6px 0}
+.ls-chip.done{background:#e6f4ea;color:#137333;font-weight:700}
 </style>
 </head>
 <body>
@@ -259,12 +266,13 @@ section{padding-top:34px}
     <a href="#" data-tab="profit" class="tab">🧮 利润计算器</a>
 <a href="#" data-tab="pick" onclick="return false">🎯 选品分析</a>
 <a href="#" data-tab="barcode" onclick="return false">🔢 条码助手</a>
+<a href="#" data-tab="listing" onclick="return false">📝 Listing 生成器</a>
   </nav>
   <style>.nav a.tab.active{background:var(--navy);color:#fff;border-color:var(--navy)} @media print{section{display:block!important}}</style>
 
 
   <section id="sect-core">
-    <div class="sec-head"><span class="num">🧰</span><div><h2>七大核心工具（全部免费）</h2><p>本站所有工具都在浏览器本地运行，免费、无需注册。不会操作可以加微信咨询（微信号 czqshy888888）。</p></div></div>
+    <div class="sec-head"><span class="num">🧰</span><div><h2>八大核心工具（全部免费）</h2><p>本站所有工具都在浏览器本地运行，免费、无需注册。不会操作可以加微信咨询（微信号 czqshy888888）。</p></div></div>
     <div class="grid">
       <article class="card"><div class="term">🔍 侵权与合规风险检测</div><p style="font-size:14px;margin:8px 0">标题、描述、商品链接、商品图四种查法，37 条风险词库，中英西三语，带语境判断和风险报告。</p><button class="btn btn-light" data-goto="home" type="button">去检测</button></article>
       <article class="card"><div class="term">✍️ 标题优化</div><p style="font-size:14px;margin:8px 0">本地词典生成 ≤60 字符西语标题，自动过侵权词表，带结构检查和修改前后对比。</p><button class="btn btn-light" data-goto="title" type="button">去优化标题</button></article>
@@ -273,6 +281,7 @@ section{padding-top:34px}
       <article class="card"><div class="term">🧮 利润计算器</div><p style="font-size:14px;margin:8px 0">单件利润、利润率、盈亏平衡售价、目标利润售价和多售价对比，还能读取上架工作台的项目并把结果存回去。</p><button class="btn btn-light" data-goto="profit" type="button">去算利润</button></article>
       <article class="card"><div class="term">🎯 选品分析</div><p style="font-size:14px;margin:8px 0">把你查到的市场、竞品、成本数据整理成候选清单，算利润、打评分、生成诊断和测试计划。</p><button class="btn btn-light" data-goto="pick" type="button">打开选品分析</button></article>
       <article class="card"><div class="term">🔢 条码助手</div><p style="font-size:14px;margin:8px 0">UPC / EAN / GTIN 格式与校验位检查、条码图片生成、测试编码演示和条码要求核实清单。</p><button class="btn btn-light" data-goto="barcode" type="button">打开条码助手</button></article>
+      <article class="card"><div class="term">📝 Listing 全套生成器</div><p style="font-size:14px;margin:8px 0">填一次商品信息，生成标题、描述、卖点、关键词、属性、图片、视频全套上架资料的 Muse 提示词，汇总导出。</p><button class="btn btn-light" data-goto="listing" type="button">打开 Listing 生成器</button></article>
     </div>
   </section>
 
@@ -831,6 +840,92 @@ section{padding-top:34px}
     <details class="faq"><summary>8. 商品没有条码时应该怎么办？</summary><p>先确认类目要求：到卖家中心按你的类目实际走一遍刊登，看 GTIN 字段是必填、可选还是有「无条码」类选项（不同国家、类目、商品类型可能不同，本站不写死）。普通刊登和目录刊登的要求也可能不一样。实在没有，又确认类目必须要，就走 GS1 正规申请，不要买假码凑数。</p></details>
   </section>
 
+  <section class="card" id="sect-listing">
+    <div class="sec-head"><span class="num">📝</span><div><h2>Listing 全套生成器</h2><p>填一次商品信息，生成标题、描述、卖点、关键词、属性、图片、视频的全套上架资料</p></div></div>
+    <div class="note">📌 <b>工作方式先说清：</b>本站不直接调用 AI。这里根据你填的商品信息，<b>本地生成专业的 Muse 提示词</b>（一键复制，去 Muse 里生成内容），再把结果粘回下面的汇总工作台统一管理、导出。合规检查和属性建议是本站本地规则实时算的。所有数据只存在当前浏览器，不上传服务器。</div>
+
+    <h3 style="margin:16px 0 6px">1. 商品项目与基础信息</h3>
+    <div class="wb-toolbar">
+      <select class="search" id="lsSel" style="max-width:300px"></select>
+      <button class="btn btn-yellow" id="lsNew" type="button">＋ 新建商品</button>
+      <button class="btn btn-ghost" id="lsDelete" type="button">🗑 删除当前商品</button>
+    </div>
+    <div class="wb-toolbar">
+      <select class="search" id="lsWbSel" style="max-width:300px"></select>
+      <button class="btn btn-light" id="lsWbImport" type="button">⬇ 从上架工作台导入</button>
+      <button class="btn btn-light" id="lsCopyInfo" type="button">复制商品基础信息</button>
+      <button class="btn btn-light" id="lsClearForm" type="button">清空表单</button>
+    </div>
+    <div id="lsProg" style="margin:8px 0"></div>
+    <div class="wb-grid" id="lsForm"></div>
+    <p class="wb-meta">带 * 的是必填。选填项没有就留空——生成提示词时会标注「未提供」，并要求 Muse 不得编造。</p>
+
+    <h3 style="margin:20px 0 6px">2. 提示词生成器（复制到 Muse 生成内容）</h3>
+
+    <div class="ls-gen"><h4>① 西班牙语标题提示词</h4>
+      <div class="wb-toolbar"><button class="btn btn-yellow" data-lsgen="title" type="button">生成标题提示词</button><button class="btn btn-light" id="lsQuickTitle" type="button">⚡ 本地快速标题（词典版）</button><button class="btn btn-light" data-lscopy="title" type="button">复制提示词</button></div>
+      <textarea class="search ls-out" id="lsOut_title" readonly placeholder="点「生成标题提示词」，这里会出现可复制给 Muse 的完整提示词"></textarea>
+      <div id="lsQuickOut"></div>
+    </div>
+
+    <div class="ls-gen"><h4>② 商品描述提示词（重点）</h4>
+      <div class="wb-grid">
+        <div class="wb-field"><label>描述风格</label><select class="search" id="lsDescStyle"><option>专业销售型</option><option>简洁实用型</option><option>场景营销型</option><option>高转化型</option></select></div>
+        <div class="wb-field"><label>描述长度</label><select class="search" id="lsDescLen"><option>标准版</option><option>简短版</option><option>详细版</option></select></div>
+        <div class="wb-field"><label>输出语言</label><select class="search" id="lsDescLang"><option>墨西哥西班牙语</option><option>葡萄牙语（巴西站）</option><option>中文</option><option>中西双语</option></select></div>
+      </div>
+      <div class="wb-toolbar"><button class="btn btn-yellow" data-lsgen="desc" type="button">生成描述提示词</button><button class="btn btn-light" data-lscopy="desc" type="button">复制提示词</button></div>
+      <textarea class="search ls-out" id="lsOut_desc" readonly placeholder="生成后复制到 Muse，它会按 12 个部分输出完整描述"></textarea>
+    </div>
+
+    <div class="ls-gen"><h4>③ 商品卖点提示词</h4>
+      <div class="wb-toolbar"><select class="search" id="lsPointsStyle" style="max-width:220px"><option>真实实用型</option><option>场景种草型</option><option>性价比型</option></select><button class="btn btn-yellow" data-lsgen="points" type="button">生成卖点提示词</button><button class="btn btn-light" data-lscopy="points" type="button">复制提示词</button></div>
+      <textarea class="search ls-out" id="lsOut_points" readonly></textarea>
+    </div>
+
+    <div class="ls-gen"><h4>④ SEO 关键词提示词</h4>
+      <div class="wb-toolbar"><button class="btn btn-yellow" data-lsgen="seo" type="button">生成关键词提示词</button><button class="btn btn-light" data-lscopy="seo" type="button">复制提示词</button></div>
+      <textarea class="search ls-out" id="lsOut_seo" readonly placeholder="注意：关键词来自 AI 语义建议，不是真实搜索数据，页面和提示词里都会写明"></textarea>
+    </div>
+
+    <div class="ls-gen"><h4>⑤ 商品属性填写助手（本地规则，不用等 AI）</h4>
+      <div class="wb-toolbar"><button class="btn btn-yellow" id="lsAttrGen" type="button">生成属性填写建议</button><button class="btn btn-light" id="lsAttrCopy" type="button">复制属性建议</button></div>
+      <div id="lsAttrOut"><div class="note">按类目给出常见属性清单（中文+西语对照，区分必填/选填/待确认）。本站读不到你的卖家后台，实际必填项请以刊登时类目页面为准。</div></div>
+    </div>
+
+    <div class="ls-gen"><h4>⑥ 商品图片设计提示词</h4>
+      <div class="wb-toolbar"><select class="search" id="lsImgType" style="max-width:240px"><option value="all">全部 7 种图（一次生成）</option><option>商品主图</option><option>功能展示图</option><option>尺寸说明图</option><option>使用场景图</option><option>商品细节图</option><option>对比展示图</option><option>包装展示图</option></select><button class="btn btn-yellow" data-lsgen="img" type="button">生成图片提示词</button><button class="btn btn-light" data-lscopy="img" type="button">复制提示词</button></div>
+      <textarea class="search ls-out" id="lsOut_img" readonly></textarea>
+    </div>
+
+    <div class="ls-gen"><h4>⑦ 商品视频脚本提示词</h4>
+      <div class="wb-toolbar"><select class="search" id="lsVideoType" style="max-width:240px"><option>商品展示视频</option><option>功能演示视频</option><option>使用场景视频</option><option>商品卖点视频</option></select><button class="btn btn-yellow" data-lsgen="video" type="button">生成视频提示词</button><button class="btn btn-light" data-lscopy="video" type="button">复制提示词</button></div>
+      <textarea class="search ls-out" id="lsOut_video" readonly></textarea>
+    </div>
+
+    <div class="ls-gen"><h4>⑧ 侵权与合规检查（本地实时检查 + AI 提示词）</h4>
+      <div class="wb-field"><label>要检查的标题</label><input class="search" id="lsChkTitle" placeholder="粘贴准备用的标题"></div>
+      <div class="wb-field"><label>要检查的描述</label><textarea class="search" id="lsChkDesc" placeholder="粘贴准备用的描述"></textarea></div>
+      <div class="wb-field"><label>要检查的卖点</label><textarea class="search" id="lsChkPoints" placeholder="粘贴准备用的卖点文案"></textarea></div>
+      <div class="wb-toolbar"><button class="btn btn-yellow" id="lsCompRun" type="button">本地检查（用本站词库）</button><button class="btn btn-light" data-lsgen="comp" type="button">生成合规检查提示词</button><button class="btn btn-light" data-lscopy="comp" type="button">复制提示词</button></div>
+      <div id="lsCompOut"></div>
+      <textarea class="search ls-out" id="lsOut_comp" readonly placeholder="合规检查提示词会出现在这里"></textarea>
+    </div>
+
+    <h3 style="margin:20px 0 6px">3. 汇总工作台（把 Muse 生成的结果粘回来统一管理）</h3>
+    <div id="lsFinalForm"></div>
+    <h4 style="margin:14px 0 6px">上架前检查清单</h4>
+    <div id="lsChecks"></div>
+    <div class="wb-toolbar">
+      <button class="btn btn-yellow" id="lsCopyAll" type="button">📋 一键复制完整 Listing</button>
+      <button class="btn btn-light" id="lsExpTxt" type="button">⬇ 导出 TXT</button>
+      <button class="btn btn-light" id="lsExpJson" type="button">⬇ 导出 JSON</button>
+      <button class="btn btn-light" id="lsExpCsv" type="button">⬇ 导出 CSV</button>
+      <button class="btn btn-ghost" id="lsClearFinal" type="button">清空汇总内容</button>
+    </div>
+    <p class="wb-meta">汇总内容和清单都会自动存到当前商品项目里（本机浏览器）。导出文件请自己再存一份到电脑或网盘。</p>
+  </section>
+
 <script>
 var WORDS=[
  {t:"réplica / replica",cn:"复制品 / 仿品",risk:"high",cat:"brand",why:"等于自认卖假货，是 BPP 投诉与删除+处罚的直接事由。(B: Upseller、Nubimetrics)",alt:"只卖正品；无品牌通用品用自有品牌或无品牌，描述功能即可。",keys:["replica","réplica"],en:"replica / knockoff / counterfeit",enk:["replica", "knockoff", "knock off", "counterfeit", "dupe"],ck:["仿品", "复刻", "仿冒"]},
@@ -998,7 +1093,7 @@ document.getElementById("checkBtn").addEventListener("click",runCheck);
 
 
 /* tabs */
-var TABMAP={home:["sect-core","sect-bench-entry","bpp","checker","sect-free"],title:["sect-title"],imgopt:["sect-img"],video:["sect-video"],bench:["sect-bench"],profit:["sect-profit"],pick:["sect-pick"],barcode:["sect-barcode"]};
+var TABMAP={home:["sect-core","sect-bench-entry","bpp","checker","sect-free"],title:["sect-title"],imgopt:["sect-img"],video:["sect-video"],bench:["sect-bench"],profit:["sect-profit"],pick:["sect-pick"],barcode:["sect-barcode"],listing:["sect-listing"]};
 function showTab(name){
   if(name==="desk"&&typeof renderDesk==="function")renderDesk();if(name==="bench"&&typeof wbRender==="function")wbRender();if(name==="profit"&&typeof pfRefreshProjects==="function")pfRefreshProjects();if(name==="barcode"&&typeof bcRefreshProjects==="function")bcRefreshProjects();
   Object.keys(TABMAP).forEach(function(k){TABMAP[k].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=(k===name?"":"none");});});
@@ -2206,7 +2301,7 @@ function mlrApplySite(){
   var bm=document.getElementById("siteMx"),bb=document.getElementById("siteBr");
   if(bm&&bb){bm.className="btn "+(br?"btn-light":"btn-yellow");bb.className="btn "+(br?"btn-yellow":"btn-light");}
   var pairs=br?[["MXN","BRL"],["墨西哥比索","巴西雷亚尔"],["目标市场：墨西哥","目标市场：巴西"]]:[["BRL","MXN"],["巴西雷亚尔","墨西哥比索"],["目标市场：巴西","目标市场：墨西哥"]];
-  ["sect-profit","sect-pick","sect-bench"].forEach(function(id){
+  ["sect-profit","sect-pick","sect-bench","sect-listing"].forEach(function(id){
     var root=document.getElementById(id);if(!root)return;
     var walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:function(n){
       if(!n.nodeValue||(!n.nodeValue.includes("MXN")&&!n.nodeValue.includes("BRL")&&!n.nodeValue.includes("墨西哥")&&!n.nodeValue.includes("巴西")))return NodeFilter.FILTER_REJECT;
@@ -2240,9 +2335,231 @@ function mlrSetSite(s){
   if(typeof wbBlank==="function"){var _wb=wbBlank;wbBlank=function(){var p=_wb();if(mlrSite()==="br")p.market="巴西";return p;};}
   var __mlrBusy=false;
   var __mlrObs=new MutationObserver(function(){if(__mlrBusy)return;__mlrBusy=true;try{mlrApplySite();}catch(e){}setTimeout(function(){__mlrBusy=false;},50);});
-  ["sect-profit","sect-pick","sect-bench"].forEach(function(id){var el=document.getElementById(id);if(el)__mlrObs.observe(el,{subtree:true,childList:true,characterData:true});});
+  ["sect-profit","sect-pick","sect-bench","sect-listing"].forEach(function(id){var el=document.getElementById(id);if(el)__mlrObs.observe(el,{subtree:true,childList:true,characterData:true});});
   mlrApplySite();
 })();
+
+/* ===== Listing 全套生成器 ===== */
+var LS_KEY="mlr_listing_v1";
+var LS_FIELDS=[
+["name","商品中文名称 *","例如：20 罐旋转调料架",1],["cat","商品类目 *","例如：厨房收纳",1],["use","商品用途 *","例如：厨房调料收纳",1],["coreFunc","商品核心功能 *","例如：360° 旋转取用、分类收纳",1],
+["brand","商品品牌","无品牌写：无品牌"],["model","商品型号",""],["material","商品材质","例如：不锈钢 + PET"],["size","商品尺寸","例如：28×18×12 cm"],
+["weight","商品重量","例如：1.2 kg"],["color","商品颜色",""],["cost","商品采购成本（元）","例如：45"],["price","商品目标售价","例如：349（MXN/BRL 按站点）"],
+["pack","商品包装内容","例如：调料架 ×1、罐 ×20、标签 ×1"],["audience","商品目标消费者","例如：家庭厨房用户"],["points","商品核心卖点","一行一个卖点，或逗号分隔"],
+["scenes","商品使用场景","例如：厨房台面、餐桌"],["compLink","商品竞品链接",""],["compDesc","商品竞品描述","竞品的卖点、价格带"],
+["keywords","目标关键词","逗号分隔"],["imgNote","商品图片参考信息","图片链接或拍摄说明"]];
+var LS_FINAL=[["fTitle","商品标题"],["fDesc","商品描述"],["fPoints","商品卖点"],["fKw","商品关键词"],["fAttr","商品属性"],["fImg","商品图片方案"],["fVideo","商品视频脚本"],["fComp","合规检查报告"]];
+var LS_CHECKS=["标题 ≤60 字符且已过侵权与合规检查","描述与实物一致，没有编造参数和功能","属性已按卖家中心该类目要求逐项核对","图片无水印、无站外联系方式、无虚假认证标识","商品条码已确认来源（或已确认类目可无码刊登）","售价已用本站利润计算器测算过","关键词没有堆砌、没有蹭品牌词","包装清单与实物一致，尺寸重量已实测"];
+function lsBlank(){var t=wbNow();var p={id:"l"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),code:"LS-"+t.slice(0,10).replace(/-/g,"")+"-"+Math.random().toString(36).slice(2,6).toUpperCase(),market:(typeof mlrSite==="function"&&mlrSite()==="br")?"巴西站":"墨西哥站",created:t,updated:t,out:{},checks:{}};
+LS_FIELDS.forEach(function(f){p[f[0]]="";});LS_FINAL.forEach(function(f){p.out[f[0]]="";});return p;}
+function lsLoad(){try{var v=JSON.parse(localStorage.getItem(LS_KEY)||"[]");return Array.isArray(v)?v:[];}catch(e){return[];}}
+function lsSaveAll(l){try{localStorage.setItem(LS_KEY,JSON.stringify(l));}catch(e){showToast("保存失败：浏览器存储不可用或已满");}}
+function lsGet(id){return lsLoad().filter(function(p){return p.id===id;})[0]||null;}
+function lsPut(p){var l=lsLoad();var i=-1;l.forEach(function(x,j){if(x.id===p.id)i=j;});if(i>=0)l[i]=p;else l.unshift(p);lsSaveAll(l);}
+var lsSel=null,lsGenFlags={};
+function lsLang(p){return p.market==="巴西站"?"pt":"es";}
+function lsInfo(p){
+function v(x){return (x&&String(x).trim())?String(x).trim():"未提供";}
+var rows=[["商品名称",p.name],["类目",p.cat],["用途",p.use],["目标市场",p.market],["核心功能",p.coreFunc],["品牌",p.brand],["型号",p.model],["材质",p.material],["尺寸",p.size],["重量",p.weight],["颜色",p.color],["采购成本",p.cost? p.cost+" 元":""],["目标售价",p.price],["包装内容",p.pack],["目标消费者",p.audience],["核心卖点",p.points],["使用场景",p.scenes],["竞品链接",p.compLink],["竞品描述",p.compDesc],["目标关键词",p.keywords],["图片参考",p.imgNote]];
+return rows.map(function(r){return r[0]+"："+v(r[1]);}).join("\n");
+}
+var LS_RULE_TAIL="[真实性铁律] 只能使用我提供的商品信息；没提供的数据一律写「未提供」，不得编造参数、功能、认证、专利、销量、搜索量或排名；不得使用未经授权的品牌词；不得保证通过平台审核。";
+function lsPrompt(kind,p){
+  var info="[商品信息]\n"+lsInfo(p)+"\n\n";
+  var langName=lsLang(p)==="pt"?"巴西葡萄牙语":"墨西哥西班牙语";
+  if(kind==="title")return "你是 Mercado Libre "+p.market+"资深运营。请根据商品信息生成标题。\n\n"+info+"[要求] 1）先分析商品真实属性，识别核心关键词；2）用自然地道的"+langName+"，不要生硬直译；3）不要关键词堆砌；4）不要用未经授权的品牌词；5）不要写商品没有的功能；6）每条标题 ≤60 字符（按"+p.market+"普通刊登上限先核实，如类目有特殊限制请指出）。\n[输出格式] 标题版本 A / B / C（各附中文解释）→ 关键词布局说明 → 标题优化建议 → 潜在风险提醒。不要编造搜索量、排名或关键词热度。\n"+LS_RULE_TAIL;
+  if(kind==="desc"){var st=document.getElementById("lsDescStyle").value,ln=document.getElementById("lsDescLen").value,lg=document.getElementById("lsDescLang").value;
+    return "你是 Mercado Libre "+p.market+"商品描述专家。请按「"+st+"」风格、「"+ln+"」长度，用「"+lg+"」输出商品描述。\n\n"+info+"[输出结构（12 部分，缺一不可）] 1 商品简介；2 核心卖点；3 商品功能；4 使用场景；5 商品规格；6 材质和尺寸；7 使用注意事项；8 包装内容；9 SEO 关键词布局（自然融入，不要堆砌）；10 合规检查报告（自查侵权词、夸大宣传、虚假认证）；11 中文对照（语言为中文或单语时可省略对照并说明）；12 最终可复制上架版本（单独成段，方便直接粘贴）。\n"+LS_RULE_TAIL;}
+  if(kind==="points"){var st2=document.getElementById("lsPointsStyle").value;
+    return "你是 Mercado Libre "+p.market+"卖点文案专家。风格："+st2+"。请根据商品信息提炼 3-5 个核心卖点。\n\n"+info+"[要求] 每个卖点 = 一句"+langName+"标题 + 1-2 句说明，并附中文对照；只写商品真实优势，不夸大、不承诺效果；面向"+(p.audience||"当地消费者")+"的阅读习惯。最后附一节「这些卖点里哪些还需要我补充证据」。\n"+LS_RULE_TAIL;}
+  if(kind==="seo")return "你是 Mercado Libre "+p.market+"SEO 分析师。请根据商品信息做关键词分析。\n\n"+info+"[输出] 1）核心关键词（"+langName+"+中文解释）；2）相关关键词；3）长尾关键词；4）关键词布局建议（标题怎么放、描述怎么放）；5）建议的标题关键词结构；6）建议的描述关键词结构。\n[必须声明] 以上是 AI 语义建议，不是真实市场数据：本站和你都没有该类目的真实搜索量、竞争度、销量或排名数据，请明确提醒我用卖家中心和实际搜索结果验证后再定稿。不要虚构任何数字。\n"+LS_RULE_TAIL;
+  if(kind==="img"){var tp=document.getElementById("lsImgType").value;
+    var types=tp==="all"?["商品主图","功能展示图","尺寸说明图","使用场景图","商品细节图","对比展示图","包装展示图"]:[tp];
+    return "你是 Mercado Libre "+p.market+"商品视觉设计师。请为以下每种图片各写一份可直接用于 AI 生图的提示词："+types.join("、")+"。\n\n"+info+"[每种图片都要包含] 设计目的 → 构图建议 → 视觉风格 → 商品展示要求 → 图上"+langName+"文案建议 → 完整的生图提示词（含负面提示词）→ 图片合规检查建议。\n[统一规格] 1:1 正方形，推荐 1200×1200px；主图白底、商品占画面约 95%。\n[禁止] 不得虚构商品功能；不得添加品牌 Logo；不得改变商品真实结构和颜色；不得出现虚假认证、促销文字、水印或联系方式；不得生成会误导消费者的对比效果。尺寸图中的数字只能用我提供的尺寸，没提供就写「待补充实测」。\n"+LS_RULE_TAIL;}
+  if(kind==="video"){var vt=document.getElementById("lsVideoType").value;
+    return "你是 Mercado Libre "+p.market+"短视频编导。请根据商品信息写一份「"+vt+"」的制作脚本和 AI 视频生成提示词。\n\n"+info+"[输出] 1 视频主题；2 视频结构（总时长 15-45 秒，竖屏 9:16）；3 镜头顺序（逐镜：时长、画面说明、运镜）；4 旁白（"+langName+"+中文对照）；5 字幕建议（"+langName+"，建议后期添加）；6 每个镜头的视频生成提示词（含一致性要求：同一商品、同一场景、光线统一；负面提示词：不要换脸换物、不要多余文字 logo）。\n所有内容只能基于商品真实信息。\n"+LS_RULE_TAIL;}
+  if(kind==="comp"){var t=document.getElementById("lsChkTitle").value,ds=document.getElementById("lsChkDesc").value,pt=document.getElementById("lsChkPoints").value;
+    return "你是 Mercado Libre "+p.market+"合规审核专家。请检查下面这份 Listing 文案的风险。\n\n"+info+"[待检查文案]\n标题："+(t||"未提供")+"\n描述："+(ds||"未提供")+"\n卖点："+(pt||"未提供")+"\n\n[检查项] 1 标题侵权与品牌词；2 描述侵权；3 卖点侵权；4 潜在品牌词风险；5 敏感表达；6 夸大宣传与绝对化用语；7 虚假认证/专利宣称；8 关键词堆砌；9 站外引流；10 与商品信息不一致的编造内容。\n[输出] 总体风险等级（低/中/高/信息不足，必须说明依据）→ 逐条问题（位置+原文+原因+修改建议）→ 修改后的安全版本。不得保证通过平台官方审核。\n"+LS_RULE_TAIL;}
+  return "";}
+
+var LS_ATTR_BASE=[["品牌","Marca","通常必填"],["型号","Modelo","通常必填"],["材质","Material","通常必填"],["颜色","Color","通常必填"],["重量","Peso","选填但建议填"],["尺寸","Dimensiones","选填但建议填"],["包装清单","Contenido del paquete","选填"]];
+var LS_ATTR_CAT=[
+{k:["厨房","收纳","餐","厨"],items:[["容量","Capacidad","待确认"],["件数/套装数量","Cantidad de piezas","待确认"],["可否进洗碗机","Apto para lavavajillas","待确认（按实物）"]]},
+{k:["电","机","数码","电子"],items:[["电压","Voltaje","待确认（墨西哥 127V 需核实）"],["功率","Potencia","待确认"],["电池","Batería","待确认"],["接口/连接","Conectividad","待确认"]]},
+{k:["衣","服装","鞋","包"],items:[["尺码","Talla","通常必填"],["面料","Tela / Composición","通常必填"],["版型","Corte / Ajuste","选填"]]},
+{k:["美妆","护肤","美容","个护"],items:[["净含量","Contenido neto","通常必填"],["适用肤质","Tipo de piel","选填"],["有效期","Fecha de caducidad","待确认"]]},
+{k:["玩具","儿童","母婴"],items:[["适用年龄","Edad recomendada","通常必填"],["是否含小零件","Piezas pequeñas","待确认（安全相关）"]]}];
+function lsAttrText(p){
+var valMap={brand:p.brand,model:p.model,material:p.material,color:p.color,weight:p.weight,size:p.size,pack:p.pack};
+var order=["brand","model","material","color","weight","size","pack"];
+var lines=["[商品属性填写建议] "+(p.name||"未命名")+"（类目："+(p.cat||"未填")+"）","说明：本站读不到你的卖家后台，以下是按类目整理的常见属性；实际必填项以刊登时该类目的页面提示为准。"];
+LS_ATTR_BASE.forEach(function(a,i){var v=valMap[order[i]];lines.push("· "+a[0]+"（"+a[1]+"）— "+a[2]+" — "+((v&&String(v).trim())?("建议填："+v):"待确认：请按实物填写，不要编造"));});
+var hay=((p.cat||"")+" "+(p.name||""));
+LS_ATTR_CAT.forEach(function(g){if(g.k.some(function(k){return hay.indexOf(k)>=0;})){lines.push("");g.items.forEach(function(a){lines.push("· "+a[0]+"（"+a[1]+"）— "+a[2]);});}});
+lines.push("提醒：规格类数字（尺寸、重量、容量）必须实测或来自供应商确认资料，猜的数字会导致退货和投诉。");
+return lines.join("\n");}
+function lsFormHTML(){
+var h=LS_FIELDS.map(function(f){
+if(f[0]==="points"||f[0]==="compDesc"||f[0]==="imgNote")return '<div class="wb-field"><label>'+f[1]+'</label><textarea class="search" data-lsf="'+f[0]+'" placeholder="'+f[2]+'"></textarea></div>';
+return '<div class="wb-field"><label>'+f[1]+'</label><input class="search" data-lsf="'+f[0]+'" placeholder="'+f[2]+'"></div>';}).join("");
+h+='<div class="wb-field"><label>目标市场 *</label><select class="search" data-lsf="market"><option>墨西哥站</option><option>巴西站</option></select></div>';
+return h;}
+function lsFinalHTML(){
+return LS_FINAL.map(function(f){
+return '<div class="wb-field"><label>'+f[1]+'</label><textarea class="search ls-final" data-lsfinal="'+f[0]+'" placeholder="把 Muse 生成的结果粘贴到这里统一管理"></textarea><div class="wb-toolbar" style="margin:4px 0 10px"><button class="btn btn-light" type="button" data-lscopyf="'+f[0]+'">复制'+f[1]+'</button></div></div>';}).join("");}
+function lsProgress(){
+var p=lsSel?lsGet(lsSel):null;var box=document.getElementById("lsProg");
+if(!p){box.innerHTML="";return;}
+var req=["name","cat","use","coreFunc","market"].filter(function(k){return (p[k]||"").trim();}).length;
+var opt=LS_FIELDS.filter(function(f){return!f[3]&&(p[f[0]]||"").trim();}).length;
+var fin=LS_FINAL.filter(function(f){return (p.out[f[0]]||"").trim();}).length;
+var gen=Object.keys(lsGenFlags).filter(function(k){return lsGenFlags[k];}).length;
+box.innerHTML='<span class="ls-chip '+(req===5?"done":"")+'">基础信息 必填 '+req+'/5</span>'
++'<span class="ls-chip">选填已填 '+opt+' 项</span>'
++'<span class="ls-chip '+(gen?"done":"")+'">已生成提示词 '+gen+' 种</span>'
++'<span class="ls-chip '+(p.compDone?"done":"")+'">合规检查 '+(p.compDone?"已做":"未做")+'</span>'
++'<span class="ls-chip '+(fin>=4?"done":"")+'">汇总已填 '+fin+'/8</span>'
++'<span class="wb-meta">项目编号 '+p.code+' · 修改于 '+p.updated+'</span>';}
+function lsRefreshSel(){
+var list=lsLoad();var sel=document.getElementById("lsSel");
+sel.innerHTML=list.length?list.map(function(p){return '<option value="'+p.id+'">'+wbEsc(p.code)+" · "+wbEsc(p.name||"未命名商品")+'</option>';}).join(""):'<option value="">（还没有商品项目）</option>';
+if(lsSel)sel.value=lsSel;
+var wb=(typeof wbLoad==="function")?wbLoad():[];var ws=document.getElementById("lsWbSel");
+ws.innerHTML=wb.length?wb.map(function(x){return '<option value="'+x.id+'">'+wbEsc(x.code)+" · "+wbEsc(x.name||"未命名")+'</option>';}).join(""):'<option value="">（上架工作台暂无项目）</option>';}
+function lsOpen(id){
+lsSel=id;var p=lsGet(id);
+document.querySelectorAll("[data-lsf]").forEach(function(el){el.value=p?(p[el.dataset.lsf]||""):"";});
+document.querySelectorAll("[data-lsfinal]").forEach(function(el){el.value=p?(p.out[el.dataset.lsfinal]||""):"";});
+lsRenderChecks();lsRefreshSel();lsProgress();}
+function lsRenderChecks(){
+var p=lsSel?lsGet(lsSel):null;
+document.getElementById("lsChecks").innerHTML=LS_CHECKS.map(function(t,i){var on=p&&p.checks["c"+i];
+return '<label style="display:block;font-size:14.5px;padding:5px 0"><input type="checkbox" data-lscheck="c'+i+'"'+(on?" checked":"")+'> '+t+'</label>';}).join("");}
+document.getElementById("lsForm").innerHTML=lsFormHTML();
+document.getElementById("lsFinalForm").innerHTML=lsFinalHTML();
+document.getElementById("lsForm").addEventListener("input",function(){
+var p=lsSel?lsGet(lsSel):null;if(!p)return;
+document.querySelectorAll("[data-lsf]").forEach(function(el){p[el.dataset.lsf]=el.value;});
+p.updated=wbNow();lsPut(p);lsProgress();
+clearTimeout(window.__lsT);window.__lsT=setTimeout(lsRefreshSel,800);});
+document.getElementById("lsFinalForm").addEventListener("input",function(){
+var p=lsSel?lsGet(lsSel):null;if(!p)return;
+document.querySelectorAll("[data-lsfinal]").forEach(function(el){p.out[el.dataset.lsfinal]=el.value;});
+p.updated=wbNow();lsPut(p);lsProgress();});
+document.getElementById("lsChecks").addEventListener("change",function(e){
+var cb=e.target.closest("[data-lscheck]");if(!cb)return;
+var p=lsSel?lsGet(lsSel):null;if(!p)return;
+p.checks[cb.dataset.lscheck]=cb.checked;p.updated=wbNow();lsPut(p);});
+document.getElementById("lsSel").addEventListener("change",function(){lsOpen(this.value);});
+document.getElementById("lsNew").addEventListener("click",function(){
+var list=lsLoad();var empty=list.filter(function(p){return!p.name;})[0];
+if(empty){lsOpen(empty.id);showToast("已有一个空白项目，先填它，避免重复");return;}
+var p=lsBlank();list.unshift(p);lsSaveAll(list);lsOpen(p.id);showToast("已新建 Listing 项目");});
+document.getElementById("lsDelete").addEventListener("click",function(){
+var p=lsSel?lsGet(lsSel):null;if(!p)return;
+if(!confirm("确定删除 Listing 项目「"+(p.name||"未命名")+"」（"+p.code+"）吗？删除后无法恢复，建议先导出 JSON。"))return;
+var rest=lsLoad().filter(function(x){return x.id!==p.id;});
+if(!rest.length)rest=[lsBlank()];
+lsSaveAll(rest);lsOpen(rest[0].id);showToast("已删除");});
+document.getElementById("lsClearForm").addEventListener("click",function(){
+var p=lsSel?lsGet(lsSel):null;if(!p)return;
+if(!confirm("清空当前商品的基础信息表单？（项目保留，汇总内容不动）"))return;
+LS_FIELDS.forEach(function(f){p[f[0]]="";});p.updated=wbNow();lsPut(p);lsOpen(p.id);showToast("已清空表单");});
+document.getElementById("lsCopyInfo").addEventListener("click",function(){
+var p=lsSel?lsGet(lsSel):null;if(!p)return;wbCopy("== 商品基础信息 =="+p.code+"\n"+lsInfo(p));});
+document.getElementById("lsWbImport").addEventListener("click",function(){
+var id=document.getElementById("lsWbSel").value;if(!id){showToast("上架工作台里还没有项目可导入");return;}
+var w=wbGet(id);if(!w)return;
+var p=lsBlank();
+p.name=w.name||"";p.cat=w.cat||"";p.brand=w.brand||"";p.model=w.model||"";p.cost=w.cost||"";p.weight=w.weight||"";p.size=w.size||"";
+if(w.profit&&w.profit.price)p.price=w.profit.price;
+p.use="";p.coreFunc=w.spec||"";
+var list=lsLoad();list.unshift(p);lsSaveAll(list);lsOpen(p.id);
+showToast("已从工作台导入为新 Listing 项目（用途请补填）");});
+document.querySelectorAll("[data-lsgen]").forEach(function(b){b.addEventListener("click",function(){
+var p=lsSel?lsGet(lsSel):null;if(!p){showToast("先新建或选择一个商品");return;}
+if(!p.name||!p.cat){showToast("先把商品名称和类目填上，提示词才有依据");return;}
+var kind=b.dataset.lsgen;
+document.getElementById("lsOut_"+kind).value=lsPrompt(kind,p);
+lsGenFlags[kind]=true;lsProgress();
+showToast("提示词已生成，点「复制提示词」粘贴到 Muse");});});
+document.querySelectorAll("[data-lscopy]").forEach(function(b){b.addEventListener("click",function(){
+var ta=document.getElementById("lsOut_"+b.dataset.lscopy);
+if(!ta.value){showToast("先生成提示词再复制");return;}wbCopy(ta.value);});});
+document.getElementById("lsQuickTitle").addEventListener("click",function(){
+var p=lsSel?lsGet(lsSel):null;if(!p||!p.name){showToast("先填商品中文名称");return;}
+var pt=lsLang(p)==="pt";
+var MATD=pt?MAT_PT:MAT_ES,FUNCD=pt?FUNC_PT:FUNC_ES,PRODD=pt?PROD_PT:PROD_ES;
+var nameT=trWords(p.name,Object.assign({},MATD,FUNCD,PRODD));
+var matT=trWords(p.material||"",MATD),funcT=trWords(p.coreFunc||"",FUNCD);
+var kws=(p.keywords||"").split(/[,，、]/).map(function(s){return s.trim();}).filter(Boolean);
+var core=kws[0]||nameT.text;
+var spec=p.size||"";
+function build(parts){return trim60(cap1(parts.filter(Boolean).join(" ")));}
+var v1=build([core,matT.text,funcT.used[0]||"",spec]);
+var v2=build([core,kws[1]||"",matT.text,spec]);
+var out=document.getElementById("lsQuickOut");
+var miss=[].concat(nameT.missing,matT.missing,funcT.missing);
+out.innerHTML='<div class="note">⚡ 本地快速标题（词典规则版，不是 AI）：<br>标准版：<b>'+wbEsc(v1)+'</b>（'+v1.length+' 字符）<br>关键词版：<b>'+wbEsc(v2)+'</b>（'+v2.length+' 字符）'
++(miss.length?'<br><span style="color:#b3261e">这些词词典里没有、保留了原文，请人工确认：'+wbEsc(miss.join("、"))+'</span>':"")
++'<br><span class="wb-meta">想要更地道的标题，用上面的「生成标题提示词」去 Muse 生成。</span></div>';});
+var lsAttrLast="";
+document.getElementById("lsAttrGen").addEventListener("click",function(){
+var p=lsSel?lsGet(lsSel):null;if(!p){showToast("先选择商品");return;}
+lsAttrLast=lsAttrText(p);
+document.getElementById("lsAttrOut").innerHTML='<div class="note" style="white-space:pre-wrap">'+wbEsc(lsAttrLast)+'</div>';
+var ta=document.querySelector('[data-lsfinal="fAttr"]');
+if(ta&&!ta.value.trim()){ta.value=lsAttrLast;p.out.fAttr=lsAttrLast;p.updated=wbNow();lsPut(p);showToast("属性建议已生成，并已填入汇总工作台");}
+lsGenFlags.attr=true;lsProgress();});
+document.getElementById("lsAttrCopy").addEventListener("click",function(){if(!lsAttrLast){showToast("先生成属性建议");return;}wbCopy(lsAttrLast);});
+document.getElementById("lsCompRun").addEventListener("click",function(){
+var p=lsSel?lsGet(lsSel):null;if(!p){showToast("先选择商品");return;}
+var t=document.getElementById("lsChkTitle").value.trim(),d=document.getElementById("lsChkDesc").value.trim(),s=document.getElementById("lsChkPoints").value.trim();
+var box=document.getElementById("lsCompOut");
+if(!t&&!d&&!s){box.innerHTML='<div class="note">⚪ <b>信息不足</b>：标题、描述、卖点都是空的，没法检查。先粘贴要检查的文案。</div>';return;}
+var hits=[];
+[["标题",t],["描述",d],["卖点",s]].forEach(function(f){
+if(f[1])analyzeField(f[1],f[0]==="标题"?"title":"desc",false).forEach(function(h){hits.push({f:f[0],h:h});});});
+var ov=overallOf(hits.map(function(x){return x.h;}));
+var lvMap={high:"🔴 高风险",med:"🟡 中风险",review:"🟡 中风险",low:"🟢 低风险",none:"🟢 低风险（未命中词库）"};
+var html='<div class="note"><b>本地合规检查结果：'+(lvMap[ov.level]||ov.label)+'</b>（依据本站侵权与合规词库实时匹配，不是随机评级；不保证官方审核结果）<br>共命中 '+hits.length+' 处：';
+if(hits.length)html+='<ul style="margin:6px 0">'+hits.slice(0,12).map(function(x){return '<li>['+x.f+'] '+wbEsc(x.h.entry.t)+' — '+wbEsc(x.h.entry.cn||"")+'；建议：'+wbEsc(x.h.entry.alt||"")+'</li>';}).join("")+'</ul>';
+html+='<span class="wb-meta">详细报告请用第一个标签「侵权与合规风险检测器」，那里有完整报告导出。</span></div>';
+box.innerHTML=html;
+p.compDone=true;p.out.fComp="本地合规检查："+(lvMap[ov.level]||ov.label)+"，命中 "+hits.length+" 处（"+new Date().toLocaleString()+"）。"+(hits.length?hits.slice(0,5).map(function(x){return "["+x.f+"]"+x.h.entry.t;}).join("；"):"");
+p.updated=wbNow();lsPut(p);
+var ta=document.querySelector('[data-lsfinal="fComp"]');if(ta)ta.value=p.out.fComp;
+lsGenFlags.comp=true;lsProgress();});
+document.getElementById("lsFinalForm").addEventListener("click",function(e){
+var b=e.target.closest("[data-lscopyf]");if(!b)return;
+var ta=document.querySelector('[data-lsfinal="'+b.dataset.lscopyf+'"]');
+if(!ta.value.trim()){showToast("这一栏还是空的");return;}wbCopy(ta.value);});
+function lsFullText(p){
+  var L=["===== Listing 全套资料 =====","项目编号："+p.code+" · 目标市场："+p.market,"","===== 商品基础信息 =====",lsInfo(p)];
+  LS_FINAL.forEach(function(f){L.push("","===== "+f[1]+" =====",p.out[f[0]]||"（未填写）");});
+  L.push("","===== 上架前检查清单 =====");
+  LS_CHECKS.forEach(function(t,i){L.push((p.checks["c"+i]?"[x] ":"[ ] ")+t);});
+  return L.join("\n");}
+function lsDownload(name,content,type){
+var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([content],{type:type}));a.download=name;document.body.appendChild(a);a.click();a.remove();}
+document.getElementById("lsCopyAll").addEventListener("click",function(){
+var p=lsSel?lsGet(lsSel):null;if(!p)return;wbCopy(lsFullText(p));});
+document.getElementById("lsExpTxt").addEventListener("click",function(){
+var p=lsSel?lsGet(lsSel):null;if(!p)return;lsDownload("listing-"+p.code+".txt",lsFullText(p),"text/plain");showToast("已导出 TXT");});
+document.getElementById("lsExpJson").addEventListener("click",function(){
+var p=lsSel?lsGet(lsSel):null;if(!p)return;lsDownload("listing-"+p.code+".json",JSON.stringify(p,null,2),"application/json");showToast("已导出 JSON");});
+document.getElementById("lsExpCsv").addEventListener("click",function(){
+var p=lsSel?lsGet(lsSel):null;if(!p)return;
+function q(v){return '"'+String(v==null?"":v).replace(/"/g,'""')+'"';}
+var rows=[["字段","内容"],["项目编号",p.code],["目标市场",p.market]];
+LS_FIELDS.forEach(function(f){rows.push([f[1].replace(" *",""),p[f[0]]||""]);});
+LS_FINAL.forEach(function(f){rows.push([f[1],p.out[f[0]]||""]);});
+lsDownload("listing-"+p.code+".csv","\ufeff"+rows.map(function(r){return r.map(q).join(",");}).join("\n"),"text/csv");showToast("已导出 CSV");});
+document.getElementById("lsClearFinal").addEventListener("click",function(){
+var p=lsSel?lsGet(lsSel):null;if(!p)return;
+if(!confirm("清空当前商品的汇总内容（8 栏）？基础信息保留。"))return;
+LS_FINAL.forEach(function(f){p.out[f[0]]="";});p.updated=wbNow();lsPut(p);lsOpen(p.id);showToast("已清空汇总内容");});
+(function(){var l=lsLoad();if(!l.length){l=[lsBlank()];lsSaveAll(l);}lsOpen(l[0].id);})();
 
 /* image optimizer */
 var IO_SCENES={
