@@ -278,7 +278,36 @@ textarea.ls-out{min-height:72px}
   </section>
   <section id="sect-tutorial">
     <div class="sec-head"><span class="num">📺</span><div><h2>美客多卖家助手教程</h2><p>实录演示本站主要功能：侵权检测、Listing 生成、利润计算和本地 AI，约 2 分钟。</p></div></div>
-    <video controls preload="metadata" playsinline style="width:100%;max-width:960px;display:block;margin:0 auto;border-radius:12px;background:#000" src="美客多卖家助手教程.mp4"></video>
+    <video id="tutVideo" controls preload="none" playsinline style="width:100%;max-width:960px;display:block;margin:0 auto;border-radius:12px;background:#000"></video>
+    <p id="tutState" style="text-align:center;color:#666;font-size:14px;margin:8px 0 0"></p>
+    <p style="text-align:center;margin:8px 0 0"><button id="tutLoadBtn" class="btn btn-yellow" type="button">加载教程视频</button></p>
+    <script>
+    (function(){
+      var N=11, base='assets/vt/vt-', parts=[], done=false, loading=false;
+      var v=document.getElementById('tutVideo'), st=document.getElementById('tutState'), btn=document.getElementById('tutLoadBtn');
+      function setState(t){ if(st) st.textContent=t; }
+      async function load(){
+        if(done||loading) return; loading=true;
+        try{
+          for(var i=0;i<N;i++){
+            setState('教程视频加载中 ('+(i+1)+'/'+N+')');
+            var r=await fetch(base+String(i).padStart(2,'0')+'.txt');
+            if(!r.ok) throw new Error('chunk '+i);
+            parts.push((await r.text()).trim());
+          }
+          var bin=atob(parts.join('')), len=bin.length, bytes=new Uint8Array(len);
+          for(var j=0;j<len;j++) bytes[j]=bin.charCodeAt(j);
+          v.src=URL.createObjectURL(new Blob([bytes],{type:'video/mp4'}));
+          done=true; setState(''); if(btn) btn.style.display='none';
+        }catch(e){ loading=false; setState('视频加载失败，请刷新页面重试。'); }
+      }
+      if(btn) btn.addEventListener('click', function(){ load(); });
+      if('IntersectionObserver' in window){
+        var sec=document.getElementById('sect-tutorial');
+        if(sec){ var io=new IntersectionObserver(function(es){ es.forEach(function(en){ if(en.isIntersecting){ load(); io.disconnect(); } }); },{rootMargin:'200px'}); io.observe(sec); }
+      }
+    })();
+    </script>
   </section>
 
   <div class="card" style="padding:12px 16px;margin:0 0 12px">
