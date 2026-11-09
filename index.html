@@ -780,12 +780,11 @@ section{padding-top:34px}
 
   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.12.1/JsBarcode.all.min.js"></script>
-    <section class="card" id="sect-barcode">
+      <section class="card" id="sect-barcode">
     <div class="sec-head"><span class="num">🔢</span><div><h2>UPC 条码生成</h2><p>输入你拥有或已获授权的 UPC / EAN 编码，在浏览器本地生成可下载的条码图片</p></div></div>
     <div class="bc-warn">⚠️ <b>先说清：</b>本工具只按 UPC 规则拼编码、画条码图片，<b>不提供商品条码注册服务</b>。下方随机拼出的编码没有在 GS1 注册过，可能与真实商品的条码相同；是否使用请自行判断，并以 Mercado Libre 当前商品类目和销售国家要求为准。</div>
     <h3 style="margin:16px 0 6px">1. 随机生成一组 UPC 编码（12 位，含正确校验位）</h3>
     <div class="wb-grid">
-      <div class="wb-field"><label for="bc_r_flag">首位数字（旗码）</label><select class="search" id="bc_r_flag"><option value="">随机</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option selected>7</option><option>8</option><option>9</option></select></div>
       <div class="wb-field"><label for="bc_r_mfr">厂商代码（5 位数字）</label><input class="search" id="bc_r_mfr" placeholder="留空 = 随机，例如 76795" maxlength="5"></div>
       <div class="wb-field"><label for="bc_r_item">商品代码（5 位数字，起始）</label><input class="search" id="bc_r_item" placeholder="留空 = 随机，例如 91049" maxlength="5"></div>
       <div class="wb-field"><label for="bc_r_count">生成数量</label><select class="search" id="bc_r_count"><option>5</option><option selected>10</option><option>20</option></select></div>
@@ -796,7 +795,7 @@ section{padding-top:34px}
       <button class="btn btn-light" id="bcCopyAll" type="button">全部复制</button>
     </div>
     <div id="bcRandOut"></div>
-    <p class="wb-meta">点列表里的任意一条编码，会自动填入下方条码图片生成框。这些编码只是按规则拼出的数字（含正确校验位），未在 GS1 注册，可能与真实商品条码重复。</p>
+    <p class="wb-meta">首位数字（旗码）每条随机生成，为 1–9 的一位数字，不会是 0。点列表里的任意一条编码，会自动填入下方条码图片生成框。这些编码只是按规则拼出的数字（含正确校验位），未在 GS1 注册，可能与真实商品条码重复。</p>
     <h3 style="margin:20px 0 6px">2. 生成条码图片（用你自己拥有或已获授权的编码）</h3>
     <div class="wb-grid">
       <div class="wb-field"><label for="bc_draw_code">要生成图片的编码</label><input class="search" id="bc_draw_code" placeholder="例如 036000291452（UPC-A 12 位）"></div>
@@ -811,6 +810,7 @@ section{padding-top:34px}
     <div class="bc-svgwrap" id="bcSvgWrap" style="display:none"><svg id="bcSvg"></svg></div>
     <p class="wb-meta">支持 8 / 12 / 13 / 14 位数字编码；生成前会自动校验格式和校验位，错码画不出来。条码图由开源库 JsBarcode（MIT 许可证）在你的浏览器本地生成，不上传服务器。14 位 GTIN 没有对应的零售条码制式，本工具用 Code 128 把这串数字画出来，打印前请先用扫码枪/手机实测能否扫出。</p>
   </section>
+
 
 
 
@@ -1872,7 +1872,6 @@ function bcRenderGen(){
   out.innerHTML=h;
 }
 function bcGenRun(randomMode){
-  var flag=document.getElementById("bc_r_flag").value;
   var mfr=document.getElementById("bc_r_mfr").value.trim();
   var item=document.getElementById("bc_r_item").value.trim();
   var cnt=parseInt(document.getElementById("bc_r_count").value,10)||10;
@@ -1881,7 +1880,7 @@ function bcGenRun(randomMode){
   bcGenList=[];
   var baseItem=item?parseInt(item,10):Math.floor(Math.random()*100000);
   for(var i=0;i<cnt;i++){
-    var f=(flag==="")?String(Math.floor(Math.random()*10)):flag;
+    var f=String(1+Math.floor(Math.random()*9));
     var m=mfr||bcRandDigits(5);
     var it;
     if(randomMode){it=bcRandDigits(5);}
