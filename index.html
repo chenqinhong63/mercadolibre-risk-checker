@@ -219,6 +219,18 @@ section{padding-top:34px}
 .ls-chip.done{background:#e6f4ea;color:#137333;font-weight:700}
 #subBar a{font-size:13.5px;padding:7px 12px;background:#eef1f6}
 #subBar a.tab.active{background:var(--navy);color:#fff}
+
+.card{padding:12px 14px}
+.hero{padding:14px 0 2px}
+.card h3{margin:10px 0 4px !important}
+.wb-grid{gap:8px}
+.wb-field label{margin-bottom:2px}
+.wb-toolbar{margin:8px 0}
+.ls-gen{padding:10px;margin:8px 0}
+textarea.ls-out{min-height:72px}
+.wrap{padding-bottom:28px}
+.search{padding:8px 10px}
+.grid{gap:10px}
 </style>
 </head>
 <body>
@@ -231,11 +243,7 @@ section{padding-top:34px}
 
       
     </div>
-    <div class="stats">
-      <div class="stat"><b>636 万</b><span>2026 上半年墨西哥站被检测出的违规刊登数量（同一报告）</span></div>
-      <div class="stat"><b>2,159 万</b><span>同期全区域主动知识产权检测量，占 IP 删除量的 97%</span></div>
-      <div class="stat"><b>278.7 万件</b><span>IMPI 在 2025-09 至 2026-10-19 查扣的仿冒产品；Operación Limpieza 自 2024-09 累计超 800 万件</span></div>
-    </div>
+    
     </div>
   </header>
 
@@ -253,7 +261,7 @@ section{padding-top:34px}
 
 
   <section id="sect-core">
-    <div class="sec-head"><span class="num">🧰</span><div><h2>八大核心工具（全部免费）</h2><p>本站所有工具都在浏览器本地运行，免费、无需注册。不会操作可以加微信咨询（微信号 czqshy888888）。</p></div></div>
+    <div class="sec-head"><span class="num">🧰</span><div><h2>核心工具（全部免费）</h2><p>本站所有工具都在浏览器本地运行，免费、无需注册。不会操作可以加微信咨询（微信号 czqshy888888）。</p></div></div>
     <div class="grid">
       <article class="card"><div class="term">🔍 侵权与合规风险检测</div><p style="font-size:14px;margin:8px 0">标题、描述、商品链接、商品图四种查法，37 条风险词库，中英西三语，带语境判断和风险报告。</p><button class="btn btn-light" data-goto="home" type="button">去检测</button></article>
       <article class="card"><div class="term">📝 Listing 生成器</div><p style="font-size:14px;margin:8px 0">一个商品的全套上架内容：标题（提示词 + 本地词典生成，含结构检查）、描述、卖点、关键词、属性、图片与视频提示词、合规检查。</p><button class="btn btn-light" data-goto="listing" type="button">打开 Listing 生成器</button></article>
@@ -467,7 +475,7 @@ section{padding-top:34px}
 
   
 
-    <div class="foot">本站是卖家自建工具，不是美客多官方产品。本页为卖家自查参考，不构成法律意见；词表为风险合成表、非官方黑名单，个别词的风险等级为依据投诉流程的推断（C 级，已在词表中标注）。拿不准的 SKU，先备齐发票与授权，再上架。</div>
+    
   
 </div>
 
@@ -772,7 +780,7 @@ section{padding-top:34px}
     </div>
     <div id="bcDrawNote"></div>
     <div class="bc-svgwrap" id="bcSvgWrap" style="display:none"><svg id="bcSvg"></svg></div>
-    <p class="wb-meta">支持 8 / 12 / 13 / 14 位数字编码；生成前会自动校验格式和校验位，错码画不出来。条码图由开源库 JsBarcode（MIT 许可证）在你的浏览器本地生成，不上传服务器。14 位 GTIN 没有对应的零售条码制式，本工具用 Code 128 把这串数字画出来，打印前请先用扫码枪/手机实测能否扫出。</p>
+    <p class="wb-meta">支持 8 / 12 / 13 / 14 位数字编码；生成前会自动校验格式和校验位，错码画不出来。14 位 GTIN 没有对应的零售条码制式，本工具用 Code 128 把这串数字画出来，打印前请先用扫码枪/手机实测能否扫出。</p>
   </section>
 
 
@@ -809,7 +817,7 @@ section{padding-top:34px}
         <div class="wb-field"><label for="lsTitleOld">原标题（可选，填了出修改前后对比）</label><input class="search" id="lsTitleOld" placeholder="把现在的标题粘进来"></div>
       </div>
       <div class="wb-toolbar"><button class="btn btn-yellow" id="lsQuickTitle" type="button">⚡ 本地生成标题（词典完整版：3 个版本 + 结构检查）</button></div>
-      <p class="wb-meta">本地生成用基础信息里的中文名称、材质、核心功能和规格（尺寸/颜色/数量）拼装，语言按目标市场自动选（墨西哥站 = 西语，巴西站 = 葡语）；这就是原来「标题优化」页的完整功能，已合并到这里。</p>
+      <p class="wb-meta">本地生成用基础信息里的中文名称、材质、核心功能和规格（尺寸/颜色/数量）拼装，语言按目标市场自动选（墨西哥站 = 西语，巴西站 = 葡语）。</p>
       <div id="lsQuickOut"></div>
     </div>
 
