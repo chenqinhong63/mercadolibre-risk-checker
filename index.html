@@ -211,6 +211,8 @@ section{padding-top:34px}
 .ls-gen h4{margin:0 0 8px;font-size:15.5px;color:#14213d}
 .ls-chip{display:inline-block;padding:3px 10px;border-radius:99px;background:#eef1f6;font-size:12.5px;margin:0 6px 6px 0}
 .ls-chip.done{background:#e6f4ea;color:#137333;font-weight:700}
+#subBar a{font-size:13.5px;padding:7px 12px;background:#eef1f6}
+#subBar a.tab.active{background:var(--navy);color:#fff}
 </style>
 </head>
 <body>
@@ -260,14 +262,9 @@ section{padding-top:34px}
     <span style="font-size:13px;color:#666">切换后，利润计算器、选品分析、上架工作台、Listing 生成器按所选站点显示币种（MXN ↔ BRL）；标题优化、图片优化、视频生成、条码助手、检测器也都支持墨西哥站（西语）和巴西站（葡语）。</span>
   </div>
   <nav class="nav" id="tabBar">
-    <a href="#" data-tab="home" class="tab active">🔍 侵权与合规风险检测器</a><a href="#" data-tab="title" class="tab">✍️ 标题优化</a>
-    <a href="#" data-tab="imgopt" class="tab">🖼 图片优化</a><a href="#" data-tab="video" class="tab">🎬 视频生成</a>
-    <a href="#" data-tab="bench" class="tab">📦 上架工作台</a>
-    <a href="#" data-tab="profit" class="tab">🧮 利润计算器</a>
-<a href="#" data-tab="pick" onclick="return false">🎯 选品分析</a>
-<a href="#" data-tab="barcode" onclick="return false">🔢 条码助手</a>
-<a href="#" data-tab="listing" onclick="return false">📝 Listing 生成器</a>
+    <a href="#" data-group="0" class="tab gnav active" onclick="return false">🎯 选品与利润</a><a href="#" data-group="1" class="tab gnav" onclick="return false">📝 Listing 上架</a><a href="#" data-group="2" class="tab gnav" onclick="return false">🎨 商品视觉</a><a href="#" data-group="3" class="tab gnav" onclick="return false">🛡 风险检测</a><a href="#" data-group="4" class="tab gnav" onclick="return false">🩺 AI 运营诊断</a>
   </nav>
+  <nav class="nav" id="subBar" style="margin-top:-4px"></nav>
   <style>.nav a.tab.active{background:var(--navy);color:#fff;border-color:var(--navy)} @media print{section{display:block!important}}</style>
 
 
@@ -923,10 +920,43 @@ section{padding-top:34px}
       <button class="btn btn-yellow" id="lsCopyAll" type="button">📋 一键复制完整 Listing</button>
       <button class="btn btn-light" id="lsExpTxt" type="button">⬇ 导出 TXT</button>
       <button class="btn btn-light" id="lsExpJson" type="button">⬇ 导出 JSON</button>
+      <button class="btn btn-light" id="lsImpJson" type="button">⬆ 导入 JSON</button><input type="file" id="lsImpFile" accept=".json,application/json" style="display:none">
       <button class="btn btn-light" id="lsExpCsv" type="button">⬇ 导出 CSV</button>
       <button class="btn btn-ghost" id="lsClearFinal" type="button">清空汇总内容</button>
     </div>
     <p class="wb-meta">汇总内容和清单都会自动存到当前商品项目里（本机浏览器）。导出文件请自己再存一份到电脑或网盘。</p>
+  </section>
+
+  <section class="card" id="sect-diag">
+    <div class="sec-head"><span class="num">🩺</span><div><h2>AI 运营诊断</h2><p>把店铺阶段和当前问题整理成一份专业诊断提示词，交给 AI 做结构化诊断</p></div></div>
+    <div class="note">📌 本站不直接调用 AI，也看不到你的店铺后台。这里做两件事：① 按下面的问卷生成一份<b>运营诊断提示词</b>，复制到 AI 对话里，它会按「问题定位 → 验证方法 → 7 天动作 → 30 天动作」输出，并先指出还缺哪些数据；② 汇总本站已有的三个诊断入口（选品诊断、Listing 合规、利润测算），点按钮直达，不用翻菜单。</div>
+    <h3 style="margin:16px 0 6px">1. 运营诊断问卷</h3>
+    <div class="wb-grid">
+      <div class="wb-field"><label>经营阶段</label><select class="search" id="dgStage"><option>刚开店，还没出单</option><option>已出单，在起量</option><option>稳定运营，想增长</option><option>遇到瓶颈或下滑</option></select></div>
+      <div class="wb-field"><label>目标市场</label><select class="search" id="dgMarket"><option>墨西哥站</option><option>巴西站</option></select></div>
+      <div class="wb-field"><label>主营类目</label><input class="search" id="dgCat" placeholder="例如：厨房收纳"></div>
+      <div class="wb-field"><label>月均订单量</label><select class="search" id="dgOrders"><option>还没出单</option><option>1–100 单</option><option>100–500 单</option><option>500 单以上</option></select></div>
+    </div>
+    <div class="wb-field"><label>当前最头疼的问题（可多选）</label>
+      <div id="dgProbs">
+        <label style="display:inline-block;margin:2px 10px 2px 0;font-size:14.5px"><input type="checkbox" class="dgProb" value="有曝光没点击、没流量转化"> 没流量 / 有曝光没点击</label>
+        <label style="display:inline-block;margin:2px 10px 2px 0;font-size:14.5px"><input type="checkbox" class="dgProb" value="有流量但不出单"> 有流量不出单</label>
+        <label style="display:inline-block;margin:2px 10px 2px 0;font-size:14.5px"><input type="checkbox" class="dgProb" value="广告花钱但不出单、ROAS 低"> 广告烧钱不出单</label>
+        <label style="display:inline-block;margin:2px 10px 2px 0;font-size:14.5px"><input type="checkbox" class="dgProb" value="退货率和差评偏高"> 退货 / 差评多</label>
+        <label style="display:inline-block;margin:2px 10px 2px 0;font-size:14.5px"><input type="checkbox" class="dgProb" value="出单但利润很薄甚至亏"> 利润太薄</label>
+        <label style="display:inline-block;margin:2px 10px 2px 0;font-size:14.5px"><input type="checkbox" class="dgProb" value="刊登被限制、被下架或收到侵权提醒"> 上架被限 / 侵权提醒</label>
+      </div>
+    </div>
+    <div class="wb-field"><label>补充说明（选填）</label><textarea class="search" id="dgNote" placeholder="例如：主推一款调料架，日均曝光 300、点击 20、出单 1-2 单"></textarea></div>
+    <div class="wb-toolbar"><button class="btn btn-yellow" id="dgGen" type="button">生成运营诊断提示词</button><button class="btn btn-light" id="dgCopy" type="button">复制提示词</button></div>
+    <textarea class="search ls-out" id="dgOut" readonly placeholder="生成的诊断提示词会出现在这里"></textarea>
+    <h3 style="margin:20px 0 6px">2. 本站诊断工具直达</h3>
+    <div class="grid">
+      <article class="card"><div class="term">🎯 选品 AI 诊断</div><p style="font-size:14px;margin:8px 0">候选商品的本地规则诊断 + 100 分评分 + AI 深度选品提示词。</p><button class="btn btn-light" data-goto="pick" type="button">去选品分析</button></article>
+      <article class="card"><div class="term">📝 Listing 合规诊断</div><p style="font-size:14px;margin:8px 0">在 Listing 生成器里对标题、描述、卖点做本地合规检查，或生成合规检查提示词。</p><button class="btn btn-light" data-goto="listing" type="button">去 Listing 生成器</button></article>
+      <article class="card"><div class="term">🔍 侵权深度分析</div><p style="font-size:14px;margin:8px 0">检测器出结构化风险报告，并能生成「复制到 AI 深度分析」的提示词。</p><button class="btn btn-light" data-goto="home" type="button">去风险检测</button></article>
+      <article class="card"><div class="term">🧮 利润诊断</div><p style="font-size:14px;margin:8px 0">利润算不清先别谈运营：单件利润、盈亏平衡、ROAS、批次回本一次算清。</p><button class="btn btn-light" data-goto="profit" type="button">去利润计算器</button></article>
+    </div>
   </section>
 
 <script>
@@ -1096,11 +1126,11 @@ document.getElementById("checkBtn").addEventListener("click",runCheck);
 
 
 /* tabs */
-var TABMAP={home:["sect-core","sect-bench-entry","bpp","checker","sect-free"],title:["sect-title"],imgopt:["sect-img"],video:["sect-video"],bench:["sect-bench"],profit:["sect-profit"],pick:["sect-pick"],barcode:["sect-barcode"],listing:["sect-listing"]};
-function showTab(name){
+var TABMAP={home:["sect-core","sect-bench-entry","bpp","checker","sect-free"],title:["sect-title"],imgopt:["sect-img"],video:["sect-video"],bench:["sect-bench"],profit:["sect-profit"],pick:["sect-pick"],barcode:["sect-barcode"],listing:["sect-listing"],diag:["sect-diag"]};
+function showTab(name){if(typeof navSync==="function")navSync(name);
   if(name==="desk"&&typeof renderDesk==="function")renderDesk();if(name==="bench"&&typeof wbRender==="function")wbRender();if(name==="profit"&&typeof pfRefreshProjects==="function")pfRefreshProjects();if(name==="barcode"&&typeof bcRefreshProjects==="function")bcRefreshProjects();
   Object.keys(TABMAP).forEach(function(k){TABMAP[k].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=(k===name?"":"none");});});
-  document.querySelectorAll("#tabBar .tab").forEach(function(a){a.classList.toggle("active",a.dataset.tab===name);});
+  document.querySelectorAll("#subBar .tab").forEach(function(a){a.classList.toggle("active",a.dataset.tab===name);});
   window.scrollTo({top:0,behavior:"smooth"});
 }
 document.getElementById("tabBar").addEventListener("click",function(e){var a=e.target.closest("[data-tab]");if(!a)return;e.preventDefault();showTab(a.dataset.tab);});
@@ -2577,6 +2607,76 @@ var p=lsSel?lsProj(lsSel):null;if(!p)return;
 if(!confirm("清空当前商品的汇总内容（8 栏）？基础信息保留。"))return;
 LS_FINAL.forEach(function(f){p.out[f[0]]="";});p.updated=wbNow();lsPut(p);lsOpen(p.id);showToast("已清空汇总内容");});
 (function(){var l=lsLoad();if(!l.length){l=[lsBlank()];lsSaveAll(l);}lsOpen(l[0].id);})();
+
+document.getElementById("lsImpJson").addEventListener("click",function(){document.getElementById("lsImpFile").click();});
+document.getElementById("lsImpFile").addEventListener("change",function(){
+  var f=this.files[0];this.value="";if(!f)return;
+  var r=new FileReader();
+  r.onload=function(){
+    try{
+      var data=JSON.parse(r.result);
+      var arr=Array.isArray(data)?data:[data];
+      var added=0,first=null;
+      arr.forEach(function(item){
+        if(!item||typeof item!=="object")return;
+        var p=lsBlank();
+        LS_FIELDS.forEach(function(fd){if(item[fd[0]]!=null)p[fd[0]]=String(item[fd[0]]);});
+        if(item.market)p.market=item.market;
+        if(item.out&&typeof item.out==="object")LS_FINAL.forEach(function(fd){if(item.out[fd[0]]!=null)p.out[fd[0]]=String(item.out[fd[0]]);});
+        if(item.checks&&typeof item.checks==="object")p.checks=item.checks;
+        var list=lsLoad();list.unshift(p);lsSaveAll(list);
+        added++;if(!first)first=p;
+      });
+      if(first){lsOpen(first.id);showToast("已导入 "+added+" 个 Listing 项目");}
+      else showToast("导入失败：文件里没有可用的项目数据");
+    }catch(e){showToast("导入失败：这不是有效的 JSON 文件");}
+  };
+  r.readAsText(f);
+});
+
+/* ===== AI 运营诊断 ===== */
+function dgPrompt(){
+  var stage=document.getElementById("dgStage").value;
+  var market=document.getElementById("dgMarket").value;
+  var cat=document.getElementById("dgCat").value.trim()||"未提供";
+  var orders=document.getElementById("dgOrders").value;
+  var probs=[];document.querySelectorAll(".dgProb").forEach(function(c){if(c.checked)probs.push(c.value);});
+  var note=document.getElementById("dgNote").value.trim()||"未提供";
+  return "你是一名资深 Mercado Libre "+market+"运营顾问。请对我的店铺做一次结构化运营诊断。\n\n[我的情况]\n经营阶段："+stage+"\n目标市场："+market+"\n主营类目："+cat+"\n月均订单量："+orders+"\n当前最头疼的问题："+(probs.length?probs.join("；"):"未勾选（请先帮我判断最该优先看哪类问题）")+"\n补充说明："+note+"\n\n[输出要求]\n1. 先指出信息缺口：要确诊还缺哪些数据（请列出我能在卖家中心直接导出的数据清单），缺数据的地方写「待验证」，不要猜。\n2. 问题定位：针对我勾选的每个问题，给出 2-3 个最可能的原因假设，并注明每个假设用什么数据、怎么验证（具体到卖家中心哪个报表或页面能看）。\n3. 7 天动作清单：按优先级列出本周能落地的小动作（每条写清做什么、看哪个指标判断有效）。\n4. 30 天动作清单：需要持续推进的改进（选品、Listing、广告、履约、售后各取相关项）。\n5. 风险提醒：结合 "+market+" 的刊登与合规要求，提醒我最容易踩的坑。\n\n[铁律] 不得编造行业平均数据、平台内部规则或我的店铺数据；不得承诺销量、流量或利润结果；所有建议必须能用卖家中心现有数据验证；不确定的明确标注。";
+}
+document.getElementById("dgGen").addEventListener("click",function(){
+  document.getElementById("dgOut").value=dgPrompt();
+  showToast("诊断提示词已生成，点「复制提示词」粘贴到 AI 对话");
+});
+document.getElementById("dgCopy").addEventListener("click",function(){
+  var ta=document.getElementById("dgOut");
+  if(!ta.value){showToast("先生成诊断提示词");return;}
+  wbCopy(ta.value);
+});
+/* ===== 两级导航（5 大模块） ===== */
+var TAB_LABELS={home:"🔍 侵权与合规风险检测器",title:"✍️ 标题优化",imgopt:"🖼 图片优化",video:"🎬 视频生成",bench:"📦 上架工作台",profit:"🧮 利润计算器",pick:"🎯 选品分析",barcode:"🔢 条码助手",listing:"📝 Listing 生成器",diag:"🩺 AI 运营诊断"};
+var NAV_GROUPS=[
+ {label:"🎯 选品与利润",tabs:["pick","profit"]},
+ {label:"📝 Listing 上架",tabs:["listing","bench","title"]},
+ {label:"🎨 商品视觉",tabs:["imgopt","video"]},
+ {label:"🛡 风险检测",tabs:["home","barcode"]},
+ {label:"🩺 AI 运营诊断",tabs:["diag"]}];
+var navLastTab={};
+function navGroupOf(tab){for(var i=0;i<NAV_GROUPS.length;i++){if(NAV_GROUPS[i].tabs.indexOf(tab)>=0)return i;}return 0;}
+function navSync(tab){
+  var gi=navGroupOf(tab);navLastTab[gi]=tab;
+  document.querySelectorAll("#tabBar .gnav").forEach(function(a,i){a.classList.toggle("active",i===gi);});
+  var sb=document.getElementById("subBar");if(!sb)return;
+  sb.innerHTML=NAV_GROUPS[gi].tabs.map(function(t){return '<a href="#" data-tab="'+t+'" class="tab'+(t===tab?" active":"")+'" onclick="return false">'+TAB_LABELS[t]+'</a>';}).join("");
+}
+document.getElementById("tabBar").addEventListener("click",function(e){
+  var a=e.target.closest("[data-group]");if(!a)return;e.preventDefault();
+  var gi=parseInt(a.dataset.group,10);
+  showTab(navLastTab[gi]||NAV_GROUPS[gi].tabs[0]);
+});
+document.getElementById("subBar").addEventListener("click",function(e){
+  var a=e.target.closest("[data-tab]");if(!a)return;e.preventDefault();showTab(a.dataset.tab);
+});
 
 /* image optimizer */
 var IO_SCENES={
