@@ -2302,7 +2302,9 @@ pkRenderList();
 
 /* ===== 站点切换（墨西哥 / 巴西） ===== */
 function mlrSite(){try{return localStorage.getItem("mlr_site")==="br"?"br":"mx";}catch(e){return "mx";}}
-function mlrApplySite(){var _tl=document.getElementById("tLang");if(_tl)_tl.value=(mlrSite()==="br")?"pt":"es";
+function mlrApplySite(){var _tl=document.getElementById("tLang");if(_tl)_tl.value=(mlrSite()==="br")?"pt":"es";var _bc=document.getElementById("bc_j_country");if(_bc&&(_bc.value==="墨西哥"||_bc.value==="巴西"))_bc.value=(mlrSite()==="br")?"巴西":"墨西哥";
+var _vm=document.getElementById("vdMarket");if(_vm&&(_vm.value==="墨西哥 Mercado Libre"||_vm.value==="巴西 Mercado Livre"))_vm.value=(mlrSite()==="br")?"巴西 Mercado Livre":"墨西哥 Mercado Libre";
+["vdVoice","vdSub"].forEach(function(id){var s=document.getElementById(id);if(!s)return;for(var i=0;i<s.options.length;i++){var t=s.options[i].text;if(mlrSite()==="br")s.options[i].text=t.replace("墨西哥西班牙语","巴西葡萄牙语").replace("西语字幕","葡语字幕");else s.options[i].text=t.replace("巴西葡萄牙语","墨西哥西班牙语").replace("葡语字幕","西语字幕");}});
   var br=mlrSite()==="br";
   var bm=document.getElementById("siteMx"),bb=document.getElementById("siteBr");
   if(bm&&bb){bm.className="btn "+(br?"btn-light":"btn-yellow");bb.className="btn "+(br?"btn-yellow":"btn-light");}
@@ -2784,7 +2786,7 @@ var head="<b>🎬 视频脚本 — "+VD_TYPE_LABEL[v.type]+"</b><div style='font
 var rows=plan.shots.map(function(s,i){
 return "<tr><td style='padding:6px 8px;border-bottom:1px solid #eee'>镜 "+(i+1)+"<br>"+s.dur+"s</td><td style='padding:6px 8px;border-bottom:1px solid #eee'>"+s.view+"<br><span style='color:#666;font-size:12.5px'>"+s.angle+" · "+s.move+"</span></td><td style='padding:6px 8px;border-bottom:1px solid #eee'>"+s.narr[0]+"<br><span style='color:#666;font-size:12.5px'>"+s.narr[1]+"</span></td><td style='padding:6px 8px;border-bottom:1px solid #eee'>"+s.sub+"</td></tr>";
 }).join("");
-var table="<div style='overflow-x:auto'><table style='width:100%;border-collapse:collapse;font-size:13.5px;min-width:560px'><tr><th style='text-align:left;padding:6px 8px'>镜头</th><th style='text-align:left;padding:6px 8px'>画面 / 角度 / 运镜</th><th style='text-align:left;padding:6px 8px'>旁白（西语 / 中文）</th><th style='text-align:left;padding:6px 8px'>字幕</th></tr>"+rows+"</table></div>";
+var table="<div style='overflow-x:auto'><table style='width:100%;border-collapse:collapse;font-size:13.5px;min-width:560px'><tr><th style='text-align:left;padding:6px 8px'>镜头</th><th style='text-align:left;padding:6px 8px'>画面 / 角度 / 运镜</th><th style='text-align:left;padding:6px 8px'>旁白（"+((typeof mlrSite==="function"&&mlrSite()==="br")?"葡语":"西语")+" / 中文）</th><th style='text-align:left;padding:6px 8px'>字幕</th></tr>"+rows+"</table></div>";
 document.getElementById("vdScript").innerHTML='<div style="border:1px solid #e5e7eb;border-radius:10px;padding:12px">'+head+table+"</div>";
 var L=[];
 L.push("你是一名电商短视频导演。请根据我上传的商品图片/视频素材，生成一条商品视频。");
