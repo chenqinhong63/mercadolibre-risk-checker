@@ -221,7 +221,7 @@ section{padding-top:34px}
 #subBar a.tab.active{background:var(--navy);color:#fff}
 
 .card{padding:12px 14px}
-.hero{padding:14px 0 2px}
+.hero{padding:14px 0 2px;text-align:center}
 .card h3{margin:10px 0 4px !important}
 .wb-grid{gap:8px}
 .wb-field label{margin-bottom:2px}
@@ -246,6 +246,20 @@ textarea.ls-out{min-height:72px}
     
     </div>
   </header>
+  <section id="sect-core">
+    <div class="sec-head"><span class="num">🧰</span><div><h2>核心工具（全部免费）</h2><p>本站所有工具都在浏览器本地运行，免费、无需注册。不会操作可以加微信咨询（微信号 czqshy888888）。</p></div></div>
+    <div class="grid">
+      <article class="card"><div class="term">🔍 侵权与合规风险检测</div><p style="font-size:14px;margin:8px 0">标题、描述、商品链接、商品图四种查法，37 条风险词库，中英西三语，带语境判断和风险报告。</p><button class="btn btn-light" data-goto="home" type="button">去检测</button></article>
+      <article class="card"><div class="term">🖼 图片优化</div><p style="font-size:14px;margin:8px 0">上传图本地实测（分辨率/比例/清晰度/白底），生成主图、卖点图、场景图的 AI 提示词。</p><button class="btn btn-light" data-goto="imgopt" type="button">去优化图片</button></article>
+      <article class="card"><div class="term">🎬 视频生成</div><p style="font-size:14px;margin:8px 0">7 种视频类型的脚本和分镜（西语旁白+中文对照），一键生成 AI 视频提示词。</p><button class="btn btn-light" data-goto="video" type="button">去生成分镜</button></article>
+      <article class="card"><div class="term">🧮 利润计算器</div><p style="font-size:14px;margin:8px 0">单件利润、利润率、盈亏平衡售价、目标利润售价和多售价对比，还能读取上架工作台的项目并把结果存回去。</p><button class="btn btn-light" data-goto="profit" type="button">去算利润</button></article>
+      <article class="card"><div class="term">🎯 选品分析</div><p style="font-size:14px;margin:8px 0">把你查到的市场、竞品、成本数据整理成候选清单，算利润、打评分、生成诊断和测试计划。</p><button class="btn btn-light" data-goto="pick" type="button">打开选品分析</button></article>
+      <article class="card"><div class="term">🔢 UPC 条码生成</div><p style="font-size:14px;margin:8px 0">输入你拥有或已获授权的 UPC / EAN 编码，本地生成可下载的条码图片，生成前自动校验格式与校验位。</p><button class="btn btn-light" data-goto="barcode" type="button">打开 UPC 生成</button></article>
+      <article class="card"><div class="term">📝 Listing 全套生成器</div><p style="font-size:14px;margin:8px 0">填一次商品信息，生成标题、描述、卖点、关键词、属性、图片、视频全套上架资料的 AI 提示词，汇总导出。</p><button class="btn btn-light" data-goto="listing" type="button">打开 Listing 生成器</button></article>
+      <article class="card"><div class="term">📦 商品上架工作台</div><p style="font-size:14px;margin:8px 0">一个商品一个项目：资料、利润、标题、描述、图片、视频、风险检查、上架清单，8 步走完，本地保存可导出备份。</p><button class="btn btn-light" data-goto="bench" type="button">打开上架工作台</button></article>
+      <article class="card"><div class="term">🩺 AI 运营诊断</div><p style="font-size:14px;margin:8px 0">填一份店铺问卷，生成可复制的诊断提示词，并直达本站选品、利润、Listing 合规等诊断工具。</p><button class="btn btn-light" data-goto="diag" type="button">去做诊断</button></article>
+    </div>
+  </section>
 
   <div class="card" style="padding:12px 16px;margin:0 0 12px">
     <b>当前站点：</b>
@@ -260,19 +274,7 @@ textarea.ls-out{min-height:72px}
   <style>.nav a.tab.active{background:var(--navy);color:#fff;border-color:var(--navy)} @media print{section{display:block!important}}</style>
 
 
-  <section id="sect-core">
-    <div class="sec-head"><span class="num">🧰</span><div><h2>核心工具（全部免费）</h2><p>本站所有工具都在浏览器本地运行，免费、无需注册。不会操作可以加微信咨询（微信号 czqshy888888）。</p></div></div>
-    <div class="grid">
-      <article class="card"><div class="term">🔍 侵权与合规风险检测</div><p style="font-size:14px;margin:8px 0">标题、描述、商品链接、商品图四种查法，37 条风险词库，中英西三语，带语境判断和风险报告。</p><button class="btn btn-light" data-goto="home" type="button">去检测</button></article>
-      <article class="card"><div class="term">📝 Listing 生成器</div><p style="font-size:14px;margin:8px 0">一个商品的全套上架内容：标题（提示词 + 本地词典生成，含结构检查）、描述、卖点、关键词、属性、图片与视频提示词、合规检查。</p><button class="btn btn-light" data-goto="listing" type="button">打开 Listing 生成器</button></article>
-      <article class="card"><div class="term">🖼 图片优化</div><p style="font-size:14px;margin:8px 0">上传图本地实测（分辨率/比例/清晰度/白底），生成主图、卖点图、场景图的 AI 提示词。</p><button class="btn btn-light" data-goto="imgopt" type="button">去优化图片</button></article>
-      <article class="card"><div class="term">🎬 视频生成</div><p style="font-size:14px;margin:8px 0">7 种视频类型的脚本和分镜（西语旁白+中文对照），一键生成 AI 视频提示词。</p><button class="btn btn-light" data-goto="video" type="button">去生成分镜</button></article>
-      <article class="card"><div class="term">🧮 利润计算器</div><p style="font-size:14px;margin:8px 0">单件利润、利润率、盈亏平衡售价、目标利润售价和多售价对比，还能读取上架工作台的项目并把结果存回去。</p><button class="btn btn-light" data-goto="profit" type="button">去算利润</button></article>
-      <article class="card"><div class="term">🎯 选品分析</div><p style="font-size:14px;margin:8px 0">把你查到的市场、竞品、成本数据整理成候选清单，算利润、打评分、生成诊断和测试计划。</p><button class="btn btn-light" data-goto="pick" type="button">打开选品分析</button></article>
-      <article class="card"><div class="term">🔢 UPC 条码生成</div><p style="font-size:14px;margin:8px 0">输入你拥有或已获授权的 UPC / EAN 编码，本地生成可下载的条码图片，生成前自动校验格式与校验位。</p><button class="btn btn-light" data-goto="barcode" type="button">打开 UPC 生成</button></article>
-      <article class="card"><div class="term">📝 Listing 全套生成器</div><p style="font-size:14px;margin:8px 0">填一次商品信息，生成标题、描述、卖点、关键词、属性、图片、视频全套上架资料的 AI 提示词，汇总导出。</p><button class="btn btn-light" data-goto="listing" type="button">打开 Listing 生成器</button></article>
-    </div>
-  </section>
+  
 
 
   <section class="card" id="sect-bench-entry">
